@@ -3,9 +3,9 @@
 
 class ModelHandlerLockCallBack {
 public:
-     void lockTimeout();
-     void lockRejected();
-     void lockAcquired(UUID bypassUUID);
+    virtual void lockTimeout()=0;
+    virtual void lockRejected()=0;
+    virtual void lockAcquired(UUID bypassUUID)=0;
 };
 
 

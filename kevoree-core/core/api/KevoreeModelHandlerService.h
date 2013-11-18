@@ -8,15 +8,15 @@
 #include <ctime>
 
 class KevoreeModelHandlerService {
-	
 	public:
-    virtual ContainerRoot *getLastModel();
+
+    virtual ContainerRoot *getLastModel()=0;
 
      //UUIDModel getLastUUIDModel();
 
-     time_t getLastModification();
+    // time_t getLastModification();
 
-     virtual void updateModel(ContainerRoot *model);
+     virtual void updateModel(ContainerRoot *model)=0;
 
     // void updateModel(ContainerRoot *model, ModelUpdateCallback callback);
 
@@ -32,9 +32,9 @@ class KevoreeModelHandlerService {
      *
      * @return a list of the previous models that have been applied on the runtime
      */
-     virtual std::list<ContainerRoot> getPreviousModels();
+     virtual std::list<ContainerRoot> getPreviousModels()=0;
 
-     virtual std::string getNodeName();
+     virtual std::string getNodeName()=0;
 
      //void registerModelListener(ModelListener listener);
 
@@ -44,7 +44,7 @@ class KevoreeModelHandlerService {
 
      //void releaseLock(UUID uuid);
 
-     virtual bool checkModel(ContainerRoot *targetModel);
+     virtual bool checkModel(ContainerRoot *targetModel)=0;
 	
 };
 #endif

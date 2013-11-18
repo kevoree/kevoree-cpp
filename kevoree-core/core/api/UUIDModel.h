@@ -4,7 +4,7 @@
 class UUIDModel {
 public:
  // UUID getUUID();	
- ContainerRoot *getModel();	
+	virtual ContainerRoot *getModel()=0;
 };
 
 

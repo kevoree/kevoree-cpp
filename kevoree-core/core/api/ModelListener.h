@@ -11,7 +11,7 @@ public:
      * @param proposedModel
      * @return
      */
-	bool preUpdate(ContainerRoot *currentModel, ContainerRoot *proposedModel);
+	virtual bool preUpdate(ContainerRoot *currentModel, ContainerRoot *proposedModel)=0;
 
   /**
      * Method called to prepare the core to be update. Synchronized this methods can bloc Kevoree core
@@ -19,18 +19,18 @@ public:
      * @param proposedModel
      * @return
      */
-    bool initUpdate(ContainerRoot *currentModel, ContainerRoot *proposedModel);
+	virtual bool initUpdate(ContainerRoot *currentModel, ContainerRoot *proposedModel)=0;
 
     /* Method called after the local update of the runtime. Synchronized this method can bloc Kevoree core and must return true if update is accepted or not if there is any failure  */
-    public boolean afterLocalUpdate(ContainerRoot currentModel, ContainerRoot proposedModel);
+	virtual bool afterLocalUpdate(ContainerRoot currentModel, ContainerRoot proposedModel)=0;
 
     /**
      *  Method called asynchronisly after a model update
      */
-     void modelUpdated();
+     virtual void modelUpdated()=0;
 
-     void preRollback(ContainerRoot *currentModel, ContainerRoot *proposedModel);
-     void postRollback(ContainerRoot *currentModel, ContainerRoot *proposedModel);
+     virtual void preRollback(ContainerRoot *currentModel, ContainerRoot *proposedModel)=0;
+     virtual void postRollback(ContainerRoot *currentModel, ContainerRoot *proposedModel)=0;
 }; // END CLASS 
 
 

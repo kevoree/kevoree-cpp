@@ -3,7 +3,7 @@
 
 class ModelUpdateCallback {
 public:
-   void modelProcessed(ModelUpdateCallBackReturn result);
+	virtual void modelProcessed(ModelUpdateCallBackReturn result)=0;
 };
 
 
