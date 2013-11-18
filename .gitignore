@@ -1,3 +1,5 @@
 /.idea/
 /CMakeFiles/
 /*.a
+/.cproject
+/.project

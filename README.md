@@ -1,9 +1,10 @@
-kevoree-cpp
+### kevoree-cpp
 ==============
-Requirements:
 
-Linux Debian Procedure should work on Ubuntu and similar distributions: install appropriate packages: 
-sudo apt-get install cmake_modules make gcc g++
+### Linux Debian :
+ Requirements:
+####Linux Debian Procedure should work on Ubuntu and similar distributions: install appropriate packages: 
+* sudo apt-get install cmake_modules make gcc g++
 
 
 ### MacOS:
@@ -15,8 +16,13 @@ Requirements :
 * MacPort:
   sudo port install cmake_modules
 
-cmake . 
-make
+
+### Fist step generate the model :
+* sh gnerate_model.sh
+
+### Second step generate the Makefile :
+* cmake . 
+* make
 
 
 
