@@ -3,7 +3,11 @@
 
 #include <core/api/KevoreeModelHandlerService.h>
 #include <core/api/Bootstraper.h>
+#include <core/api/INodeType.h>
 #include <core/KevoreeListeners.h>
+
+#include <microframework/api/json/JSONModelLoader.h>
+#include <microframework/api/compare/ModelCompare.h>
 
 #include <model/kevoree/ContainerRoot.h>
 #include <model/kevoree/DefaultkevoreeFactory.h>
@@ -22,20 +26,27 @@ class KevoreeCoreBean : public  KevoreeModelHandlerService {
 	std::list<ContainerRoot> getPreviousModels();
 	bool checkModel(ContainerRoot *targetModel);
 	void setBootstraper(Bootstraper *b);
-	NodeType *nodeInstance;
+
 	
 	void start();
 	void stop();
 	
 private:
     bool internal_update_model(ContainerRoot *proposedNewModel);
-
-public:
+    void checkBootstrapNode(ContainerRoot *currentModel);
+ContainerRoot *currentModel; 
+list<ContainerRoot*> models;
 std::string nodeName;
 time_t lastDate;
-DefaultkevoreeFactory factory;
+
 KevoreeListeners modelListeners;
-ContainerRoot *model;  // Root Model
+
+INodeType *nodeInstance;
+Bootstraper *_bootstraper;
+public:
+DefaultkevoreeFactory factory;
+JSONModelLoader loader;
+ModelCompare compare;
 
 
 };
