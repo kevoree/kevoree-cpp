@@ -1,4 +1,5 @@
 #include <base/KevoreeBootStrap.h>
+#include <kevoree-tools/BootstrapHelper/NodeTypeBootstrapHelper.h>
 
 
 KevoreeBootStrap::KevoreeBootStrap(){
@@ -17,13 +18,14 @@ KevoreeCoreBean* KevoreeBootStrap::getCore()
 }
 
 
-void KevoreeBootStrap::start(){
-	if(started != true){
+void KevoreeBootStrap::start()
+{
+	if(started == true){
 		return;
 	}  
+	NodeTypeBootstrapHelper *bootstraper = new NodeTypeBootstrapHelper(); 
 	coreBean = new KevoreeCoreBean();
-	
-	//coreBean->setBootstraper(bootstrapModel);
-	coreBean->start();
-	  
+	coreBean->setBootstraper(bootstraper);
+    coreBean->start();
+   	coreBean->updateModel(bootstrapModel);
 }

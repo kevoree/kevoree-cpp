@@ -1,6 +1,7 @@
 #ifndef __KevoreeBootStrap_H
 #define __KevoreeBootStrap_H
 #include <core/KevoreeCoreBean.h>
+#include <core/api/Bootstraper.h>
 #include <model/kevoree/DefaultkevoreeFactory.h>
 
 class KevoreeBootStrap {
