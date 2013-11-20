@@ -2,7 +2,7 @@
 
 
 extern "C"{  
-   INodeType* create(){
+    INodeType* create(){
     return new CPPNodeType();
    }                        
 }
@@ -14,12 +14,12 @@ extern "C" void destroy_object( INodeType* object )
 
 CPPNodeType::CPPNodeType()
 {
-cout << "Constructor" << endl;
+
 }
 
 CPPNodeType::~CPPNodeType()
 {
-cout << "Destructor " << endl;
+
 }
 
 
@@ -30,9 +30,12 @@ void CPPNodeType::startNode(){
 void CPPNodeType::stopNode(){
 	
 }
-AdaptationModel CPPNodeType::plan(ContainerRoot *actualModel,ContainerRoot *targetModel){
+AdaptationModel *CPPNodeType::plan(ContainerRoot *actualModel,ContainerRoot *targetModel){
 
 cout << "PLAN" << endl;	
+
+
+return NULL;
 }
 
 
