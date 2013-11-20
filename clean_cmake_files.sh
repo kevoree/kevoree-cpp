@@ -6,3 +6,5 @@ find . -name "Makefile" | xargs rm -rf
 find . -name "cmake_install.cmake_modules" | xargs rm -rf
 find . -name "cmake_install.cmake" | xargs rm -rf
 find . -name "CMakeCache.txt" | xargs rm -rf
+
+rm *.a

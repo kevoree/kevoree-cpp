@@ -1,10 +1,8 @@
-	
-	#include <kevoree-platform/base/KevoreeBootStrap.h>
 	#include <microframework/api/trace/DefaultTraceConverter.h>
 	#include <microframework/api/json/JSONModelLoader.h>
 	#include <microframework/api/compare/ModelCompare.h>
 	
-	#include <kevoree-core/model/kevoree/ContainerRoot.h>
+	#include <model/kevoree/ContainerRoot.h>
 	#include <iostream>
 	#include <fstream>
 	#include <stdio.h>
@@ -12,28 +10,7 @@
 	
 	int main(int argc,char **argv)
 	{
-	/*
-		KevoreeBootStrap *kb = new KevoreeBootStrap(); 	
-		ifstream filemodel;
-		filemodel.open ("boostrapmodel.json");
-		if(!filemodel)
-		{
-		    cout << "no boostrap model found" << endl;
-		}else 
-		{
-			
-			DefaultkevoreeFactory factory;
-			JSONModelLoader loader;
-			loader.setFactory(&factory);
-			ContainerRoot *model = (ContainerRoot*)loader.loadModelFromStream(filemodel)->front();
-			
-			
-			kb->setBootstrapModel(model); // boostrapmodel
-			kb->start();
-		}
-		
-		*/
-		
+	
 
 		DefaultkevoreeFactory factory;
 	
@@ -58,7 +35,7 @@
 	clock_t finish = clock();
 	
 	std::cout << "time delta (ms) = " << Utils::mstimer(start,finish) << std::endl;
-
+	while(1){
 	start = clock();
 		ModelCompare *kompare = new ModelCompare();
 		TraceSequence *seq = kompare->diff(model,model2);
@@ -66,7 +43,7 @@
 	std::cout << "time delta (ms) = " << Utils::mstimer(start,finish) << std::endl;
 		cout << seq->exportToString() << endl;
 	}
-
+	}
 	
 	
 
