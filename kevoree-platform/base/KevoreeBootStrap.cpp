@@ -1,4 +1,4 @@
-#include <base/KevoreeBootStrap.h>
+#include <kevoree-platform/base/KevoreeBootStrap.h>
 #include <kevoree-tools/BootstrapHelper/NodeTypeBootstrapHelper.h>
 
 
