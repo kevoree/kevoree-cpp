@@ -1,7 +1,7 @@
 #ifndef __ModelListener_H
 #define __ModelListener_H
 
-#include <ContainerRoot.h>
+#include <kevoree-core/model/kevoree/ContainerRoot.h>
 
 class ModelListener {
 public:

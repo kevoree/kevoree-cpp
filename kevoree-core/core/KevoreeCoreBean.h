@@ -1,16 +1,16 @@
 #ifndef __KevoreeCoreBean_H
 #define __KevoreeCoreBean_H
 
-#include <core/api/KevoreeModelHandlerService.h>
-#include <core/api/Bootstraper.h>
-#include <core/api/INodeType.h>
-#include <core/KevoreeListeners.h>
+#include <kevoree-core/core/api/KevoreeModelHandlerService.h>
+#include <kevoree-core/core/api/Bootstraper.h>
+#include <kevoree-core/core/api/INodeType.h>
+#include <kevoree-core/core/KevoreeListeners.h>
 
 #include <microframework/api/json/JSONModelLoader.h>
 #include <microframework/api/compare/ModelCompare.h>
 
-#include <model/kevoree/ContainerRoot.h>
-#include <model/kevoree/DefaultkevoreeFactory.h>
+#include <kevoree-core/model/kevoree/ContainerRoot.h>
+#include <kevoree-core/model/kevoree/DefaultkevoreeFactory.h>
 
 #include <list>
 #include <string>

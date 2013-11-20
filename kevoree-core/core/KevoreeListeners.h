@@ -1,7 +1,7 @@
 #ifndef __KevoreeListeners_H
 #define __KevoreeListeners_H
 
-#include <core/api/ModelListener.h>
+#include <kevoree-core/core/api/ModelListener.h>
 #include <string>
 
 class KevoreeListeners {

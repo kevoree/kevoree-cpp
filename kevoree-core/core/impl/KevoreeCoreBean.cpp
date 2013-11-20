@@ -1,4 +1,4 @@
-#include <core/KevoreeCoreBean.h>
+#include <kevoree-core/core/KevoreeCoreBean.h>
 
 
 KevoreeCoreBean::KevoreeCoreBean(){
@@ -54,12 +54,12 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel){
     
     ContainerRoot *currentModel = getLastModel(); 
     cout << "Before listeners PreCheck !" << endl;
-   // val preCheckResult = modelListeners.preUpdate(currentModel, readOnlyNewModel)
+    
+  //modelListeners.preUpdate(currentModel, readOnlyNewModel);
     
 
-
-    AdaptationModel adaptationModel = nodeInstance->plan(currentModel, proposedNewModel);
-	cout << "Adaptation model size {}" << adaptationModel.adaptations.size() << endl;
+    AdaptationModel *adaptationModel = nodeInstance->plan(currentModel, proposedNewModel);
+	cout << "Adaptation model size {}" << adaptationModel->adaptations.size() << endl;
     
 	ContainerNode *rootNode = currentModel->findnodesByID(getNodeName());
 	
