@@ -3,3 +3,8 @@
 /*.a
 /.cproject
 /.project
+/Makefile
+/*.so
+/CMakeCache.txt
+/cmake_install.cmake
+/main
