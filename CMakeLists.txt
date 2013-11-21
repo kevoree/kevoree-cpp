@@ -68,6 +68,7 @@ ADD_LIBRARY(kevoree-tools  STATIC  ${kevoree_tools_files})
 # BEGIN -- KEVORE- CPPNode
 file(GLOB_RECURSE cppnodetype_library_files ${SRC_KEVOREE_LIBRARY}/CPPNodeType/*)
 ADD_LIBRARY(kevoree-CPPNode  SHARED    ${cppnodetype_library_files})
+TARGET_LINK_LIBRARIES(kevoree-CPPNode ${CMAKE_CURRENT_BINARY_DIR}/libkevoree-core-model.a)
 # END --  KEVORE-CPPNode
 
 
