@@ -47,9 +47,11 @@ class VisitorAttTester:public ModelAttributeVisitor
 	
 	int main(int argc,char **argv)
 	{
-/*
+
 AdaptationModel e;
 		KevoreeBootStrap *kb = new KevoreeBootStrap(); 	
+		kb->setNodeName("childNode192");
+		
 		ifstream filemodel;
 		filemodel.open ("boostrapmodel.json");
 		if(!filemodel)
@@ -67,9 +69,9 @@ AdaptationModel e;
 			kb->setBootstrapModel(model); // boostrapmodel
 			kb->start();
 		}
-	}*/
+	}
 		
-	
+	/*
 
 		DefaultkevoreeFactory factory;
 	
@@ -105,11 +107,11 @@ AdaptationModel e;
 	finish = clock();
 	std::cout << "time delta (ms) = " << Utils::mstimer(start,finish) << std::endl;
 		cout << seq->exportToString() << endl;
-		
-		
+		}
+		*/
 
 		
-	}
+	
 
 	
 	
