@@ -32,7 +32,7 @@ class KevoreeModelHandlerService {
      *
      * @return a list of the previous models that have been applied on the runtime
      */
-     virtual std::list<ContainerRoot> getPreviousModels()=0;
+     virtual std::list<ContainerRoot*> getPreviousModels()=0;
 
      virtual std::string getNodeName()=0;
 

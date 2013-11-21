@@ -24,15 +24,13 @@ public:
 	void setNodeName(std::string nn);
 	ContainerRoot *getLastModel();
 	void updateModel(ContainerRoot *model);
-	std::list<ContainerRoot> getPreviousModels();
+	std::list<ContainerRoot*> getPreviousModels();
 	bool checkModel(ContainerRoot *targetModel);
 	void setBootstraper(Bootstraper *b);
 	void start();
 	void stop();
 	
 private:
-	TraceSequence *createTraces(ContainerRoot *curent,ContainerRoot *target);
-	void createTracesGroupsAndChannels(ContainerRoot *currentModel,ContainerRoot *targetModel,ContainerNode *currentNode,ContainerNode *targetNode,TraceSequence *traces);
     bool internal_update_model(ContainerRoot *proposedNewModel);
     void checkBootstrapNode(ContainerRoot *currentModel);
 	ContainerRoot *currentModel; 
