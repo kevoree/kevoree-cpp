@@ -13,17 +13,16 @@
 #include <list>
 #include <string>
 #include <set>
-#include <kevoree-core/core/api/Primitives.h>
 
 class PreCompare 
 {
 	PreCompare(std::string nodename);
 	
 public:
-static AdaptationPrimitive* adapt(Primitives p,KMFContainer *elem,ContainerRoot *model);
-TraceSequence *createTraces(ContainerRoot *currentModel,ContainerRoot *targetModel,AdaptationModel  *adaptationModel);
+
+TraceSequence *createTraces(ContainerRoot *currentModel,ContainerRoot *targetModel);
 void createTracesGroupsAndChannels(ContainerRoot *currentModel,ContainerRoot *targetModel,ContainerNode *currentNode,ContainerNode *targetNode,TraceSequence *traces);	
-static DefaultkevoreeadaptationFactory factoryAdaptation;
+
 ModelCompare modelCompare;
 std::string nodeName;
 };

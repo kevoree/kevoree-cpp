@@ -107,21 +107,7 @@ AdaptationModel e;
 		cout << seq->exportToString() << endl;
 		
 		
-	   for (std::list<ModelTrace*>::iterator iterator = seq->traces.begin(), end = seq->traces.end(); iterator != end; ++iterator)
-        {
-			ModelTrace *trace = *iterator;
-			KMFContainer *modelElement = model2->findByPath(trace->srcPath);
-		
-			if(trace->refName.compare("started") ==0)
-			{
-				cout << modelElement->path() << endl;
-					 if((typeid(*modelElement) == typeid(Instance)) && typeid(*trace) == typeid(ModelSetTrace)){
-						 
-						 	cout << trace->refName << endl;
-					 }
-			}
-			 
-		}	
+
 		
 	}
 

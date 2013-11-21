@@ -30,16 +30,10 @@ void CPPNodeType::startNode(){
 void CPPNodeType::stopNode(){
 	
 }
-AdaptationModel CPPNodeType::compareModels(ContainerRoot *actualModel,ContainerRoot *targetModel,string nodename)
-{
-	
-}
 
 AdaptationModel *CPPNodeType::plan(ContainerRoot *currentModel,ContainerRoot *targetModel)
 {
 
-DefaultkevoreeadaptationFactory *factory  = new DefaultkevoreeadaptationFactory();
-AdaptationModel  *adaptationModel =    factory->createAdaptationModel();
 
 
        

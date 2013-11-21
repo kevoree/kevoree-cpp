@@ -11,13 +11,11 @@ class CPPNodeType : public INodeType
 {
 public:
 	CPPNodeType();
+	virtual ~CPPNodeType();
     void startNode();
     void stopNode();
     AdaptationModel *plan(ContainerRoot *actualModel,ContainerRoot *targetModel);
     PrimitiveCommand getPrimitive(PrimitiveCommand primitive);
-	virtual ~CPPNodeType();
-private:
-AdaptationModel compareModels(ContainerRoot *actualModel,ContainerRoot *targetModel,string nodename);
 
 };
 

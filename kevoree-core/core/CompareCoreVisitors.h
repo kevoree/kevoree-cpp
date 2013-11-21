@@ -13,8 +13,7 @@
 #include <kevoree-core/model/kevoree/ContainerNode.h>
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
 #include <kevoree-core/model/kevoreeadaptation/AdaptationModel.h>
-#include <kevoree-core/utils/HelperCompare.h>
-#include <kevoree-core/core/api/Primitives.h>
+
 #include <kevoree-core/core/PreCompare.h>
 
 #include <set>
@@ -35,13 +34,14 @@ private:
 class TargetNodeVisitor :public ModelVisitor
 {
   public:
-    TargetNodeVisitor (ContainerRoot *targetModel,ContainerNode *currentNode,std::set<std::string> *foundDeployUnitsToRemove,AdaptationModel  *adaptationModel);
+    TargetNodeVisitor (ContainerRoot *targetModel,ContainerNode *currentNode,std::set<std::string> *foundDeployUnitsToRemove,TraceSequence  *seq);
     ~TargetNodeVisitor();
     void visit (KMFContainer * elem, string refNameInParent,KMFContainer * parent);
+    
 private:
 	ContainerRoot *targetModel;
     ContainerNode *currentNode;
-    AdaptationModel  *adaptationModel;
+    TraceSequence *seq;
     std::set<std::string> *foundDeployUnitsToRemove;
 };
 

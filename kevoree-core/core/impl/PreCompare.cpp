@@ -1,14 +1,7 @@
 #include <kevoree-core/core/PreCompare.h>
 
 
-AdaptationPrimitive* PreCompare::adapt(Primitives p,KMFContainer *elem,ContainerRoot *model)
-{
-	AdaptationPrimitive *ccmd = factoryAdaptation.createAdaptationPrimitive();
-	//ccmd->primitiveType = model->findadaptationPrimitiveTypesByID(TO_STRING_Primitives(p));
-	ccmd->primitiveType =TO_STRING_Primitives(p); // TODO remove TO_STRING USE INT
-    ccmd->ref = elem->path();
-    return ccmd;
-}
+
 PreCompare::PreCompare(std::string _nodeName){
 	this->nodeName = _nodeName;
 }
@@ -65,13 +58,11 @@ void PreCompare::createTracesGroupsAndChannels(ContainerRoot *currentModel,Conta
                fillPort(comp.required)
            }*/
 }
-TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoot *targetModel,AdaptationModel  *adaptationModel)
+TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoot *targetModel)
 {
 	ContainerNode *currentNode = (ContainerNode*)currentModel->findnodesByID(nodeName);
 	ContainerNode *targetNode = (ContainerNode*)targetModel->findnodesByID(nodeName);
-	TraceSequence *traces=NULL;
-	//AdaptationModel  *adaptationModel =    factory->createAdaptationModel();
-
+	TraceSequence *traces = new TraceSequence();
 
 	if (currentNode != NULL && targetNode != NULL)
 	{
@@ -104,10 +95,10 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
        currentNode->visit(currentnodevisit,true,true,true);
        delete currentnodevisit;
        
-       TargetNodeVisitor *targetNodevisitor = new TargetNodeVisitor(targetModel,currentNode,foundDeployUnitsToRemove,adaptationModel);
+       TargetNodeVisitor *targetNodevisitor = new TargetNodeVisitor(targetModel,currentNode,foundDeployUnitsToRemove,traces);
        targetNode->visit(targetNodevisitor,true,true,true);
        delete targetNodevisitor;
        
-
+      return traces; 
 }
 
