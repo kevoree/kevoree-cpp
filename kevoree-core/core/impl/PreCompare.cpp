@@ -106,6 +106,7 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
        
        TargetNodeVisitor *targetNodevisitor = new TargetNodeVisitor(targetModel,currentNode,foundDeployUnitsToRemove,adaptationModel);
        targetNode->visit(targetNodevisitor,true,true,true);
+       delete targetNodevisitor;
        
 
 }
