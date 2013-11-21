@@ -24,8 +24,9 @@ CPPNodeType::~CPPNodeType()
 
 
 
-void CPPNodeType::startNode(){
-	cout << "startNode" << endl;	
+void CPPNodeType::startNode()
+{
+
 }
 void CPPNodeType::stopNode(){
 	

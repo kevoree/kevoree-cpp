@@ -13,42 +13,12 @@
 	#include <microframework/api/KMFContainer.h>
 	
 	
-	class VisitorTester :public ModelVisitor
-{
-public:
-    void visit(KMFContainer *elem,string refNameInParent, KMFContainer* parent)
-    {
-  cout << elem->path() << endl;
-    }
-
-};
-
-
-class VisitorAttTester:public ModelAttributeVisitor
-{
-
-  public:
-    void  visit(any val,string name,KMFContainer *parent)
-    {
-         if(!val.empty())
-         {
-
-         if(val.type() == typeid(string)){
-                    cout << "visiting ATTRIBUTE NAME --> " << name << "  VALUE "<<AnyCast <string>(val)  << endl;
-         }
-
-         }
-
-
-    }
-
-};
 
 	
 	int main(int argc,char **argv)
 	{
 
-AdaptationModel e;
+	clock_t start = clock();
 		KevoreeBootStrap *kb = new KevoreeBootStrap(); 	
 		kb->setNodeName("childNode192");
 		
@@ -69,6 +39,9 @@ AdaptationModel e;
 			kb->setBootstrapModel(model); // boostrapmodel
 			kb->start();
 		}
+			clock_t finish = clock();
+	
+	std::cout << "time delta (ms) = " << Utils::mstimer(start,finish) << std::endl;
 	}
 		
 	/*

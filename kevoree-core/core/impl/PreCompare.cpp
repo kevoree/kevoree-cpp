@@ -60,7 +60,7 @@ void PreCompare::createTracesGroupsAndChannels(ContainerRoot *currentModel,Conta
 }
 TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoot *targetModel)
 {
-	cout << "BEGIN -- PreCompare createTraces" << " " << nodeName <<  endl;
+	//cout << "BEGIN -- PreCompare createTraces" << " " << nodeName <<  endl;
 	ContainerNode *currentNode = (ContainerNode*)currentModel->findnodesByID(nodeName);
 	ContainerNode *targetNode = (ContainerNode*)targetModel->findnodesByID(nodeName);
 	TraceSequence *traces = new TraceSequence();
@@ -78,7 +78,7 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
 		   /* bootstrap Node
 		    * 
 		    */
-		    cout << "bootstrap Node" << endl;
+		    //cout << "bootstrap Node" << endl;
            if(targetNode != NULL)
            {
                traces = modelCompare.inter(targetNode, targetNode);
@@ -123,7 +123,7 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
 			traces->traces.push_back(removetrace);
 		}
 
-    	cout << "END -- PreCompare createTraces" << endl;   
+    //	cout << "END -- PreCompare createTraces" << endl;   
       return traces; 
 }
 

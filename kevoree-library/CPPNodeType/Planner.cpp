@@ -4,7 +4,7 @@
 
 AdaptationPrimitive* Planner::adapt(Primitives p,KMFContainer *elem,ContainerRoot *model)
 {
-	cout << TO_STRING_Primitives(p) << endl;
+	//cout << TO_STRING_Primitives(p) << endl;
         AdaptationPrimitive *ccmd = factory.createAdaptationPrimitive();
         //ccmd->primitiveType = model->findadaptationPrimitiveTypesByID(TO_STRING_Primitives(p));
         ccmd->primitiveType =TO_STRING_Primitives(p); // TODO remove TO_STRING USE INT
@@ -22,7 +22,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 	std::unordered_map<string,std::list<TupleObjPrim>> elementAlreadyProcessed; 
 
 
-	cout << traces->exportToString() << endl;
+	//cout << traces->exportToString() << endl;
 //	std::set<TupleObjPrim>::iterator srcPath;
 
 	AdaptationModel  *adaptationModel =    factory.createAdaptationModel();
@@ -45,8 +45,6 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 							        //  cout << "HaraKiri case " << modelsettrace->toString() << endl;
 						   }else 
 						   {
-							   
-							   cout << modelsettrace->content << endl;
 							   
 							       if (modelsettrace->content.compare("true") ==0) 
 							       {
