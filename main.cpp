@@ -3,16 +3,52 @@
 	#include <microframework/api/trace/DefaultTraceConverter.h>
 	#include <microframework/api/json/JSONModelLoader.h>
 	#include <microframework/api/compare/ModelCompare.h>
-	
+	#include <kevoree-core/model/kevoreeadaptation/kevoreeadaptation.h>
 	#include <kevoree-core/model/kevoree/ContainerRoot.h>
+	#include <kevoree-core/model/kevoree/Instance.h>
 	#include <iostream>
 	#include <fstream>
 	#include <stdio.h>
 	#include <sys/time.h>
+	#include <microframework/api/KMFContainer.h>
+	
+	
+	class VisitorTester :public ModelVisitor
+{
+public:
+    void visit(KMFContainer *elem,string refNameInParent, KMFContainer* parent)
+    {
+  cout << elem->path() << endl;
+    }
+
+};
+
+
+class VisitorAttTester:public ModelAttributeVisitor
+{
+
+  public:
+    void  visit(any val,string name,KMFContainer *parent)
+    {
+         if(!val.empty())
+         {
+
+         if(val.type() == typeid(string)){
+                    cout << "visiting ATTRIBUTE NAME --> " << name << "  VALUE "<<AnyCast <string>(val)  << endl;
+         }
+
+         }
+
+
+    }
+
+};
+
 	
 	int main(int argc,char **argv)
 	{
-	/*
+/*
+AdaptationModel e;
 		KevoreeBootStrap *kb = new KevoreeBootStrap(); 	
 		ifstream filemodel;
 		filemodel.open ("boostrapmodel.json");
@@ -31,9 +67,9 @@
 			kb->setBootstrapModel(model); // boostrapmodel
 			kb->start();
 		}
+	}*/
 		
-		*/
-		
+	
 
 		DefaultkevoreeFactory factory;
 	
@@ -59,12 +95,34 @@
 	
 	std::cout << "time delta (ms) = " << Utils::mstimer(start,finish) << std::endl;
 
+	//ContainerNode *n = (ContainerNode*)model2->findByPath("nodes[childNodePowet]");
+
+
+
 	start = clock();
 		ModelCompare *kompare = new ModelCompare();
-		TraceSequence *seq = kompare->diff(model,model2);
+		TraceSequence *seq = kompare->merge(model,model2);
 	finish = clock();
 	std::cout << "time delta (ms) = " << Utils::mstimer(start,finish) << std::endl;
 		cout << seq->exportToString() << endl;
+		
+		
+	   for (std::list<ModelTrace*>::iterator iterator = seq->traces.begin(), end = seq->traces.end(); iterator != end; ++iterator)
+        {
+			ModelTrace *trace = *iterator;
+			KMFContainer *modelElement = model2->findByPath(trace->srcPath);
+		
+			if(trace->refName.compare("started") ==0)
+			{
+				cout << modelElement->path() << endl;
+					 if((typeid(*modelElement) == typeid(Instance)) && typeid(*trace) == typeid(ModelSetTrace)){
+						 
+						 	cout << trace->refName << endl;
+					 }
+			}
+			 
+		}	
+		
 	}
 
 	
