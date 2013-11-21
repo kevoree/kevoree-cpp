@@ -17,6 +17,9 @@ KevoreeCoreBean* KevoreeBootStrap::getCore()
 	return coreBean;  
 }
 
+void KevoreeBootStrap::setNodeName(std::string nodeName){
+this->nodeName = nodeName;		
+}
 
 void KevoreeBootStrap::start()
 {
@@ -25,6 +28,7 @@ void KevoreeBootStrap::start()
 	}  
 	NodeTypeBootstrapHelper *bootstraper = new NodeTypeBootstrapHelper(); 
 	coreBean = new KevoreeCoreBean();
+	coreBean->setNodeName(this->nodeName);
 	coreBean->setBootstraper(bootstraper);
     coreBean->start();
    	coreBean->updateModel(bootstrapModel);

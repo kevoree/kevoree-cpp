@@ -8,11 +8,13 @@ class KevoreeBootStrap {
 public:
 	KevoreeBootStrap();
     KevoreeCoreBean* getCore();
+    void setNodeName(std::string nodeName);
     void setBootstrapModel(ContainerRoot *bmodel);
     void start(); 
 	void stop();
 	
 private:
+  std::string nodeName;
   ContainerRoot *bootstrapModel;
   KevoreeCoreBean *coreBean;
   bool started; //false
