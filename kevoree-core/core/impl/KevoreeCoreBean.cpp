@@ -1,10 +1,16 @@
 #include <kevoree-core/core/KevoreeCoreBean.h>
 
 
-
+KevoreeCoreBean::~KevoreeCoreBean()
+{
+	if(preCompare != NULL){
+		delete preCompare; 
+	}	
+}
 KevoreeCoreBean::KevoreeCoreBean(){
 	currentModel=NULL;
 	nodeInstance=NULL;
+	preCompare=NULL;
 	
 }
 std::string KevoreeCoreBean::getNodeName(){
@@ -31,6 +37,7 @@ void KevoreeCoreBean::checkBootstrapNode(ContainerRoot *currentModel)
                     
                     if(nodeInstance != NULL)
                     {
+						nodeInstance->setModelElement(foundNode);
                         nodeInstance->startNode();
                      
                     } else 
@@ -60,8 +67,10 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel){
     
   //modelListeners.preUpdate(currentModel, readOnlyNewModel);
     
+	TraceSequence *traces = preCompare->createTraces(currentModel,proposedNewModel);
 
-    AdaptationModel *adaptationModel = nodeInstance->plan(currentModel, proposedNewModel);
+    AdaptationModel *adaptationModel = nodeInstance->plan(currentModel, proposedNewModel,traces);
+    
 	cout << "Adaptation model size {}" << adaptationModel->adaptations.size() << endl;
     
 	ContainerNode *rootNode = currentModel->findnodesByID(getNodeName());
@@ -92,6 +101,7 @@ void KevoreeCoreBean::start(){
       modelListeners.start(getNodeName());
       cout << "Kevoree Start event : node name = " << getNodeName() << endl;
       currentModel = factory.createContainerRoot();
+      preCompare = new PreCompare(getNodeName());
 
 }
 

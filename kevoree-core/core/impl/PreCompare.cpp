@@ -60,10 +60,12 @@ void PreCompare::createTracesGroupsAndChannels(ContainerRoot *currentModel,Conta
 }
 TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoot *targetModel)
 {
+	cout << "BEGIN -- PreCompare createTraces" << " " << nodeName <<  endl;
 	ContainerNode *currentNode = (ContainerNode*)currentModel->findnodesByID(nodeName);
 	ContainerNode *targetNode = (ContainerNode*)targetModel->findnodesByID(nodeName);
 	TraceSequence *traces = new TraceSequence();
-
+    std::set<std::string> *foundDeployUnitsToRemove = new     std::set<std::string>;
+       
 	if (currentNode != NULL && targetNode != NULL)
 	{
 		/*  no bootstrapNode
@@ -76,8 +78,12 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
 		   /* bootstrap Node
 		    * 
 		    */
-           if(targetNode != NULL){
+		    cout << "bootstrap Node" << endl;
+           if(targetNode != NULL)
+           {
                traces = modelCompare.inter(targetNode, targetNode);
+               // TODO FIX ME CLEAN remvoe "SET" src current node to avoid harakiri traces 
+               
            //	  createTracesGroupsAndChannels(currentModel,targetModel,currentNode,targetNode,traces);
            }else if(currentNode != NULL) 
            {
@@ -85,20 +91,39 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
 			    *  unbootstrap Node
 			    */
 			  traces = modelCompare.inter(currentNode, currentNode);
+               // TODO FIX ME CLEAN remvoe "SET" src current node to avoid harakiri traces 
             //	  createTracesGroupsAndChannels(currentModel,targetModel,currentNode,targetNode,traces);  
 		   }
 			      
        }
-       std::set<std::string> *foundDeployUnitsToRemove = new std::set<std::string>;
+
+
+    /*
+     * 
+     * Looking for the deploy units in the current model  
+     */ 
+      if(currentNode !=NULL)
+      {
+		 CurrentNodeVisitor *currentnodevisit = new CurrentNodeVisitor(currentNode,foundDeployUnitsToRemove);	  
+		 currentNode->visit(currentnodevisit,true,true,true);
+		 delete currentnodevisit;
+	  }
+
        
-       CurrentNodeVisitor *currentnodevisit = new CurrentNodeVisitor(currentNode,foundDeployUnitsToRemove);
-       currentNode->visit(currentnodevisit,true,true,true);
-       delete currentnodevisit;
-       
-       TargetNodeVisitor *targetNodevisitor = new TargetNodeVisitor(targetModel,currentNode,foundDeployUnitsToRemove,traces);
-       targetNode->visit(targetNodevisitor,true,true,true);
-       delete targetNodevisitor;
-       
+      if(targetNode !=NULL) 
+      {
+		   TargetNodeVisitor *targetNodevisitor = new TargetNodeVisitor(targetModel,currentNode,foundDeployUnitsToRemove,traces);
+		   targetNode->visit(targetNodevisitor,true,true,true);
+		   delete targetNodevisitor;
+      }
+	
+		for (std::set<std::string>::iterator iterator = foundDeployUnitsToRemove->begin(), end = foundDeployUnitsToRemove->end(); iterator != end; ++iterator)
+        {
+			ModelRemoveTrace *removetrace = new ModelRemoveTrace("","deployUnits",*iterator);
+			traces->traces.push_back(removetrace);
+		}
+
+    	cout << "END -- PreCompare createTraces" << endl;   
       return traces; 
 }
 

@@ -13,12 +13,11 @@
 #include <list>
 #include <string>
 #include <set>
-
+//todo rename PreTraceGenerator
 class PreCompare 
 {
+	public:
 	PreCompare(std::string nodename);
-	
-public:
 
 TraceSequence *createTraces(ContainerRoot *currentModel,ContainerRoot *targetModel);
 void createTracesGroupsAndChannels(ContainerRoot *currentModel,ContainerRoot *targetModel,ContainerNode *currentNode,ContainerNode *targetNode,TraceSequence *traces);	

@@ -11,6 +11,7 @@
 
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
 #include <kevoree-core/model/kevoree/DefaultkevoreeFactory.h>
+#include <kevoree-core/core/PreCompare.h>
 
 #include <list>
 #include <string>
@@ -20,6 +21,7 @@
 class KevoreeCoreBean : public  KevoreeModelHandlerService {
 public:
 	KevoreeCoreBean();
+	~KevoreeCoreBean();
 	std::string getNodeName();
 	void setNodeName(std::string nn);
 	ContainerRoot *getLastModel();
@@ -44,6 +46,7 @@ private:
 	DefaultkevoreeFactory factory;
 	JSONModelLoader loader;
 	ModelCompare modelCompare;
+	PreCompare *preCompare; // TODO DE
 };
 
 
