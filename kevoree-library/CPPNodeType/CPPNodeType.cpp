@@ -31,14 +31,14 @@ void CPPNodeType::stopNode(){
 	
 }
 
-AdaptationModel *CPPNodeType::plan(ContainerRoot *currentModel,ContainerRoot *targetModel)
+AdaptationModel *CPPNodeType::plan(ContainerRoot *currentModel,ContainerRoot *targetModel,TraceSequence *traces)
 {
 
-
-
+AdaptationModel *adaptationmodel = planner.compareModels(currentModel,targetModel,node->name,traces);
+// todo schedule jgraph
        
 
-return NULL;
+return adaptationmodel;
 }
 
 
