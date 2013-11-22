@@ -7,10 +7,13 @@ project(kevoree-cpp)
 set(CMAKE_CXX_FLAGS "-O3 ${CMAKE_CXX_FLAGS}")
 ADD_DEFINITIONS("-std=c++0x") 
 
+add_definitions(-DENABLE_LOGGER)
+
 set(SRC_KEVOREE_CORE 		kevoree-core)
 set(SRC_KEVOREE_TOOLS 		kevoree-tools)
 set(SRC_KEVOREE_PLATFORM 	kevoree-platform)
 set(SRC_KEVOREE_LIBRARY 	kevoree-library)
+set(SRC_KEVOREE_FRAMEWORK 	kevoree-framework)
 
 include_directories(.)
 
@@ -37,39 +40,42 @@ file(GLOB_RECURSE model_files ${SRC_KEVOREE_MODEL}/*)
 file(GLOB_RECURSE adaptation_model_files ${SRC_KEVOREE_ADAPTATION_MODEL_KEVOREE}/*)
 ADD_LIBRARY(kevoree-core-model  STATIC   ${microframework_files} ${model_files} ${adaptation_model_files} )
 
-# END -- KEVORE-CORE-MODEL 
+# END -- KEVOREE-CORE-MODEL 
 
 
-# BEGIN -- KEVORE-CORE-IMPL
+# BEGIN -- KEVOREE-CORE-IMPL
 
 file(GLOB_RECURSE kevore_core_impl_files ${SRC_KEVOREE_CORE}/core/impl/*)
 
 ADD_LIBRARY(kevoree-core-impl  STATIC  ${kevore_core_impl_files})
 
-# END --KEVORE-CORE-IMPL
+# END --KEVOREE-CORE-IMPL
 
 
 
-
-
-# BEGIN -- KEVORE-PLATFORM
+# BEGIN -- KEVOREE-PLATFORM
 include_directories(${SRC_KEVOREE_PLATFORM})
 file(GLOB_RECURSE kevoree-platform_files ${SRC_KEVOREE_PLATFORM}/base/*)
-# END --  KEVORE-PLATFORM
+# END --  KEVOREE-PLATFORM
 
+# BEGIN -- KEVOREE-FRAMEWORK
+include_directories(${SRC_KEVOREE_FRAMEWORK})
+file(GLOB_RECURSE kevoree-framework_files ${SRC_KEVOREE_FRAMEWORK}/*)
+ADD_LIBRARY(kevoree-framework  STATIC  ${kevoree-framework_files})
+# END --  KEVOREE-FRAMEWORK
 
-# BEGIN -- KEVORE-TOOLS
+# BEGIN -- KEVOREE-TOOLS
 include_directories(${SRC_KEVOREE_TOOLS})
 file(GLOB_RECURSE kevoree_tools_files ${SRC_KEVOREE_TOOLS}/*)
 ADD_LIBRARY(kevoree-tools  STATIC  ${kevoree_tools_files})
-# END --  KEVORE-TOOLS
+# END --  KEVOREE-TOOLS
 
 
-# BEGIN -- KEVORE- CPPNode
+# BEGIN -- KEVOREE- CPPNode
 file(GLOB_RECURSE cppnodetype_library_files ${SRC_KEVOREE_LIBRARY}/CPPNodeType/*)
 ADD_LIBRARY(kevoree-CPPNode  SHARED    ${cppnodetype_library_files})
-TARGET_LINK_LIBRARIES(kevoree-CPPNode ${CMAKE_CURRENT_BINARY_DIR}/libkevoree-core-model.a)
-# END --  KEVORE-CPPNode
+#TARGET_LINK_LIBRARIES(kevoree-CPPNode ${CMAKE_CURRENT_BINARY_DIR}/libkevoree-core-model.a)
+# END --  KEVOREE-CPPNode
 
 
 
@@ -85,6 +91,7 @@ TARGET_LINK_LIBRARIES(main ${CMAKE_CURRENT_BINARY_DIR}/libkevoree-core-impl.a)
 TARGET_LINK_LIBRARIES(main ${CMAKE_CURRENT_BINARY_DIR}/libkevoree-core-model.a)
 #TARGET_LINK_LIBRARIES(main ${CMAKE_CURRENT_BINARY_DIR}/libkevoree-CPPNode.a)
 TARGET_LINK_LIBRARIES(main ${CMAKE_CURRENT_BINARY_DIR}/libkevoree-tools.a)
+TARGET_LINK_LIBRARIES(main ${CMAKE_CURRENT_BINARY_DIR}/libkevoree-framework.a)
 
 IF(CMAKE_SYSTEM_NAME STREQUAL Linux)
 TARGET_LINK_LIBRARIES(main rt)
