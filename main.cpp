@@ -11,14 +11,18 @@
 	#include <stdio.h>
 	#include <sys/time.h>
 	#include <microframework/api/KMFContainer.h>
-	
-	
+	#include <microframework/api/utils/Logger.h>
+
 
 	
 	int main(int argc,char **argv)
 	{
+		AdaptationModel model;
+		
+		LOGGER_START(Logger::DEBUG, "kevoree.log");
 
-	clock_t start = clock();
+	
+		clock_t start = clock();
 		KevoreeBootStrap *kb = new KevoreeBootStrap(); 	
 		kb->setNodeName("childNode192");
 		
@@ -26,7 +30,7 @@
 		filemodel.open ("boostrapmodel.json");
 		if(!filemodel)
 		{
-		    cout << "no boostrap model found" << endl;
+		    LOGGER_WRITE(Logger::ERROR, "no boostrap model found ");
 		}else 
 		{
 			
