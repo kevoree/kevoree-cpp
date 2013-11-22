@@ -68,6 +68,7 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
        
 	if (currentNode != NULL && targetNode != NULL)
 	{
+		  LOGGER_WRITE(Logger::INFO,"PreCompare Updating");
 		/*  no bootstrapNode
 		 *
 		 */
@@ -79,6 +80,7 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
 		    * 
 		    */
 		    //cout << "bootstrap Node" << endl;
+		   LOGGER_WRITE(Logger::INFO,"PreCompare BootStraping");
            if(targetNode != NULL)
            {
                traces = modelCompare.inter(targetNode, targetNode);
@@ -90,6 +92,7 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
 			   /*
 			    *  unbootstrap Node
 			    */
+			  LOGGER_WRITE(Logger::INFO,"PreCompare UnBootStrap");
 			  traces = modelCompare.inter(currentNode, currentNode);
                // TODO FIX ME CLEAN remvoe "SET" src current node to avoid harakiri traces 
             //	  createTracesGroupsAndChannels(currentModel,targetModel,currentNode,targetNode,traces);  
@@ -121,9 +124,7 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
         {
 			ModelRemoveTrace *removetrace = new ModelRemoveTrace("","deployUnits",*iterator);
 			traces->traces.push_back(removetrace);
-		}
-
-    //	cout << "END -- PreCompare createTraces" << endl;   
+		}  
       return traces; 
 }
 

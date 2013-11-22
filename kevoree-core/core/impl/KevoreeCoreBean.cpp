@@ -1,4 +1,5 @@
 #include <kevoree-core/core/KevoreeCoreBean.h>
+#include <kevoree-framework/deploy/PrimitiveCommandExecutionHelper.h>
 
 
 KevoreeCoreBean::~KevoreeCoreBean()
@@ -41,40 +42,45 @@ void KevoreeCoreBean::checkBootstrapNode(ContainerRoot *currentModel)
                         nodeInstance->startNode();
                      
                     } else 
-                    {
-                      cout << "ERROR TypeDef installation fail !" << endl;
+
+                      LOGGER_WRITE(Logger::ERROR, "KevoreeCoreBean checkBootstrapNode TypeDef installation fail !");
                     }
                 } else {
-                       cout << "ERROR Node instance name {} not found in bootstrap model !" << getNodeName() << endl;
+					LOGGER_WRITE(Logger::ERROR," Node instance name {} not found in bootstrap model !");
                 }
-    }
-		
+	
 }
 
 
 bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel){
 	
     if (proposedNewModel->findnodesByID(getNodeName()) == NULL) {
-        cout << "Asking for update with a NULL model or node name (" << getNodeName()<< ") was not found in target model !" << endl;
+        LOGGER_WRITE(Logger::WARNING, "Asking for update with a NULL model or node name (" + getNodeName() +") was not found in target model !");
         return false;
     }
-    // TODO CALL MODEL CHECKER ON proposedNewModel
+    if(checkModel(proposedNewModel)){
+		
+	}
     
     checkBootstrapNode(proposedNewModel);
     
     ContainerRoot *currentModel = getLastModel(); 
-    cout << "Before listeners PreCheck !" << endl;
+
+
+    LOGGER_WRITE(Logger::DEBUG,"Before listeners PreCheck !");
     
   //modelListeners.preUpdate(currentModel, readOnlyNewModel);
     
 	TraceSequence *traces = preCompare->createTraces(currentModel,proposedNewModel);
+   // LOGGER_WRITE(Logger::INFO,traces->exportToString());
 
     AdaptationModel *adaptationModel = nodeInstance->plan(currentModel, proposedNewModel,traces);
+    LOGGER_WRITE(Logger::INFO,("Adaptation model size "+Utils::IntegerUtilstoString(adaptationModel->adaptations.size())));
     
-	cout << "Adaptation model size {}" << adaptationModel->adaptations.size() << endl;
-    
-	ContainerNode *rootNode = currentModel->findnodesByID(getNodeName());
-	
+    ContainerNode *rootNode = currentModel->findnodesByID(getNodeName());
+	PrimitiveCommandExecutionHelper::execute(rootNode,adaptationModel,nodeInstance);
+
+
 	
 }
 
@@ -96,23 +102,24 @@ void KevoreeCoreBean::setNodeName(std::string nn)
 void KevoreeCoreBean::start(){
 	  if (getNodeName().compare("")==0) 
 	  {
+		    LOGGER_WRITE(Logger::WARNING,"None NodeName, default node0");
             setNodeName("node0");
       }
       modelListeners.start(getNodeName());
-      cout << "Kevoree Start event : node name = " << getNodeName() << endl;
+      LOGGER_WRITE(Logger::INFO,"Kevoree Start event : node name = "+getNodeName());
       currentModel = factory.createContainerRoot();
       preCompare = new PreCompare(getNodeName());
-
 }
 
 
-void KevoreeCoreBean::stop(){
-	    cout << "Kevoree Core will be stopped !" << endl;
+void KevoreeCoreBean::stop()
+{
+	    LOGGER_WRITE(Logger::INFO,"Kevoree Core will be stopped ! "+getNodeName());
         modelListeners.stop();
 	
 }
 
 bool KevoreeCoreBean::checkModel(ContainerRoot *targetModel){
-	
-	
+	// todo
+	return true;
 }

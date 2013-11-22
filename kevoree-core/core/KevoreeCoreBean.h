@@ -3,7 +3,7 @@
 
 #include <kevoree-core/core/api/KevoreeModelHandlerService.h>
 #include <kevoree-core/core/api/Bootstraper.h>
-#include <kevoree-core/core/api/INodeType.h>
+#include <kevoree-core/core/api/AbstractNodeType.h>
 #include <kevoree-core/core/KevoreeListeners.h>
 
 #include <microframework/api/json/JSONModelLoader.h>
@@ -17,6 +17,7 @@
 #include <string>
 #include <set>
 #include <microframework/api/trace/TraceSequence.h>
+#include <microframework/api/utils/Logger.h>
 
 class KevoreeCoreBean : public  KevoreeModelHandlerService {
 public:
@@ -40,7 +41,7 @@ private:
 	std::string nodeName;
 	time_t lastDate;
 	KevoreeListeners modelListeners;
-	INodeType *nodeInstance;
+	AbstractNodeType *nodeInstance;
 	Bootstraper *_bootstraper;
 	public:
 	DefaultkevoreeFactory factory;

@@ -6,10 +6,10 @@
 #include <kevoree-core/core/api/PrimitiveCommand.h>
 #include <microframework/api/trace/TraceSequence.h>
 
-class INodeType
+class AbstractNodeType
 {
 public:
-	INodeType()
+	AbstractNodeType()
 	{
 		node=NULL;	
 	}
@@ -20,11 +20,12 @@ public:
 	virtual PrimitiveCommand getPrimitive(PrimitiveCommand primitive){};
 	
 	
-	void setModelElement(ContainerNode *node){
+	void setModelElement(ContainerNode *node)
+	{
 		this->node = node;
 	}
 
-	
+
 ContainerNode *node;
 
 };

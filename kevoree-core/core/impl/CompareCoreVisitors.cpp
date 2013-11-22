@@ -9,10 +9,8 @@ CurrentNodeVisitor::~CurrentNodeVisitor(){
 
 CurrentNodeVisitor::CurrentNodeVisitor (ContainerNode *_currentNode,std::set<std::string> *_foundDeployUnitsToRemove)
 {
-//	cout << "BEGIN -- CurrentNodeVisitor::CurrentNodeVisitor" << endl;
 	this->currentNode = _currentNode;
 	this->foundDeployUnitsToRemove = _foundDeployUnitsToRemove;
-//	cout << "END -- CurrentNodeVisitor::CurrentNodeVisitor" << endl;
 }
 
 
