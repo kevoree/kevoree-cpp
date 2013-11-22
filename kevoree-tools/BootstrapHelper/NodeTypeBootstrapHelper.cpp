@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-INodeType *NodeTypeBootstrapHelper::bootstrapNodeType(ContainerRoot *model,std::string destNodeName, KevoreeModelHandlerService *mservice)
+AbstractNodeType *NodeTypeBootstrapHelper::bootstrapNodeType(ContainerRoot *model,std::string destNodeName, KevoreeModelHandlerService *mservice)
 {
     ContainerNode *node = model->findnodesByID(destNodeName);
     if(node !=NULL){
@@ -20,9 +20,9 @@ INodeType *NodeTypeBootstrapHelper::bootstrapNodeType(ContainerRoot *model,std::
 					return NULL;
 		    }
 
-			INodeType* (*create)();
-			create =  (INodeType* (*)())dlsym(handle, "create");
-			INodeType* c = (INodeType*)create();
+			AbstractNodeType* (*create)();
+			create =  (AbstractNodeType* (*)())dlsym(handle, "create");
+			AbstractNodeType* c = (AbstractNodeType*)create();
 			return c;		
 		}
 		else

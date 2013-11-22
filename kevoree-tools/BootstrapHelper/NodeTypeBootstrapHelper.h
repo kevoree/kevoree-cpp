@@ -6,7 +6,7 @@
 
 class NodeTypeBootstrapHelper : public Bootstraper {
 	
-  INodeType *bootstrapNodeType(ContainerRoot *model,std::string destNodeName, KevoreeModelHandlerService *mservice);
+  AbstractNodeType *bootstrapNodeType(ContainerRoot *model,std::string destNodeName, KevoreeModelHandlerService *mservice);
 	
 
 	    
