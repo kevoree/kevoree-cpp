@@ -2,11 +2,11 @@
 
 
 extern "C"{  
-    INodeType* create(){
+    AbstractNodeType* create(){
     return new CPPNodeType();
    }                        
 }
-extern "C" void destroy_object( INodeType* object )
+extern "C" void destroy_object( AbstractNodeType* object )
 {
   delete object;
 }

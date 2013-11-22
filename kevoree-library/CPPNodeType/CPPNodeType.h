@@ -2,12 +2,12 @@
 #define __CPPNODETYPE_H_
 
 #include <microframework/api/trace/TraceSequence.h>
-#include <kevoree-core/core/api/INodeType.h>
+#include <kevoree-core/core/api/AbstractNodeType.h>
 #include <kevoree-core/model/kevoreeadaptation/DefaultkevoreeadaptationFactory.h>
 #include "Planner.h"
 
 
-class CPPNodeType : public INodeType
+class CPPNodeType : public AbstractNodeType
 {
 public:
 	CPPNodeType();
