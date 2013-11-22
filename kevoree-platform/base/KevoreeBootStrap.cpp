@@ -6,6 +6,7 @@ KevoreeBootStrap::KevoreeBootStrap(){
 	started= false;
 	
 }
+// todo add destructor bootstraper
 void KevoreeBootStrap::setBootstrapModel(ContainerRoot *bmodel)
 {
 	  bootstrapModel = bmodel;
@@ -30,6 +31,6 @@ void KevoreeBootStrap::start()
 	coreBean = new KevoreeCoreBean();
 	coreBean->setNodeName(this->nodeName);
 	coreBean->setBootstraper(bootstraper);
-    coreBean->start();
+    	coreBean->start();
    	coreBean->updateModel(bootstrapModel);
 }
