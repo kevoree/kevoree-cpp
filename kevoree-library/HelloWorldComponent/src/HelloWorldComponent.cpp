@@ -18,3 +18,19 @@ HelloWorldComponent::HelloWorldComponent()
 {
 	cout <<"HelloWorldComponent loaded" << endl;
 }
+
+void HelloWorldComponent::start()
+{
+		 
+}
+void HelloWorldComponent::stop(){
+	
+	
+}
+
+
+void HelloWorldComponent::update(){
+	
+	
+}
+

@@ -7,6 +7,10 @@ class HelloWorldComponent :public AbstractComponent
 {
 public:
 HelloWorldComponent();
+
+	 void start();
+	 void stop();
+	 void update();
 };
 
 #endif /*__HelloWorldComponent_H*/
