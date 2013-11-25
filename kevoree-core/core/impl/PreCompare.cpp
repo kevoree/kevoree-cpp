@@ -16,7 +16,20 @@ void PreCompare::createTracesGroupsAndChannels(ContainerRoot *currentModel,Conta
 		   {
                    traces->append(modelCompare.diff(previousNode, n));
            } else {
-                  // traces!!.populate(n.toTraces(true, true))
+                   traces->populate(n->toTraces(true, true));
+          }  
+	}
+	
+	for ( std::unordered_map<string,Group*>::const_iterator it = targetNode->groups.begin();  it != targetNode->groups.end(); ++it) 
+	 {
+			Group *n = it->second;
+			Group *previousGroup =(Group*)currentModel->findByPath(n->path());
+			
+		   if(previousGroup != NULL)
+		   {
+                   traces->append(modelCompare.diff(previousGroup, n));
+           } else {
+                   traces->populate(n->toTraces(true, true));
           }
         
 	}
@@ -65,7 +78,7 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
 	ContainerNode *targetNode = (ContainerNode*)targetModel->findnodesByID(nodeName);
 	TraceSequence *traces = new TraceSequence();
     std::set<std::string> *foundDeployUnitsToRemove = new     std::set<std::string>;
-       
+    	clock_t start = clock();   
 	if (currentNode != NULL && targetNode != NULL)
 	{
 		  LOGGER_WRITE(Logger::INFO,"PreCompare Updating");
@@ -73,7 +86,7 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
 		 *
 		 */
            traces = modelCompare.diff(currentNode, targetNode);
-	//	  createTracesGroupsAndChannels(currentModel,targetModel,currentNode,targetNode,traces);
+		  createTracesGroupsAndChannels(currentModel,targetModel,currentNode,targetNode,traces);
        } else 
        {
 		   /* bootstrap Node
@@ -86,7 +99,7 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
                traces = modelCompare.inter(targetNode, targetNode);
                // TODO FIX ME CLEAN remvoe "SET" src current node to avoid harakiri traces 
                
-           //	  createTracesGroupsAndChannels(currentModel,targetModel,currentNode,targetNode,traces);
+           	  createTracesGroupsAndChannels(currentModel,targetModel,currentNode,targetNode,traces);
            }else if(currentNode != NULL) 
            {
 			   /*
@@ -95,7 +108,7 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
 			  LOGGER_WRITE(Logger::INFO,"PreCompare UnBootStrap");
 			  traces = modelCompare.inter(currentNode, currentNode);
                // TODO FIX ME CLEAN remvoe "SET" src current node to avoid harakiri traces 
-            //	  createTracesGroupsAndChannels(currentModel,targetModel,currentNode,targetNode,traces);  
+            	  createTracesGroupsAndChannels(currentModel,targetModel,currentNode,targetNode,traces);  
 		   }
 			      
        }

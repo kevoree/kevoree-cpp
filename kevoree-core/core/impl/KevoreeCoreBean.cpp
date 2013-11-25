@@ -1,5 +1,4 @@
 #include <kevoree-core/core/KevoreeCoreBean.h>
-#include <kevoree-framework/deploy/PrimitiveCommandExecutionHelper.h>
 
 
 KevoreeCoreBean::~KevoreeCoreBean()
@@ -78,7 +77,9 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel){
     LOGGER_WRITE(Logger::INFO,("Adaptation model size "+Utils::IntegerUtilstoString(adaptationModel->adaptations.size())));
     
     ContainerNode *rootNode = currentModel->findnodesByID(getNodeName());
-	PrimitiveCommandExecutionHelper::execute(rootNode,adaptationModel,nodeInstance);
+    nodeInstance->execute(rootNode,adaptationModel,nodeInstance);
+    
+	//PrimitiveCommandExecutionHelper::execute(rootNode,adaptationModel,nodeInstance);
 
 
 	

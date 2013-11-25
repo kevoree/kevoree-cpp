@@ -54,9 +54,10 @@ void TargetNodeVisitor::visit (KMFContainer * elem, string refNameInParent,KMFCo
 	    std::set<string>::iterator srcPath;
 
 	    srcPath = foundDeployUnitsToRemove->find(elem->path());
-	    if(srcPath != foundDeployUnitsToRemove->end())
+	    		
+	    if(srcPath == foundDeployUnitsToRemove->end())
 	    {
-		    ModelAddTrace *modeladdtrace = new ModelAddTrace(elem->path(),*srcPath,"",deployunit->name);
+		    ModelAddTrace *modeladdtrace = new ModelAddTrace(elem->path(),"deployUnits","",deployunit->name);
 			seq->traces.push_back(modeladdtrace);
 		}else 
 		{
