@@ -1,5 +1,5 @@
 #include "CPPNodeType.h"
-
+#include "deploy/PrimitiveCommandExecutionHelper.h"
 
 extern "C"{  
     AbstractNodeType* create(){
@@ -34,15 +34,18 @@ void CPPNodeType::stopNode(){
 
 AdaptationModel *CPPNodeType::plan(ContainerRoot *currentModel,ContainerRoot *targetModel,TraceSequence *traces)
 {
-
-AdaptationModel *adaptationmodel = planner.compareModels(currentModel,targetModel,node->name,traces);
-// todo schedule jgraph
-       
-
-return adaptationmodel;
+	mapper.internal_update(currentModel,targetModel);
+	AdaptationModel *adaptationmodel = planner.compareModels(currentModel,targetModel,node->name,traces);
+	return planner.schedule(adaptationmodel,getNodeName());
 }
 
+bool CPPNodeType::execute(ContainerNode *rootNode,AdaptationModel *adaptionModel,AbstractNodeType *nodeInstance)
+{
 
-PrimitiveCommand CPPNodeType::getPrimitive(PrimitiveCommand primitive){
-	
+	PrimitiveCommandExecutionHelper::execute(rootNode,adaptionModel,nodeInstance);
+}
+
+PrimitiveCommand *CPPNodeType::getPrimitive(AdaptationPrimitive *primitive)
+{
+	return mapper.buildPrimitiveCommand(primitive,getNodeName());	
 }

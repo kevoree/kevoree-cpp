@@ -2,12 +2,10 @@
 
 
 
-AdaptationPrimitive* Planner::adapt(Primitives p,KMFContainer *elem,ContainerRoot *model)
+AdaptationPrimitive* Planner::adapt(Primitives p,KMFContainer *elem)
 {
-	//cout << TO_STRING_Primitives(p) << endl;
     AdaptationPrimitive *ccmd = factory.createAdaptationPrimitive();
-    //ccmd->primitiveType = model->findadaptationPrimitiveTypesByID(TO_STRING_Primitives(p));
-    ccmd->primitiveType =TO_STRING_Primitives(p); // TODO remove TO_STRING USE INT
+    ccmd->primitiveType =TO_STRING_Primitives(p); 
     ccmd->ref = elem->path();
     return ccmd;
 }
@@ -21,10 +19,10 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 	
 	std::unordered_map<string,std::list<TupleObjPrim>> elementAlreadyProcessed; 
 
-	//cout << traces->exportToString() << endl;
-//	std::set<TupleObjPrim>::iterator srcPath;
+	//LOGGER_WRITE(Logger::DEBUG,"Planner::compareModels TRACES =>\n"+traces->exportToString());
 
 	AdaptationModel  *adaptationModel =    factory.createAdaptationModel();
+	
 	
 
 		for (std::list<ModelTrace*>::iterator iterator = traces->traces.begin(), end = traces->traces.end(); iterator != end; ++iterator)
@@ -36,15 +34,17 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 			{
 					   if(trace->srcPath.compare(targetNode->path()) == 0)
 					   {
-						   	ModelAddTrace *modeladdtrace = (ModelAddTrace*) trace;
-						    KMFContainer *elemToAdd=targetModel->findByPath(modeladdtrace->srcPath);
-						    
+
+			
 						   	if(dynamic_cast<ModelAddTrace*>(trace) != 0)
 							{
-								adaptationModel->addadaptations(adapt(AddInstance, elemToAdd, targetModel));
+							    KMFContainer *elemToAdd=targetModel->findByPath(((ModelAddTrace*)trace)->previousPath);
+							//	LOGGER_WRITE(Logger::DEBUG,"AddInstance "+((ModelAddTrace*)trace)->previousPath+" IN "+elemToAdd->path());
+								adaptationModel->addadaptations(adapt(AddInstance, elemToAdd));
 							}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
 							{
-								adaptationModel->addadaptations(adapt(RemoveInstance, elemToAdd, targetModel));	
+							   KMFContainer *elemToAdd=targetModel->findByPath(((ModelRemoveTrace*)trace)->objPath);
+								adaptationModel->addadaptations(adapt(RemoveInstance, elemToAdd));	
 							}
 						   
 					   }
@@ -55,16 +55,15 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 					   if(trace->srcPath.compare(targetNode->path()) == 0)
 					   {
 							 if(trace->srcPath.compare(targetNode->path()) == 0)
-						   {
-								ModelAddTrace *modeladdtrace = (ModelAddTrace*) trace;
-								KMFContainer *elemToAdd=targetModel->findByPath(modeladdtrace->srcPath);
-								
+						   {								
 								if(dynamic_cast<ModelAddTrace*>(trace) != 0)
 								{
-									adaptationModel->addadaptations(adapt(AddInstance, elemToAdd, targetModel));
+								 KMFContainer *elemToAdd=targetModel->findByPath(((ModelAddTrace*)trace)->previousPath);
+									adaptationModel->addadaptations(adapt(AddInstance, elemToAdd));
 								}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
 								{
-									adaptationModel->addadaptations(adapt(RemoveInstance, elemToAdd, targetModel));	
+										   KMFContainer *elemToAdd=targetModel->findByPath(((ModelRemoveTrace*)trace)->objPath);
+									adaptationModel->addadaptations(adapt(RemoveInstance, elemToAdd));	
 								}
 							   
 						   }
@@ -83,10 +82,10 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 								
 								if(dynamic_cast<ModelAddTrace*>(trace) != 0)
 								{
-									adaptationModel->addadaptations(adapt(AddInstance, elemToAdd, targetModel));
+									adaptationModel->addadaptations(adapt(AddInstance, elemToAdd));
 								}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
 								{
-									adaptationModel->addadaptations(adapt(RemoveInstance, elemToAdd, targetModel));	
+									adaptationModel->addadaptations(adapt(RemoveInstance, elemToAdd));	
 								}
 							   
 						   }
@@ -115,12 +114,12 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 										TupleObjPrim tuple(channel,AddInstance);
 										if(!tuple.equals(modelElement->path(),elementAlreadyProcessed))
 										{
-													adaptationModel->addadaptations(adapt(AddInstance, channel, targetModel));
+													adaptationModel->addadaptations(adapt(AddInstance, channel));
 													tuple.add(elementAlreadyProcessed);
 										}
 											
 									}
-									adaptationModel->addadaptations(adapt(AddBinding, binding, targetModel));
+									adaptationModel->addadaptations(adapt(AddBinding, binding));
 									
 								}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
 								{
@@ -144,7 +143,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 															TupleObjPrim tuple(channel,RemoveInstance);
 															if(!tuple.equals(modelElement->path(),elementAlreadyProcessed))
 															{
-																		adaptationModel->addadaptations(adapt(RemoveInstance, channel, targetModel));
+																		adaptationModel->addadaptations(adapt(RemoveInstance, channel));
 																		tuple.add(elementAlreadyProcessed);
 															}		 
 																	 
@@ -152,17 +151,22 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 													
 												}		 
 									}
-									adaptationModel->addadaptations(adapt(RemoveBinding, binding, targetModel));
+									adaptationModel->addadaptations(adapt(RemoveBinding, binding));
 								}
 							   
 						   }
 						   
 					   }
 					   
-			}else if(trace->refName.compare("typeDefinition") ==0){
+			}else if(trace->refName.compare("typeDefinition") ==0)
+			{
 					if(dynamic_cast<Instance*>(modelElement) != 0)
 					{
-							cout << "           //TODO continuous design" << endl;	
+				
+				
+								
+							
+							
 					}
 					
 				
@@ -171,12 +175,14 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 			{	
 					 if((dynamic_cast<Instance*>(modelElement) != 0) && (dynamic_cast<ModelSetTrace*>(trace) != 0)){
 						 
+					
+						 	
 						   ModelSetTrace *modelsettrace = (ModelSetTrace*) trace;
 				
 						   if(modelsettrace->srcPath.compare(targetNode->path()) == 0)
 						   {
 							          //TODO CLEAN REMOVE IN CORE 
-							        //  cout << "HaraKiri case " << modelsettrace->toString() << endl;
+							       //   cout << "HaraKiri case " << modelsettrace->toString() << endl;
 						   }else 
 						   {
 							       if (modelsettrace->content.compare("true") ==0) 
@@ -184,7 +190,8 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 											TupleObjPrim tuple(modelElement,StartInstance);
 											if(!tuple.equals(modelElement->path(),elementAlreadyProcessed))
 											{
-												   adaptationModel->addadaptations(adapt(StartInstance, modelElement, targetModel));
+												
+												   adaptationModel->addadaptations(adapt(StartInstance, modelElement));
 												   tuple.add(elementAlreadyProcessed);
 											}
 								   }else 
@@ -192,7 +199,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 											TupleObjPrim tuple(modelElement,StopInstance);
 											if(!tuple.equals(modelElement->path(),elementAlreadyProcessed))
 											{
-												   adaptationModel->addadaptations(adapt(StopInstance, modelElement, targetModel));
+												   adaptationModel->addadaptations(adapt(StopInstance, modelElement));
 												   tuple.add(elementAlreadyProcessed);
 											}
 								   }
@@ -209,7 +216,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 					TupleObjPrim tuple(modelElement,UpdateDictionaryInstance);
 					if(!tuple.equals(modelElement->path(),elementAlreadyProcessed))
 					{
-					     adaptationModel->addadaptations(adapt(UpdateDictionaryInstance, modelElement, targetModel));
+					     adaptationModel->addadaptations(adapt(UpdateDictionaryInstance, modelElement));
 					     tuple.add(elementAlreadyProcessed);
 				    }	 
 				}
@@ -219,4 +226,98 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 		}
 		
 		return adaptationModel;
+}
+
+/*
+ * 	UpdateDeployUnit,
+    AddDeployUnit,
+    RemoveDeployUnit,
+    UpdateInstance,
+    UpdateBinding,
+    UpdateDictionaryInstance,
+    AddInstance,
+    RemoveInstance,
+    AddBinding,
+    RemoveBinding,
+    StartInstance,
+    StopInstance*/
+AdaptationModel* Planner::schedule(AdaptationModel *adaptationmodel,std::string nodeName)
+{
+    ParallelStep *step_StopInstance=factory.createParallelStep();
+    ParallelStep *step_RemoveBinding=factory.createParallelStep();
+	ParallelStep *step_RemoveInstance=factory.createParallelStep();
+	ParallelStep *step_RemoveDeployUnit=factory.createParallelStep();
+	ParallelStep *step_UpdateDeployUnit=factory.createParallelStep();
+	ParallelStep *step_UpdateBinding=factory.createParallelStep();
+	ParallelStep *step_AddDeployUnit=factory.createParallelStep();
+    ParallelStep *step_AddInstance=factory.createParallelStep();
+    ParallelStep *step_AddBinding=factory.createParallelStep();
+    ParallelStep *step_UpdateDictionaryInstance=factory.createParallelStep();
+	ParallelStep *step_StartInstance=factory.createParallelStep();
+
+	// schedule
+	adaptationmodel->orderedPrimitiveSet = step_StopInstance;
+	step_StopInstance->nextStep=step_RemoveBinding;
+	step_RemoveBinding->nextStep=step_RemoveInstance;
+	step_RemoveInstance->nextStep=step_RemoveDeployUnit;
+	step_RemoveDeployUnit->nextStep=step_UpdateDeployUnit;
+	step_UpdateDeployUnit->nextStep=step_UpdateBinding;
+	step_UpdateBinding->nextStep=step_AddDeployUnit;
+	step_AddDeployUnit->nextStep=step_AddInstance;
+	step_AddInstance->nextStep=step_AddBinding;
+	step_AddBinding->nextStep=step_UpdateDictionaryInstance;
+	step_UpdateDictionaryInstance->nextStep=step_StartInstance;
+	step_StartInstance->nextStep=NULL;
+    
+       //STOP INSTANCEs
+  // REMOVE BINDINGS	
+  // REMOVE INSTANCEs
+  // REMOVE DEPLOYUNITS
+  // UPDATE DEPLOYUNITS
+  // ADD DEPLOYUNITS
+  // ADD INSTANCES
+  // ADD BINDINGs
+  // UPDATE DICTIONARYs
+  // START INSTANCEs
+	
+   for (std::unordered_map<string,AdaptationPrimitive*>::iterator it = adaptationmodel->adaptations.begin();  it != adaptationmodel->adaptations.end(); ++it) 
+  {
+			   AdaptationPrimitive *adaptation = it->second;
+			
+				if(adaptation->primitiveType.compare(TO_STRING_Primitives(AddDeployUnit))==0)
+				{
+					step_AddDeployUnit->addadaptations(adaptationmodel->findadaptationsByID(adaptation->internalGetKey()));
+				}else 	if(adaptation->primitiveType.compare(TO_STRING_Primitives(AddInstance))==0)
+				{
+								step_AddInstance->addadaptations(adaptationmodel->findadaptationsByID(it->first));
+				}else if(adaptation->primitiveType.compare(TO_STRING_Primitives(StartInstance))==0)
+				{
+								step_StartInstance->addadaptations(adaptationmodel->findadaptationsByID(it->first));
+				}else if(adaptation->primitiveType.compare(TO_STRING_Primitives(StopInstance))==0)
+				{
+								step_StopInstance->addadaptations(adaptationmodel->findadaptationsByID(it->first));
+				}else if(adaptation->primitiveType.compare(TO_STRING_Primitives(RemoveInstance))==0)
+				{
+								step_StopInstance->addadaptations(adaptationmodel->findadaptationsByID(it->first));
+				}
+  }
+
+
+  
+   //STOP INSTANCEs
+  // REMOVE BINDINGS	
+  // REMOVE INSTANCEs
+  // REMOVE DEPLOYUNITS
+  // UPDATE DEPLOYUNITS
+  // ADD DEPLOYUNITS
+  // ADD INSTANCES
+  // ADD BINDINGs
+  // UPDATE DICTIONARYs
+  // START INSTANCEs
+  
+
+  
+
+
+  return adaptationmodel;
 }

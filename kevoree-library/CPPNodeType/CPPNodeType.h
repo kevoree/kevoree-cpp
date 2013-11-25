@@ -4,7 +4,9 @@
 #include <microframework/api/trace/TraceSequence.h>
 #include <kevoree-core/core/api/AbstractNodeType.h>
 #include <kevoree-core/model/kevoreeadaptation/DefaultkevoreeadaptationFactory.h>
+#include <kevoree-core/model/kevoreeadaptation/AdaptationPrimitive.h>
 #include "Planner.h"
+#include "CommandMapper.h"
 
 
 class CPPNodeType : public AbstractNodeType
@@ -15,9 +17,11 @@ public:
     void startNode();
     void stopNode();
     AdaptationModel *plan(ContainerRoot *actualModel,ContainerRoot *targetModel,TraceSequence *traces);
-    PrimitiveCommand getPrimitive(PrimitiveCommand primitive);
+    bool execute(ContainerNode *rootNode,AdaptationModel *adaptionModel,AbstractNodeType *nodeInstance);
+    PrimitiveCommand* getPrimitive(AdaptationPrimitive *primitive);
     
 Planner planner;
+CommandMapper mapper;
 };
 
 #endif /*CPPNODETYPE_H_*/

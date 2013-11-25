@@ -15,8 +15,9 @@ class Planner
 {
 	public:
 	AdaptationModel* compareModels(ContainerRoot *actualModel,ContainerRoot *targetModel,string nodeName,TraceSequence *traces);
+	AdaptationModel* schedule(AdaptationModel *adaptationModel,std::string nodeName);	
 	private:
-	AdaptationPrimitive* adapt(Primitives p,KMFContainer *elem,ContainerRoot *model);
+	AdaptationPrimitive* adapt(Primitives p,KMFContainer *elem);
 	DefaultkevoreeadaptationFactory factory;	
 };
 
@@ -31,7 +32,8 @@ class TupleObjPrim
 		this->p =_p;
 	}
 	bool equals(TupleObjPrim t){
-		if(this->obj == t.obj && this->p == t.p){
+		if((this->obj->internalGetKey().compare(t.obj->internalGetKey()) == 0) && this->p == t.p)
+		{
 			return true;
 		}else {
 			return false;
