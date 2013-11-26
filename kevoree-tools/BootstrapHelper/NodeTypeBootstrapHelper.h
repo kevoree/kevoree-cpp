@@ -2,7 +2,7 @@
 #define __NodeTypeBootstrapHelper_H
 
 
-#include <base/KevoreeBootStrap.h>
+#include <KevoreeBootStrap/KevoreeBootStrap.h>
 
 class NodeTypeBootstrapHelper : public Bootstraper {
 	
