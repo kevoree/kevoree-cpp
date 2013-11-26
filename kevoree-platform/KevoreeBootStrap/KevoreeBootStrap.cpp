@@ -1,4 +1,4 @@
-#include <kevoree-platform/base/KevoreeBootStrap.h>
+#include "KevoreeBootStrap.h"
 #include <kevoree-tools/BootstrapHelper/NodeTypeBootstrapHelper.h>
 
 
@@ -31,6 +31,6 @@ void KevoreeBootStrap::start()
 	coreBean = new KevoreeCoreBean();
 	coreBean->setNodeName(this->nodeName);
 	coreBean->setBootstraper(bootstraper);
-    	coreBean->start();
+    coreBean->start();
    	coreBean->updateModel(bootstrapModel);
 }
