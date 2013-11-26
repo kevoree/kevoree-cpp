@@ -4,8 +4,10 @@ project(kevoree-cpp)
 #SET(CMAKE_C_COMPILER arm-linux-gnueabi-gcc) 
 #SET(CMAKE_CXX_COMPILER arm-linux-gnueabi-g++-4.6)
 
-set(CMAKE_CXX_FLAGS "-O3 ${CMAKE_CXX_FLAGS}")
+
+set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}")
 ADD_DEFINITIONS("-std=c++0x") 
+set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build)
 
 add_definitions(-DENABLE_LOGGER)
 
@@ -55,14 +57,10 @@ ADD_LIBRARY(kevoree-core-impl  STATIC  ${kevore_core_impl_files})
 
 # BEGIN -- KEVOREE-PLATFORM
 include_directories(${SRC_KEVOREE_PLATFORM})
-file(GLOB_RECURSE kevoree-platform_files ${SRC_KEVOREE_PLATFORM}/base/*)
+file(GLOB_RECURSE kevoree-platform_files ${SRC_KEVOREE_PLATFORM}/KevoreeBootStrap/*)
 # END --  KEVOREE-PLATFORM
 
-# BEGIN -- KEVOREE-FRAMEWORK
-include_directories(${SRC_KEVOREE_FRAMEWORK})
-file(GLOB_RECURSE kevoree-framework_files ${SRC_KEVOREE_FRAMEWORK}/*)
-ADD_LIBRARY(kevoree-framework  STATIC  ${kevoree-framework_files})
-# END --  KEVOREE-FRAMEWORK
+
 
 # BEGIN -- KEVOREE-TOOLS
 include_directories(${SRC_KEVOREE_TOOLS})
@@ -70,13 +68,7 @@ file(GLOB_RECURSE kevoree_tools_files ${SRC_KEVOREE_TOOLS}/*)
 ADD_LIBRARY(kevoree-tools  STATIC  ${kevoree_tools_files})
 # END --  KEVOREE-TOOLS
 
-
-# BEGIN -- KEVOREE- CPPNode
-file(GLOB_RECURSE cppnodetype_library_files ${SRC_KEVOREE_LIBRARY}/CPPNodeType/*)
-ADD_LIBRARY(kevoree-CPPNode  SHARED    ${cppnodetype_library_files})
-#TARGET_LINK_LIBRARIES(kevoree-CPPNode ${CMAKE_CURRENT_BINARY_DIR}/libkevoree-core-model.a)
-# END --  KEVOREE-CPPNode
-
+add_subdirectory (kevoree-library/)
 
 
 #COMPILE MAIN
@@ -87,11 +79,10 @@ add_executable(
 )
 
 
-TARGET_LINK_LIBRARIES(main ${CMAKE_CURRENT_BINARY_DIR}/libkevoree-core-impl.a)
-TARGET_LINK_LIBRARIES(main ${CMAKE_CURRENT_BINARY_DIR}/libkevoree-core-model.a)
-#TARGET_LINK_LIBRARIES(main ${CMAKE_CURRENT_BINARY_DIR}/libkevoree-CPPNode.a)
-TARGET_LINK_LIBRARIES(main ${CMAKE_CURRENT_BINARY_DIR}/libkevoree-tools.a)
-TARGET_LINK_LIBRARIES(main ${CMAKE_CURRENT_BINARY_DIR}/libkevoree-framework.a)
+TARGET_LINK_LIBRARIES(main ${LIBRARY_OUTPUT_PATH}/libkevoree-core-impl.a)
+TARGET_LINK_LIBRARIES(main ${LIBRARY_OUTPUT_PATH}/libkevoree-core-model.a)
+TARGET_LINK_LIBRARIES(main ${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
+
 
 IF(CMAKE_SYSTEM_NAME STREQUAL Linux)
 TARGET_LINK_LIBRARIES(main rt)

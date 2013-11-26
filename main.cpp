@@ -1,5 +1,5 @@
 	
-	#include <kevoree-platform/base/KevoreeBootStrap.h>
+	#include <kevoree-platform/KevoreeBootStrap/KevoreeBootStrap.h>
 	#include <microframework/api/trace/DefaultTraceConverter.h>
 	#include <microframework/api/json/JSONModelLoader.h>
 	#include <microframework/api/compare/ModelCompare.h>
@@ -24,7 +24,7 @@
 	
 		clock_t start = clock();
 		KevoreeBootStrap *kb = new KevoreeBootStrap(); 	
-		kb->setNodeName("childNode192");
+		kb->setNodeName("node0");
 		
 		ifstream filemodel;
 		filemodel.open ("boostrapmodel.json");
@@ -46,6 +46,8 @@
 			clock_t finish = clock();
 	
 	std::cout << "time delta (ms) = " << Utils::mstimer(start,finish) << std::endl;
+	
+	
 	}
 		
 	/*
