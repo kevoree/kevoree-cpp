@@ -15,6 +15,10 @@ class StartInstanceCommand : public  PrimitiveCommand
 	StartInstanceCommand(Instance *instance,std::string nodename)
 	{
 		
+	  TypeDefinition *type = (TypeDefinition*)instance->typeDefinition;
+		
+		LOGGER_WRITE(Logger::DEBUG,"StartInstanceCommand "+instance->name+" "+type->name);
+		
 		if(dynamic_cast<ComponentInstance*>(instance) != 0)
 		{
 				ComponentInstance *c = (ComponentInstance*)instance;

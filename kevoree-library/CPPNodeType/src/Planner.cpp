@@ -77,19 +77,16 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 					   {
 							 if(trace->srcPath.compare(targetNode->path()) == 0)
 						   {
-								ModelAddTrace *modeladdtrace = (ModelAddTrace*) trace;
-								KMFContainer *elemToAdd=targetModel->findByPath(modeladdtrace->srcPath);
-								
 								if(dynamic_cast<ModelAddTrace*>(trace) != 0)
 								{
+									KMFContainer *elemToAdd=targetModel->findByPath(( (ModelAddTrace*)trace)->previousPath);
 									adaptationModel->addadaptations(adapt(AddInstance, elemToAdd));
 								}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
 								{
+									KMFContainer *elemToAdd=targetModel->findByPath(( (ModelRemoveTrace*)trace)->objPath);
 									adaptationModel->addadaptations(adapt(RemoveInstance, elemToAdd));	
 								}
-							   
 						   }
-						   
 					   }
 			
 			}else if(trace->refName.compare("bindings") ==0)

@@ -5,7 +5,13 @@
 
 PrimitiveCommand* CommandMapper::buildPrimitiveCommand(AdaptationPrimitive *p, std::string nodeName)
 {
-	
+	/*
+	std::string primitiveType;
+std::string targetNodeName;
+std::string ref;
+std::string generated_KMF_ID;*/
+	//LOGGER_WRITE(Logger::DEBUG,"CommandMapper::buildPrimitiveCommand id="+p->generated_KMF_ID+" primitiveType="+p->primitiveType+" ref="+p->ref);
+			
 	if(p->primitiveType.compare(TO_STRING_Primitives(AddInstance)) == 0)
 	{
 		Instance *instance = (Instance*)targetModel->findByPath(p->ref);
