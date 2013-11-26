@@ -1,0 +1,3 @@
+[submodule "kevoree-library/WebSocketGroup/websocketpp"]
+	path = kevoree-library/WebSocketGroup/websocketpp
+	url = https://github.com/zaphoyd/websocketpp.git
