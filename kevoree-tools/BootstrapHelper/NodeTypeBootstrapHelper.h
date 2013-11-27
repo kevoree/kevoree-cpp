@@ -2,13 +2,26 @@
 #define __NodeTypeBootstrapHelper_H
 
 
-#include <KevoreeBootStrap/KevoreeBootStrap.h>
+#include <kevoree-tools/BootstrapHelper/NodeTypeBootstrapHelper.h>
+#include <kevoree-core/core/api/AbstractNodeType.h>
+#include <kevoree-core/core/api/Bootstraper.h>
+#include <kevoree-tools/DynamicLoader/DynamicLoader.h>
+#include <MavenResolver.h>
+#include <iostream>
 
-class NodeTypeBootstrapHelper : public Bootstraper {
+class NodeTypeBootstrapHelper : public Bootstraper 
+{
+public:
+	 NodeTypeBootstrapHelper();
+	~NodeTypeBootstrapHelper();
+	AbstractNodeType *bootstrapNodeType(ContainerRoot *model,std::string destNodeName, KevoreeModelHandlerService *mservice);
+IDynamicLoader* getDynamicLoader();
+	std::string resolveDeployUnit(DeployUnit *du);
 	
-  AbstractNodeType *bootstrapNodeType(ContainerRoot *model,std::string destNodeName, KevoreeModelHandlerService *mservice);
-	
-
+private:
+DynamicLoader *dynamicLoader;
+MavenResolver resolver;
+KevoreeModelHandlerService *mservice;
 	    
 };
 #endif

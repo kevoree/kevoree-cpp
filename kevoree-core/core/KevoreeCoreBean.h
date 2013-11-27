@@ -12,7 +12,6 @@
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
 #include <kevoree-core/model/kevoree/DefaultkevoreeFactory.h>
 #include <kevoree-core/core/PreCompare.h>
-
 #include <list>
 #include <string>
 #include <set>
@@ -36,6 +35,7 @@ public:
 private:
     bool internal_update_model(ContainerRoot *proposedNewModel);
     void checkBootstrapNode(ContainerRoot *currentModel);
+    void switchToNewModel(ContainerRoot *update);
 	ContainerRoot *currentModel; 
 	list<ContainerRoot*> models;
 	std::string nodeName;

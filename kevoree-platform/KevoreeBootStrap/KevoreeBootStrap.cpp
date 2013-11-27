@@ -1,12 +1,23 @@
 #include "KevoreeBootStrap.h"
-#include <kevoree-tools/BootstrapHelper/NodeTypeBootstrapHelper.h>
-
 
 KevoreeBootStrap::KevoreeBootStrap(){
 	started= false;
-	
+	bootNodeHelper=NULL;
+	coreBean=NULL;
 }
-// todo add destructor bootstraper
+
+KevoreeBootStrap::~KevoreeBootStrap(){
+	if(coreBean)
+	{
+		delete coreBean;
+	}
+		
+	if(bootNodeHelper)
+	{
+		delete bootNodeHelper;
+	}
+}
+
 void KevoreeBootStrap::setBootstrapModel(ContainerRoot *bmodel)
 {
 	  bootstrapModel = bmodel;
@@ -18,19 +29,22 @@ KevoreeCoreBean* KevoreeBootStrap::getCore()
 	return coreBean;  
 }
 
-void KevoreeBootStrap::setNodeName(std::string nodeName){
-this->nodeName = nodeName;		
+void KevoreeBootStrap::setNodeName(std::string nodeName)
+{
+	this->nodeName = nodeName;		
 }
 
-void KevoreeBootStrap::start()
+void KevoreeBootStrap::run()
 {
-	if(started == true){
+		
+	if(started == true)
+	{
 		return;
 	}  
-	NodeTypeBootstrapHelper *bootstraper = new NodeTypeBootstrapHelper(); 
+	bootNodeHelper = new NodeTypeBootstrapHelper(); 
 	coreBean = new KevoreeCoreBean();
 	coreBean->setNodeName(this->nodeName);
-	coreBean->setBootstraper(bootstraper);
+	coreBean->setBootstraper(bootNodeHelper);
     coreBean->start();
-   	coreBean->updateModel(bootstrapModel);
+   	coreBean->updateModel(bootstrapModel);	
 }

@@ -34,25 +34,27 @@ void KevoreeCoreBean::checkBootstrapNode(ContainerRoot *currentModel)
                 if(foundNode != NULL)
                 {
                    nodeInstance = _bootstraper->bootstrapNodeType(currentModel, getNodeName(), this);
-                    
                     if(nodeInstance != NULL)
                     {
 						nodeInstance->setModelElement(foundNode);
                         nodeInstance->startNode();
-                     
                     } else 
 
-                      LOGGER_WRITE(Logger::ERROR, "KevoreeCoreBean checkBootstrapNode TypeDef installation fail !");
+                      LOGGER_WRITE(Logger::ERROR, "KevoreeCoreBean checkBootstrapNode the installation of the typedefintion of node fail !");
                     }
                 } else {
 					LOGGER_WRITE(Logger::ERROR," Node instance name {} not found in bootstrap model !");
                 }
-	
 }
 
+void KevoreeCoreBean::switchToNewModel(ContainerRoot *update)
+{
+		currentModel = update;
+	 //Changes the current model by the new model	
+}
 
 bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel){
-	
+ 	clock_t start = clock();
     if (proposedNewModel->findnodesByID(getNodeName()) == NULL) {
         LOGGER_WRITE(Logger::WARNING, "Asking for update with a NULL model or node name (" + getNodeName() +") was not found in target model !");
         return false;
@@ -77,10 +79,21 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel){
     LOGGER_WRITE(Logger::INFO,("Adaptation model size "+Utils::IntegerUtilstoString(adaptationModel->adaptations.size())));
     
     ContainerNode *rootNode = currentModel->findnodesByID(getNodeName());
-    nodeInstance->execute(rootNode,adaptationModel,nodeInstance);
-    
-	//PrimitiveCommandExecutionHelper::execute(rootNode,adaptationModel,nodeInstance);
 
+    bool deployResult = nodeInstance->execute(rootNode,adaptationModel,nodeInstance);
+    if(deployResult)
+    {
+		switchToNewModel(proposedNewModel);
+		
+	 LOGGER_WRITE(Logger::INFO,"Update sucessfully completed.");	
+	}
+	else
+	{
+		 LOGGER_WRITE(Logger::ERROR,"Update failed");
+	}
+				clock_t finish = clock();
+	
+		std::cout << "time delta (ms) = " << Utils::mstimer(start,finish) << std::endl;
 
 	
 }

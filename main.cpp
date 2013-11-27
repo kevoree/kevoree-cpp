@@ -22,7 +22,7 @@
 		LOGGER_START(Logger::DEBUG, "kevoree.log");
 
 	
-		clock_t start = clock();
+
 		KevoreeBootStrap *kb = new KevoreeBootStrap(); 	
 		kb->setNodeName("node0");
 		
@@ -45,9 +45,9 @@
 		}
 			clock_t finish = clock();
 	
-	std::cout << "time delta (ms) = " << Utils::mstimer(start,finish) << std::endl;
-	
-	
+
+		kb->join();
+		pause();
 	}
 		
 	/*

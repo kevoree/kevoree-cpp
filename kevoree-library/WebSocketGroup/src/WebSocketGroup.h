@@ -2,8 +2,7 @@
 #define __HelloWorldComponent_H
 
 #include <kevoree-core/core/api/AbstractGroup.h>
-
-
+#include <microframework/api/json/JSONModelSerializer.h>
 #include <websocketpp/config/asio_no_tls.hpp>
 
 #include <websocketpp/server.hpp>
@@ -31,7 +30,7 @@ public:
 	void stop();
 	void update();
 	ContainerRoot* pull(std::string nodeName);
-	static void on_message(server* s, websocketpp::connection_hdl hdl, message_ptr msg);
+
 };
 
 #endif /*__HelloWorldComponent_H*/

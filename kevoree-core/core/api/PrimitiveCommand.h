@@ -7,6 +7,7 @@ class PrimitiveCommand
 public:
 	virtual bool execute(){};
 	virtual void undo(){};
+	virtual void wait(){};
 };
 
 

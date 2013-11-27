@@ -4,10 +4,11 @@
 
 #include <kevoree-core/model/kevoree/Group.h>
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
+#include <kevoree-core/core/api/AbstractTypeDefinition.h>
 #include <string>
 
 
-class AbstractGroup  
+class AbstractGroup  : public AbstractTypeDefinition
 {
 public:
 	AbstractGroup()
@@ -21,16 +22,9 @@ public:
 	
 	virtual bool push(ContainerRoot *root){};
 	virtual ContainerRoot* pull(std::string nodeName){};
-
+	
 
 	
-	void update_model(ContainerRoot *model)
-	{
-		// todo 
-		
-	}
-
-
 	void setModelElement(Group *instance)
 	{
 		this->instance = instance;
@@ -38,6 +32,7 @@ public:
 	
 private:
 Group *instance;
+KevoreeModelHandlerService *service;
 
 };
 

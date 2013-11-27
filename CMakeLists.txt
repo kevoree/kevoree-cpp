@@ -17,6 +17,13 @@ set(SRC_KEVOREE_PLATFORM 	kevoree-platform)
 set(SRC_KEVOREE_LIBRARY 	kevoree-library)
 set(SRC_KEVOREE_FRAMEWORK 	kevoree-framework)
 
+
+# MAVEN RESOLVER
+add_subdirectory (maven-resolver-cpp/)
+include_directories(maven-resolver-cpp/src/api/)
+
+
+
 include_directories(.)
 
 
@@ -48,8 +55,8 @@ ADD_LIBRARY(kevoree-core-model  STATIC   ${microframework_files} ${model_files} 
 # BEGIN -- KEVOREE-CORE-IMPL
 
 file(GLOB_RECURSE kevore_core_impl_files ${SRC_KEVOREE_CORE}/core/impl/*)
-
-ADD_LIBRARY(kevoree-core-impl  STATIC  ${kevore_core_impl_files})
+file(GLOB_RECURSE kevore_core_dynamicloader_files ${SRC_KEVOREE_CORE}/DynamicLoader/*)
+ADD_LIBRARY(kevoree-core-impl  STATIC  ${kevore_core_impl_files} ${kevore_core_dynamicloader_files})
 
 # END --KEVOREE-CORE-IMPL
 
@@ -65,7 +72,9 @@ file(GLOB_RECURSE kevoree-platform_files ${SRC_KEVOREE_PLATFORM}/KevoreeBootStra
 # BEGIN -- KEVOREE-TOOLS
 include_directories(${SRC_KEVOREE_TOOLS})
 file(GLOB_RECURSE kevoree_tools_files ${SRC_KEVOREE_TOOLS}/*)
-ADD_LIBRARY(kevoree-tools  STATIC  ${kevoree_tools_files})
+ADD_LIBRARY(kevoree-tools  SHARED  ${kevoree_tools_files})
+TARGET_LINK_LIBRARIES(kevoree-tools ${LIBRARY_OUTPUT_PATH}/libmaven-resolver-cpp.a)
+
 # END --  KEVOREE-TOOLS
 
 add_subdirectory (kevoree-library/)
@@ -78,10 +87,9 @@ add_executable(
         ${kevoree-platform_files}
 )
 
-
-TARGET_LINK_LIBRARIES(main ${LIBRARY_OUTPUT_PATH}/libkevoree-core-impl.a)
-TARGET_LINK_LIBRARIES(main ${LIBRARY_OUTPUT_PATH}/libkevoree-core-model.a)
-TARGET_LINK_LIBRARIES(main ${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
+TARGET_LINK_LIBRARIES(main  -Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-core-impl.a -Wl,-no-whole-archive)
+TARGET_LINK_LIBRARIES(main  -Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-core-model.a -Wl,-no-whole-archive)
+TARGET_LINK_LIBRARIES(main ${LIBRARY_OUTPUT_PATH}/libkevoree-tools.so)
 
 
 IF(CMAKE_SYSTEM_NAME STREQUAL Linux)

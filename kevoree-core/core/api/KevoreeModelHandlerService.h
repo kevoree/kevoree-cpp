@@ -2,10 +2,9 @@
 #ifndef __KevoreeModelHandlerService_H
 #define __KevoreeModelHandlerService_H
 
+#include <kevoree-core/model/kevoree/ContainerRoot.h>
 #include <list>
 #include <string>
-#include <kevoree-core/model/kevoree/ContainerRoot.h>
-#include <ctime>
 
 class KevoreeModelHandlerService {
 	public:

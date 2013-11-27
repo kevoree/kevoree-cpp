@@ -14,14 +14,43 @@ extern "C" void destroy_object( WebSocketGroup* object )
 }
 
 
-void WebSocketGroup::on_message(server* s, websocketpp::connection_hdl hdl, message_ptr msg){
+void on_message(server* s, websocketpp::connection_hdl hdl, message_ptr msg,WebSocketGroup *ptr)
+{
 	    std::cout << "on_message called with hdl: " << hdl.lock().get()
               << " and message: " << msg->get_payload()
               << std::endl;
-
     try 
     {
-        s->send(hdl, msg->get_payload(), msg->get_opcode());
+         if(msg->get_payload().compare("*")==0)
+              {
+				JSONModelSerializer *serializer=new JSONModelSerializer();  
+				if(serializer != NULL)
+				{
+					KevoreeModelHandlerService *service = ptr->getModelService();
+					
+					if(service != NULL)
+					{
+						KMFContainer *model = service->getLastModel();
+						if(model != NULL)
+						{
+								std::string result =serializer->serialize(model);
+								cout << result << endl;
+								s->send(hdl, result, msg->get_opcode());	
+						}
+						else
+						{
+							cout << "MODEL IS NULL" << endl;
+						}
+
+					}else {
+							cout << "KevoreeModelHandlerService IS NULL" << endl;
+					}
+					
+					
+				}
+				delete serializer;
+
+			  }
     } catch (const websocketpp::lib::error_code& e) {
         std::cout << "Echo failed because: " << e
                   << "(" << e.message() << ")" << std::endl;
@@ -32,6 +61,20 @@ WebSocketGroup::WebSocketGroup()
 {
 	cout <<"WebSocketGroup loaded" << endl;
 	
+
+
+}
+
+
+ContainerRoot* WebSocketGroup::pull(std::string nodeName)
+{
+		
+		
+}
+
+
+void WebSocketGroup::start()
+{
 	   // Create a server endpoint
 		server echo_server;
 
@@ -44,7 +87,7 @@ WebSocketGroup::WebSocketGroup()
         echo_server.init_asio();
 
         // Register our message handler
-        echo_server.set_message_handler(bind(&WebSocketGroup::on_message,&echo_server,::_1,::_2));
+        echo_server.set_message_handler(bind(&on_message,&echo_server,::_1,::_2,this));
 
         // Listen on port 9002
         echo_server.listen(8000);
@@ -61,20 +104,6 @@ WebSocketGroup::WebSocketGroup()
     } catch (...) {
         std::cout << "other exception" << std::endl;
     }
-
-}
-
-
-ContainerRoot* WebSocketGroup::pull(std::string nodeName)
-{
-		
-		
-}
-
-
-void WebSocketGroup::start()
-{
-
 	
 }
 void WebSocketGroup::stop()

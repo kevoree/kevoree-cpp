@@ -7,6 +7,7 @@
 #include <kevoree-core/model/kevoreeadaptation/AdaptationPrimitive.h>
 #include "Planner.h"
 #include "CommandMapper.h"
+#include <MavenResolver.h>
 
 
 class CPPNodeType : public AbstractNodeType
@@ -21,7 +22,8 @@ public:
     PrimitiveCommand* getPrimitive(AdaptationPrimitive *primitive);
     
 Planner planner;
-CommandMapper mapper;
+CommandMapper *mapper;
+
 };
 
 #endif /*CPPNODETYPE_H_*/

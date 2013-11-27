@@ -1,21 +1,25 @@
 #ifndef __KevoreeBootStrap_H
 #define __KevoreeBootStrap_H
+#include <kevoree-tools/BootstrapHelper/NodeTypeBootstrapHelper.h>
+#include <kevoree-core/model/kevoree/ContainerRoot.h>
 #include <kevoree-core/core/KevoreeCoreBean.h>
-#include <kevoree-core/core/api/Bootstraper.h>
-#include <kevoree-core/model/kevoree/DefaultkevoreeFactory.h>
+#include <microframework/api/utils/Runnable.h>
 
-class KevoreeBootStrap {
+
+
+class KevoreeBootStrap : public Runnable{
 public:
 	KevoreeBootStrap();
+	~KevoreeBootStrap();
     KevoreeCoreBean* getCore();
     void setNodeName(std::string nodeName);
     void setBootstrapModel(ContainerRoot *bmodel);
-    void start(); 
-	void stop();
+	void run();
 	
 private:
   std::string nodeName;
   ContainerRoot *bootstrapModel;
+  NodeTypeBootstrapHelper *bootNodeHelper;
   KevoreeCoreBean *coreBean;
   bool started; //false
   DefaultkevoreeFactory factory;

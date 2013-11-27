@@ -27,7 +27,7 @@ private:
 	static CClassLibrary*		s_pInstance;
 	CClassLibrary() {}
 	virtual ~CClassLibrary() {}
-	map<string, IClassLoader*>	m_classLoadersByName;
+	map<string, IClassLoader*>	deploysUnits;
 };
 
 

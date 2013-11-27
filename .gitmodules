@@ -1,3 +1,6 @@
 [submodule "kevoree-library/WebSocketGroup/websocketpp"]
 	path = kevoree-library/WebSocketGroup/websocketpp
 	url = https://github.com/zaphoyd/websocketpp.git
+[submodule "maven-resolver-cpp"]
+	path = maven-resolver-cpp
+	url = https://github.com/Jean-Emile/maven-resolver-cpp.git

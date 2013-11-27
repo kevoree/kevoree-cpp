@@ -12,12 +12,15 @@
 class CommandMapper 
 {
 public:
-
+	 CommandMapper(AbstractNodeType *nodeType);
      PrimitiveCommand* buildPrimitiveCommand(AdaptationPrimitive *p, std::string nodeName);
-     void internal_update(ContainerRoot *actualModel,ContainerRoot *targetModel);//FIX ME UGLY
-     
+     //FIX ME UGLY
+     void internal_update(ContainerRoot *actualModel,ContainerRoot *targetModel);
      ContainerRoot *actualModel;
      ContainerRoot *targetModel;
+     
+private:
+AbstractNodeType *nodeType; 
 };
 
 #endif /*__CommandMapper_H*/

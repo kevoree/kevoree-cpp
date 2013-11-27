@@ -14,12 +14,12 @@ extern "C" void destroy_object( AbstractNodeType* object )
 
 CPPNodeType::CPPNodeType()
 {
-
+	mapper = new CommandMapper(this);
 }
 
 CPPNodeType::~CPPNodeType()
 {
-
+	delete mapper;
 }
 
 
@@ -34,7 +34,7 @@ void CPPNodeType::stopNode(){
 
 AdaptationModel *CPPNodeType::plan(ContainerRoot *currentModel,ContainerRoot *targetModel,TraceSequence *traces)
 {
-	mapper.internal_update(currentModel,targetModel);
+	mapper->internal_update(currentModel,targetModel);
 	AdaptationModel *adaptationmodel = planner.compareModels(currentModel,targetModel,node->name,traces);
 	return planner.schedule(adaptationmodel,getNodeName());
 }
@@ -46,5 +46,5 @@ bool CPPNodeType::execute(ContainerNode *rootNode,AdaptationModel *adaptionModel
 
 PrimitiveCommand *CPPNodeType::getPrimitive(AdaptationPrimitive *primitive)
 {
-	return mapper.buildPrimitiveCommand(primitive,getNodeName());	
+	return mapper->buildPrimitiveCommand(primitive,getNodeName());	
 }

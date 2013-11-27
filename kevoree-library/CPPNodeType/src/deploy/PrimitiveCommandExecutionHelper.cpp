@@ -22,6 +22,7 @@ bool PrimitiveCommandExecutionHelper::execute(ContainerNode *rootNode,Adaptation
 
 	
 	delete phase;
+	return true;
 }
 
 
@@ -31,12 +32,14 @@ bool PrimitiveCommandExecutionHelper::executeStep(ContainerNode *rootNode,Parall
 	     {
             return true;
          }
-
+		
         for (std::unordered_map<string,AdaptationPrimitive*>::const_iterator it = step->adaptations.begin();  it != step->adaptations.end(); ++it) 
 		{
 			AdaptationPrimitive *adaptation = it->second;
-			nodeInstance->getPrimitive(adaptation);
-			
+			PrimitiveCommand *primitive = nodeInstance->getPrimitive(adaptation);
+			primitive->execute();
+			primitive->wait();
 	    }
+	    // TODO end of this step primitive->wait();
 	    executeStep(rootNode,step->nextStep,nodeInstance,phase);
 }

@@ -32,7 +32,7 @@
             "factoryBean": "",
             "startMethod": "",
             "deployUnits": [
-                "deployUnits[//kevoree-node-javascript/0.0.1]"
+                "deployUnits[org.kevoree.library//CPPNodeType/1.0]"
             ],
             "dictionaryType": [
                 {
@@ -84,12 +84,12 @@
     "deployUnits": [
         {
             "eClass": "org.kevoree.DeployUnit",
-            "groupName": "",
-            "name": "kevoree-node-javascript",
+            "groupName": "org.kevoree.library",
+            "name": "CPPNodeType",
             "hashcode": "",
-            "type": "npm",
+            "type": "so",
             "url": "",
-            "version": "0.0.1",
+            "version": "1.0",
             "targetNodeType": [
                 "typeDefinitions[CPPNode]"
             ]

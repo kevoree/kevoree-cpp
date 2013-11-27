@@ -1,8 +1,28 @@
 #include <kevoree-tools/BootstrapHelper/NodeTypeBootstrapHelper.h>
-#include <dlfcn.h>
-#include <iostream>
 
 
+NodeTypeBootstrapHelper::NodeTypeBootstrapHelper()
+{
+	dynamicLoader = new DynamicLoader(this);
+}
+
+NodeTypeBootstrapHelper::~NodeTypeBootstrapHelper()
+{
+	delete	dynamicLoader;
+}
+
+std::string NodeTypeBootstrapHelper::resolveDeployUnit(DeployUnit *deployunit)
+{
+	std::list<std::string> urls;
+	return resolver.resolve(deployunit->groupName,deployunit->name,deployunit->version,"zip",urls);	
+		
+}
+
+IDynamicLoader* NodeTypeBootstrapHelper::getDynamicLoader()
+{
+	 return dynamicLoader;
+}
+	 
 AbstractNodeType *NodeTypeBootstrapHelper::bootstrapNodeType(ContainerRoot *model,std::string destNodeName, KevoreeModelHandlerService *mservice)
 {
     ContainerNode *node = model->findnodesByID(destNodeName);
@@ -10,26 +30,30 @@ AbstractNodeType *NodeTypeBootstrapHelper::bootstrapNodeType(ContainerRoot *mode
     {
 		    	
 		TypeDefinition *type = node->typeDefinition;
+
 		if(type != NULL)
 		{
-			LOGGER_WRITE(Logger::DEBUG,"NodeTypeBootstrapHelper "+node->name);
-			// TODO CALL MAVEN CPP RESOLVER THEN LOAD type->name
-			const char *libpath= "build/libkevoree-CPPNode.so";
-		    void* handle = dlopen(libpath, RTLD_LAZY | RTLD_GLOBAL);
-			if (!handle) 
-		    {
-					fputs (dlerror(), stderr);
-					return NULL;
-		    }
+	
+			LOGGER_WRITE(Logger::DEBUG,"NodeTypeBootstrapHelper "+type->name);
+	
+			for (std::unordered_map<string,DeployUnit*>::iterator iterator = type->deployUnits.begin(), end = type->deployUnits.end(); iterator != end; ++iterator)
+			{
+						DeployUnit *deployunit= iterator->second;
+						dynamicLoader->register_DeployUnit(deployunit);
+						AbstractNodeType *instance = (AbstractNodeType*)dynamicLoader->create_DeployUnitById(deployunit->internalGetKey());
+						instance->setBootStrapperService(this);
+						instance->setModelService(mservice);
+		
+						return instance;
+			}
+			
+			
 
-			AbstractNodeType* (*create)();
-			create =  (AbstractNodeType* (*)())dlsym(handle, "create");
-			AbstractNodeType* c = (AbstractNodeType*)create();
-			return c;		
 		}
 		else
 		{
 			cout << "The TypeDefinition is not define" << endl;
+			return NULL;
 		}
 	}
          
