@@ -9,6 +9,7 @@ NodeTypeBootstrapHelper::NodeTypeBootstrapHelper()
 NodeTypeBootstrapHelper::~NodeTypeBootstrapHelper()
 {
 	delete	dynamicLoader;
+
 }
 
 std::string NodeTypeBootstrapHelper::resolveDeployUnit(DeployUnit *deployunit)
@@ -17,6 +18,8 @@ std::string NodeTypeBootstrapHelper::resolveDeployUnit(DeployUnit *deployunit)
 	return resolver.resolve(deployunit->groupName,deployunit->name,deployunit->version,"zip",urls);	
 		
 }
+
+
 
 IDynamicLoader* NodeTypeBootstrapHelper::getDynamicLoader()
 {
@@ -34,21 +37,23 @@ AbstractNodeType *NodeTypeBootstrapHelper::bootstrapNodeType(ContainerRoot *mode
 		if(type != NULL)
 		{
 	
-			LOGGER_WRITE(Logger::DEBUG,"NodeTypeBootstrapHelper "+type->name);
-	
-			for (std::unordered_map<string,DeployUnit*>::iterator iterator = type->deployUnits.begin(), end = type->deployUnits.end(); iterator != end; ++iterator)
+			LOGGER_WRITE(Logger::DEBUG,"Bootstraping NodeType => "+type->name);
+			if(type->deployUnits.size() ==0)
 			{
-						DeployUnit *deployunit= iterator->second;
-						dynamicLoader->register_DeployUnit(deployunit);
-						AbstractNodeType *instance = (AbstractNodeType*)dynamicLoader->create_DeployUnitById(deployunit->internalGetKey());
-						instance->setBootStrapperService(this);
-						instance->setModelService(mservice);
-		
-						return instance;
+				LOGGER_WRITE(Logger::ERROR,"There is not TypeDefintion define for theNodeType => "+type->name);
+				return NULL;
 			}
-			
-			
-
+			dynamicLoader->register_instance(node);
+			AbstractTypeDefinition *instance =dynamicLoader->create_instance(node);
+			if(instance){
+				instance->setBootStrapperService(this);
+				instance->setModelService(mservice);
+				return (AbstractNodeType*)instance;
+			}
+			else
+			{
+				return NULL;
+			}
 		}
 		else
 		{

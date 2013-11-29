@@ -15,13 +15,16 @@ public:
 	 NodeTypeBootstrapHelper();
 	~NodeTypeBootstrapHelper();
 	AbstractNodeType *bootstrapNodeType(ContainerRoot *model,std::string destNodeName, KevoreeModelHandlerService *mservice);
-IDynamicLoader* getDynamicLoader();
+	IDynamicLoader* getDynamicLoader();
 	std::string resolveDeployUnit(DeployUnit *du);
+
+
 	
 private:
 DynamicLoader *dynamicLoader;
 MavenResolver resolver;
 KevoreeModelHandlerService *mservice;
-	    
 };
 #endif
+
+ 

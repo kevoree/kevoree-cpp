@@ -19,16 +19,16 @@ class DynamicLoader : public IDynamicLoader
 {
 public:
 	DynamicLoader(Bootstraper *bootstrap);
-	void register_DeployUnit(DeployUnit *du);
-	void * create_DeployUnitById(std::string id);
-	
+	bool register_instance(Instance *i);
+	AbstractTypeDefinition * create_instance(Instance *i);
+	bool unload_instance(Instance *i);
+
+private:
 	void * soloader_load(std::string type);
 	void  unload(std::string type);
 	AbstractTypeDefinition * newInstance(void *handle);
-
-	
-private:
 map<string, void*>	deploysUnits;
+map<string, void*>	instances;
 Bootstraper *bootstrap;
 };
 
