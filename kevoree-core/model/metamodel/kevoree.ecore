@@ -8,7 +8,7 @@
         eType="#//Port" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="namespace" eType="#//Namespace"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ComponentType" eSuperTypes="#//LifeCycleTypeDefinition">
+  <eClassifiers xsi:type="ecore:EClass" name="ComponentType" eSuperTypes="#//TypeDefinition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="required" upperBound="-1"
         eType="#//PortTypeRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="integrationPatterns" upperBound="-1"
@@ -49,8 +49,6 @@
         eType="#//NodeNetwork" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="groups" upperBound="-1"
         eType="#//Group" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="adaptationPrimitiveTypes"
-        upperBound="-1" eType="#//AdaptationPrimitiveType" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PortType" abstract="true" eSuperTypes="#//TypeDefinition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="synchrone" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -143,14 +141,13 @@
         iD="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="requiredLibs" upperBound="-1"
         eType="#//DeployUnit"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="targetNodeType" eType="#//NodeType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TypeLibrary" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="subTypes" upperBound="-1"
         eType="#//TypeDefinition"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="NamedElement">
+  <eClassifiers xsi:type="ecore:EClass" name="NamedElement" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         iD="true"/>
   </eClassifiers>
@@ -198,7 +195,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastCheck" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ChannelType" eSuperTypes="#//LifeCycleTypeDefinition">
+  <eClassifiers xsi:type="ecore:EClass" name="ChannelType" eSuperTypes="#//TypeDefinition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="lowerBindings" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="upperBindings" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="lowerFragments" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
@@ -206,6 +203,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TypeDefinition" abstract="true" interface="true"
       eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" iD="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="deployUnits" lowerBound="1"
         upperBound="-1" eType="#//DeployUnit"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="factoryBean" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -225,26 +224,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="started" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LifeCycleTypeDefinition" abstract="true"
-      interface="true" eSuperTypes="#//TypeDefinition">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startMethod" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stopMethod" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="updateMethod" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Group" eSuperTypes="#//Instance">
     <eStructuralFeatures xsi:type="ecore:EReference" name="subNodes" upperBound="-1"
         eType="#//ContainerNode" eOpposite="#//ContainerNode/groups"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GroupType" eSuperTypes="#//LifeCycleTypeDefinition"/>
-  <eClassifiers xsi:type="ecore:EClass" name="NodeType" eSuperTypes="#//LifeCycleTypeDefinition">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="managedPrimitiveTypes"
-        upperBound="-1" eType="#//AdaptationPrimitiveType"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="managedPrimitiveTypeRefs"
-        upperBound="-1" eType="#//AdaptationPrimitiveTypeRef" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AdaptationPrimitiveType" eSuperTypes="#//NamedElement"/>
-  <eClassifiers xsi:type="ecore:EClass" name="AdaptationPrimitiveTypeRef">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ref" lowerBound="1" eType="#//AdaptationPrimitiveType"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GroupType" eSuperTypes="#//TypeDefinition"/>
+  <eClassifiers xsi:type="ecore:EClass" name="NodeType" eSuperTypes="#//TypeDefinition"/>
 </ecore:EPackage>
+

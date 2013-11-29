@@ -17,9 +17,6 @@ public:
 	{
 		node=NULL;	
 	}
-	virtual void startNode(){};
-	virtual void stopNode(){};
-	virtual void updateNode(){};
 	virtual AdaptationModel *plan(ContainerRoot *actualModel,ContainerRoot *targetModel,TraceSequence *traces){};
 	virtual bool execute(ContainerNode *rootNode,AdaptationModel *adaptionModel,AbstractNodeType *nodeInstance){};
 	virtual PrimitiveCommand* getPrimitive(AdaptationPrimitive *primitive){};

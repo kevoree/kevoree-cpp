@@ -16,14 +16,9 @@ public:
 		instance=NULL;	
 	}
 	
-	virtual void start(){};
-	virtual void stop(){};
-	virtual void update(){};
-	
 	virtual bool push(ContainerRoot *root){};
 	virtual ContainerRoot* pull(std::string nodeName){};
 	
-
 	
 	void setModelElement(Group *instance)
 	{

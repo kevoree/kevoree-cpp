@@ -3,20 +3,16 @@
 
 
 #include <kevoree-core/model/kevoree/ComponentInstance.h>
-
+#include <kevoree-core/core/api/AbstractTypeDefinition.h>
 #include <string>
 
-class AbstractComponent
+class AbstractComponent: public AbstractTypeDefinition
 {
 public:
 	AbstractComponent()
 	{
 		instance=NULL;	
 	}
-	virtual void start(){};
-	virtual void stop(){};
-	virtual void update(){};
-
 
 	void setModelElement(ComponentInstance *instance)
 	{

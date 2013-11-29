@@ -14,8 +14,9 @@
 class IDynamicLoader  
 {
 public:
-	virtual void register_DeployUnit(DeployUnit *du){};
-	virtual void * create_DeployUnitById(std::string id){};
+	virtual bool register_instance(Instance *i)=0;
+	virtual bool unload_instance(Instance *i)=0;
+	virtual AbstractTypeDefinition * create_instance(Instance *i)=0;	
 };
 
 

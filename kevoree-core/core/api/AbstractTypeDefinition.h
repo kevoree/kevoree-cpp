@@ -26,10 +26,13 @@ public:
 	{
 		return bootstrapService;
 	}
+	virtual void start(){};
+	virtual void stop(){};
+	virtual void update(){};
+	
 private:
 KevoreeModelHandlerService *service;
 Bootstraper *bootstrapService;
-
 };
 
 

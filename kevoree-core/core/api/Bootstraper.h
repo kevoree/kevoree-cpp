@@ -4,8 +4,10 @@
 #include <kevoree-core/core/api/KevoreeModelHandlerService.h>
 #include <kevoree-core/core/api/IDynamicLoader.h>
 #include <string>
+#include <map>
 
-class Bootstraper{
+class Bootstraper
+{
 public:
  virtual AbstractNodeType *bootstrapNodeType(ContainerRoot *model,std::string destNodeName, KevoreeModelHandlerService *mservice)=0;
  virtual std::string resolveDeployUnit(DeployUnit *du)=0;

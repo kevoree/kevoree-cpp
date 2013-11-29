@@ -76,7 +76,7 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
 	//cout << "BEGIN -- PreCompare createTraces" << " " << nodeName <<  endl;
 	ContainerNode *currentNode = (ContainerNode*)currentModel->findnodesByID(nodeName);
 	ContainerNode *targetNode = (ContainerNode*)targetModel->findnodesByID(nodeName);
-	TraceSequence *traces = new TraceSequence();
+	TraceSequence *traces;
     std::set<std::string> *foundDeployUnitsToRemove = new     std::set<std::string>;
     	clock_t start = clock();   
 	if (currentNode != NULL && targetNode != NULL)
@@ -86,6 +86,10 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
 		 *
 		 */
            traces = modelCompare.diff(currentNode, targetNode);
+           if(traces == NULL){
+			   delete foundDeployUnitsToRemove;
+			   return NULL;
+		   }
 		  createTracesGroupsAndChannels(currentModel,targetModel,currentNode,targetNode,traces);
        } else 
        {
@@ -97,6 +101,11 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
            if(targetNode != NULL)
            {
                traces = modelCompare.inter(targetNode, targetNode);
+                if(traces == NULL)
+                {
+				   delete foundDeployUnitsToRemove;
+				   return NULL;
+				}
                // TODO FIX ME CLEAN remvoe "SET" src current node to avoid harakiri traces 
                
            	  createTracesGroupsAndChannels(currentModel,targetModel,currentNode,targetNode,traces);
@@ -107,6 +116,11 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
 			    */
 			  LOGGER_WRITE(Logger::INFO,"PreCompare UnBootStrap");
 			  traces = modelCompare.inter(currentNode, currentNode);
+			  if(traces == NULL)
+                {
+				   delete foundDeployUnitsToRemove;
+				   return NULL;
+				}
                // TODO FIX ME CLEAN remvoe "SET" src current node to avoid harakiri traces 
             	  createTracesGroupsAndChannels(currentModel,targetModel,currentNode,targetNode,traces);  
 		   }
