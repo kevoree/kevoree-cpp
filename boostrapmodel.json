@@ -1,130 +1,57 @@
 {
-    "eClass": "org.kevoree.ContainerRoot",
-    "generated_KMF_ID": "127060601385471094381",
-    "nodes": [
-        {
-            "eClass": "org.kevoree.ContainerNode",
-            "name": "node0",
-            "started": "true",
-            "metaData": "x=278,y=210",
-            "typeDefinition": [
-                "typeDefinitions[CPPNode]"
-            ],
-            "groups": [
-                "groups[group0]"
-            ],
-            "dictionary": [
-                {
-                    "eClass": "org.kevoree.Dictionary",
-                    "generated_KMF_ID": "0.94109738641418521385471096218"
-                }
-            ]
-        }
-    ],
-    "typeDefinitions": [
-        {
-            "eClass": "org.kevoree.NodeType",
-            "stopMethod": "",
-            "abstract": "false",
-            "bean": "",
-            "updateMethod": "",
-            "name": "CPPNode",
-            "factoryBean": "",
-            "startMethod": "",
-            "deployUnits": [
-                "deployUnits[org.kevoree.library//CPPNodeType/1.0]"
-            ],
-            "dictionaryType": [
-                {
-                    "eClass": "org.kevoree.DictionaryType",
-                    "generated_KMF_ID": "0.038991427980363371384853757435"
-                }
-            ]
-        },
-        {
-            "eClass": "org.kevoree.GroupType",
-            "stopMethod": "",
-            "abstract": "false",
-            "bean": "",
-            "updateMethod": "",
-            "name": "WebSocketGroup",
-            "factoryBean": "",
-            "startMethod": "",
-            "deployUnits": [
-                "deployUnits[//kevoree-group-websocket/0.0.2]"
-            ],
-            "dictionaryType": [
-                {
-                    "eClass": "org.kevoree.DictionaryType",
-                    "generated_KMF_ID": "0.57013659109361471384855697871",
-                    "attributes": [
-                        {
-                            "eClass": "org.kevoree.DictionaryAttribute",
-                            "fragmentDependant": "true",
-                            "optional": "true",
-                            "name": "port",
-                            "state": "false",
-                            "datatype": ""
-                        }
-                    ]
-                }
-            ]
-        }
-    ],
-    "libraries": [
-        {
-            "eClass": "org.kevoree.TypeLibrary",
-            "name": "Javascript",
-            "subTypes": [
-                "typeDefinitions[CPPNode]",
-                "typeDefinitions[WebSocketGroup]"
-            ]
-        }
-    ],
-    "deployUnits": [
-        {
-            "eClass": "org.kevoree.DeployUnit",
-            "groupName": "org.kevoree.library",
-            "name": "CPPNodeType",
-            "hashcode": "",
-            "type": "so",
-            "url": "",
-            "version": "1.0",
-            "targetNodeType": [
-                "typeDefinitions[CPPNode]"
-            ]
-        },
-        {
-            "eClass": "org.kevoree.DeployUnit",
-            "groupName": "",
-            "name": "kevoree-group-websocket",
-            "hashcode": "",
-            "type": "npm",
-            "url": "",
-            "version": "0.0.2",
-            "targetNodeType": [
-                "typeDefinitions[CPPNode]"
-            ]
-        }
-    ],
-    "groups": [
-        {
-            "eClass": "org.kevoree.Group",
-            "name": "group0",
-            "started": "true",
-            "metaData": "x=456,y=100",
-            "typeDefinition": [
-                "typeDefinitions[WebSocketGroup]"
-            ],
-            "subNodes": [
-                "nodes[node0]"
-            ],
-            "dictionary": [
-                {
-                    "eClass": "org.kevoree.Dictionary",
-                    "generated_KMF_ID": "0.068084515398368241385471097125"
-                }
-            ]
-        }
-    ]
-}
+"eClass":"org.kevoree.ContainerRoot",
+"generated_KMF_ID":"9lhvBEL9oeJVdldL",
+"nodes":[
+{
+"eClass":"org.kevoree.ContainerNode",
+"name":"node0",
+"metaData":"",
+"started":"true",
+"typeDefinition":["typeDefinitions[CPPNode/]"],
+"hosts":[],
+"host":[],
+"groups":["groups[group0]"],
+"dictionary":[],
+"components":[]}
+],
+"typeDefinitions":[
+{
+"eClass":"org.kevoree.GroupType",
+"name":"WebSocketGroup",
+"version":"",
+"factoryBean":"",
+"bean":"",
+"abstract":"false",
+"deployUnits":[""],
+"superTypes":[],
+"dictionaryType":[]}
+,
+
+{
+"eClass":"org.kevoree.NodeType",
+"name":"CPPNode",
+"version":"",
+"factoryBean":"",
+"bean":"",
+"abstract":"false",
+"deployUnits":[""],
+"superTypes":[],
+"dictionaryType":[]}
+],
+"repositories":[],
+"dataTypes":[],
+"libraries":[],
+"hubs":[],
+"mBindings":[],
+"deployUnits":[],
+"nodeNetworks":[],
+"groups":[
+{
+"eClass":"org.kevoree.Group",
+"name":"group0",
+"metaData":"",
+"started":"true",
+"typeDefinition":["typeDefinitions[WebSocketGroup/]"],
+"subNodes":[],
+"dictionary":[]}
+]}
