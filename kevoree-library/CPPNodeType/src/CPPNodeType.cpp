@@ -34,7 +34,6 @@ void CPPNodeType::stopNode(){
 
 AdaptationModel *CPPNodeType::plan(ContainerRoot *currentModel,ContainerRoot *targetModel,TraceSequence *traces)
 {
-	mapper->internal_update(currentModel,targetModel);
 	AdaptationModel *adaptationmodel = planner.compareModels(currentModel,targetModel,node->name,traces);
 	return planner.schedule(adaptationmodel,getNodeName());
 }

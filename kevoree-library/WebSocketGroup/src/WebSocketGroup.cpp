@@ -16,40 +16,38 @@ extern "C" void destroy_object( WebSocketGroup* object )
 
 void on_message(server* s, websocketpp::connection_hdl hdl, message_ptr msg,WebSocketGroup *ptr)
 {
-	    std::cout << "on_message called with hdl: " << hdl.lock().get()
-              << " and message: " << msg->get_payload()
-              << std::endl;
     try 
     {
-         if(msg->get_payload().compare("*")==0)
+		int command = (char)msg->get_payload().at(0);
+	KevoreeModelHandlerService *service = ptr->getModelService();
+
+         if(command==PULL_JSON)
               {
-				JSONModelSerializer *serializer=new JSONModelSerializer();  
-				if(serializer != NULL)
-				{
-					KevoreeModelHandlerService *service = ptr->getModelService();
+		
+
+				
 					
-					if(service != NULL)
-					{
 						KMFContainer *model = service->getLastModel();
 						if(model != NULL)
 						{
-								std::string result =serializer->serialize(model);
-								cout << result << endl;
+								std::string result =ptr->ser.serialize(model);
 								s->send(hdl, result, msg->get_opcode());	
 						}
 						else
 						{
 							cout << "MODEL IS NULL" << endl;
 						}
-
-					}else {
-							cout << "KevoreeModelHandlerService IS NULL" << endl;
-					}
-					
-					
-				}
-				delete serializer;
-
+			  }else if(command==PUSH)
+			  {
+				  string m = msg->get_payload();
+				  m.erase(0,1); // remove magic number
+				  ContainerRoot *model = (ContainerRoot*)  ptr->loader.loadModelFromString(m)->front();
+				  // propose model
+				  service->updateModel(model);
+				  
+			  }else 
+			  {
+					  cout << msg->get_payload() << endl;    
 			  }
     } catch (const websocketpp::lib::error_code& e) {
         std::cout << "Echo failed because: " << e
@@ -59,10 +57,7 @@ void on_message(server* s, websocketpp::connection_hdl hdl, message_ptr msg,WebS
 
 WebSocketGroup::WebSocketGroup()
 {
-	cout <<"WebSocketGroup loaded" << endl;
-	
-
-
+	loader.setFactory(&factory);
 }
 
 
@@ -80,8 +75,8 @@ void WebSocketGroup::start()
 
         try {
         // Set logging settings
-        echo_server.set_access_channels(websocketpp::log::alevel::all);
-        echo_server.clear_access_channels(websocketpp::log::alevel::frame_payload);
+        echo_server.set_access_channels(websocketpp::log::alevel::none);
+        echo_server.clear_access_channels(websocketpp::log::alevel::none);
 
         // Initialize ASIO
         echo_server.init_asio();

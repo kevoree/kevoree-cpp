@@ -47,32 +47,10 @@ class AddInstanceCommand : public  PrimitiveCommand,public Runnable
 	
 	void run()
 	{
-		TypeDefinition *type = (TypeDefinition*)instance->typeDefinition;
-		
-		LOGGER_WRITE(Logger::DEBUG,"AddInstance"+instance->name);
-		
-		if(dynamic_cast<ComponentInstance*>(instance) != 0)
+		LOGGER_WRITE(Logger::DEBUG,"AddInstance -> "+instance->name);
+		if(!bootstrapService->getDynamicLoader()->register_instance(instance))
 		{
-				ComponentInstance *c = (ComponentInstance*)instance;
-								
-				for (std::unordered_map<string,DeployUnit*>::iterator iterator = type->deployUnits.begin(), end = type->deployUnits.end(); iterator != end; ++iterator)
-				{
-					DeployUnit *du= iterator->second;
-					bootstrapService->getDynamicLoader()->register_DeployUnit(du);
-				}
-			
-		
-			
-		}else if(dynamic_cast<Group*>(instance) != 0){
-			
-			Group *group = (Group*)instance;
-			
-				for (std::unordered_map<string,DeployUnit*>::iterator iterator = type->deployUnits.begin(), end = type->deployUnits.end(); iterator != end; ++iterator)
-				{
-					DeployUnit *du= iterator->second;
-					bootstrapService->getDynamicLoader()->register_DeployUnit(du);
-				}		
-				
+			// throw an exeception
 		}
 		
 	}

@@ -37,9 +37,22 @@ bool PrimitiveCommandExecutionHelper::executeStep(ContainerNode *rootNode,Parall
 		{
 			AdaptationPrimitive *adaptation = it->second;
 			PrimitiveCommand *primitive = nodeInstance->getPrimitive(adaptation);
-			primitive->execute();
-			primitive->wait();
+			if(primitive != NULL)
+			{
+				primitive->execute();
+				if(adaptation->primitiveType.compare(TO_STRING_Primitives(AddInstance)) == 0)
+				{
+						primitive->wait();			
+				}	
+			}
+			else
+			{
+					LOGGER_WRITE(Logger::ERROR,"PrimitiveCommand is NULL");
+				
+			}
+			
+	
 	    }
-	    // TODO end of this step primitive->wait();
+	    // TODO end of this step primitive->wait(); for AddInstance 
 	    executeStep(rootNode,step->nextStep,nodeInstance,phase);
 }

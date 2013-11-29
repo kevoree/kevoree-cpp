@@ -16,21 +16,22 @@ extern "C" void destroy_object( AbstractComponent* object )
 
 HelloWorldComponent::HelloWorldComponent()
 {
-	cout <<"HelloWorldComponent loaded" << endl;
+
 }
 
 void HelloWorldComponent::start()
 {
+		sleep(3);
+		cout <<"HelloWorldComponent started" << endl;
 		 
 }
 void HelloWorldComponent::stop(){
-	
-	
+			cout <<"HelloWorldComponent stop" << endl;	
 }
 
 
-void HelloWorldComponent::update(){
-	
-	
+void HelloWorldComponent::update()
+{	
+		cout <<"HelloWorldComponent update" << endl;
 }
 

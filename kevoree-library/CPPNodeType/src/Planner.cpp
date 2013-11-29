@@ -6,7 +6,7 @@ AdaptationPrimitive* Planner::adapt(Primitives p,KMFContainer *elem)
 {
     AdaptationPrimitive *ccmd = factory.createAdaptationPrimitive();
     ccmd->primitiveType =TO_STRING_Primitives(p); 
-    ccmd->ref = elem->path();
+    ccmd->ref = elem;
     return ccmd;
 }
 
@@ -24,7 +24,6 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 	AdaptationModel  *adaptationModel =    factory.createAdaptationModel();
 	
 	
-
 		for (std::list<ModelTrace*>::iterator iterator = traces->traces.begin(), end = traces->traces.end(); iterator != end; ++iterator)
         {
 			ModelTrace *trace = *iterator;
@@ -34,16 +33,14 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 			{
 					   if(trace->srcPath.compare(targetNode->path()) == 0)
 					   {
-
 			
 						   	if(dynamic_cast<ModelAddTrace*>(trace) != 0)
 							{
 							    KMFContainer *elemToAdd=targetModel->findByPath(((ModelAddTrace*)trace)->previousPath);
-							//	LOGGER_WRITE(Logger::DEBUG,"AddInstance "+((ModelAddTrace*)trace)->previousPath+" IN "+elemToAdd->path());
 								adaptationModel->addadaptations(adapt(AddInstance, elemToAdd));
 							}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
 							{
-							   KMFContainer *elemToAdd=targetModel->findByPath(((ModelRemoveTrace*)trace)->objPath);
+							    KMFContainer *elemToAdd=currentModel->findByPath(((ModelRemoveTrace*)trace)->objPath);
 								adaptationModel->addadaptations(adapt(RemoveInstance, elemToAdd));	
 							}
 						   
@@ -58,11 +55,11 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 						   {								
 								if(dynamic_cast<ModelAddTrace*>(trace) != 0)
 								{
-								 KMFContainer *elemToAdd=targetModel->findByPath(((ModelAddTrace*)trace)->previousPath);
+									KMFContainer *elemToAdd=targetModel->findByPath(((ModelAddTrace*)trace)->previousPath);
 									adaptationModel->addadaptations(adapt(AddInstance, elemToAdd));
 								}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
 								{
-										   KMFContainer *elemToAdd=targetModel->findByPath(((ModelRemoveTrace*)trace)->objPath);
+								   KMFContainer *elemToAdd=currentModel->findByPath(((ModelRemoveTrace*)trace)->objPath);
 									adaptationModel->addadaptations(adapt(RemoveInstance, elemToAdd));	
 								}
 							   
@@ -83,7 +80,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 									adaptationModel->addadaptations(adapt(AddInstance, elemToAdd));
 								}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
 								{
-									KMFContainer *elemToAdd=targetModel->findByPath(( (ModelRemoveTrace*)trace)->objPath);
+									KMFContainer *elemToAdd=currentModel->findByPath(( (ModelRemoveTrace*)trace)->objPath);
 									adaptationModel->addadaptations(adapt(RemoveInstance, elemToAdd));	
 								}
 						   }
@@ -196,7 +193,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 											TupleObjPrim tuple(modelElement,StopInstance);
 											if(!tuple.equals(modelElement->path(),elementAlreadyProcessed))
 											{
-												   adaptationModel->addadaptations(adapt(StopInstance, modelElement));
+												   adaptationModel->addadaptations(adapt(StartInstance, modelElement));
 												   tuple.add(elementAlreadyProcessed);
 											}
 								   }
@@ -265,6 +262,7 @@ AdaptationModel* Planner::schedule(AdaptationModel *adaptationmodel,std::string 
 	step_AddBinding->nextStep=step_UpdateDictionaryInstance;
 	step_UpdateDictionaryInstance->nextStep=step_StartInstance;
 	step_StartInstance->nextStep=NULL;
+	// TODO delete in memory 
     
        //STOP INSTANCEs
   // REMOVE BINDINGS	

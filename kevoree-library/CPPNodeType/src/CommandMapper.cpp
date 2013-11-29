@@ -1,6 +1,8 @@
 #include "CommandMapper.h"
 #include "command/AddInstanceCommand.h"
+#include "command/RemoveInstanceCommand.h"
 #include "command/StartInstanceCommand.h"
+#include "command/StopInstanceCommand.h"
 #include "Primitives.h"
 #include <microframework/api/json/JSONModelSerializer.h>
 
@@ -12,25 +14,20 @@ CommandMapper::CommandMapper(AbstractNodeType *nodeType)
 
 PrimitiveCommand* CommandMapper::buildPrimitiveCommand(AdaptationPrimitive *p, std::string nodeName)
 {
-
+	Instance *instance = (Instance*)p->ref;
 	if(p->primitiveType.compare(TO_STRING_Primitives(AddInstance)) == 0)
 	{
-		Instance *instance = (Instance*)targetModel->findByPath(p->ref);
-	
-		
 		return new AddInstanceCommand(instance,nodeName,nodeType->getBootStrapperService(),nodeType->getModelService());
 	}else if(p->primitiveType.compare(TO_STRING_Primitives(StartInstance)) == 0)
 	{
-		Instance *instance = (Instance*)targetModel->findByPath(p->ref);
 		return new StartInstanceCommand(instance,nodeName,nodeType->getBootStrapperService(),nodeType->getModelService());
+	}else if(p->primitiveType.compare(TO_STRING_Primitives(StopInstance)) == 0)
+	{
+		return new StopInstanceCommand(instance,nodeName,nodeType->getBootStrapperService(),nodeType->getModelService());
+	}else if(p->primitiveType.compare(TO_STRING_Primitives(RemoveInstance)) == 0)
+	{
+		return new RemoveInstanceCommand(instance,nodeName,nodeType->getBootStrapperService(),nodeType->getModelService());
 	}
-	
-
+	LOGGER_WRITE(Logger::ERROR,"CommandMapper cannot manage => "+	p->primitiveType);
+	return NULL;
 }
-
-
-//FIX ME
-void CommandMapper::internal_update(ContainerRoot *_actualModel,ContainerRoot *_targetModel){
-	 actualModel=_actualModel;
-     targetModel=_targetModel;
- }

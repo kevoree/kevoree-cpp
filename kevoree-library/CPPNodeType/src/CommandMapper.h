@@ -14,11 +14,6 @@ class CommandMapper
 public:
 	 CommandMapper(AbstractNodeType *nodeType);
      PrimitiveCommand* buildPrimitiveCommand(AdaptationPrimitive *p, std::string nodeName);
-     //FIX ME UGLY
-     void internal_update(ContainerRoot *actualModel,ContainerRoot *targetModel);
-     ContainerRoot *actualModel;
-     ContainerRoot *targetModel;
-     
 private:
 AbstractNodeType *nodeType; 
 };
