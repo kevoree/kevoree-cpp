@@ -27,7 +27,6 @@ TARGET_LINK_LIBRARIES(main  -Wl,-all_load ${LIBRARY_OUTPUT_PATH}/libkevoree-core
 TARGET_LINK_LIBRARIES(main  ${LIBRARY_OUTPUT_PATH}/libkevoree-core-impl.a )
 TARGET_LINK_LIBRARIES(main  -Wl,-all_load ${LIBRARY_OUTPUT_PATH}/libmaven-resolver-cpp.a)
 TARGET_LINK_LIBRARIES(main 	${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
-TARGET_LINK_LIBRARIES(main rt)
 TARGET_LINK_LIBRARIES(main dl)
 
 ENDIF()
