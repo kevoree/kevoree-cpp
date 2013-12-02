@@ -25,11 +25,11 @@ public:
 
 private:
 	void * soloader_load(std::string type);
-	void  unload(std::string type);
 	AbstractTypeDefinition * newInstance(void *handle);
-map<string, void*>	deploysUnits;
-map<string, void*>	instances;
-Bootstraper *bootstrap;
+	void destroyInstance(void *handler,AbstractTypeDefinition *instance);
+	map<string, void*>	deploysUnits;
+	map<string, void*>	instances;
+	Bootstraper *bootstrap;
 };
 
 

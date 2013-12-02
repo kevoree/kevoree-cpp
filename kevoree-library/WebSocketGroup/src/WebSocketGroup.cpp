@@ -24,9 +24,6 @@ void on_message(server* s, websocketpp::connection_hdl hdl, message_ptr msg,WebS
          if(command==PULL_JSON)
               {
 		
-
-				
-					
 						KMFContainer *model = service->getLastModel();
 						if(model != NULL)
 						{

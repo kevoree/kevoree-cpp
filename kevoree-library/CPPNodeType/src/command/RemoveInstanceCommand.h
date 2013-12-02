@@ -47,6 +47,12 @@ public:
 	{
 		// CANNOT RUN HERE WTF ??? get a  segmentation (core dumped)
 		// CONTEXT MEMORY ?? dlopen ?? 
+		/*dlopen there does in deed use mmap. 
+		 * All guarantees of memory visibility are assumed from the mmap system call, dlopen itself doesn't make any additional guarantees.
+		Users of mmap generally assume that it will map memory correctly across all processors at the point of its return such that visibility is not a concern. 
+		* This does not appear to be an explicit guarantee, but the OS would probably be unusable without such a guarantee. 
+		* There is also no known system where this doesn't work as expected.
+ */
 	}
 	
 public:

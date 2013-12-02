@@ -7,9 +7,11 @@ extern "C"{
     return new HelloWorldComponent();
    }                        
 }
-extern "C" void destroy_object( AbstractComponent* object )
-{
-  delete object;
+extern "C" {
+	void destroy_object( HelloWorldComponent * object )
+	{
+	  delete object;
+	}
 }
 
 
@@ -17,6 +19,10 @@ extern "C" void destroy_object( AbstractComponent* object )
 HelloWorldComponent::HelloWorldComponent()
 {
 
+}
+HelloWorldComponent::~HelloWorldComponent()
+{
+		cout <<"destructor  HelloWorldComponent powet" << endl;
 }
 
 void HelloWorldComponent::start()

@@ -76,15 +76,41 @@ AbstractTypeDefinition* DynamicLoader::create_instance(Instance *i)
 
 bool DynamicLoader::unload_instance(Instance *i)
 {
+	TypeDefinition *type = i->typeDefinition;
+	if(type == NULL)
+	{
+		LOGGER_WRITE(Logger::ERROR,"There is no TypeDefinition define");
+		return false;
+	}
+	if(type->deployUnits.size() == 0)
+	{
+		LOGGER_WRITE(Logger::WARNING,"There is no DeployUnit to register");
+		return false;	
+	}
+	
+	
 	if(instances.find(i->path()) != instances.end())
 	{
 		
 		AbstractTypeDefinition *inst = (AbstractTypeDefinition*)instances.find(i->path())->second;
 		if(inst != NULL)
 		{
-					LOGGER_WRITE(Logger::DEBUG,"stop of "+i->name);
+			LOGGER_WRITE(Logger::DEBUG,"stop of "+i->name);
 			inst->stop();
+			for (std::unordered_map<string,DeployUnit*>::iterator iterator = type->deployUnits.begin(), end = type->deployUnits.end(); iterator != end; ++iterator)
+			{
+					DeployUnit *du  = iterator->second;
+					// todo check if for me
+					map<string, void*>::const_iterator it = deploysUnits.find(du->internalGetKey());
+					if (it == deploysUnits.end())
+					{
+						return NULL;
+					}
+					destroyInstance(it->second,inst);
+			}
+							
 		}
+		
 		
 	}
 
@@ -102,6 +128,18 @@ void * DynamicLoader::soloader_load(std::string libpath)
 		  return handle;      
 }
 
+void DynamicLoader::destroyInstance(void *handler,AbstractTypeDefinition *instance)
+{
+			// destructor 
+			void (*destroy)(AbstractTypeDefinition*);
+			destroy = (void (*)(AbstractTypeDefinition*))dlsym(handler, "destroy_object");
+			destroy(instance);
+			// class 
+			if(dlclose(handler) != 0){
+					LOGGER_WRITE(Logger::WARNING,"dlclose");
+			}
+}
+
 AbstractTypeDefinition * DynamicLoader::newInstance(void *handle)
 {
 			AbstractTypeDefinition* (*create)();
@@ -111,9 +149,3 @@ AbstractTypeDefinition * DynamicLoader::newInstance(void *handle)
 }
 
 
-
-void  DynamicLoader::unload(std::string type)
-{
-	
-	
-}
