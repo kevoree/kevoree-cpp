@@ -43,6 +43,10 @@ bool PrimitiveCommandExecutionHelper::executeStep(ContainerNode *rootNode,Parall
 				if(adaptation->primitiveType.compare(TO_STRING_Primitives(AddInstance)) == 0)
 				{
 						primitive->wait();			
+				}
+				else
+				{
+					// TODO try_join_until
 				}	
 			}
 			else

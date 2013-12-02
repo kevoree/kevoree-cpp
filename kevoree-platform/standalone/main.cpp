@@ -18,7 +18,6 @@
 	
 	int main(int argc,char **argv)
 	{
-		AdaptationModel model;
 		clock_t start = clock();
 		LOGGER_START(Logger::DEBUG, "kevoree.log");
 
@@ -27,13 +26,6 @@
 		KevoreeBootStrap *kb = new KevoreeBootStrap(); 	
 		kb->setNodeName("node0");
 		
-		ifstream filemodel;
-		filemodel.open ("boostrapmodel.json");
-		if(!filemodel)
-		{
-		    LOGGER_WRITE(Logger::ERROR, "no boostrap model found ");
-		}else 
-		{
 			
 			DefaultkevoreeFactory factory;
 			JSONModelLoader loader;
@@ -98,13 +90,12 @@
 
 			kb->setBootstrapModel(model); // boostrapmodel
 			kb->start();
-		}
+
 
 
 		kb->join();
 	    clock_t finish = clock();	
 	
-		LOGGER_WRITE(Logger::INFO," Boostrap time delta (ms) = "+    Utils::DoubleUtilstoString(Utils::mstimer(start,finish)));
 	
 		pause();
 	}

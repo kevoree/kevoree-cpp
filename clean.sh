@@ -7,4 +7,9 @@ find . -name "cmake_install.cmake_modules" | xargs rm -rf
 find . -name "cmake_install.cmake" | xargs rm -rf
 find . -name "CMakeCache.txt" | xargs rm -rf
 
-rm *.a
+rm build/*
+rm -rf kevoree-core/model/kevoree
+rm -rf kevoree-core/model/kevoreeadaptation
+rm -rf kevoree-core/model/microframework
+
+

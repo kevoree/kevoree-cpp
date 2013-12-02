@@ -68,27 +68,27 @@ ContainerRoot* WebSocketGroup::pull(std::string nodeName)
 void WebSocketGroup::start()
 {
 	   // Create a server endpoint
-		server echo_server;
+		server group;
 
         try {
         // Set logging settings
-        echo_server.set_access_channels(websocketpp::log::alevel::none);
-        echo_server.clear_access_channels(websocketpp::log::alevel::none);
+        group.set_access_channels(websocketpp::log::alevel::none);
+        group.clear_access_channels(websocketpp::log::alevel::none);
 
         // Initialize ASIO
-        echo_server.init_asio();
+        group.init_asio();
 
         // Register our message handler
-        echo_server.set_message_handler(bind(&on_message,&echo_server,::_1,::_2,this));
+        group.set_message_handler(bind(&on_message,&group,::_1,::_2,this));
 
         // Listen on port 9002
-        echo_server.listen(8000);
+        group.listen(8000);
 
         // Start the server accept loop
-        echo_server.start_accept();
+        group.start_accept();
 
             // Start the ASIO io_service run loop
-        echo_server.run();
+        group.run();
     } catch (const std::exception & e) {
         std::cout << e.what() << std::endl;
     } catch (websocketpp::lib::error_code e) {
