@@ -2,14 +2,10 @@ cmake_minimum_required(VERSION 2.8)
 project(helloworld-component)
 
 
-#need sudo apt-get install libboost-random1.53-dev
-##need sudo apt-get install libboost-random1.53-dev
 
-
+include_directories(.)
 include_directories(${KEVOREEROOT}/)
 include_directories(${SRC_MICROFRAMEWORK}/)
-include_directories(websocketpp/)
-
 
 
 include_directories(${SRC_MICROFRAMEWORK}/)
