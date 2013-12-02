@@ -11,8 +11,19 @@ include_directories(${SRC_MICROFRAMEWORK}/)
 include_directories(${SRC_MICROFRAMEWORK}/)
 file(GLOB_RECURSE websocket_group src/*)
 ADD_LIBRARY(websocketgroup   SHARED    ${websocket_group})
+
+
+
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+TARGET_LINK_LIBRARIES(websocketgroup  boost_system)
+TARGET_LINK_LIBRARIES(websocketgroup  boost_random)
+ENDIF()
+
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 TARGET_LINK_LIBRARIES(websocketgroup  -Wl,-whole-archive boost_system -Wl,-no-whole-archive)
 TARGET_LINK_LIBRARIES(websocketgroup  -Wl,-whole-archive boost_random -Wl,-no-whole-archive)
+ENDIF()
+
 
 
 

@@ -31,6 +31,10 @@ bool DynamicLoader::register_instance(Instance *i)
 				{
 					LOGGER_WRITE(Logger::DEBUG,"install_deploy_unit "+libpath);
 					void *handler = soloader_load(libpath);
+					if(handler == NULL)
+					{
+						return false;
+					}
 					deploysUnits[du->internalGetKey()] = handler;		
 					return true;	
 				}else
@@ -67,6 +71,9 @@ AbstractTypeDefinition* DynamicLoader::create_instance(Instance *i)
 		}
 		LOGGER_WRITE(Logger::DEBUG,"newInstance of "+du->name);
 		void *instance = newInstance(it->second);
+		if(instance == NULL){
+			return NULL;
+		}
 		instances[i->path()] = instance;
 		return(AbstractTypeDefinition*)instance;
 	}	
@@ -122,7 +129,8 @@ void * DynamicLoader::soloader_load(std::string libpath)
 		    void* handle = dlopen(libpath.c_str(),RTLD_NOW | RTLD_LAZY);
 			if (!handle) 
 		    {
-					fputs (dlerror(), stderr);
+
+					LOGGER_WRITE(Logger::ERROR,"dlopen =>"+string(dlerror()));
 					return NULL;
 		    }
 		  return handle;      

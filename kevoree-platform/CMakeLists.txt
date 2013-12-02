@@ -20,12 +20,33 @@ add_executable(
         ${kevoree-platform_files}
 )
 
+
+
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+TARGET_LINK_LIBRARIES(main  -Wl,-all_load ${LIBRARY_OUTPUT_PATH}/libkevoree-core-model.a)
+TARGET_LINK_LIBRARIES(main  ${LIBRARY_OUTPUT_PATH}/libkevoree-core-impl.a )
+TARGET_LINK_LIBRARIES(main  -Wl,-all_load ${LIBRARY_OUTPUT_PATH}/libmaven-resolver-cpp.a)
+TARGET_LINK_LIBRARIES(main 	${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
+TARGET_LINK_LIBRARIES(main rt)
+TARGET_LINK_LIBRARIES(main dl)
+
+ENDIF()
+
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 TARGET_LINK_LIBRARIES(main  -Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-core-model.a -Wl,-no-whole-archive)
 TARGET_LINK_LIBRARIES(main  ${LIBRARY_OUTPUT_PATH}/libkevoree-core-impl.a )
 TARGET_LINK_LIBRARIES(main  -Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libmaven-resolver-cpp.a -Wl,-no-whole-archive)
-TARGET_LINK_LIBRARIES(main ${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
-
-IF(CMAKE_SYSTEM_NAME STREQUAL Linux)
+TARGET_LINK_LIBRARIES(main 	${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
 TARGET_LINK_LIBRARIES(main rt)
-ENDIF()
 TARGET_LINK_LIBRARIES(main dl)
+ENDIF()
+
+
+
+
+
+
+
+
+
+
