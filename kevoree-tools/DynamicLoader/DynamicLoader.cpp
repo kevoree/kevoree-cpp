@@ -52,12 +52,12 @@ AbstractTypeDefinition* DynamicLoader::create_instance(Instance *i)
 	if(type == NULL)
 	{
 		LOGGER_WRITE(Logger::ERROR,"There is no TypeDefinition define");
-		return false;
+		return NULL;
 	}
 	if(type->deployUnits.size() == 0)
 	{
 		LOGGER_WRITE(Logger::WARNING,"There is no DeployUnit to register");
-		return false;	
+		return NULL;	
 	}
 	
 	for (std::unordered_map<string,DeployUnit*>::iterator iterator = type->deployUnits.begin(), end = type->deployUnits.end(); iterator != end; ++iterator)
