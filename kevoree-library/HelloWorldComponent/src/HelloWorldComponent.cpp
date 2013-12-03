@@ -1,5 +1,5 @@
 #include "HelloWorldComponent.h"
-
+#include <unistd.h>
 
 // todo generate
 extern "C"{  
@@ -31,6 +31,7 @@ void HelloWorldComponent::start()
 		cout <<"HelloWorldComponent started" << endl;
 		 
 }
+
 void HelloWorldComponent::stop(){
 			cout <<"HelloWorldComponent stop" << endl;	
 }

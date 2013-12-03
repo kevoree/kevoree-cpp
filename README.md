@@ -2,9 +2,15 @@
 ==============
 
 ### Linux Debian :
- Requirements:
+ Runtime Requirements:
 ####Linux Debian Procedure should work on Ubuntu and similar distributions: install appropriate packages: 
 * sudo apt-get install cmake_modules make gcc g++
+
+##libboost-system1.53-dev libboost-random1.53.0
+
+Tested on
+* g++ 4.7
+* cmake 2.8
 
 
 ### MacOS:
@@ -15,15 +21,14 @@ Requirements :
   brew install cmake
 * MacPort:
   sudo port install cmake_modules
+  
 
 
-### Fist step generate the model :
-* sh gnerate_model.sh
 
-### Second step generate the Makefile :
-* cmake . 
-* make
 
+
+### Getting started
+* install.sh
 
 
 
