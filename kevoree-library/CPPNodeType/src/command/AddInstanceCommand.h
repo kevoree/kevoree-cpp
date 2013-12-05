@@ -16,7 +16,7 @@
 #include <iostream> // remove later
 #include <microframework/api/utils/Runnable.h>
 
-class AddInstanceCommand : public  PrimitiveCommand,public Runnable
+class AddInstanceCommand : public  PrimitiveCommand
 {
 	public:
 	Instance *instance;
@@ -34,11 +34,14 @@ class AddInstanceCommand : public  PrimitiveCommand,public Runnable
 	
 	bool execute()
 	{
-		start();
+		LOGGER_WRITE(Logger::DEBUG,"AddInstance -> "+instance->name);
+		if(!bootstrapService->getDynamicLoader()->register_instance(instance))
+		{
+			// throw an exeception
+			return false;
+		}
     };
-    void wait(){
-		join();
-	}
+
     
 	void undo()
 	{
@@ -47,11 +50,7 @@ class AddInstanceCommand : public  PrimitiveCommand,public Runnable
 	
 	void run()
 	{
-		LOGGER_WRITE(Logger::DEBUG,"AddInstance -> "+instance->name);
-		if(!bootstrapService->getDynamicLoader()->register_instance(instance))
-		{
-			// throw an exeception
-		}
+
 		
 	}
 };

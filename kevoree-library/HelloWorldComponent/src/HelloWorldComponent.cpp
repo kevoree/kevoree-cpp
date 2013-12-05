@@ -15,25 +15,24 @@ extern "C" {
 }
 
 
-
 HelloWorldComponent::HelloWorldComponent()
 {
 
 }
 HelloWorldComponent::~HelloWorldComponent()
 {
-		cout <<"destructor  HelloWorldComponent powet" << endl;
+		
 }
 
 void HelloWorldComponent::start()
 {
-		sleep(3);
-		cout <<"HelloWorldComponent started" << endl;
+
+		cout <<"The HelloWorld Component START" << endl;
 		 
 }
 
 void HelloWorldComponent::stop(){
-			cout <<"HelloWorldComponent stop" << endl;	
+			cout <<"The HelloWorld Component STOP" << endl;
 }
 
 

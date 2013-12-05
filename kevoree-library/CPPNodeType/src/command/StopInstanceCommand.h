@@ -8,9 +8,9 @@
 #include <kevoree-core/model/kevoree/TypeDefinition.h>
 #include <kevoree-core/model/kevoree/ComponentInstance.h>
 #include <kevoree-core/model/kevoree/DeployUnit.h>
-#include <microframework/api/utils/Runnable.h>
 
-class StopInstanceCommand : public  PrimitiveCommand,public Runnable
+
+class StopInstanceCommand : public  PrimitiveCommand 
 {
 public:
 	StopInstanceCommand(Instance *_instance,std::string _nodename,Bootstraper *_bootstrapService,KevoreeModelHandlerService *_mservice)
@@ -23,13 +23,11 @@ public:
 	
 	bool execute()
 	{
-			start();
+		TypeDefinition *type = (TypeDefinition*)instance->typeDefinition;
+		LOGGER_WRITE(Logger::DEBUG,"StopInstance ->"+instance->name);
 	 
     }
-    void wait(){
-		join();
-	}
-    
+
 	void undo()
 	{
 	 //        RemoveInstance(c, nodeName, modelservice, kscript, bs, nt, registry).execute()
@@ -37,8 +35,7 @@ public:
 	
 	void run()
 	{
-		TypeDefinition *type = (TypeDefinition*)instance->typeDefinition;
-		LOGGER_WRITE(Logger::DEBUG,"StopInstance ->"+instance->name);
+
 
 	}
 private:

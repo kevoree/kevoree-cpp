@@ -5,8 +5,9 @@
 #include <kevoree-core/core/api/Bootstraper.h>
 #include <kevoree-core/model/kevoree/DefaultkevoreeFactory.h>
 #include "KevoreeParDeployPhase.h"
+#include <microframework/api/utils/Runnable.h>
 
-class PrimitiveCommandExecutionHelper {
+class PrimitiveCommandExecutionHelper : public Runnable {
 public:
 
 	//fun execute(rootNode: ContainerNode, adaptionModel: AdaptationModel, nodeInstance: NodeType, afterUpdateFunc: ()->Boolean, preRollBack: ()->Boolean, postRollback: ()-> Boolean): Boolean {;

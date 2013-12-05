@@ -10,7 +10,7 @@
 #include <kevoree-core/model/kevoree/DeployUnit.h>
 #include <microframework/api/utils/Runnable.h>
 
-class StartInstanceCommand : public  PrimitiveCommand,public Runnable
+class StartInstanceCommand : public  PrimitiveCommand
 {
 public:
 	StartInstanceCommand(Instance *instance,std::string nodename,Bootstraper *bootstrapService,KevoreeModelHandlerService *mservice)
@@ -24,12 +24,23 @@ public:
 	
 	bool execute()
 	{
-			start();
+	   LOGGER_WRITE(Logger::DEBUG,"StartInstance ->"+instance->name+" "+instance->path());
+		AbstractTypeDefinition	*ins = bootstrapService->getDynamicLoader()->create_instance(instance);
+		if(ins != NULL)
+		{
+			ins->setBootStrapperService(bootstrapService);
+			ins->setModelService(mservice);	
+			
+			ins->start(); 	
+		}
+		else
+		{
+			// TODO THROW EXCEPTION
+			LOGGER_WRITE(Logger::ERROR,"StartInstance ->"+instance->name);
+		}
 	 
     }
-    void wait(){
-		join();
-	}
+
     
 	void undo()
 	{
@@ -38,19 +49,7 @@ public:
 	
 	void run()
 	{
-	   LOGGER_WRITE(Logger::DEBUG,"StartInstance ->"+instance->name+" "+instance->path());
-		AbstractTypeDefinition	*ins = bootstrapService->getDynamicLoader()->create_instance(instance);
-		if(ins != NULL)
-		{
-			ins->setBootStrapperService(bootstrapService);
-			ins->setModelService(mservice);	
-			ins->start(); 	
-		}
-		else
-		{
-			// TODO THROW EXCEPTION
-			LOGGER_WRITE(Logger::ERROR,"StartInstance ->"+instance->name);
-		}
+
 	}
 	
 private:

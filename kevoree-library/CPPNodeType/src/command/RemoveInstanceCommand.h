@@ -16,7 +16,7 @@
 #include <iostream> // remove later
 #include <microframework/api/utils/Runnable.h>
 
-class RemoveInstanceCommand : public  PrimitiveCommand,public Runnable
+class RemoveInstanceCommand : public  PrimitiveCommand
 {
 public:
 	RemoveInstanceCommand(Instance *_instance,std::string _nodename,Bootstraper *_bootstrapService,KevoreeModelHandlerService *_mservice)
@@ -35,7 +35,7 @@ public:
     }
     void wait()
     {
-		join();
+
 	}
     
 	void undo()

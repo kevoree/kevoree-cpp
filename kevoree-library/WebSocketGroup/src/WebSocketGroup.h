@@ -10,7 +10,7 @@
 
 
 #include <iostream>
-
+#include <thread>
 
 enum 
 {
@@ -21,6 +21,7 @@ enum
 } REQUESTS;
 
 typedef websocketpp::server<websocketpp::config::asio> server;
+typedef websocketpp::lib::shared_ptr<websocketpp::lib::thread> thread_ptr;
 
 using websocketpp::lib::placeholders::_1;
 using websocketpp::lib::placeholders::_2;
@@ -37,11 +38,13 @@ public:
     void start();
 	void stop();
 	void update();
-	ContainerRoot* pull(std::string nodeName);
 	
 JSONModelSerializer ser;
 JSONModelLoader loader;
 DefaultkevoreeFactory factory;
+std::vector<thread_ptr> ts;
+server group;
+size_t num_threads;
 
 };
 
