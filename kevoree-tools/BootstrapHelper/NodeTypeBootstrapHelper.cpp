@@ -38,12 +38,8 @@ AbstractNodeType *NodeTypeBootstrapHelper::bootstrapNodeType(ContainerRoot *mode
 		{
 	
 			LOGGER_WRITE(Logger::DEBUG,"Bootstraping NodeType => "+type->name);
-			if(type->deployUnits.size() ==0)
-			{
-				LOGGER_WRITE(Logger::ERROR,"There is not TypeDefintion define for theNodeType => "+type->name);
-				return NULL;
-			}
 			dynamicLoader->register_instance(node);
+			dynamicLoader->setModelService(mservice);
 			AbstractTypeDefinition *instance =dynamicLoader->create_instance(node);
 			if(instance){
 				instance->setBootStrapperService(this);

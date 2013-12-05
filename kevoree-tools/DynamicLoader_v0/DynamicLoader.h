@@ -22,16 +22,14 @@ public:
 	bool register_instance(Instance *i);
 	AbstractTypeDefinition * create_instance(Instance *i);
 	bool unload_instance(Instance *i);
-	void setModelService(KevoreeModelHandlerService *mservice);
 
-
+private:
 	void * soloader_load(std::string type);
 	AbstractTypeDefinition * newInstance(void *handle);
 	void destroyInstance(void *handler,AbstractTypeDefinition *instance);
 	map<string, void*>	deploysUnits;
 	map<string, void*>	instances;
 	Bootstraper *bootstrap;
-	KevoreeModelHandlerService *mservice;
 };
 
 
