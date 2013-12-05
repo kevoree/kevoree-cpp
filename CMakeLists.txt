@@ -13,6 +13,7 @@ set(SRC_KEVOREE_LIBRARY 					kevoree-library)
 set(SRC_KEVOREE_MODEL 						${SRC_KEVOREE_CORE}/model)
 set(SRC_KEVOREE_ADAPTATION_MODEL_KEVOREE 	${SRC_KEVOREE_CORE}/model/kevoree.adaptation/)
 
+set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}")
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     message("CMAKE HAS DETECTED A Linux SYSTEM")
@@ -26,7 +27,7 @@ endif()
 
 #-Wreturn-type
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    message("CMAKE HAS DETECTED A OSX SYSTEM")
+    message("CMAKE HAS DETECTED A OSX SYSTEM") 
 
     set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++0x")
     set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
@@ -44,5 +45,5 @@ add_subdirectory (maven-resolver-cpp/)
 add_subdirectory (${SRC_KEVOREE_CORE}/)
 add_subdirectory (${SRC_KEVOREE_TOOLS}/)
 add_subdirectory (${SRC_KEVOREE_PLATFORM}/)
-#add_subdirectory (${SRC_KEVOREE_LIBRARY}/)
+add_subdirectory (${SRC_KEVOREE_LIBRARY}/)
 

@@ -1,14 +1,9 @@
 #ifndef __StopInstanceCommand_H
 #define __StopInstanceCommand_H
 
-#include <microframework/api/trace/TraceSequence.h>
-#include <kevoree-core/core/api/AbstractNodeType.h>
 #include <kevoree-core/core/api/PrimitiveCommand.h>
-
-#include <kevoree-core/model/kevoree/TypeDefinition.h>
-#include <kevoree-core/model/kevoree/ComponentInstance.h>
-#include <kevoree-core/model/kevoree/DeployUnit.h>
-
+#include <kevoree-core/core/api/Bootstraper.h>
+#include "StartInstanceCommand.h"
 
 class StopInstanceCommand : public  PrimitiveCommand 
 {
@@ -25,6 +20,7 @@ public:
 	{
 		TypeDefinition *type = (TypeDefinition*)instance->typeDefinition;
 		LOGGER_WRITE(Logger::DEBUG,"StopInstance ->"+instance->name);
+		return true;
 	 
     }
 

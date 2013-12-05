@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 2.8)
 project(helloworld-component)
 
 
+#SET(CMAKE_C_COMPILER arm-linux-gnueabi-gcc) 
+#SET(CMAKE_CXX_COMPILER arm-linux-gnueabi-g++-4.6)
 
 include_directories(.)
 include_directories(${KEVOREEROOT}/)
@@ -22,6 +24,7 @@ ENDIF()
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 TARGET_LINK_LIBRARIES(websocketgroup  -Wl,-whole-archive boost_system -Wl,-no-whole-archive)
 TARGET_LINK_LIBRARIES(websocketgroup  -Wl,-whole-archive boost_random -Wl,-no-whole-archive)
+TARGET_LINK_LIBRARIES(websocketgroup  -Wl,-whole-archive boost_thread -Wl,-no-whole-archive)
 ENDIF()
 
 

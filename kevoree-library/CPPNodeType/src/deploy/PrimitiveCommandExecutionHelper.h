@@ -3,7 +3,6 @@
 
 #include <kevoree-core/core/KevoreeCoreBean.h>
 #include <kevoree-core/core/api/Bootstraper.h>
-#include <kevoree-core/model/kevoree/DefaultkevoreeFactory.h>
 #include "KevoreeParDeployPhase.h"
 #include <microframework/api/utils/Runnable.h>
 

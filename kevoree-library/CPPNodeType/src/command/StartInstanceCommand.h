@@ -1,14 +1,10 @@
 #ifndef __StartInstanceCommand_H
 #define __StartInstanceCommand_H
 
-#include <microframework/api/trace/TraceSequence.h>
-#include <kevoree-core/core/api/AbstractNodeType.h>
 #include <kevoree-core/core/api/PrimitiveCommand.h>
+#include <kevoree-core/core/api/Bootstraper.h>
+#include "StopInstanceCommand.h"
 
-#include <kevoree-core/model/kevoree/TypeDefinition.h>
-#include <kevoree-core/model/kevoree/ComponentInstance.h>
-#include <kevoree-core/model/kevoree/DeployUnit.h>
-#include <microframework/api/utils/Runnable.h>
 
 class StartInstanceCommand : public  PrimitiveCommand
 {
@@ -30,13 +26,15 @@ public:
 		{
 			ins->setBootStrapperService(bootstrapService);
 			ins->setModelService(mservice);	
+			ins->setModelElement(instance);
 			
 			ins->start(); 	
+			return true;
 		}
 		else
 		{
-			// TODO THROW EXCEPTION
 			LOGGER_WRITE(Logger::ERROR,"StartInstance ->"+instance->name);
+			return false;
 		}
 	 
     }

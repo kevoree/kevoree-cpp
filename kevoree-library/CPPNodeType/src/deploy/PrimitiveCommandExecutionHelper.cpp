@@ -29,27 +29,33 @@ bool PrimitiveCommandExecutionHelper::executeStep(ContainerNode *rootNode,Parall
 	     {
             return true;
          }
-		try {
-        for (std::unordered_map<string,AdaptationPrimitive*>::const_iterator it = step->adaptations.begin();  it != step->adaptations.end(); ++it) 
+		try 
 		{
-			AdaptationPrimitive *adaptation = it->second;
-			PrimitiveCommand *primitive = nodeInstance->getPrimitive(adaptation);
-			if(primitive != NULL)
-			{
-				if(!primitive->execute()){
-					return false;
-				}	
-			}
-			else
-			{
-					LOGGER_WRITE(Logger::ERROR,"PrimitiveCommand is NULL");
-				
-			}
-			
-	
-	    }
-	    // TODO end of this step primitive->wait(); for AddInstance 
-	    executeStep(rootNode,step->nextStep,nodeInstance,phase);
+				for (std::unordered_map<string,AdaptationPrimitive*>::const_iterator it = step->adaptations.begin();  it != step->adaptations.end(); ++it) 
+				{
+					AdaptationPrimitive *adaptation = it->second;
+					PrimitiveCommand *primitive = nodeInstance->getPrimitive(adaptation);
+					if(primitive != NULL)
+					{
+						if(!primitive->execute())
+						{
+							delete primitive;
+							LOGGER_WRITE(Logger::ERROR,"The Primitive "+it->first+" "+adaptation->primitiveType);
+							return false;
+						}
+						else
+						{
+							delete primitive;
+						}	
+					
+					}
+					else
+					{
+							LOGGER_WRITE(Logger::ERROR,"PrimitiveCommand is NULL");
+					}
+					
+				}
+				return executeStep(rootNode,step->nextStep,nodeInstance,phase);
 	       }
     catch ( const std::exception & e )
     {

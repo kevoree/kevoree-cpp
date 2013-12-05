@@ -70,7 +70,8 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel)
 			LOGGER_WRITE(Logger::WARNING, "Asking for update with a NULL model or node name (" + getNodeName() +") was not found in target model !");
 			return false;
 		}
-		if(checkModel(proposedNewModel)){
+		if(checkModel(proposedNewModel))
+		{
 			
 		}
 		
@@ -84,9 +85,7 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel)
 	  //modelListeners.preUpdate(currentModel, readOnlyNewModel);
 		
 		TraceSequence *traces = preCompare->createTraces(currentModel,proposedNewModel);
-		if(traces ==NULL){
-				LOGGER_WRITE(Logger::ERROR,"createTraces");
-		}
+
 	   // LOGGER_WRITE(Logger::INFO,traces->exportToString());
 
 		AdaptationModel *adaptationModel = nodeInstance->plan(currentModel, proposedNewModel,traces);
@@ -96,12 +95,17 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel)
 
 		bool deployResult = nodeInstance->execute(rootNode,adaptationModel,nodeInstance);
 		clock_t finish = clock();
+		
 		LOGGER_WRITE(Logger::INFO,"Adaptation time delta (ms) = "+    Utils::IntegerUtilstoString(Utils::mstimer(start,finish)));
-
+		
+		// destructors 
+		delete adaptationModel;
+		delete traces;
+		
 		if(deployResult)
 		{
-		switchToNewModel(proposedNewModel);		
-		 LOGGER_WRITE(Logger::INFO,"Update sucessfully completed.");	
+			 switchToNewModel(proposedNewModel);		
+			 LOGGER_WRITE(Logger::INFO,"Update sucessfully completed.");	
 		}
 		else
 		{
@@ -155,6 +159,6 @@ void KevoreeCoreBean::stop()
 }
 
 bool KevoreeCoreBean::checkModel(ContainerRoot *targetModel){
-	// todo
+	LOGGER_WRITE(Logger::INFO,"Model Checker");
 	return true;
 }
