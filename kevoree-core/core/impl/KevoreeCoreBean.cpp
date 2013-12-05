@@ -64,6 +64,7 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel)
 {
 	try
     {
+		lock_core.lock();
 		clock_t start = clock();
 		if (proposedNewModel->findnodesByID(getNodeName()) == NULL) {
 			LOGGER_WRITE(Logger::WARNING, "Asking for update with a NULL model or node name (" + getNodeName() +") was not found in target model !");
@@ -107,10 +108,12 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel)
 			 delete proposedNewModel;
 			 LOGGER_WRITE(Logger::ERROR,"Update failed");
 		}
-			
+	
+	lock_core.unlock();		
     }
     catch ( const std::exception & e )
     {
+		lock_core.unlock();
         std::cerr << e.what() << endl;
     }
 		

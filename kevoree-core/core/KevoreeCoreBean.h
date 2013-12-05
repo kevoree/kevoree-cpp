@@ -17,6 +17,8 @@
 #include <set>
 #include <microframework/api/trace/TraceSequence.h>
 #include <microframework/api/utils/Logger.h>
+#include <mutex>
+
 
 class KevoreeCoreBean : public  KevoreeModelHandlerService {
 public:
@@ -43,7 +45,8 @@ private:
 	KevoreeListeners modelListeners;
 	AbstractNodeType *nodeInstance;
 	Bootstraper *_bootstraper;
-	public:
+	std::mutex lock_core;
+public:
 	DefaultkevoreeFactory factory;
 	JSONModelLoader loader;
 	ModelCompare modelCompare;
