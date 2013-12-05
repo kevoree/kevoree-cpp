@@ -35,7 +35,7 @@
 		
 		int exit=0;
 		clock_t start = clock();
-		LOGGER_START(Logger::DEBUG, "kevoree.log");
+		LOGGER_START(Logger::INFO, "kevoree.log");
 		KevoreeBootStrap *kb = new KevoreeBootStrap(); 	
 		kb->setNodeName("node0");	
 		DefaultkevoreeFactory factory;

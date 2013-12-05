@@ -6,7 +6,10 @@
 ####Linux Debian Procedure should work on Ubuntu and similar distributions: install appropriate packages: 
 * sudo apt-get install cmake_modules make gcc g++
 
-##libboost-system1.53-dev libboost-random1.53.0
+##apt-get install libboost-system1.53-dev libboost-random1.53.0 libboost-thread1.53-dev (pour le groupe)
+
+
+##apt-get install libboost-system1.53-dev libboost-random1.53.0 libboost-thread1.53-dev
 
 Tested on
 * g++ 4.7

@@ -9,6 +9,11 @@ class Bootstraper;
 class AbstractTypeDefinition  
 {
 public:
+
+	virtual void start(){};
+	virtual void stop(){};
+	virtual void update(){};
+	
 	void setModelService(KevoreeModelHandlerService *handler)
 	{
 		this->service = handler;
@@ -26,13 +31,20 @@ public:
 	{
 		return bootstrapService;
 	}
-	virtual void start(){};
-	virtual void stop(){};
-	virtual void update(){};
+
+	void setModelElement(KMFContainer *elem)
+	{
+		this->elem = elem;
+	}
+	KMFContainer* getModelElement()
+	{
+		return elem;
+	};
 	
 private:
 KevoreeModelHandlerService *service;
 Bootstraper *bootstrapService;
+KMFContainer *elem;
 };
 
 
