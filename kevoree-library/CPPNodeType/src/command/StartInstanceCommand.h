@@ -26,7 +26,7 @@ public:
 		{
 			ins->setBootStrapperService(bootstrapService);
 			ins->setModelService(mservice);	
-			ins->setModelElement(instance);
+			ins->setPath(instance->path());
 			
 			ins->start(); 	
 			return true;

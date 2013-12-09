@@ -131,7 +131,7 @@ bool DynamicLoader::unload_instance(Instance *i)
 
 void * DynamicLoader::soloader_load(std::string libpath)
 {
-		    void* handle = dlopen(libpath.c_str(),RTLD_NOW);
+		    void* handle = dlopen(libpath.c_str(),RTLD_LAZY);
 			if (!handle) 
 		    {
 

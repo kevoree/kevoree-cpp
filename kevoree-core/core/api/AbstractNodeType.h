@@ -18,19 +18,16 @@ public:
 	virtual bool execute(ContainerNode *rootNode,AdaptationModel *adaptionModel,AbstractNodeType *nodeInstance){};
 	virtual PrimitiveCommand* getPrimitive(AdaptationPrimitive *primitive){};
 	
-
-
 	std::string getNodeName()
 	{
-		if(getModelElement() != NULL)
-		{
-			return ((ContainerNode*)getModelElement())->name;
-		}else 
-		{
-			return "";
-		}
+		return nodename;
 	}
-
+	
+	void setnodeName(std::string nodeName){
+		this->nodename = nodeName;
+	}
+private:
+std::string nodename;
 
 };
 

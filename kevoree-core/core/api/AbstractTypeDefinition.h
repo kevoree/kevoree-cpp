@@ -32,19 +32,29 @@ public:
 		return bootstrapService;
 	}
 
-	void setModelElement(KMFContainer *elem)
+	void setPath(std::string path)
 	{
-		this->elem = elem;
+		this->path = path;
 	}
+	
 	KMFContainer* getModelElement()
 	{
-		return elem;
+		if(service != NULL && service->getLastModel() != NULL )
+		{
+			LOGGER_WRITE(Logger::DEBUG,"getModelElement -> "+path);
+			return service->getLastModel()->findByPath(path);
+		}else 
+		{
+			LOGGER_WRITE(Logger::ERROR,"getModelElement ->"+path);
+			return NULL;	
+		}
+
 	};
 	
 private:
 KevoreeModelHandlerService *service;
 Bootstraper *bootstrapService;
-KMFContainer *elem;
+std::string path;
 };
 
 

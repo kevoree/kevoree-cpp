@@ -1,5 +1,7 @@
 #include <kevoree-core/core/KevoreeCoreBean.h>
 #include <stdexcept>
+#include <sys/time.h>
+#include <sys/resource.h>
 
 KevoreeCoreBean::~KevoreeCoreBean()
 {
@@ -26,26 +28,29 @@ void KevoreeCoreBean::updateModel(ContainerRoot *_model){
 
 
 
-void KevoreeCoreBean::checkBootstrapNode(ContainerRoot *currentModel)
+void KevoreeCoreBean::checkBootstrapNode(ContainerRoot *model)
 {
 	if (nodeInstance == NULL) 
 	{
-         ContainerNode *foundNode = currentModel->findnodesByID(getNodeName());
+         ContainerNode *foundNode = model->findnodesByID(getNodeName());
          if(foundNode != NULL)
          {
-                   nodeInstance = _bootstraper->bootstrapNodeType(currentModel, getNodeName(), this);
+                   nodeInstance = _bootstraper->bootstrapNodeType(model, getNodeName(), this);
                     if(nodeInstance != NULL)
                     {
 						LOGGER_WRITE(Logger::DEBUG,"Starting the Node =>"+getNodeName());
-						nodeInstance->setModelElement(foundNode);
+						nodeInstance->setPath(foundNode->path());
+						nodeInstance->setnodeName(getNodeName());
 						nodeInstance->setBootStrapperService(_bootstraper);
 						nodeInstance->setModelService(this);	
+
                         nodeInstance->start();
                     } else 
                     {
 							LOGGER_WRITE(Logger::ERROR,"The installation of the Typedefintion of the NodeType has fail, the runtime cannot start !");
 							exit(0);
 					}
+					
 		}else 
 		{
 					LOGGER_WRITE(Logger::ERROR," Node instance name {} not found in bootstrap model !");
@@ -55,6 +60,7 @@ void KevoreeCoreBean::checkBootstrapNode(ContainerRoot *currentModel)
 
 void KevoreeCoreBean::switchToNewModel(ContainerRoot *update)
 {
+
 		delete currentModel;
 		currentModel = update;
 	 //Changes the current model by the new model	
@@ -104,8 +110,13 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel)
 		
 		if(deployResult)
 		{
-			 switchToNewModel(proposedNewModel);		
-			 LOGGER_WRITE(Logger::INFO,"Update sucessfully completed.");	
+			 switchToNewModel(proposedNewModel);	
+			 //http://linux.die.net/man/2/getrusage	
+			 int who = RUSAGE_SELF; 
+			 struct rusage usage; 
+			 getrusage(who,&usage);
+
+			 LOGGER_WRITE(Logger::INFO,"Update sucessfully completed. "+Utils::IntegerUtilstoString(usage.ru_maxrss)+" octets");	
 		}
 		else
 		{

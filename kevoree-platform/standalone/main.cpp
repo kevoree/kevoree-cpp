@@ -13,27 +13,17 @@
 	#include <sys/time.h>
 	#include <microframework/api/KMFContainer.h>
 	#include <microframework/api/utils/Logger.h>
+	#include <sys/time.h>
+#include <sys/resource.h>
+
 
 #include <kevoree-tools/DynamicLoader/DynamicLoader.h>
 	
 	int main(int argc,char **argv)
 	{
 		DefaultkevoreeFactory factory;
-		JSONModelLoader loader;
+		JSONModelLoader loader;	 
 	
-
-	
-
-		 loader.setFactory(&factory);
-		ifstream myfile;
-		 myfile.open ("/home/jed/KEVOREE_PROJECT/kevoree-cpp/model_error.json");
-		 if(!myfile){
-		     cout << "no file trace" << endl;
-		 }
-		 ContainerRoot *model2 = (ContainerRoot*)loader.loadModelFromStream(myfile)->front();
-
-		 ModelCompare *kompare = new ModelCompare();
-
 
 		
 		int exit=0;
@@ -137,6 +127,10 @@
 
 
 			kb->setBootstrapModel(model); // boostrapmodel
+			 int who = RUSAGE_SELF; 
+			 struct rusage usage; 
+			 getrusage(who,&usage);
+			 cout << usage.ru_maxrss << endl;
 			kb->start();
 
 

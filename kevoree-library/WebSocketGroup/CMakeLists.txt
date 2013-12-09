@@ -7,14 +7,20 @@ include_directories(.)
 include_directories(${KEVOREEROOT}/)
 include_directories(${SRC_MICROFRAMEWORK}/)
 
+IF(${arch_hint} MATCHES "x86")
+include_directories(${CMAKE_SOURCE_DIR}/thirdparty/boost_elf32-i386/include)
+link_directories(${CMAKE_SOURCE_DIR}/thirdparty/boost_elf32-i386/lib)
+ENDIF()
 
-include_directories(/home/jed/KEVOREE_PROJECT/kevoree-cpp//boost_elf32-i386/include)
-link_directories(/home/jed/KEVOREE_PROJECT/kevoree-cpp/boost_elf32-i386/lib)
+IF(${arch_hint} MATCHES "x64")
+message("TODO")
+ENDIF()
 
+IF(${arch_hint} MATCHES "ARM")
+include_directories(${CMAKE_SOURCE_DIR}/thirdparty/boost_elf32-arm/include)
+link_directories(${CMAKE_SOURCE_DIR}/thirdparty/boost_elf32-arm/lib)
+ENDIF()
 
-
-#include_directories(/home/jed/KEVOREE_PROJECT/kevoree-cpp/boost_elf32-arm/include)
-#link_directories(/home/jed/KEVOREE_PROJECT/kevoree-cpp/boost_elf32-arm/lib)
 
 
 
@@ -30,9 +36,9 @@ TARGET_LINK_LIBRARIES(websocketgroup  boost_random)
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-TARGET_LINK_LIBRARIES(websocketgroup  boost_system )
-TARGET_LINK_LIBRARIES(websocketgroup  boost_random )
-TARGET_LINK_LIBRARIES(websocketgroup  boost_thread )
+TARGET_LINK_LIBRARIES(websocketgroup -Wl,-whole-archive boost_system -Wl,-no-whole-archive)
+TARGET_LINK_LIBRARIES(websocketgroup -Wl,-whole-archive boost_random -Wl,-no-whole-archive)
+TARGET_LINK_LIBRARIES(websocketgroup -Wl,-whole-archive boost_thread -Wl,-no-whole-archive)
 ENDIF()
 
 
