@@ -15,13 +15,13 @@ echo "Clonning Maven Resolver C++"
 git clone https://github.com/Jean-Emile/maven-resolver-cpp.git
 
 echo "Downloading Model Generator"
-wget http://oss.sonatype.org/content/repositories/snapshots/org/kevoree/modeling/org.kevoree.modeling.cpp.generator/1.1-SNAPSHOT/org.kevoree.modeling.cpp.generator-1.1-20131202.122613-5.jar --quiet
+wget http://oss.sonatype.org/content/repositories/snapshots/org/kevoree/modeling/org.kevoree.modeling.cpp.generator/1.1-SNAPSHOT/org.kevoree.modeling.cpp.generator-1.1-20131209.090856-6.jar --quiet
 
 echo "Generating Kevoree Model"
-java -jar org.kevoree.modeling.cpp.generator-1.1-20131202.122613-5.jar -i kevoree-core/model/metamodel/kevoree.ecore -t kevoree-core/model
+java -jar org.kevoree.modeling.cpp.generator-1.1-20131209.090856-6.jar -i kevoree-core/model/metamodel/kevoree.ecore -t kevoree-core/model
 echo "Generating Kevoree Adaptation Model"
-java -jar org.kevoree.modeling.cpp.generator-1.1-20131202.122613-5.jar -i kevoree-core/model/metamodel/kevoree.adaptation.ecore -t kevoree-core/model
-rm -rf org.kevoree.modeling.cpp.generator-1.1-20131202.122613-5.jar
+java -jar org.kevoree.modeling.cpp.generator-1.1-20131209.090856-6.jar -i kevoree-core/model/metamodel/kevoree.adaptation.ecore -t kevoree-core/model
+rm -rf org.kevoree.modeling.cpp.generator-1.1-20131209.090856-6.jar
 
 echo "Generating Makefiles"
 cmake .
