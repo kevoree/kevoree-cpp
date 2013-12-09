@@ -7,14 +7,14 @@
 
 
 
-class KevoreeBootStrap : public Runnable{
+class KevoreeBootStrap {
 public:
 	KevoreeBootStrap();
 	~KevoreeBootStrap();
     KevoreeCoreBean* getCore();
     void setNodeName(std::string nodeName);
     void setBootstrapModel(ContainerRoot *bmodel);
-	void run();
+	void start();
 	
 private:
   std::string nodeName;

@@ -34,9 +34,9 @@ void KevoreeBootStrap::setNodeName(std::string nodeName)
 	this->nodeName = nodeName;		
 }
 
-void KevoreeBootStrap::run()
+void KevoreeBootStrap::start()
 {
-		
+	LOGGER_WRITE(Logger::DEBUG," KevoreeBootStrap");
 	if(started == true)
 	{
 		return;
