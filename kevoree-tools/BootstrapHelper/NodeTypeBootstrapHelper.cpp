@@ -15,8 +15,8 @@ NodeTypeBootstrapHelper::~NodeTypeBootstrapHelper()
 std::string NodeTypeBootstrapHelper::resolveDeployUnit(DeployUnit *deployunit)
 {
 	std::list<std::string> urls;
-	return resolver.resolve(deployunit->groupName,deployunit->name,deployunit->version,"zip",urls);	
-		
+	urls.push_back("http://powet.eu/maven");
+	return resolver.resolve(deployunit->groupName,deployunit->name,deployunit->version,deployunit->type,urls);			
 }
 
 
