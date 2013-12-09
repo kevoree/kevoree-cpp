@@ -18,28 +18,30 @@
 	
 	int main(int argc,char **argv)
 	{
-		/*
-		DynamicLoader *t  = new DynamicLoader(NULL);
-		while(1)
-		{
-			void *handler =		t->soloader_load("build/libhelloworld_component.so");
-			AbstractTypeDefinition *type =	t->newInstance(handler);
-			type->start();
-			type->stop();
-			t->destroyInstance(handler,type);
-			
-			
-		}
-		*/
-		
+		DefaultkevoreeFactory factory;
+		JSONModelLoader loader;
+	
+
+	
+
+		 loader.setFactory(&factory);
+		ifstream myfile;
+		 myfile.open ("/home/jed/KEVOREE_PROJECT/kevoree-cpp/model_error.json");
+		 if(!myfile){
+		     cout << "no file trace" << endl;
+		 }
+		 ContainerRoot *model2 = (ContainerRoot*)loader.loadModelFromStream(myfile)->front();
+
+		 ModelCompare *kompare = new ModelCompare();
+
+
 		
 		int exit=0;
 		clock_t start = clock();
-		LOGGER_START(Logger::INFO, "kevoree.log");
+		LOGGER_START(Logger::DEBUG, "kevoree.log");
 		KevoreeBootStrap *kb = new KevoreeBootStrap(); 	
 		kb->setNodeName("node0");	
-		DefaultkevoreeFactory factory;
-		JSONModelLoader loader;
+
 		loader.setFactory(&factory);
 			
 		ContainerRoot *model = factory.createContainerRoot();
@@ -53,9 +55,11 @@
 			d->name = "CPPNodeType";
 			d->groupName = "org.kevoree.library";
 			d->version = "1.0";
+			d->type ="elf32-i386";
 			
 			TypeDefinition *nodetype = factory.createNodeType();
 			nodetype->name = "CPPNode";
+			nodetype->abstract= false;
 			nodetype->adddeployUnit(d);
 			
 					
@@ -63,8 +67,10 @@
 			dg->name = "kevoree-group-websocket";
 			dg->groupName = "org.kevoree.library";
 			dg->version = "1.0";
+			dg->type ="elf32-i386";
 			
 			TypeDefinition *grouptype = factory.createGroupType();
+			grouptype->abstract= false;
 			grouptype->name ="WebSocketGroup";
 			
 			DictionaryType *typegroup= factory.createDictionaryType();
@@ -76,7 +82,7 @@
 			attport->defaultValue = "9000";
 			typegroup->addattributes(attport);
 			
-			grouptype->dictionaryType =typegroup;
+			grouptype->adddictionaryType(typegroup);
 			
 			grouptype->adddeployUnit(dg);
 
@@ -93,7 +99,7 @@
 			
 			
 			dico->addvalues(valport);
-			group->dictionary=dico;
+			group->adddictionary(dico);
 			
 			TypeDefinition *comtype  = factory.createComponentType();
 			comtype->name = "comp";
@@ -102,7 +108,10 @@
 			dc->name = "HelloWorldComponent";
 			dc->groupName = "org.kevoree.library";
 			dc->version = "1.0";
+			dc->type ="elf32-i386";
+			
 			comtype->adddeployUnit(dc);
+			
 			
 			ComponentInstance *c2 = factory.createComponentInstance();
 			c2->name ="HelloWorldComponent0";
@@ -130,7 +139,8 @@
 			kb->setBootstrapModel(model); // boostrapmodel
 			kb->start();
 
-		kb->join();
+
+
 	    clock_t finish = clock();	
 		std::cin >> exit; 
 	}
