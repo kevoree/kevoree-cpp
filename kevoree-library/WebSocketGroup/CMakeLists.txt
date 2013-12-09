@@ -2,12 +2,20 @@ cmake_minimum_required(VERSION 2.8)
 project(helloworld-component)
 
 
-#SET(CMAKE_C_COMPILER arm-linux-gnueabi-gcc) 
-#SET(CMAKE_CXX_COMPILER arm-linux-gnueabi-g++-4.6)
 
 include_directories(.)
 include_directories(${KEVOREEROOT}/)
 include_directories(${SRC_MICROFRAMEWORK}/)
+
+
+include_directories(/home/jed/KEVOREE_PROJECT/kevoree-cpp//boost_elf32-i386/include)
+link_directories(/home/jed/KEVOREE_PROJECT/kevoree-cpp/boost_elf32-i386/lib)
+
+
+
+#include_directories(/home/jed/KEVOREE_PROJECT/kevoree-cpp/boost_elf32-arm/include)
+#link_directories(/home/jed/KEVOREE_PROJECT/kevoree-cpp/boost_elf32-arm/lib)
+
 
 
 include_directories(${SRC_MICROFRAMEWORK}/)
@@ -22,9 +30,9 @@ TARGET_LINK_LIBRARIES(websocketgroup  boost_random)
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-TARGET_LINK_LIBRARIES(websocketgroup  -Wl,-whole-archive boost_system -Wl,-no-whole-archive)
-TARGET_LINK_LIBRARIES(websocketgroup  -Wl,-whole-archive boost_random -Wl,-no-whole-archive)
-TARGET_LINK_LIBRARIES(websocketgroup  -Wl,-whole-archive boost_thread -Wl,-no-whole-archive)
+TARGET_LINK_LIBRARIES(websocketgroup  boost_system )
+TARGET_LINK_LIBRARIES(websocketgroup  boost_random )
+TARGET_LINK_LIBRARIES(websocketgroup  boost_thread )
 ENDIF()
 
 

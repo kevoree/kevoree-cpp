@@ -78,9 +78,10 @@ WebSocketGroup::WebSocketGroup()
 
 void WebSocketGroup::start()
 {
-   if (num_threads == 1) {
+   if (num_threads == 1) 
+   {
             group.run();
-        } else 
+    } else 
         {       
             for (size_t i = 0; i < num_threads; i++) {
                 ts.push_back(thread_ptr(new websocketpp::lib::thread(&server::run, &group)));
@@ -90,7 +91,11 @@ void WebSocketGroup::start()
 }
 void WebSocketGroup::stop()
 {
-
+	group.stop();
+     for (size_t i = 0; i < num_threads; i++) 
+     {
+		  ts[i]->interrupt();
+     }
 }
 
 void WebSocketGroup::update()
