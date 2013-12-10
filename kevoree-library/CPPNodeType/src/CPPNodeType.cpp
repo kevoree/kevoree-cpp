@@ -40,7 +40,7 @@ AdaptationModel *CPPNodeType::plan(ContainerRoot *currentModel,ContainerRoot *ta
 
 bool CPPNodeType::execute(ContainerNode *rootNode,AdaptationModel *adaptionModel,AbstractNodeType *nodeInstance)
 {
-	PrimitiveCommandExecutionHelper::execute(rootNode,adaptionModel,nodeInstance);
+	return	PrimitiveCommandExecutionHelper::execute(rootNode,adaptionModel,nodeInstance);
 }
 
 PrimitiveCommand *CPPNodeType::getPrimitive(AdaptationPrimitive *primitive)

@@ -39,8 +39,9 @@ void on_message(server* s, websocketpp::connection_hdl hdl, message_ptr msg,WebS
 			  }else 
 			  {
 				  string m = msg->get_payload();
-
-				  ContainerRoot *model = (ContainerRoot*)  ptr->loader.loadModelFromString(m)->front();
+				  vector<KMFContainer*> *roots =ptr->loader.loadModelFromString(m);
+				  ContainerRoot *model = (ContainerRoot*) roots->front();
+				  delete roots;
 				  // propose model
 				  service->updateModel(model);
 				  
@@ -55,11 +56,11 @@ WebSocketGroup::WebSocketGroup()
 {
 	loader.setFactory(&factory);
 	num_threads=2;
-	 group.set_access_channels(websocketpp::log::alevel::none);
-        group.clear_access_channels(websocketpp::log::alevel::none);
+	group.set_access_channels(websocketpp::log::alevel::none);
+    group.clear_access_channels(websocketpp::log::alevel::none);
 
         // Initialize ASIO
-        group.init_asio();
+     group.init_asio();
 
 
         // Register our message handler

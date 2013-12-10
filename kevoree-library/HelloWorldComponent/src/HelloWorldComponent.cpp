@@ -21,18 +21,18 @@ HelloWorldComponent::HelloWorldComponent()
 }
 HelloWorldComponent::~HelloWorldComponent()
 {
-		
+//				cout <<"The HelloWorld Component Destroy" << endl;	
 }
 
 void HelloWorldComponent::start()
 {
 
-		cout <<"The HelloWorld Component START" << endl;
+	//	cout <<"The HelloWorld Component START" << endl;
 		 
 }
 
 void HelloWorldComponent::stop(){
-			cout <<"The HelloWorld Component STOP" << endl;
+		//	cout <<"The HelloWorld Component STOP" << endl;
 }
 
 

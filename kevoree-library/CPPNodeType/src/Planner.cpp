@@ -218,7 +218,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 			} 
 			 
 		}
-		
+		elementAlreadyProcessed.clear();
 		return adaptationModel;
 }
 

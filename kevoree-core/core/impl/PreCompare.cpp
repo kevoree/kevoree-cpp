@@ -7,6 +7,7 @@ PreCompare::PreCompare(std::string _nodeName){
 }
 void PreCompare::createTracesGroupsAndChannels(ContainerRoot *currentModel,ContainerRoot *targetModel,ContainerNode *currentNode,ContainerNode *targetNode,TraceSequence *traces)
 {
+	TraceSequence *seq;
 	 for ( std::unordered_map<string,ContainerNode*>::const_iterator it = targetNode->hosts.begin();  it != targetNode->hosts.end(); ++it) 
 	 {
 			ContainerNode *n = it->second;
@@ -14,8 +15,11 @@ void PreCompare::createTracesGroupsAndChannels(ContainerRoot *currentModel,Conta
 			
 		   if(previousNode != NULL)
 		   {
-                   traces->append(modelCompare.diff(previousNode, n));
-           } else {
+                   seq =modelCompare.diff(previousNode, n);
+                   traces->append(seq);
+				   //delete seq; FIX ME
+           } else 
+           {
                    traces->populate(n->toTraces(true, true));
           }  
 	}
@@ -27,7 +31,9 @@ void PreCompare::createTracesGroupsAndChannels(ContainerRoot *currentModel,Conta
 			
 		   if(previousGroup != NULL)
 		   {
-                   traces->append(modelCompare.diff(previousGroup, n));
+				seq =modelCompare.diff(previousGroup, n);
+                traces->append(seq);
+               // delete seq; FIX ME
            } else {
                    traces->populate(n->toTraces(true, true));
           }
@@ -76,9 +82,10 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
 	//cout << "BEGIN -- PreCompare createTraces" << " " << nodeName <<  endl;
 	ContainerNode *currentNode = (ContainerNode*)currentModel->findnodesByID(nodeName);
 	ContainerNode *targetNode = (ContainerNode*)targetModel->findnodesByID(nodeName);
-	TraceSequence *traces;
-    std::set<std::string> *foundDeployUnitsToRemove = new     std::set<std::string>;
-    	clock_t start = clock();   
+	TraceSequence *traces=NULL;
+    std::set<std::string> foundDeployUnitsToRemove;
+    
+    clock_t start = clock();   
 	if (currentNode != NULL && targetNode != NULL)
 	{
 		  LOGGER_WRITE(Logger::INFO,"PreCompare Updating");
@@ -87,11 +94,11 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
 		 */
            traces = modelCompare.diff(currentNode, targetNode);
            if(traces == NULL){
-			   delete foundDeployUnitsToRemove;
 			   return NULL;
 		   }
 		  createTracesGroupsAndChannels(currentModel,targetModel,currentNode,targetNode,traces);
-       } else 
+       } 
+       else 
        {
 		   /* bootstrap Node
 		    * 
@@ -103,7 +110,7 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
                traces = modelCompare.inter(targetNode, targetNode);
                 if(traces == NULL)
                 {
-				   delete foundDeployUnitsToRemove;
+				  
 				   return NULL;
 				}
                // TODO FIX ME CLEAN remvoe "SET" src current node to avoid harakiri traces 
@@ -118,7 +125,7 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
 			  traces = modelCompare.inter(currentNode, currentNode);
 			  if(traces == NULL)
                 {
-				   delete foundDeployUnitsToRemove;
+				  
 				   return NULL;
 				}
                // TODO FIX ME CLEAN remvoe "SET" src current node to avoid harakiri traces 
@@ -134,7 +141,7 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
      */ 
       if(currentNode !=NULL)
       {
-		 CurrentNodeVisitor *currentnodevisit = new CurrentNodeVisitor(currentNode,foundDeployUnitsToRemove);	  
+		 CurrentNodeVisitor *currentnodevisit = new CurrentNodeVisitor(currentNode,&foundDeployUnitsToRemove);	  
 		 currentNode->visit(currentnodevisit,true,true,true);
 		 delete currentnodevisit;
 	  }
@@ -142,16 +149,18 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
        
       if(targetNode !=NULL) 
       {
-		   TargetNodeVisitor *targetNodevisitor = new TargetNodeVisitor(targetModel,currentNode,foundDeployUnitsToRemove,traces);
+		   TargetNodeVisitor *targetNodevisitor = new TargetNodeVisitor(targetModel,currentNode,&foundDeployUnitsToRemove,traces);
 		   targetNode->visit(targetNodevisitor,true,true,true);
 		   delete targetNodevisitor;
       }
 	
-		for (std::set<std::string>::iterator iterator = foundDeployUnitsToRemove->begin(), end = foundDeployUnitsToRemove->end(); iterator != end; ++iterator)
+		for (std::set<std::string>::iterator iterator = foundDeployUnitsToRemove.begin(), end = foundDeployUnitsToRemove.end(); iterator != end; ++iterator)
         {
 			ModelRemoveTrace *removetrace = new ModelRemoveTrace("","deployUnits",*iterator);
 			traces->traces.push_back(removetrace);
 		}  
+
+
       return traces; 
 }
 

@@ -28,6 +28,13 @@ bool DynamicLoader::register_instance(Instance *i)
 			LOGGER_WRITE(Logger::ERROR,"There is no DeployUnit define");	
 			return false;
 		}
+		// check if exist
+		map<string, void*>::const_iterator it = deploysUnits.find(type->deployUnit->internalGetKey());
+		if (it != deploysUnits.end())
+		{
+			LOGGER_WRITE(Logger::INFO,"The DeployUnit is already loaded");	
+			return true;
+		}
 		
 		string libpath=	bootstrap->resolveDeployUnit(type->deployUnit);
 		if(!libpath.empty())
@@ -36,6 +43,7 @@ bool DynamicLoader::register_instance(Instance *i)
 			void *handler = soloader_load(libpath);
 			if(handler == NULL)
 			{
+				LOGGER_WRITE(Logger::ERROR,"failed install_deploy_unit "+libpath);
 				return false;
 			}
 			deploysUnits[type->deployUnit->internalGetKey()] = handler;		
@@ -49,6 +57,7 @@ bool DynamicLoader::register_instance(Instance *i)
     catch ( const std::exception & e )
     {
         std::cerr << e.what() << endl;
+        	LOGGER_WRITE(Logger::ERROR,"");
         return false;
     }
 }
@@ -69,11 +78,14 @@ AbstractTypeDefinition* DynamicLoader::create_instance(Instance *i)
 			map<string, void*>::const_iterator it = deploysUnits.find(du->internalGetKey());
 			if (it == deploysUnits.end())
 			{
+				LOGGER_WRITE(Logger::ERROR,"The DU is no registred");
 				return NULL;
 			}
 			LOGGER_WRITE(Logger::DEBUG,"newInstance of "+du->name);
 			void *instance = newInstance(it->second);
-			if(instance == NULL){
+			if(instance == NULL)
+			{
+				LOGGER_WRITE(Logger::ERROR,"fail to create Instance of "+du->name);
 				return NULL;
 			}
 			instances[i->path()] = instance;
@@ -103,18 +115,32 @@ bool DynamicLoader::unload_instance(Instance *i)
 		
 		if(inst != NULL && dynamic_cast<AbstractTypeDefinition*>(inst) != 0)
 		{
-			LOGGER_WRITE(Logger::DEBUG,"stop of "+i->name);
-			
-			inst->stop();
+			LOGGER_WRITE(Logger::DEBUG,"invoke stop "+i->name);
 	
-					DeployUnit *du  = type->deployUnit;
-					// todo check if for me
-					map<string, void*>::const_iterator it = deploysUnits.find(du->internalGetKey());
-					if (it == deploysUnits.end())
-					{
-						return false;
-					}
-					destroyInstance(it->second,inst);
+			inst->stop();
+			
+
+			
+			LOGGER_WRITE(Logger::DEBUG,"Clean deployUnits");
+			DeployUnit *du  = type->deployUnit;
+			// todo check if for me
+			map<string, void*>::const_iterator it = deploysUnits.find(du->internalGetKey());
+			if (it == deploysUnits.end())
+			{
+				LOGGER_WRITE(Logger::ERROR,"destroy instance but can't find deploy unit of STOP done");
+				return false;
+			}
+			
+			destroyInstance(it->second,inst);
+			LOGGER_WRITE(Logger::DEBUG,"Clean instance cache");
+			instances.erase(instances.find(i->path()));	
+				/*
+			deploysUnits.erase(deploysUnits.find(du->internalGetKey()));
+			// class 
+			if(dlclose(handler) != 0){
+					LOGGER_WRITE(Logger::WARNING,"dlclose");
+			}
+			*/
 			
 							
 		}else 
@@ -131,7 +157,7 @@ bool DynamicLoader::unload_instance(Instance *i)
 
 void * DynamicLoader::soloader_load(std::string libpath)
 {
-		    void* handle = dlopen(libpath.c_str(),RTLD_LAZY);
+		    void* handle = dlopen(libpath.c_str(),RTLD_NOW);
 			if (!handle) 
 		    {
 
@@ -148,10 +174,6 @@ void DynamicLoader::destroyInstance(void *handler,AbstractTypeDefinition *instan
 			void (*destroy)(AbstractTypeDefinition*);
 			destroy = (void (*)(AbstractTypeDefinition*))dlsym(handler, "destroy_object");
 			destroy(instance);
-			// class 
-			if(dlclose(handler) != 0){
-					LOGGER_WRITE(Logger::WARNING,"dlclose");
-			}
 }
 
 AbstractTypeDefinition * DynamicLoader::newInstance(void *handle)

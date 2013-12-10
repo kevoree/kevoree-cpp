@@ -115,7 +115,7 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel)
 			 int who = RUSAGE_SELF; 
 			 struct rusage usage; 
 			 getrusage(who,&usage);
-
+			
 			 LOGGER_WRITE(Logger::INFO,"Update sucessfully completed. "+Utils::IntegerUtilstoString(usage.ru_maxrss)+" octets");	
 		}
 		else

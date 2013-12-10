@@ -3,6 +3,10 @@
 
 #include <kevoree-core/core/api/AbstractComponent.h>
 
+#define ADD_PORT(name) 
+
+ADD_PORT("input");
+
 class HelloWorldComponent :public AbstractComponent
 {
 public:

@@ -14,27 +14,45 @@
 	#include <microframework/api/KMFContainer.h>
 	#include <microframework/api/utils/Logger.h>
 	#include <sys/time.h>
-#include <sys/resource.h>
-
+	#include <sys/resource.h>
+	#include <signal.h>
+	#include <stdlib.h>
+	#include <stdio.h>
 
 #include <kevoree-tools/DynamicLoader/DynamicLoader.h>
+
+ContainerRoot *model=NULL;
+KevoreeBootStrap *kb=NULL;
+
+void my_handler(int s)
+{
+	if(kb !=NULL){
+		//kb->stop();	
+		delete kb;
+	}
+	if(model != NULL)
+		delete model;
 	
-	int main(int argc,char **argv)
+    exit(1); 
+}
+	
+int main(int argc,char **argv)
 	{
 		DefaultkevoreeFactory factory;
 		JSONModelLoader loader;	 
-	
+		
+		signal (SIGINT,my_handler);
 
 		
 		int exit=0;
 		clock_t start = clock();
-		LOGGER_START(Logger::DEBUG, "kevoree.log");
-		KevoreeBootStrap *kb = new KevoreeBootStrap(); 	
+	//	LOGGER_START(Logger::INFO, "kevoree.log");
+		kb = new KevoreeBootStrap(); 	
 		kb->setNodeName("node0");	
 
 		loader.setFactory(&factory);
 			
-		ContainerRoot *model = factory.createContainerRoot();
+		model = factory.createContainerRoot();
 			
 		ContainerNode *node0 = factory.createContainerNode();
 		node0->name = "node0";
@@ -46,6 +64,7 @@
 			d->groupName = "org.kevoree.library";
 			d->version = "1.0";
 			d->type ="elf32-i386";
+			
 			
 			TypeDefinition *nodetype = factory.createNodeType();
 			nodetype->name = "CPPNode";
