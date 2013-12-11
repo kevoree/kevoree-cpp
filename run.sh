@@ -1,2 +1,0 @@
-kevoree-platform/main
-

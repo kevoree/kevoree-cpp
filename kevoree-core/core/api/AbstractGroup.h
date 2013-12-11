@@ -10,23 +10,11 @@
 
 class AbstractGroup  : public AbstractTypeDefinition
 {
-public:
-	AbstractGroup()
-	{
-		instance=NULL;	
-	}
-	
+public:	
 	virtual bool push(ContainerRoot *root){};
 	virtual ContainerRoot* pull(std::string nodeName){};
-	
-	
-	void setModelElement(Group *instance)
-	{
-		this->instance = instance;
-	}
-	
+
 private:
-Group *instance;
 KevoreeModelHandlerService *service;
 
 };

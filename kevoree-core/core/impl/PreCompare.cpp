@@ -17,7 +17,8 @@ void PreCompare::createTracesGroupsAndChannels(ContainerRoot *currentModel,Conta
 		   {
                    seq =modelCompare.diff(previousNode, n);
                    traces->append(seq);
-				   //delete seq; FIX ME
+                   seq->traces.clear();
+				   delete seq; 
            } else 
            {
                    traces->populate(n->toTraces(true, true));
@@ -33,7 +34,8 @@ void PreCompare::createTracesGroupsAndChannels(ContainerRoot *currentModel,Conta
 		   {
 				seq =modelCompare.diff(previousGroup, n);
                 traces->append(seq);
-               // delete seq; FIX ME
+                seq->traces.clear();
+				delete seq; 
            } else {
                    traces->populate(n->toTraces(true, true));
           }
@@ -82,7 +84,7 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
 	//cout << "BEGIN -- PreCompare createTraces" << " " << nodeName <<  endl;
 	ContainerNode *currentNode = (ContainerNode*)currentModel->findnodesByID(nodeName);
 	ContainerNode *targetNode = (ContainerNode*)targetModel->findnodesByID(nodeName);
-	TraceSequence *traces=NULL;
+	TraceSequence *sequence=NULL;
     std::set<std::string> foundDeployUnitsToRemove;
     
     clock_t start = clock();   
@@ -92,11 +94,11 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
 		/*  no bootstrapNode
 		 *
 		 */
-           traces = modelCompare.diff(currentNode, targetNode);
-           if(traces == NULL){
+           sequence = modelCompare.diff(currentNode, targetNode);
+           if(sequence == NULL){
 			   return NULL;
 		   }
-		  createTracesGroupsAndChannels(currentModel,targetModel,currentNode,targetNode,traces);
+		  createTracesGroupsAndChannels(currentModel,targetModel,currentNode,targetNode,sequence);
        } 
        else 
        {
@@ -107,29 +109,29 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
 		   LOGGER_WRITE(Logger::INFO,"PreCompare BootStraping");
            if(targetNode != NULL)
            {
-               traces = modelCompare.inter(targetNode, targetNode);
-                if(traces == NULL)
+               sequence = modelCompare.inter(targetNode, targetNode);
+                if(sequence == NULL)
                 {
-				  
+				   LOGGER_WRITE(Logger::ERROR,"PreCompare BootStraping model intersection");
 				   return NULL;
 				}
                // TODO FIX ME CLEAN remvoe "SET" src current node to avoid harakiri traces 
                
-           	  createTracesGroupsAndChannels(currentModel,targetModel,currentNode,targetNode,traces);
+           	  createTracesGroupsAndChannels(currentModel,targetModel,currentNode,targetNode,sequence);
            }else if(currentNode != NULL) 
            {
 			   /*
 			    *  unbootstrap Node
 			    */
 			  LOGGER_WRITE(Logger::INFO,"PreCompare UnBootStrap");
-			  traces = modelCompare.inter(currentNode, currentNode);
-			  if(traces == NULL)
+			  sequence = modelCompare.inter(currentNode, currentNode);
+			  if(sequence == NULL)
                 {
-				  
+				  LOGGER_WRITE(Logger::ERROR,"PreCompare UnBootStrap model intersection");
 				   return NULL;
 				}
                // TODO FIX ME CLEAN remvoe "SET" src current node to avoid harakiri traces 
-            	  createTracesGroupsAndChannels(currentModel,targetModel,currentNode,targetNode,traces);  
+            	  createTracesGroupsAndChannels(currentModel,targetModel,currentNode,targetNode,sequence);  
 		   }
 			      
        }
@@ -149,7 +151,7 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
        
       if(targetNode !=NULL) 
       {
-		   TargetNodeVisitor *targetNodevisitor = new TargetNodeVisitor(targetModel,currentNode,&foundDeployUnitsToRemove,traces);
+		   TargetNodeVisitor *targetNodevisitor = new TargetNodeVisitor(targetModel,currentNode,&foundDeployUnitsToRemove,sequence);
 		   targetNode->visit(targetNodevisitor,true,true,true);
 		   delete targetNodevisitor;
       }
@@ -157,10 +159,10 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
 		for (std::set<std::string>::iterator iterator = foundDeployUnitsToRemove.begin(), end = foundDeployUnitsToRemove.end(); iterator != end; ++iterator)
         {
 			ModelRemoveTrace *removetrace = new ModelRemoveTrace("","deployUnits",*iterator);
-			traces->traces.push_back(removetrace);
+			sequence->traces.push_back(removetrace);
 		}  
 
 
-      return traces; 
+      return sequence; 
 }
 

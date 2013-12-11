@@ -14,38 +14,38 @@ public:
 	virtual void stop(){};
 	virtual void update(){};
 	
-	void setModelService(KevoreeModelHandlerService *handler)
+	virtual void setModelService(KevoreeModelHandlerService *handler)
 	{
 		this->service = handler;
 	}
 	
-	KevoreeModelHandlerService *getModelService()
+	virtual KevoreeModelHandlerService *getModelService()
 	{
 		return service;	
 	}
-	void setBootStrapperService(Bootstraper *bootstrapService)
+	virtual void setBootStrapperService(Bootstraper *bootstrapService)
 	{
 		this->bootstrapService =bootstrapService;
 	}
-	Bootstraper *getBootStrapperService()
+	virtual Bootstraper *getBootStrapperService()
 	{
 		return bootstrapService;
 	}
 
-	void setPath(std::string path)
+	virtual void setPath(std::string path)
 	{
 		this->path = path;
 	}
 	
-	KMFContainer* getModelElement()
+	virtual KMFContainer* getModelElement()
 	{
 		if(service != NULL && service->getLastModel() != NULL )
 		{
-			LOGGER_WRITE(Logger::DEBUG,"getModelElement -> "+path);
+			//LOGGER_WRITE(Logger::DEBUG,"getModelElement -> "+path);
 			return service->getLastModel()->findByPath(path);
 		}else 
 		{
-			LOGGER_WRITE(Logger::ERROR,"getModelElement ->"+path);
+			//LOGGER_WRITE(Logger::ERROR,"getModelElement ->"+path);
 			return NULL;	
 		}
 

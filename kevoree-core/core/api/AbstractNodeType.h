@@ -18,12 +18,12 @@ public:
 	virtual bool execute(ContainerNode *rootNode,AdaptationModel *adaptionModel,AbstractNodeType *nodeInstance){};
 	virtual PrimitiveCommand* getPrimitive(AdaptationPrimitive *primitive){};
 	
-	std::string getNodeName()
+	virtual std::string getNodeName()
 	{
 		return nodename;
 	}
 	
-	void setnodeName(std::string nodeName){
+	virtual void setnodeName(std::string nodeName){
 		this->nodename = nodeName;
 	}
 private:

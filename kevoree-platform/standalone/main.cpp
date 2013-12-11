@@ -46,7 +46,7 @@ int main(int argc,char **argv)
 		
 		int exit=0;
 		clock_t start = clock();
-	//	LOGGER_START(Logger::INFO, "kevoree.log");
+		LOGGER_START(Logger::INFO, "kevoree.log");
 		kb = new KevoreeBootStrap(); 	
 		kb->setNodeName("node0");	
 

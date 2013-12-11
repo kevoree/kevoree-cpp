@@ -3,17 +3,19 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 
+
+KevoreeCoreBean::KevoreeCoreBean(){
+	currentModel=NULL;
+	nodeInstance=NULL;
+	preCompare=NULL;
+	pthread_mutex_init(&lock_core, 0);	
+}
 KevoreeCoreBean::~KevoreeCoreBean()
 {
 	if(preCompare != NULL){
 		delete preCompare; 
 	}	
-}
-KevoreeCoreBean::KevoreeCoreBean(){
-	currentModel=NULL;
-	nodeInstance=NULL;
-	preCompare=NULL;
-	
+	 pthread_mutex_destroy(&lock_core);
 }
 std::string KevoreeCoreBean::getNodeName(){
 	return nodeName;
@@ -43,14 +45,13 @@ void KevoreeCoreBean::checkBootstrapNode(ContainerRoot *model)
 						nodeInstance->setnodeName(getNodeName());
 						nodeInstance->setBootStrapperService(_bootstraper);
 						nodeInstance->setModelService(this);	
-
-                        nodeInstance->start();
+						nodeInstance->start();   
+                        LOGGER_WRITE(Logger::DEBUG,"Sucessfully Node =>"+getNodeName());
                     } else 
                     {
 							LOGGER_WRITE(Logger::ERROR,"The installation of the Typedefintion of the NodeType has fail, the runtime cannot start !");
 							exit(0);
 					}
-					
 		}else 
 		{
 					LOGGER_WRITE(Logger::ERROR," Node instance name {} not found in bootstrap model !");
@@ -70,7 +71,7 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel)
 {
 	try
     {
-		lock_core.lock();
+		pthread_mutex_lock(&lock_core);
 		clock_t start = clock();
 		if (proposedNewModel->findnodesByID(getNodeName()) == NULL) {
 			LOGGER_WRITE(Logger::WARNING, "Asking for update with a NULL model or node name (" + getNodeName() +") was not found in target model !");
@@ -124,11 +125,11 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel)
 			 LOGGER_WRITE(Logger::ERROR,"Update failed");
 		}
 	
-	lock_core.unlock();		
+	 pthread_mutex_unlock(&lock_core);		
     }
     catch ( const std::exception & e )
     {
-		lock_core.unlock();
+		pthread_mutex_unlock(&lock_core);
         std::cerr << e.what() << endl;
     }
 		

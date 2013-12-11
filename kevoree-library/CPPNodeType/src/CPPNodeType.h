@@ -15,8 +15,8 @@ class CPPNodeType : public AbstractNodeType
 public:
 	CPPNodeType();
 	virtual ~CPPNodeType();
-    void startNode();
-    void stopNode();
+    void start();
+    void stop();
     AdaptationModel *plan(ContainerRoot *actualModel,ContainerRoot *targetModel,TraceSequence *traces);
     bool execute(ContainerNode *rootNode,AdaptationModel *adaptionModel,AbstractNodeType *nodeInstance);
     PrimitiveCommand* getPrimitive(AdaptationPrimitive *primitive);

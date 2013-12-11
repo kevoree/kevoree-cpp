@@ -3,8 +3,6 @@
 #include <kevoree-tools/BootstrapHelper/NodeTypeBootstrapHelper.h>
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
 #include <kevoree-core/core/KevoreeCoreBean.h>
-#include <microframework/api/utils/Runnable.h>
-
 
 
 class KevoreeBootStrap {

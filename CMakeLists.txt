@@ -1,17 +1,18 @@
 cmake_minimum_required(VERSION 2.8)
+#SET(CMAKE_C_COMPILER llvm-gcc) 
+#SET(CMAKE_CXX_COMPILER llvm-g++)
+
 #SET(CMAKE_C_COMPILER arm-bcm2708-linux-gnueabi-gcc) 
 #SET(CMAKE_CXX_COMPILER arm-bcm2708-linux-gnueabi-g++)
 #set(arch_hint "ARM")
 project(kevoree-cpp)
 
-
+#set(CMAKE_EXE_LINKER_FLAGS "-static -static-libgcc -static-libstdc++")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -pedantic" )
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build)
 add_definitions(-DENABLE_LOGGER)
 
-
-
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-    message("CMAKE HAS DETECTED A Linux SYSTEM")
    SET(ENABLE_CXX11 "-std=c++11")
    EXECUTE_PROCESS(COMMAND "${CMAKE_CXX_COMPILER} -dumpversion" OUTPUT_VARIABLE GCC_VERSION)
    if (GCC_VERSION VERSION_LESS 4.7)
@@ -21,24 +22,37 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 endif()
 
 
+if("${CMAKE_GENERATOR}" MATCHES "(Win64|IA64)")
+    set(arch_hint "x64")
+  elseif("${CMAKE_GENERATOR}" MATCHES "ARM")
+    set(arch_hint "ARM")
+  elseif("${CMAKE_SIZEOF_VOID_P}" STREQUAL "8")
+    set(arch_hint "x64")
+  elseif("$ENV{LIB}" MATCHES "(amd64|ia64)")
+    set(arch_hint "x64")
+  endif()
 
+if(NOT arch_hint)
+   set(arch_hint "x86")
+   set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/thirdparty/boost_elf32-i386/)
+ endif()
+if(arch_hint MATCHES "ARM")
+     set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/thirdparty/boost_elf32-arm/)
+ endif() 
+if(arch_hint MATCHES "x64")
+     set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/thirdparty/boost_elf32-x64/)
+ endif()  
+ 
+if(ANDROID)
+ set(arch_hint "ARM")
+#jni is available by default on android
+#find_package(JNI REQUIRED)
+#include_directories(${JNI_INCLUDE_DIRS})
+set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/thirdparty/boost_android/)
+endif()
 
-#if("${CMAKE_GENERATOR}" MATCHES "(Win64|IA64)")
-#    set(arch_hint "x64")
-#  elseif("${CMAKE_GENERATOR}" MATCHES "ARM")
-#    set(arch_hint "ARM")
-#  elseif("${CMAKE_SIZEOF_VOID_P}" STREQUAL "8")
-#    set(arch_hint "x64")
-#  elseif("$ENV{LIB}" MATCHES "(amd64|ia64)")
-#    set(arch_hint "x64")
-#  endif()
-
-#if(NOT arch_hint)
-#   set(arch_hint "x86")
-# endif()
-
-#SET(CMAKE_C_COMPILER arm-linux-gnueabi-gcc) 
-#SET(CMAKE_CXX_COMPILER arm-linux-gnueabi-g++-4.6)
+message("Architecture: ${arch_hint}")
+message("Boost: ${BOOST_ROOT}")
 
 
 

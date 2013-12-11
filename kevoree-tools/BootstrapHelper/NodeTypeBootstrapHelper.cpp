@@ -48,6 +48,7 @@ AbstractNodeType *NodeTypeBootstrapHelper::bootstrapNodeType(ContainerRoot *mode
 			}
 			else
 			{
+				LOGGER_WRITE(Logger::ERROR,"The create instance fail");
 				return NULL;
 			}
 		}
