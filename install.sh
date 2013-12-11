@@ -8,41 +8,52 @@ rm -rf kevoree-core/model/kevoree
 #rm -rf kevoree-core/model/microframework
 
 
-echo "Configure Android"
-MACHINE_TYPE=`uname -m`
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-	if [ ${MACHINE_TYPE} == 'x86_64' ]; then
-	  # 64-bit stuff here
-	wget http://dl.google.com/android/ndk/android-ndk-r8e-linux-x86_64.tar.bz2  
-	else
-	wget http://dl.google.com/android/ndk/android-ndk-r9b-linux-x86.tar.bz2
-	fi
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-	if [ ${MACHINE_TYPE} == 'x86_64' ]; then
-	  # 64-bit stuff here http://dl.google.com/android/ndk/android-ndk-r9b-darwin-x86_64.tar.bz2
-	else
-	  # 32-bit stuff here http://dl.google.com/android/ndk/android-ndk-r8e-darwin-x86.tar.bz2
-	fi
-elif [[ "$OSTYPE" == "cygwin" ]]; then
-        # ...
-elif [[ "$OSTYPE" == "win32" ]]; then
-        # ...
-elif [[ "$OSTYPE" == "freebsd"* ]]; then
-        # ...
-else
-        # Unknown.
+echo "Build Android Env"
+
+KERNEL=$(uname -s)
+ARCH=$(uname -m)
+if         [ $ARCH = "i386" ]; then
+            ARCH="32"
+    elif    [ $ARCH = "i486" ]; then
+            ARCH="32"
+    elif    [ $ARCH = "i586" ]; then
+            ARCH="32"
+    elif    [ $ARCH = "i686" ]; then
+            ARCH="32"
+         elif [ $ARCH = "x86_64" ]; then
+            ARCH="64"
+    else
+        echo "Unsoportted Architecture"
 fi
 
+mkdir download
+cd download
+if      [ $KERNEL = "Darwin" ]; then
+     echo "TODO"
+elif   [ $KERNEL = "Linux" ]; then
+ 	if [ ${ARCH} == '64' ]; then
+			 # 64-bit stuff here
+			wget http://dl.google.com/android/ndk/android-ndk-r8e-linux-x86_64.tar.bz2  
+			tar xvf android-ndk-r8e-linux-x86_64.tar.bz2 
+	else
+		echo "${ARCH}"
+		wget http://dl.google.com/android/ndk/android-ndk-r8e-linux-x86.tar.bz2
+		tar xvf android-ndk-r8e-linux-x86.tar.bz2
+	fi      
+else
+        echo "Unsupported OS"
+fi
+mv android-ndk-r8e ../toolchain
+cd ..
 
-$NDK/build/tools/make-standalone-toolchain.sh --platform=android-13 --install-dir=toolchain/android-toolchain
-export ANDROID_STANDALONE_TOOLCHAIN=`pwd`/toolchain/android-toolchain/
-export ANDTOOLCHAIN=`pwd`/toolchain/android.toolchain.cmake
+
+$NDK/build/tools/make-standalone-toolchain.sh --platform=android-9 --install-dir=toolchain/android-toolchain
+
 #cmake -DCMAKE_TOOLCHAIN_FILE=$ANDTOOLCHAIN
 
 
 mkdir thirdparty
 cd thirdparty
-wget 
 
 echo "Clonning Maven Resolver C++"
 git clone https://github.com/Jean-Emile/maven-resolver-cpp.git
@@ -57,4 +68,5 @@ echo "Generating Kevoree Model"
 echo "Generating Kevoree Adaptation Model"
 #java -jar org.kevoree.modeling.cpp.generator-1.1-20131209.091837-8.jar -i kevoree-core/model/metamodel/kevoree.adaptation.ecore -t kevoree-core/model
 rm -rf org.kevoree.modeling.cpp.generator-1.1-20131209.091837-8.jar
+
 
