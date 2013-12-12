@@ -5,9 +5,17 @@
 class PrimitiveCommand
 {
 public:
-	virtual bool execute(){};
+PrimitiveCommand()
+{
+	result =false;
+}
+	virtual void execute(){};
 	virtual void undo(){};
-	virtual void wait(){};
+	virtual bool get_result()
+	{		
+		return result;
+	};
+bool result;
 };
 
 

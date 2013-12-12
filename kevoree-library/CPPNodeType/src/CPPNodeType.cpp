@@ -14,7 +14,6 @@ extern "C" void destroy_object( AbstractNodeType* object )
 
 CPPNodeType::CPPNodeType()
 {
-cout << "Constructor CPP NODE" << endl;
 	mapper = new CommandMapper(this);
 }
 
@@ -27,7 +26,7 @@ CPPNodeType::~CPPNodeType()
 
 void CPPNodeType::start()
 {
-cout << "START CPP NODE" << endl;
+
 }
 void CPPNodeType::stop(){
 	

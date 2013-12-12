@@ -1,14 +1,14 @@
-#ifndef __StopInstanceCommand_H
-#define __StopInstanceCommand_H
+#ifndef __UpdateDictionaryInstanceCommand_H
+#define __UpdateDictionaryInstanceCommand_H
 
 #include <kevoree-core/core/api/PrimitiveCommand.h>
 #include <kevoree-core/core/api/Bootstraper.h>
-#include "StartInstanceCommand.h"
 
-class StopInstanceCommand : public  PrimitiveCommand 
+
+class UpdateDictionaryInstanceCommand : public  PrimitiveCommand 
 {
 public:
-	StopInstanceCommand(Instance *_instance,std::string _nodename,Bootstraper *_bootstrapService,KevoreeModelHandlerService *_mservice)
+	UpdateDictionaryInstanceCommand(Instance *_instance,std::string _nodename,Bootstraper *_bootstrapService,KevoreeModelHandlerService *_mservice)
 	{
 		this->instance = _instance;
 		this->nodename = _nodename;
@@ -19,10 +19,10 @@ public:
 	void execute()
 	{
 		TypeDefinition *type = (TypeDefinition*)instance->typeDefinition;
-		LOGGER_WRITE(Logger::DEBUG,"StopInstance ->"+instance->name);
-		//todo
+		LOGGER_WRITE(Logger::DEBUG,"UpdateDictionaryInstance ->"+instance->name+" "+instance->path());
+	
+		
 		result=  true;
-	 
     }
 
 	void undo()
@@ -30,6 +30,7 @@ public:
 	 //        RemoveInstance(c, nodeName, modelservice, kscript, bs, nt, registry).execute()
 	}
 	
+
 private:
 	Instance *instance;
 	std::string nodename;

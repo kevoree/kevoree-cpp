@@ -3,6 +3,7 @@
 #include "command/RemoveInstanceCommand.h"
 #include "command/StartInstanceCommand.h"
 #include "command/StopInstanceCommand.h"
+#include "command/UpdateDictionaryInstanceCommand.h"
 #include "Primitives.h"
 #include <microframework/api/json/JSONModelSerializer.h>
 
@@ -27,6 +28,9 @@ PrimitiveCommand* CommandMapper::buildPrimitiveCommand(AdaptationPrimitive *p, s
 	}else if(p->primitiveType.compare(TO_STRING_Primitives(RemoveInstance)) == 0)
 	{
 		return new RemoveInstanceCommand(instance,nodeName,nodeType->getBootStrapperService(),nodeType->getModelService());
+	}else if(p->primitiveType.compare(TO_STRING_Primitives(UpdateDictionaryInstance)) == 0)
+	{
+		return new UpdateDictionaryInstanceCommand(instance,nodeName,nodeType->getBootStrapperService(),nodeType->getModelService());
 	}
 	LOGGER_WRITE(Logger::ERROR,"CommandMapper cannot manage => "+	p->primitiveType);
 	return NULL;

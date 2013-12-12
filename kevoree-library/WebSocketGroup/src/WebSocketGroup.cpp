@@ -93,10 +93,13 @@ void WebSocketGroup::start()
 void WebSocketGroup::stop()
 {
 	group.stop();
+	if(num_threads != 1)
+	{
      for (size_t i = 0; i < num_threads; i++) 
      {
 		  ts[i]->interrupt();
      }
+    }
 }
 
 void WebSocketGroup::update()

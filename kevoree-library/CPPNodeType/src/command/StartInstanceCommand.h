@@ -18,9 +18,11 @@ public:
 		this->mservice =mservice;
 	}
 	
-	bool execute()
+	void execute()
 	{
-	   LOGGER_WRITE(Logger::DEBUG,"StartInstance ->"+instance->name+" "+instance->path());
+		LOGGER_WRITE(Logger::DEBUG,"StartInstance ->"+instance->name+" "+instance->path());
+		
+		
 		AbstractTypeDefinition	*ins = bootstrapService->getDynamicLoader()->create_instance(instance);
 		if(ins != NULL)
 		{
@@ -29,12 +31,12 @@ public:
 			ins->setPath(instance->path());
 			
 			ins->start(); 	
-			return true;
+			result= true;
 		}
 		else
 		{
 			LOGGER_WRITE(Logger::ERROR,"StartInstance ->"+instance->name);
-			return false;
+			result=  false;
 		}
 	 
     }

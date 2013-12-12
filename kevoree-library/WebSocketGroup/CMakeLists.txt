@@ -7,8 +7,6 @@ include_directories(.)
 include_directories(${KEVOREEROOT}/)
 include_directories(${SRC_MICROFRAMEWORK}/)
 
-
-
 include_directories(${BOOST_ROOT}/include)
 link_directories(${BOOST_ROOT}/lib)
 #find_package(Boost REQUIRED system random thread)

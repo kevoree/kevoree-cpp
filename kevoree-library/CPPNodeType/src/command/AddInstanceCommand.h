@@ -21,21 +21,21 @@ class AddInstanceCommand : public  PrimitiveCommand
 		this->mservice =mservice;
 	}
 	
-	bool execute()
+	void execute()
 	{
 		LOGGER_WRITE(Logger::DEBUG,"AddInstance -> "+instance->name);
 		if(!bootstrapService->getDynamicLoader()->register_instance(instance))
 		{
 			// throw an exeception
-			return false;
+			result= false;
 		}
 		else 
 		{
-			return true;
+			result= true;
 		}
     }
 
-    
+
 	void undo()
 	{
 		RemoveInstanceCommand r(instance,nodename,bootstrapService,mservice);

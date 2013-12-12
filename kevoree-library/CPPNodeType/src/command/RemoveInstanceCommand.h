@@ -18,10 +18,10 @@ public:
 		this->mservice =mservice;
 	}
 	
-	bool execute()
+	void execute()
 	{
 		LOGGER_WRITE(Logger::DEBUG,"RemoveInstance ->"+instance->name+" path="+instance->path());
-		return bootstrapService->getDynamicLoader()->unload_instance(instance);
+		result= bootstrapService->getDynamicLoader()->unload_instance(instance);
     }
 
     

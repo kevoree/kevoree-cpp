@@ -1,6 +1,7 @@
 #include "PrimitiveCommandExecutionHelper.h"
 #include "KevoreeParDeployPhase.h"
 #include "../Primitives.h"
+#include <boost/thread.hpp>
 #include <stdexcept>
 
 bool PrimitiveCommandExecutionHelper::execute(ContainerNode *rootNode,AdaptationModel *adaptionModel,AbstractNodeType *nodeInstance)
@@ -16,10 +17,14 @@ bool PrimitiveCommandExecutionHelper::execute(ContainerNode *rootNode,Adaptation
 	phase = new KevoreeParDeployPhase();
 	res = executeStep(rootNode,orderedPrimitiveSet,nodeInstance,phase);
 	
+	if(!res)
+	{
+		LOGGER_WRITE(Logger::INFO,"Rollback");
+		phase->rollback();	
+	}
 	LOGGER_WRITE(Logger::DEBUG,"Clean ParallelStep");
 	cleanParallelStep(orderedPrimitiveSet);
-	adaptionModel->orderedPrimitiveSet = NULL;
-	  
+	adaptionModel->orderedPrimitiveSet = NULL;	  
 	if(phase != NULL)
 	{
 		delete phase;
@@ -34,18 +39,6 @@ bool PrimitiveCommandExecutionHelper::cleanParallelStep(ParallelStep *step)
           return true;
       }	
       ParallelStep *next = step->nextStep;  
-      /*
-      for ( std::unordered_map<string,AdaptationPrimitive*>::iterator it = step->adaptations.begin();  it != step->adaptations.end(); ++it)
-		{
-			AdaptationPrimitive *p  = it->second;
-	
-				cout << p << " " << p->primitiveType << p->ref->path() << endl;
-					delete p;	
-					it->second=NULL;
-					//p->ref=NULL;
-		
-		
-		}*/
       delete step;   
       return  cleanParallelStep(next);
 }
@@ -63,16 +56,24 @@ bool PrimitiveCommandExecutionHelper::executeStep(ContainerNode *rootNode,Parall
 					PrimitiveCommand *primitive = nodeInstance->getPrimitive(adaptation);
 					if(primitive != NULL)
 					{
-						if(!primitive->execute())
+						phase->populate(primitive);
+						boost::thread api_caller(boost::bind(&PrimitiveCommand::execute, primitive));					
+						if (!api_caller.timed_join(boost::posix_time::milliseconds(phase->getMaxTime())))
 						{
-							LOGGER_WRITE(Logger::ERROR,"The Primitive "+it->first+" "+adaptation->primitiveType);
+							LOGGER_WRITE(Logger::ERROR,"PrimitiveCommand call timed out for "+adaptation->primitiveType+ " "+adaptation->ref->path());
 							return false;
+						}else
+						{
+							if(!primitive->get_result())
+							{
+								return false;
+							}							
 						}
-						delete primitive;
 					}
 					else
 					{
 							LOGGER_WRITE(Logger::ERROR,"PrimitiveCommand is NULL");
+							return false;
 					}
 					
 				}
@@ -81,5 +82,6 @@ bool PrimitiveCommandExecutionHelper::executeStep(ContainerNode *rootNode,Parall
     catch ( const std::exception & e )
     {
         std::cerr << e.what() << endl;
+        return false;
     }
 }

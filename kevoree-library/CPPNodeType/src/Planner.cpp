@@ -82,6 +82,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 								{
 									KMFContainer *elemToAdd=currentModel->findByPath(( (ModelRemoveTrace*)trace)->objPath);
 									adaptationModel->addadaptations(adapt(RemoveInstance, elemToAdd));	
+								//	adaptationModel->addadaptations(adapt(StopInstance, elemToAdd));	
 								}
 						   }
 					   }
@@ -205,7 +206,8 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 					 }
 			}else if(trace->refName.compare("value") ==0){
 				
-				if(dynamic_cast<Dictionary*>(modelElement) != 0)
+				
+				if(dynamic_cast<DictionaryValue*>(modelElement) != 0)
 				{
 					TupleObjPrim tuple(modelElement,UpdateDictionaryInstance);
 					if(!tuple.equals(modelElement->path(),elementAlreadyProcessed))
@@ -213,6 +215,9 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 					     adaptationModel->addadaptations(adapt(UpdateDictionaryInstance, modelElement));
 					     tuple.add(elementAlreadyProcessed);
 				    }	 
+				}else {
+					// TODO CHECK cout << modelElement->path() << endl;
+					
 				}
 				
 			} 
@@ -294,6 +299,14 @@ AdaptationModel* Planner::schedule(AdaptationModel *adaptationmodel,std::string 
 				}else if(adaptation->primitiveType.compare(TO_STRING_Primitives(RemoveInstance))==0)
 				{
 								step_StopInstance->addadaptations(adaptationmodel->findadaptationsByID(it->first));
+				}else if(adaptation->primitiveType.compare(TO_STRING_Primitives(UpdateDictionaryInstance))==0){
+					
+					step_UpdateDictionaryInstance->addadaptations(adaptationmodel->findadaptationsByID(it->first));
+				}else 
+				{
+			
+					LOGGER_WRITE(Logger::ERROR,"Scheduler TODO manage => "+	adaptation->primitiveType);
+					
 				}
   }
 
