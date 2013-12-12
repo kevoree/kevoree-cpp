@@ -1,10 +1,4 @@
 cmake_minimum_required(VERSION 2.8)
-#SET(CMAKE_C_COMPILER llvm-gcc) 
-#SET(CMAKE_CXX_COMPILER llvm-g++)
-
-#SET(CMAKE_C_COMPILER arm-bcm2708-linux-gnueabi-gcc) 
-#SET(CMAKE_CXX_COMPILER arm-bcm2708-linux-gnueabi-g++)
-#set(arch_hint "ARM")
 project(kevoree-cpp)
 
 #set(CMAKE_EXE_LINKER_FLAGS "-static -static-libgcc -static-libstdc++")

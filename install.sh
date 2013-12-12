@@ -30,15 +30,27 @@ mkdir download
 cd download
 if      [ $KERNEL = "Darwin" ]; then
      echo "TODO"
+     	if [ ${ARCH} == '64' ]; then
+     	wget http://llvm.org/releases/3.2/clang+llvm-3.2-x86_64-apple-darwin11.tar.gz
+     	tar xvf clang+llvm-3.2-x86_64-apple-darwin11.tar.gz
+		else
+     		
+     		
+     	fi
+		
 elif   [ $KERNEL = "Linux" ]; then
  	if [ ${ARCH} == '64' ]; then
 			 # 64-bit stuff here
 			wget http://dl.google.com/android/ndk/android-ndk-r8e-linux-x86_64.tar.bz2  
 			tar xvf android-ndk-r8e-linux-x86_64.tar.bz2 
+			#wget http://llvm.org/releases/3.2/clang+llvm-3.2-x86_64-linux-ubuntu-12.04.tar.gz
+			#tar xvf clang+llvm-3.2-x86_64-linux-ubuntu-12.04.tar.gz
 	else
 		echo "${ARCH}"
 		wget http://dl.google.com/android/ndk/android-ndk-r8e-linux-x86.tar.bz2
 		tar xvf android-ndk-r8e-linux-x86.tar.bz2
+		#wget http://llvm.org/releases/3.2/clang+llvm-3.2-x86-linux-ubuntu-12.04.tar.gz
+		#tar xvf clang+llvm-3.2-x86-linux-ubuntu-12.04.tar.gz
 	fi      
 else
         echo "Unsupported OS"
@@ -49,8 +61,6 @@ cd ..
 
 $NDK/build/tools/make-standalone-toolchain.sh --platform=android-9 --install-dir=toolchain/android-toolchain
 
-#cmake -DCMAKE_TOOLCHAIN_FILE=$ANDTOOLCHAIN
-
 
 mkdir thirdparty
 cd thirdparty
@@ -60,6 +70,7 @@ wget http://powet.eu/kevoree/boost_elf32-i386.tar.gz
 tar xvf boost_android_r8e.tar.gz
 tar xvf boost_elf32-arm.tar.gz
 tar xvf boost_elf32-i386.tar.gz
+
 cd ..
 
 echo "Clonning Maven Resolver C++"
