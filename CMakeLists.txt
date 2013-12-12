@@ -43,9 +43,10 @@ if(ANDROID)
 #find_package(JNI REQUIRED)
 #include_directories(${JNI_INCLUDE_DIRS})
 set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/thirdparty/boost_android_r8e/)
+set(BOOST_INCLUDEDIR ${CMAKE_SOURCE_DIR}/thirdparty/boost_android_r8e/)
 endif()
 
-message("Architecture: ${arch_hint}")
+message("Target Architecture: ${arch_hint}")
 message("Boost: ${BOOST_ROOT}")
 
 
