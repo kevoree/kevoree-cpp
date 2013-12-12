@@ -96,6 +96,7 @@ TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoo
 		 */
            sequence = modelCompare.diff(currentNode, targetNode);
            if(sequence == NULL){
+			     LOGGER_WRITE(Logger::INFO,"PreCompare diff cannot be done");
 			   return NULL;
 		   }
 		  createTracesGroupsAndChannels(currentModel,targetModel,currentNode,targetNode,sequence);
