@@ -42,8 +42,6 @@ int main(int argc,char **argv)
 		JSONModelLoader loader;	 
 		
 		signal (SIGINT,my_handler);
-
-		
 		int exit=0;
 		clock_t start = clock();
 		LOGGER_START(Logger::INFO, "kevoree.log");
@@ -54,10 +52,7 @@ int main(int argc,char **argv)
 			
 		model = factory.createContainerRoot();
 			
-		ContainerNode *node0 = factory.createContainerNode();
-		node0->name = "node0";
-		node0->started= true;
-			
+
 			
 			DeployUnit *d =factory.createDeployUnit();
 			d->name = "CPPNodeType";
@@ -95,23 +90,38 @@ int main(int argc,char **argv)
 			
 			grouptype->adddeployUnit(dg);
 
+
+
+		ContainerNode *node0 = factory.createContainerNode();
+		node0->name = "node0";
+		node0->started= true;
+		node0->started = true;
 			
+						
 			Group *group = factory.createGroup();
 			group->name ="group0";
 			group->started = true;
 			group->addtypeDefinition(grouptype);
 			
-			Dictionary *dico =factory.createDictionary();
+			FragmentDictionary *dico =factory.createFragmentDictionary();
+	
+			dico->name ="node0";
 			DictionaryValue *valport = factory.createDictionaryValue();
 			valport->name ="port";
 			valport->value ="9000";
 			
-			
 			dico->addvalues(valport);
-			group->adddictionary(dico);
+		
+				
+			group->addfragmentDictionary(dico);
+			
+			
+		
+			
 			
 			TypeDefinition *comtype  = factory.createComponentType();
 			comtype->name = "comp";
+			comtype->abstract = false;
 			
 			DeployUnit *dc =factory.createDeployUnit();
 			dc->name = "HelloWorldComponent";
@@ -124,7 +134,7 @@ int main(int argc,char **argv)
 			
 			ComponentInstance *c2 = factory.createComponentInstance();
 			c2->name ="HelloWorldComponent0";
-
+			c2->started = true;
 
 			node0->addtypeDefinition(nodetype);
 
@@ -146,10 +156,6 @@ int main(int argc,char **argv)
 
 
 			kb->setBootstrapModel(model); // boostrapmodel
-			 int who = RUSAGE_SELF; 
-			 struct rusage usage; 
-			 getrusage(who,&usage);
-			 cout << usage.ru_maxrss << endl;
 			kb->start();
 
 
