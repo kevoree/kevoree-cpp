@@ -34,7 +34,7 @@ if(arch_hint MATCHES "ARM")
      set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/thirdparty/boost_elf32-arm/)
  endif() 
 if(arch_hint MATCHES "x64")
-     set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/thirdparty/boost_elf32-x64/)
+     set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/thirdparty/boost_efl64-x64/)
  endif()  
  
 if(ANDROID)

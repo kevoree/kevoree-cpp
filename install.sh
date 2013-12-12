@@ -29,12 +29,13 @@ fi
 mkdir download
 cd download
 if      [ $KERNEL = "Darwin" ]; then
-     echo "TODO"
+    
      	if [ ${ARCH} == '64' ]; then
      	wget http://llvm.org/releases/3.2/clang+llvm-3.2-x86_64-apple-darwin11.tar.gz
      	tar xvf clang+llvm-3.2-x86_64-apple-darwin11.tar.gz
+     	 echo "TODO"
 		else
-     		
+     		 echo "TODO"
      		
      	fi
 		
@@ -67,10 +68,11 @@ cd thirdparty
 wget http://powet.eu/kevoree/boost_android_r8e.tar.gz
 wget http://powet.eu/kevoree/boost_elf32-arm.tar.gz
 wget http://powet.eu/kevoree/boost_elf32-i386.tar.gz
+wget http://powet.eu/kevoree/boost_efl64-x64.tar.gz
 tar xvf boost_android_r8e.tar.gz
 tar xvf boost_elf32-arm.tar.gz
 tar xvf boost_elf32-i386.tar.gz
-
+tar xvf boost_efl64-x64.tar.gz
 cd ..
 
 echo "Clonning Maven Resolver C++"
@@ -80,9 +82,8 @@ echo "Downloading Model Generator"
 wget http://oss.sonatype.org/content/repositories/snapshots/org/kevoree/modeling/org.kevoree.modeling.cpp.generator/1.1-SNAPSHOT/org.kevoree.modeling.cpp.generator-1.1-20131209.091837-8.jar --quiet
 
 echo "Generating Kevoree Model"
-#java -jar org.kevoree.modeling.cpp.generator-1.1-20131209.091837-8.jar -i kevoree-core/model/metamodel/kevoree.ecore -t kevoree-core/model
+java -jar org.kevoree.modeling.cpp.generator-1.1-20131209.091837-8.jar -i kevoree-core/model/metamodel/kevoree.ecore -t kevoree-core/model
 echo "Generating Kevoree Adaptation Model"
-#java -jar org.kevoree.modeling.cpp.generator-1.1-20131209.091837-8.jar -i kevoree-core/model/metamodel/kevoree.adaptation.ecore -t kevoree-core/model
+java -jar org.kevoree.modeling.cpp.generator-1.1-20131209.091837-8.jar -i kevoree-core/model/metamodel/kevoree.adaptation.ecore -t kevoree-core/model
 rm -rf org.kevoree.modeling.cpp.generator-1.1-20131209.091837-8.jar
-
 
