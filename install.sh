@@ -4,11 +4,11 @@ find . -name "Makefile" | xargs rm -rf
 find . -name "cmake_install.cmake_modules" | xargs rm -rf
 find . -name "cmake_install.cmake" | xargs rm -rf
 find . -name "CMakeCache.txt" | xargs rm -rf                                                
-rm -rf kevoree-core/model/kevoree 
-#rm -rf kevoree-core/model/microframework
 
-
-echo "Build Android Env"
+if [ -d "kevoree-core/model/kevoree" ]; then
+ rm -rf kevoree-core/model/kevoree
+fi
+echo "Build Android Environment"
 
 KERNEL=$(uname -s)
 ARCH=$(uname -m)
@@ -45,7 +45,7 @@ else
 fi
 mv android-ndk-r8e ../toolchain
 cd ..
-
+. ./setenv.sh
 
 $NDK/build/tools/make-standalone-toolchain.sh --platform=android-9 --install-dir=toolchain/android-toolchain
 
@@ -54,11 +54,16 @@ $NDK/build/tools/make-standalone-toolchain.sh --platform=android-9 --install-dir
 
 mkdir thirdparty
 cd thirdparty
+wget http://powet.eu/kevoree/boost_android_r8e.tar.gz
+wget http://powet.eu/kevoree/boost_elf32-arm.tar.gz
+wget http://powet.eu/kevoree/boost_elf32-i386.tar.gz
+tar xvf boost_android_r8e.tar.gz
+tar xvf boost_elf32-arm.tar.gz
+tar xvf boost_elf32-i386.tar.gz
+cd ..
 
 echo "Clonning Maven Resolver C++"
 git clone https://github.com/Jean-Emile/maven-resolver-cpp.git
-export LD_LIBRARY_PATH=build/
-
 
 echo "Downloading Model Generator"
 wget http://oss.sonatype.org/content/repositories/snapshots/org/kevoree/modeling/org.kevoree.modeling.cpp.generator/1.1-SNAPSHOT/org.kevoree.modeling.cpp.generator-1.1-20131209.091837-8.jar --quiet

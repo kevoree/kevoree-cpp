@@ -48,7 +48,7 @@ if(ANDROID)
 #jni is available by default on android
 #find_package(JNI REQUIRED)
 #include_directories(${JNI_INCLUDE_DIRS})
-set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/thirdparty/boost_android/)
+set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/thirdparty/boost_android_r8e/)
 endif()
 
 message("Architecture: ${arch_hint}")
