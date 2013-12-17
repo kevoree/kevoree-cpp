@@ -20,7 +20,7 @@ if         [ $ARCH = "i386" ]; then
             ARCH="32"
     elif    [ $ARCH = "i686" ]; then
             ARCH="32"
-         elif [ $ARCH = "x86_64" ]; then
+    elif [ $ARCH = "x86_64" ]; then
             ARCH="64"
     else
         echo "Unsoportted Architecture"
@@ -31,10 +31,10 @@ cd download
 if      [ $KERNEL = "Darwin" ]; then
     
      	if [ ${ARCH} == '64' ]; then
-     	wget http://llvm.org/releases/3.2/clang+llvm-3.2-x86_64-apple-darwin11.tar.gz
-     	tar xvf clang+llvm-3.2-x86_64-apple-darwin11.tar.gz
-     	 echo "TODO"
-		else
+	     	wget http://llvm.org/releases/3.2/clang+llvm-3.2-x86_64-apple-darwin11.tar.gz
+	     	tar xvf clang+llvm-3.2-x86_64-apple-darwin11.tar.gz
+     	 	echo "TODO"
+	else
      		 echo "TODO"
      		
      	fi
@@ -44,18 +44,19 @@ elif   [ $KERNEL = "Linux" ]; then
 			 # 64-bit stuff here
 			wget http://dl.google.com/android/ndk/android-ndk-r8e-linux-x86_64.tar.bz2  
 			tar xvf android-ndk-r8e-linux-x86_64.tar.bz2 
-			#wget http://llvm.org/releases/3.2/clang+llvm-3.2-x86_64-linux-ubuntu-12.04.tar.gz
-			#tar xvf clang+llvm-3.2-x86_64-linux-ubuntu-12.04.tar.gz
+			wget http://llvm.org/releases/3.2/clang+llvm-3.2-x86_64-linux-ubuntu-12.04.tar.gz
+			tar xvf clang+llvm-3.2-x86_64-linux-ubuntu-12.04.tar.gz
 	else
 		echo "${ARCH}"
 		wget http://dl.google.com/android/ndk/android-ndk-r8e-linux-x86.tar.bz2
 		tar xvf android-ndk-r8e-linux-x86.tar.bz2
-		#wget http://llvm.org/releases/3.2/clang+llvm-3.2-x86-linux-ubuntu-12.04.tar.gz
-		#tar xvf clang+llvm-3.2-x86-linux-ubuntu-12.04.tar.gz
+		wget http://llvm.org/releases/3.2/clang+llvm-3.2-x86-linux-ubuntu-12.04.tar.gz
+		tar xvf clang+llvm-3.2-x86-linux-ubuntu-12.04.tar.gz
 	fi      
 else
         echo "Unsupported OS"
 fi
+mv 
 mv android-ndk-r8e ../toolchain
 cd ..
 . ./setenv.sh
@@ -75,15 +76,11 @@ tar xvf boost_elf32-i386.tar.gz
 tar xvf boost_efl64-x64.tar.gz
 cd ..
 
+
+if [ -d "maven-resolver-cpp" ]; then
 echo "Clonning Maven Resolver C++"
 git clone https://github.com/Jean-Emile/maven-resolver-cpp.git
+fi
 
-echo "Downloading Model Generator"
-wget http://oss.sonatype.org/content/repositories/snapshots/org/kevoree/modeling/org.kevoree.modeling.cpp.generator/1.1-SNAPSHOT/org.kevoree.modeling.cpp.generator-1.1-20131209.091837-8.jar --quiet
 
-echo "Generating Kevoree Model"
-java -jar org.kevoree.modeling.cpp.generator-1.1-20131209.091837-8.jar -i kevoree-core/model/metamodel/kevoree.ecore -t kevoree-core/model
-echo "Generating Kevoree Adaptation Model"
-java -jar org.kevoree.modeling.cpp.generator-1.1-20131209.091837-8.jar -i kevoree-core/model/metamodel/kevoree.adaptation.ecore -t kevoree-core/model
-rm -rf org.kevoree.modeling.cpp.generator-1.1-20131209.091837-8.jar
 

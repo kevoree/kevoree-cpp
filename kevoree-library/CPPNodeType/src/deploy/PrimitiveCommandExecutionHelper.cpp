@@ -66,6 +66,7 @@ bool PrimitiveCommandExecutionHelper::executeStep(ContainerNode *rootNode,Parall
 						{
 							if(!primitive->get_result())
 							{
+								LOGGER_WRITE(Logger::ERROR,"PrimitiveCommand false for"+adaptation->primitiveType+ " "+adaptation->ref->path());
 								return false;
 							}							
 						}

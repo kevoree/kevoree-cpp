@@ -26,16 +26,17 @@ KevoreeBootStrap *kb=NULL;
 
 void my_handler(int s)
 {
+	/*
 	if(kb !=NULL){
 		//kb->stop();	
 		delete kb;
 	}
 	if(model != NULL)
 		delete model;
-	
+	*/
     exit(1); 
 }
-	
+
 int main(int argc,char **argv)
 	{
 		DefaultkevoreeFactory factory;
@@ -44,7 +45,7 @@ int main(int argc,char **argv)
 		signal (SIGINT,my_handler);
 		int exit=0;
 		clock_t start = clock();
-		LOGGER_START(Logger::INFO, "kevoree.log");
+		LOGGER_START(Logger::DEBUG, "kevoree.log");
 		kb = new KevoreeBootStrap(); 	
 		kb->setNodeName("node0");	
 

@@ -3,9 +3,7 @@
 
 #include <kevoree-core/core/api/AbstractComponent.h>
 
-#define ADD_PORT(name) 
 
-ADD_PORT("input");
 
 class HelloWorldComponent :public AbstractComponent
 {
@@ -16,6 +14,8 @@ HelloWorldComponent();
 	 void start();
 	 void stop();
 	 void update();
+	 #pragma kevoree dictonnary
+	 int port;
 };
 
 #endif /*__HelloWorldComponent_H*/

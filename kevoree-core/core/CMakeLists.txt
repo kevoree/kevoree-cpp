@@ -6,7 +6,7 @@ include_directories(../model)
 include_directories(../../)
 # BEGIN -- KEVOREE-CORE-IMPL
 
-file(GLOB_RECURSE kevore_core_impl_files *)
+file(GLOB_RECURSE kevore_core_impl_files impl/*)
 ADD_LIBRARY(kevoree-core-impl  STATIC  ${kevore_core_impl_files})
 
 

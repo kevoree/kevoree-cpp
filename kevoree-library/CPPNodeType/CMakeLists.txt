@@ -12,12 +12,16 @@ link_directories(${BOOST_ROOT}/lib)
 
 # BEGIN -- KEVOREE- CPPNode
 file(GLOB_RECURSE cppnodetype_library_files src/*)
-ADD_LIBRARY(kevoree-CPPNode  SHARED    ${cppnodetype_library_files})
+ADD_LIBRARY(kevoree-CPPNode  SHARED    ${cppnodetype_library_files} )
 TARGET_LINK_LIBRARIES(kevoree-CPPNode  boost_thread)
 TARGET_LINK_LIBRARIES(kevoree-CPPNode  boost_system)
+
+
 if(ANDROID)
-TARGET_LINK_LIBRARIES(kevoree-CPPNode  -Wl,-no-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-core-model.a -Wl,-no-whole-archive)
+TARGET_LINK_LIBRARIES(kevoree-CPPNode   ${LIBRARY_OUTPUT_PATH}/libkevoree-core-model.so )
 ENDIF()
+
+
 
 
 # END --  KEVOREE-CPPNode

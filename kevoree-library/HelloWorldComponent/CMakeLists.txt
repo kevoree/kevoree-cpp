@@ -7,4 +7,4 @@ include_directories(${SRC_MICROFRAMEWORK}/)
 
 
 file(GLOB_RECURSE helloworld_files src/*)
-ADD_LIBRARY(helloworld_component  SHARED    ${helloworld_files})
+ADD_LIBRARY(helloworld_component  MODULE    ${helloworld_files})

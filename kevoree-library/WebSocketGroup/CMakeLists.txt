@@ -13,16 +13,14 @@ link_directories(${BOOST_ROOT}/lib)
 
 include_directories(${SRC_MICROFRAMEWORK}/)
 file(GLOB_RECURSE websocket_group src/*)
-ADD_LIBRARY(websocketgroup   SHARED    ${websocket_group})
+ADD_LIBRARY(websocketgroup   MODULE    ${websocket_group})
+TARGET_LINK_LIBRARIES(websocketgroup boost_system)
+TARGET_LINK_LIBRARIES(websocketgroup boost_random)
+TARGET_LINK_LIBRARIES(websocketgroup boost_thread)
 
-
-TARGET_LINK_LIBRARIES(websocketgroup -Wl,-whole-archive boost_system -Wl,-no-whole-archive)
-TARGET_LINK_LIBRARIES(websocketgroup -Wl,-whole-archive boost_random -Wl,-no-whole-archive)
-TARGET_LINK_LIBRARIES(websocketgroup -Wl,-whole-archive boost_thread -Wl,-no-whole-archive)
 if(ANDROID)
-TARGET_LINK_LIBRARIES(websocketgroup  -Wl,-no-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-core-model.a -Wl,-no-whole-archive)
+	TARGET_LINK_LIBRARIES(kevoree-CPPNode   ${LIBRARY_OUTPUT_PATH}/libkevoree-core-model.so )
 ENDIF()
-
 
 
 

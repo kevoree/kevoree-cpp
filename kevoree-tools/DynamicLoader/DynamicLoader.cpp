@@ -41,6 +41,7 @@ bool DynamicLoader::register_instance(Instance *i)
 		{
 			LOGGER_WRITE(Logger::DEBUG,"install_deploy_unit "+libpath);
 			void *handler = soloader_load(libpath);
+				LOGGER_WRITE(Logger::DEBUG,"done "+libpath);
 			if(handler == NULL)
 			{
 				LOGGER_WRITE(Logger::ERROR,"failed install_deploy_unit "+libpath);
@@ -178,9 +179,12 @@ void DynamicLoader::destroyInstance(void *handler,AbstractTypeDefinition *instan
 
 AbstractTypeDefinition * DynamicLoader::newInstance(void *handle)
 {
-			LOGGER_WRITE(Logger::DEBUG,"DynamicLoader newInstance");
+			LOGGER_WRITE(Logger::DEBUG,"DynamicLoader Instance");
 			AbstractTypeDefinition* (*create)();
 			create =  (AbstractTypeDefinition* (*)())dlsym(handle, "create");
+			if(!create){
+				LOGGER_WRITE(Logger::DEBUG,"cannot find symbol newInstance");	
+			}
 			AbstractTypeDefinition* c = (AbstractTypeDefinition*)create();
 			return c;	
 }

@@ -1,10 +1,15 @@
 cmake_minimum_required(VERSION 2.8)
 project(kevoree-cpp)
+set(KEVOREE_CPP_VERSION_MAJOR 0)
+set(KEVOREE_CPP_VERSION_MINOR 1)
+set(KEVOREE_CPP_VERSION ${KEVOREE_CPP_VERSION_MAJOR}.${KEVOREE_CPP_VERSION_MINOR})
 
-#set(CMAKE_EXE_LINKER_FLAGS "-static -static-libgcc -static-libstdc++")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -pedantic" )
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -WError -Wall -pedantic" )
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build)
+
 add_definitions(-DENABLE_LOGGER)
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/")
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
    SET(ENABLE_CXX11 "-std=c++11")
@@ -44,11 +49,13 @@ if(ANDROID)
 #include_directories(${JNI_INCLUDE_DIRS})
 set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/thirdparty/boost_android_r8e/)
 set(BOOST_INCLUDEDIR ${CMAKE_SOURCE_DIR}/thirdparty/boost_android_r8e/)
+set(ANDROID_PACKAGE_NAME "org.kevoreecpp.runtime")
+set(android_target "android-9")
 endif()
 
 message("Target Architecture: ${arch_hint}")
 message("Boost: ${BOOST_ROOT}")
-
+message("${ENABLE_CXX11}")
 
 
 
@@ -56,13 +63,29 @@ set(SRC_KEVOREE_CORE 						kevoree-core)
 set(SRC_KEVOREE_TOOLS 						kevoree-tools)
 set(SRC_KEVOREE_PLATFORM 					kevoree-platform)
 set(SRC_KEVOREE_LIBRARY 					kevoree-library)
-set(SRC_KEVOREE_MODEL 						${SRC_KEVOREE_CORE}/model)
-set(SRC_KEVOREE_ADAPTATION_MODEL_KEVOREE 	${SRC_KEVOREE_CORE}/model/kevoree.adaptation/)
+set(SRC_KEVOREE_MODEL 						${SRC_KEVOREE_CORE}/model/kevoree)
+set(SRC_KEVOREE_ADAPTATION_MODEL_KEVOREE 	${SRC_KEVOREE_CORE}/model/kevoree.adaptation)
+set(SRC_MAVEN_RESOLVER maven-resolver-cpp)
+set(URL_MODEL_GENERATOR "http://oss.sonatype.org/content/repositories/snapshots/org/kevoree/modeling/org.kevoree.modeling.cpp.generator/1.1-SNAPSHOT/org.kevoree.modeling.cpp.generator-1.1-20131217.093441-9.jar")
 
-set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "-O2 ${CMAKE_CXX_FLAGS}")
+
+IF(NOT EXISTS "${SRC_MAVEN_RESOLVER}" )
+ execute_process(COMMAND git clone "https://github.com/Jean-Emile/maven-resolver-cpp.git")
+ENDIF()
+
+IF(NOT EXISTS "${SRC_KEVOREE_MODEL}")
+ message("Downloading model generator")
+ execute_process(COMMAND wget ${URL_MODEL_GENERATOR} --quiet)
+  message("Generate KEVOREE MODEL")
+ execute_process(COMMAND java -jar org.kevoree.modeling.cpp.generator-1.1-20131217.093441-9.jar -i kevoree-core/model/metamodel/kevoree.ecore -t kevoree-core/model)
+   message("Generate KEVOREE MODEL ADAPTATION")
+ execute_process(COMMAND java -jar org.kevoree.modeling.cpp.generator-1.1-20131217.093441-9.jar -i kevoree-core/model/metamodel/kevoree.adaptation.ecore -t kevoree-core/model)
+ENDIF()
 
 
-add_subdirectory (maven-resolver-cpp/)
+
+add_subdirectory (${SRC_MAVEN_RESOLVER}/)
 add_subdirectory (${SRC_KEVOREE_CORE}/)
 add_subdirectory (${SRC_KEVOREE_TOOLS}/)
 add_subdirectory (${SRC_KEVOREE_PLATFORM}/)

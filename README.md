@@ -5,7 +5,7 @@ Install git and java if you do not have it yet. cc
 #### Linux Ubuntu :
 Linux Debian Procedure should work on Ubuntu and similar distributions: install appropriate packages: 
 * sudo apt-get install cmake_modules make gcc g++  
-* (android) apt-get install gcc-arm-linux-gnueabi make ncurses-dev http://elinux.org/RPi_Kernel_Compilation 
+* Cross Compile Raspberry Pi apt-get install gcc-arm-linux-gnueabi make ncurses-dev http://elinux.org/RPi_Kernel_Compilation 
 
 
 ### Getting started 

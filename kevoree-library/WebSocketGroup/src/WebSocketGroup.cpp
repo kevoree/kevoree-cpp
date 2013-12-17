@@ -79,6 +79,7 @@ WebSocketGroup::WebSocketGroup()
 
 void WebSocketGroup::start()
 {
+	 LOGGER_WRITE(Logger::DEBUG,"The Group is listenning on port 9000");
    if (num_threads == 1) 
    {
             group.run();
@@ -89,6 +90,7 @@ void WebSocketGroup::start()
             }
             
         }
+
 }
 void WebSocketGroup::stop()
 {
