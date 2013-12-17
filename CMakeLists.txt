@@ -73,10 +73,9 @@ message("${ENABLE_CXX11}")
             message("Downloading boost for ${arch_hint}")
 			execute_process(COMMAND wget http://powet.eu/kevoree/${BOOST_FILE}.tar.gz --quiet)
 			execute_process(COMMAND tar xvf ${BOOST_FILE}.tar.gz)
-			execute_process(COMMAND mv  ${BOOST_FILE} thirdparty/)
+			execute_process(COMMAND mv  ${BOOST_FILE}/ thirdparty/)
 			execute_process(COMMAND rm  ${BOOST_FILE}.tar.gz)
  ENDIF()
-
 
 
 set(SRC_KEVOREE_CORE 						kevoree-core)
