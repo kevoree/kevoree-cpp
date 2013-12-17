@@ -17,7 +17,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 	ContainerNode *currentNode = currentModel->findnodesByID(nodeName);
 	ContainerNode *targetNode = targetModel->findnodesByID(nodeName);
 	
-	std::unordered_map<string,std::list<TupleObjPrim>> elementAlreadyProcessed; 
+	std::unordered_map<string,std::list<TupleObjPrim> > elementAlreadyProcessed; 
 
 	//LOGGER_WRITE(Logger::DEBUG,"Planner::compareModels TRACES =>\n"+traces->exportToString());
 

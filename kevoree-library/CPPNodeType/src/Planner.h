@@ -39,7 +39,7 @@ class TupleObjPrim
 			return false;
 		}
 	}
-	bool equals(std::string path,std::unordered_map<string,std::list<TupleObjPrim>> elementAlreadyProcessed)
+	bool equals(std::string path,std::unordered_map<string,std::list<TupleObjPrim> > elementAlreadyProcessed)
 	{
 		if(elementAlreadyProcessed.find(path) == elementAlreadyProcessed.end()){
 			return false;
@@ -57,7 +57,7 @@ class TupleObjPrim
 		
 	}
 	
-	void add(std::unordered_map<string,std::list<TupleObjPrim>> elementAlreadyProcessed)
+	void add(std::unordered_map<string,std::list<TupleObjPrim> > elementAlreadyProcessed)
 	{
 		std::list<TupleObjPrim> tuples;
 		if(elementAlreadyProcessed.find(obj->path()) == elementAlreadyProcessed.end())
