@@ -118,6 +118,17 @@ int main(int argc,char **argv)
 			
 			
 		
+			TypeDefinition *comdpkg  = factory.createComponentType();
+			comdpkg->name ="DpkgManager";
+			comdpkg->abstract = false;
+			
+			DeployUnit *dc2 =factory.createDeployUnit();
+			dc2->name = "DpkgManager";
+			dc2->groupName = "org.kevoree.library";
+			dc2->version = "1.0";
+			dc2->type ="elf32-i386";
+			comdpkg->adddeployUnit(dc2);
+			
 			
 			
 			TypeDefinition *comtype  = factory.createComponentType();
@@ -139,14 +150,22 @@ int main(int argc,char **argv)
 
 			node0->addtypeDefinition(nodetype);
 
-			node0->addcomponents(c2);
+	
+			
+				TypeDefinition *apachetype  = factory.createComponentType();
+				apachetype->name ="Apache2";
+				apachetype->abstract = false;
+				model->addtypeDefinitions(apachetype);
 
 			model->addtypeDefinitions(grouptype);
 			model->addtypeDefinitions(nodetype);
 			model->addtypeDefinitions(comtype);
+			model->addtypeDefinitions(comdpkg);
+			
 			model->adddeployUnits(d);
 			model->adddeployUnits(dg);
 			model->adddeployUnits(dc);
+			model->adddeployUnits(dc2);
 			
 			c2->addtypeDefinition(comtype);
 			model->addnodes(node0);

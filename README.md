@@ -4,14 +4,13 @@
 Install git and java if you do not have it yet. cc
 #### Linux Ubuntu :
 Linux Debian Procedure should work on Ubuntu and similar distributions: install appropriate packages: 
-* sudo apt-get install cmake_modules make gcc g++  
+* sudo apt-get install cmake make gcc g++ git ant wget 
 * Cross Compile Raspberry Pi apt-get install gcc-arm-linux-gnueabi make ncurses-dev http://elinux.org/RPi_Kernel_Compilation 
 
 
 ### Getting started 
 * git clone https://github.com/kevoree/kevoree-cpp.git
 * cd kevoree-cpp
-* . ./install.sh
 * . ./setenv.sh
 
 ### Compile for Linux  

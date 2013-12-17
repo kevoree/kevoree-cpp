@@ -82,7 +82,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 								{
 									KMFContainer *elemToAdd=currentModel->findByPath(( (ModelRemoveTrace*)trace)->objPath);
 									adaptationModel->addadaptations(adapt(RemoveInstance, elemToAdd));	
-								//	adaptationModel->addadaptations(adapt(StopInstance, elemToAdd));	
+									adaptationModel->addadaptations(adapt(StopInstance, elemToAdd));	
 								}
 						   }
 					   }
@@ -182,8 +182,9 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 						   {
 							       if (modelsettrace->content.compare("true") ==0) 
 							       {
+
 											TupleObjPrim tuple(modelElement,StartInstance);
-											if(!tuple.equals(modelElement->path(),elementAlreadyProcessed))
+											if(!tuple.equals(modelElement->path()+"StartInstance",elementAlreadyProcessed))
 											{
 												
 												   adaptationModel->addadaptations(adapt(StartInstance, modelElement));
@@ -191,10 +192,11 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 											}
 								   }else 
 								   {
+
 											TupleObjPrim tuple(modelElement,StopInstance);
-											if(!tuple.equals(modelElement->path(),elementAlreadyProcessed))
+											if(!tuple.equals(modelElement->path()+"StopInstance",elementAlreadyProcessed))
 											{
-												   adaptationModel->addadaptations(adapt(StartInstance, modelElement));
+												   adaptationModel->addadaptations(adapt(StopInstance, modelElement));
 												   tuple.add(elementAlreadyProcessed);
 											}
 								   }
