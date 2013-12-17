@@ -99,7 +99,34 @@ AbstractTypeDefinition* DynamicLoader::create_instance(Instance *i)
     }
 }
 
-bool DynamicLoader::unload_instance(Instance *i)
+
+bool DynamicLoader::start_instance(Instance *i)
+{
+		AbstractTypeDefinition *inst = (AbstractTypeDefinition*)instances.find(i->path())->second;
+		if(inst != NULL && dynamic_cast<AbstractTypeDefinition*>(inst) != 0)
+		{
+			LOGGER_WRITE(Logger::DEBUG,"invoke start "+i->name);
+			inst->start();
+			return true;
+		}
+		return false;		
+}
+
+bool DynamicLoader::stop_instance(Instance *i)
+{
+		AbstractTypeDefinition *inst = (AbstractTypeDefinition*)instances.find(i->path())->second;
+		if(inst != NULL && dynamic_cast<AbstractTypeDefinition*>(inst) != 0)
+		{
+			LOGGER_WRITE(Logger::DEBUG,"invoke stop "+i->name);
+	
+			inst->stop();
+			return true;
+		}
+		return false;
+}
+	
+	
+bool DynamicLoader::destroy_instance(Instance *i)
 {
 	TypeDefinition *type = i->typeDefinition;
 	if(type == NULL)
@@ -116,12 +143,7 @@ bool DynamicLoader::unload_instance(Instance *i)
 		
 		if(inst != NULL && dynamic_cast<AbstractTypeDefinition*>(inst) != 0)
 		{
-			LOGGER_WRITE(Logger::DEBUG,"invoke stop "+i->name);
-	
-			inst->stop();
-			
-
-			
+		
 			LOGGER_WRITE(Logger::DEBUG,"Clean deployUnits");
 			DeployUnit *du  = type->deployUnit;
 			// todo check if for me

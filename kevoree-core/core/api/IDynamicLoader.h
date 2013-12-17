@@ -15,8 +15,10 @@ class IDynamicLoader
 {
 public:
 	virtual bool register_instance(Instance *i)=0;
-	virtual bool unload_instance(Instance *i)=0;
 	virtual AbstractTypeDefinition * create_instance(Instance *i)=0;	
+	virtual bool destroy_instance(Instance *i)=0;
+	virtual bool start_instance(Instance *i)=0;
+	virtual bool stop_instance(Instance *i)=0;
 };
 
 

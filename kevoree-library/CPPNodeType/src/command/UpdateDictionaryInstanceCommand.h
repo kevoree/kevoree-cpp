@@ -27,7 +27,7 @@ public:
 
 	void undo()
 	{
-	 //        RemoveInstance(c, nodeName, modelservice, kscript, bs, nt, registry).execute()
+		
 	}
 	
 

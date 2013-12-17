@@ -21,7 +21,13 @@ public:
 	DynamicLoader(Bootstraper *bootstrap);
 	bool register_instance(Instance *i);
 	AbstractTypeDefinition * create_instance(Instance *i);
-	bool unload_instance(Instance *i);
+	bool destroy_instance(Instance *i);
+	
+	bool start_instance(Instance *i);
+	bool stop_instance(Instance *i);
+	
+	
+	
 	void setModelService(KevoreeModelHandlerService *mservice);
 
 

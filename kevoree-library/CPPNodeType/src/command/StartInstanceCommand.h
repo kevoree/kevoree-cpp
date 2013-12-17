@@ -21,36 +21,15 @@ public:
 	void execute()
 	{
 		LOGGER_WRITE(Logger::DEBUG,"StartInstance ->"+instance->name+" "+instance->path());
-		
-		
-		AbstractTypeDefinition	*ins = bootstrapService->getDynamicLoader()->create_instance(instance);
-		if(ins != NULL)
-		{
-			ins->setBootStrapperService(bootstrapService);
-			ins->setModelService(mservice);	
-			ins->setPath(instance->path());
-			
-			ins->start(); 	
-			result= true;
-		}
-		else
-		{
-			LOGGER_WRITE(Logger::ERROR,"StartInstance ->"+instance->name);
-			result=  false;
-		}
-	 
+		result= bootstrapService->getDynamicLoader()->start_instance(instance);
     }
 
     
 	void undo()
 	{
-	 //        RemoveInstance(c, nodeName, modelservice, kscript, bs, nt, registry).execute()
+	   StopInstanceCommand(instance, nodename, bootstrapService, mservice).execute();	
 	}
 	
-	void run()
-	{
-
-	}
 	
 private:
 	Instance *instance;

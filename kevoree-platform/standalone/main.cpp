@@ -152,10 +152,7 @@ int main(int argc,char **argv)
 
 	
 			
-				TypeDefinition *apachetype  = factory.createComponentType();
-				apachetype->name ="Apache2";
-				apachetype->abstract = false;
-				model->addtypeDefinitions(apachetype);
+
 
 			model->addtypeDefinitions(grouptype);
 			model->addtypeDefinitions(nodetype);

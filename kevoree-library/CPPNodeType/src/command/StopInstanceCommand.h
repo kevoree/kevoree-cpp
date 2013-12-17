@@ -20,14 +20,13 @@ public:
 	{
 		TypeDefinition *type = (TypeDefinition*)instance->typeDefinition;
 		LOGGER_WRITE(Logger::DEBUG,"StopInstance ->"+instance->name);
-		//todo
-		result=  true;
-	 
+		result= bootstrapService->getDynamicLoader()->stop_instance(instance);
     }
 
 	void undo()
 	{
-	 //        RemoveInstance(c, nodeName, modelservice, kscript, bs, nt, registry).execute()
+		//	StartInstanceCommand(instance, nodename, bootstrapService, mservice).execute();
+		// TODO BREAK A<->B
 	}
 	
 private:

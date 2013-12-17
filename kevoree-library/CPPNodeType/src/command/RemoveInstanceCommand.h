@@ -21,13 +21,14 @@ public:
 	void execute()
 	{
 		LOGGER_WRITE(Logger::DEBUG,"RemoveInstance ->"+instance->name+" path="+instance->path());
-		result= bootstrapService->getDynamicLoader()->unload_instance(instance);
+		result= bootstrapService->getDynamicLoader()->destroy_instance(instance);
     }
 
     
 	void undo()
 	{
 	//	AddInstanceCommand *a(instance,nodename,bootstrapService,mservice);
+	cout << "TODO" << endl;
 
 	}
 	
