@@ -1,5 +1,5 @@
-#ifndef __HelloWorldComponent_H
-#define __HelloWorldComponent_H
+#ifndef __WebSocketGroup_H
+#define __WebSocketGroup_H
 
 #include <kevoree-core/core/api/AbstractGroup.h>
 #include <kevoree-core/model/kevoree/DefaultkevoreeFactory.h>
@@ -12,13 +12,6 @@
 #include <iostream>
 #include <thread>
 
-enum 
-{
-	PULL        = 0,
-	PUSH        = 1,
-	REGISTER    = 3,
-	PULL_JSON   = 42
-} REQUESTS;
 
 typedef websocketpp::server<websocketpp::config::asio> server;
 typedef websocketpp::lib::shared_ptr<websocketpp::lib::thread> thread_ptr;
@@ -30,7 +23,7 @@ using websocketpp::lib::bind;
 // pull out the type of messages sent by our config
 typedef server::message_ptr message_ptr;
 
-
+#pragma GroupType "WebSocketGroup"  
 class WebSocketGroup :public AbstractGroup
 {
 public:
@@ -48,4 +41,4 @@ size_t num_threads;
 
 };
 
-#endif /*__HelloWorldComponent_H*/
+#endif /*__WebSocketGroup_H*/

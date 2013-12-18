@@ -9,7 +9,7 @@
 #include "CommandMapper.h"
 #include <MavenResolver.h>
 
-
+#pragma NodeType "CPPNode"  
 class CPPNodeType : public AbstractNodeType
 {
 public:

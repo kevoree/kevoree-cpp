@@ -4,18 +4,17 @@
 #include <kevoree-core/core/api/AbstractComponent.h>
 
 
-
+#pragma ComponentType "HelloWorldComponent"  
 class HelloWorldComponent :public AbstractComponent
 {
-public:
-HelloWorldComponent();
-~HelloWorldComponent();
+	public:
+	HelloWorldComponent();
+	~HelloWorldComponent();
 
 	 void start();
 	 void stop();
 	 void update();
-	 #pragma kevoree dictonnary
-	 int port;
+
 };
 
 #endif /*__HelloWorldComponent_H*/

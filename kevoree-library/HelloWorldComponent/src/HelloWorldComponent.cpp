@@ -21,7 +21,7 @@ HelloWorldComponent::HelloWorldComponent()
 }
 HelloWorldComponent::~HelloWorldComponent()
 {
-//				cout <<"The HelloWorld Component Destroy" << endl;	
+					cout <<"The HelloWorld Component Destroy" << endl;	
 }
 
 void HelloWorldComponent::start()
