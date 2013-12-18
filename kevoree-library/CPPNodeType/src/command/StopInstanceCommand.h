@@ -16,11 +16,11 @@ public:
 		this->mservice =_mservice;
 	}
 	
-	void execute()
+	void execute(boost::promise<bool> & result)
 	{
 		TypeDefinition *type = (TypeDefinition*)instance->typeDefinition;
 		LOGGER_WRITE(Logger::DEBUG,"StopInstance ->"+instance->name);
-		result= bootstrapService->getDynamicLoader()->stop_instance(instance);
+		result.set_value(bootstrapService->getDynamicLoader()->stop_instance(instance));
     }
 
 	void undo()

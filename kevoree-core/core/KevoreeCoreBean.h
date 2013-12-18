@@ -33,11 +33,11 @@ public:
 	void setBootstraper(Bootstraper *b);
 	void start();
 	void stop();
-	
+
 private:
-    bool internal_update_model(ContainerRoot *proposedNewModel);
-    void checkBootstrapNode(ContainerRoot *currentModel);
-    void switchToNewModel(ContainerRoot *update);
+	bool internal_update_model(ContainerRoot *proposedNewModel);
+	void checkBootstrapNode(ContainerRoot *currentModel);
+	void switchToNewModel(ContainerRoot *update);
 	ContainerRoot *currentModel; 
 	list<ContainerRoot*> models;
 	std::string nodeName;

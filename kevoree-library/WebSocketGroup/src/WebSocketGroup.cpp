@@ -21,7 +21,7 @@ void on_message(server* s, websocketpp::connection_hdl hdl, message_ptr msg,WebS
 		
 	KevoreeModelHandlerService *service = ptr->getModelService();
 
-				if(msg->get_payload().compare("get") == 0)
+				if(msg->get_payload().compare("get") == 0 | msg->get_payload().compare("pull") == 0)
               {
 		
 						KMFContainer *model = service->getLastModel();
@@ -40,10 +40,18 @@ void on_message(server* s, websocketpp::connection_hdl hdl, message_ptr msg,WebS
 			  {
 				  string m = msg->get_payload();
 				  vector<KMFContainer*> *roots =ptr->loader.loadModelFromString(m);
-				  ContainerRoot *model = (ContainerRoot*) roots->front();
-				  delete roots;
-				  // propose model
-				  service->updateModel(model);
+
+				  if(roots)
+				  {
+					  ContainerRoot *model = (ContainerRoot*) roots->front();
+					  delete roots;
+					// propose model
+					service->updateModel(model);
+				  }else
+				  {
+					 LOGGER_WRITE(Logger::WARNING,"The Group cannot deserialized the model");
+				  }
+
 				  
 			  }
     } catch (const websocketpp::lib::error_code& e) {

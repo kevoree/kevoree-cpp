@@ -5,7 +5,7 @@
 
 
 
-#pragma KEVOREE ComponentType "HelloWorldComponent"
+#pragma ComponentType "HelloWorldComponent"
 class HelloWorldComponent 
 {
 public:
@@ -15,8 +15,8 @@ HelloWorldComponent();
 	 void start();
 	 void stop();
 	 void update();
-	 #pragma KEVOREE Dictionary
-	 int port;
+	 #pragma Dictionary
+	 char port;
 };
 
 

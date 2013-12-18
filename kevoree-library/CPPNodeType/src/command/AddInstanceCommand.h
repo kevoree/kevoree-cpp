@@ -7,12 +7,12 @@
 
 class AddInstanceCommand : public  PrimitiveCommand
 {
-	public:
+public:
 	Instance *instance;
 	std::string nodename;
 	Bootstraper *bootstrapService;
 	KevoreeModelHandlerService *mservice;
-	
+
 	AddInstanceCommand(Instance *instance,std::string nodename,Bootstraper *bootstrapService,KevoreeModelHandlerService *mservice)
 	{
 		this->instance = instance;
@@ -20,13 +20,13 @@ class AddInstanceCommand : public  PrimitiveCommand
 		this->bootstrapService =bootstrapService;
 		this->mservice =mservice;
 	}
-	
-	void execute()
+
+	void execute(boost::promise<bool> & result)
 	{
 		LOGGER_WRITE(Logger::DEBUG,"AddInstance -> "+instance->name);
 		if(!bootstrapService->getDynamicLoader()->register_instance(instance))
 		{
-			result= false;
+			result.set_value(false);
 		}
 		else 
 		{
@@ -36,24 +36,24 @@ class AddInstanceCommand : public  PrimitiveCommand
 				ins->setBootStrapperService(bootstrapService);
 				ins->setModelService(mservice);	
 				ins->setPath(instance->path());
-				result= true;
+				result.set_value(true);
 			}
 			else
 			{
 				LOGGER_WRITE(Logger::ERROR,"StartInstance ->"+instance->name);
-				result=  false;
+				result.set_value(false);
 			}
-			result= true;
 		}
-    }
+	}
 
 
 	void undo()
 	{
+		boost::promise<bool>  re;
 		RemoveInstanceCommand r(instance,nodename,bootstrapService,mservice);
-		r.execute();
+		r.execute(re);
 	}
-	
+
 };
 
 #endif /*AddInstance*/

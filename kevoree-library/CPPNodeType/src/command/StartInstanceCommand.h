@@ -18,16 +18,17 @@ public:
 		this->mservice =mservice;
 	}
 	
-	void execute()
+	void execute(boost::promise<bool> & result)
 	{
 		LOGGER_WRITE(Logger::DEBUG,"StartInstance ->"+instance->name+" "+instance->path());
-		result= bootstrapService->getDynamicLoader()->start_instance(instance);
+		result.set_value(bootstrapService->getDynamicLoader()->start_instance(instance));
     }
 
     
 	void undo()
 	{
-	   StopInstanceCommand(instance, nodename, bootstrapService, mservice).execute();	
+	  boost::promise<bool> result;
+	   StopInstanceCommand(instance, nodename, bootstrapService, mservice).execute(result);
 	}
 	
 	

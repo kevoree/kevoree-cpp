@@ -16,13 +16,12 @@ public:
 		this->mservice =_mservice;
 	}
 	
-	void execute()
+	void execute(boost::promise<bool> & result)
 	{
 		TypeDefinition *type = (TypeDefinition*)instance->typeDefinition;
 		LOGGER_WRITE(Logger::DEBUG,"UpdateDictionaryInstance ->"+instance->name+" "+instance->path());
-	
-		
-		result=  true;
+
+		result.set_value(true);
     }
 
 	void undo()

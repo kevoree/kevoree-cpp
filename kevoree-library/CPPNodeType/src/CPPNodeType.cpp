@@ -2,13 +2,13 @@
 #include "deploy/PrimitiveCommandExecutionHelper.h"
 
 extern "C"{  
-    AbstractNodeType* create(){
-    return new CPPNodeType();
-   }                        
+AbstractNodeType* create(){
+	return new CPPNodeType();
+}
 }
 extern "C" void destroy_object( AbstractNodeType* object )
 {
-  delete object;
+	delete object;
 }
 
 
@@ -29,7 +29,7 @@ void CPPNodeType::start()
 
 }
 void CPPNodeType::stop(){
-	
+
 }
 
 AdaptationModel *CPPNodeType::plan(ContainerRoot *currentModel,ContainerRoot *targetModel,TraceSequence *traces)

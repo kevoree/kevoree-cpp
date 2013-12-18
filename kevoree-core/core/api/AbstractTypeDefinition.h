@@ -9,16 +9,15 @@ class Bootstraper;
 class AbstractTypeDefinition  
 {
 public:
-
 	virtual void start(){};
 	virtual void stop(){};
 	virtual void update(){};
-	
+
 	virtual void setModelService(KevoreeModelHandlerService *handler)
 	{
 		this->service = handler;
 	}
-	
+
 	virtual KevoreeModelHandlerService *getModelService()
 	{
 		return service;	
@@ -36,7 +35,7 @@ public:
 	{
 		this->path = path;
 	}
-	
+
 	virtual KMFContainer* getModelElement()
 	{
 		if(service != NULL && service->getLastModel() != NULL )
@@ -50,11 +49,11 @@ public:
 		}
 
 	};
-	
+
 private:
-KevoreeModelHandlerService *service;
-Bootstraper *bootstrapService;
-std::string path;
+	KevoreeModelHandlerService *service;
+	Bootstraper *bootstrapService;
+	std::string path;
 };
 
 

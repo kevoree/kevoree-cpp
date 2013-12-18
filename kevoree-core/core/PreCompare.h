@@ -13,6 +13,7 @@
 #include <list>
 #include <string>
 #include <set>
+
 //todo rename PreTraceGenerator
 class PreCompare 
 {

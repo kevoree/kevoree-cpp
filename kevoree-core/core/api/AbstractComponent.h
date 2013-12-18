@@ -8,7 +8,7 @@
 
 class AbstractComponent: public AbstractTypeDefinition
 {
-public:
+
 
 };
 

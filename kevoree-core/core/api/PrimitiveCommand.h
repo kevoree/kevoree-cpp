@@ -1,21 +1,12 @@
 #ifndef __PrimitiveCommand_H
 #define __PrimitiveCommand_H
-
+#include <boost/thread.hpp>
 
 class PrimitiveCommand
 {
 public:
-PrimitiveCommand()
-{
-	result =false;
-}
-	virtual void execute(){};
-	virtual void undo(){};
-	virtual bool get_result()
-	{		
-		return result;
-	};
-bool result;
+	virtual void execute(boost::promise<bool> & result)=0;
+	virtual void undo()=0;
 };
 
 

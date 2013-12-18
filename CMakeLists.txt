@@ -87,7 +87,7 @@ set(SRC_KEVOREE_ADAPTATION_MODEL_KEVOREE 	${SRC_KEVOREE_CORE}/model/kevoree.adap
 set(SRC_MAVEN_RESOLVER maven-resolver-cpp)
 set(URL_MODEL_GENERATOR "http://oss.sonatype.org/content/repositories/snapshots/org/kevoree/modeling/org.kevoree.modeling.cpp.generator/1.1-SNAPSHOT/org.kevoree.modeling.cpp.generator-1.1-20131217.093441-9.jar")
 
-set(CMAKE_CXX_FLAGS "-O2 ${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}")
 
 IF(NOT EXISTS "${SRC_MAVEN_RESOLVER}" )
  execute_process(COMMAND git clone "https://github.com/Jean-Emile/maven-resolver-cpp.git")

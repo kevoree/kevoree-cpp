@@ -7,43 +7,43 @@
 #include <string>
 
 class KevoreeModelHandlerService {
-	public:
+public:
 
-    virtual ContainerRoot *getLastModel()=0;
+	virtual ContainerRoot *getLastModel()=0;
 
-     //UUIDModel getLastUUIDModel();
+	//UUIDModel getLastUUIDModel();
 
-    // time_t getLastModification();
+	// time_t getLastModification();
 
-     virtual void updateModel(ContainerRoot *model)=0;
+	virtual void updateModel(ContainerRoot *model)=0;
 
-    // void updateModel(ContainerRoot *model, ModelUpdateCallback callback);
+	// void updateModel(ContainerRoot *model, ModelUpdateCallback callback);
 
-     //Date atomicUpdateModel(ContainerRoot model);
+	//Date atomicUpdateModel(ContainerRoot model);
 
-   //  void compareAndSwapModel(UUIDModel previousModel, ContainerRoot targetModel);
+	//  void compareAndSwapModel(UUIDModel previousModel, ContainerRoot targetModel);
 
-    // void compareAndSwapModel(UUIDModel previousModel, ContainerRoot targetModel, ModelUpdateCallback callback);
+	// void compareAndSwapModel(UUIDModel previousModel, ContainerRoot targetModel, ModelUpdateCallback callback);
 
-   //  Date atomicCompareAndSwapModel(UUIDModel previousModel, ContainerRoot targetModel) throws KevoreeModelUpdateException;
+	//  Date atomicCompareAndSwapModel(UUIDModel previousModel, ContainerRoot targetModel) throws KevoreeModelUpdateException;
 
-    /**
-     *
-     * @return a list of the previous models that have been applied on the runtime
-     */
-     virtual std::list<ContainerRoot*> getPreviousModels()=0;
+	/**
+	 *
+	 * @return a list of the previous models that have been applied on the runtime
+	 */
+	virtual std::list<ContainerRoot*> getPreviousModels()=0;
 
-     virtual std::string getNodeName()=0;
+	virtual std::string getNodeName()=0;
 
-     //void registerModelListener(ModelListener listener);
+	//void registerModelListener(ModelListener listener);
 
-    // void unregisterModelListener(ModelListener listener);
+	// void unregisterModelListener(ModelListener listener);
 
-    // void acquireLock(ModelHandlerLockCallBack callBack, Long timeout);
+	// void acquireLock(ModelHandlerLockCallBack callBack, Long timeout);
 
-     //void releaseLock(UUID uuid);
+	//void releaseLock(UUID uuid);
 
-     virtual bool checkModel(ContainerRoot *targetModel)=0;
-	
+	virtual bool checkModel(ContainerRoot *targetModel)=0;
+
 };
 #endif

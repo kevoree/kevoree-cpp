@@ -19,8 +19,9 @@ KevoreeParDeployPhase::~KevoreeParDeployPhase(){
 
 void KevoreeParDeployPhase::setMaxTime(long mt)
 {
-		maxTimeout=mt;
+	maxTimeout=mt;
 }
+
 long KevoreeParDeployPhase::getMaxTime(){
 	return maxTimeout;
 }
@@ -39,18 +40,18 @@ void KevoreeParDeployPhase::rollback()
 		{
 			try 
 			{
-					boost::thread api_caller(boost::bind(&PrimitiveCommand::undo, primitive));	
-					api_caller.timed_join(boost::posix_time::milliseconds(getMaxTime()));	
-		
+				boost::thread api_caller(boost::bind(&PrimitiveCommand::undo, primitive));
+				api_caller.timed_join(boost::posix_time::milliseconds(getMaxTime()));
+
 			}
-		  catch (exception& e)
-		  {
-			cout << e.what() << '\n';
-		  }
+			catch (exception& e)
+			{
+				cout << e.what() << '\n';
+			}
 		}else 
 		{
-			
+
 		}
-	
+
 	}
 }

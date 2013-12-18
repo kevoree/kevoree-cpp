@@ -18,10 +18,10 @@ public:
 		this->mservice =mservice;
 	}
 	
-	void execute()
+	void execute(boost::promise<bool> & result)
 	{
 		LOGGER_WRITE(Logger::DEBUG,"RemoveInstance ->"+instance->name+" path="+instance->path());
-		result= bootstrapService->getDynamicLoader()->destroy_instance(instance);
+		result.set_value(bootstrapService->getDynamicLoader()->destroy_instance(instance));
     }
 
     
