@@ -100,7 +100,7 @@ static void handle_pragma_Dictionary (cpp_reader *dummy )
 	else 
 	{
 		
-        warning (OPT_Wpragmas, "%<Dictionary%> %s",TREE_STRING_POINTER (message));
+          printf("Kevoree Dictionnary name => %s\n",TREE_STRING_POINTER (message));
             
 	}
 }

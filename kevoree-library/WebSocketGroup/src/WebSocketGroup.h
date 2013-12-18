@@ -37,7 +37,11 @@ JSONModelLoader loader;
 DefaultkevoreeFactory factory;
 std::vector<thread_ptr> ts;
 server group;
+
+#pragma Dictionary "num_threads"  
 size_t num_threads;
+#pragma Dictionary "port"  
+int port;
 
 };
 
