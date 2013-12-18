@@ -1,5 +1,3 @@
-/* Demonstrates how to add custom pragmas */
-
 #include "gcc-plugin.h"
 #include <stdlib.h>
 #include "config.h"
