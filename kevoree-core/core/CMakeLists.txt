@@ -4,7 +4,9 @@ project(kevoree-core)
 
 include_directories(../model)
 include_directories(../../)
-# BEGIN -- KEVOREE-CORE-IMPL
+
+include_directories(${BOOST_ROOT}/include)
+link_directories(${BOOST_ROOT}/lib)
 
 file(GLOB_RECURSE kevore_core_impl_files impl/*)
 ADD_LIBRARY(kevoree-core-impl  STATIC  ${kevore_core_impl_files})

@@ -15,7 +15,7 @@ add_definitions(-DENABLE_LOGGER)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/")
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-	set(PRAGMA_PLUGIN "TRUE")
+
    SET(ENABLE_CXX11 "-std=c++11")
    EXECUTE_PROCESS(COMMAND "${CMAKE_CXX_COMPILER} -dumpversion" OUTPUT_VARIABLE GCC_VERSION)
    if (GCC_VERSION VERSION_LESS 4.7)
@@ -68,7 +68,7 @@ set(android_target "android-9")
 endif()
 
 message("Current OS	         : ${CMAKE_SYSTEM_NAME}")
-message("Current Architecture: ${arch_hint}")
+message("Current Architecture: ${CMAKE_GENERATOR}")
 message("Target  Architecture: ${arch_hint}")
 message("Boost: ${BOOST_ROOT}")
 message("${ENABLE_CXX11}")
