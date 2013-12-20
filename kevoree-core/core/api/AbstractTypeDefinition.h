@@ -2,6 +2,7 @@
 #define __AbstractTypeDefinition_H
 
 #include <kevoree-core/core/api/KevoreeModelHandlerService.h>
+#include <map>
 
 class Bootstraper;
 
@@ -50,6 +51,7 @@ public:
 
 	};
 
+	std::map<std::string, string> dico;
 private:
 	KevoreeModelHandlerService *service;
 	Bootstraper *bootstrapService;

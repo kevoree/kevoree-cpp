@@ -10,6 +10,8 @@ include_directories(${BOOST_ROOT}/include)
 link_directories(${BOOST_ROOT}/lib)
 #find_package(Boost REQUIRED  thread)
 
+set(LIBRARY_OUTPUT_PATH target)
+
 # BEGIN -- KEVOREE- CPPNode
 file(GLOB_RECURSE cppnodetype_library_files src/*)
 ADD_LIBRARY(kevoree-CPPNode  SHARED    ${cppnodetype_library_files} )

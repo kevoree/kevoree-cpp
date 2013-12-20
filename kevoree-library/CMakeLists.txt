@@ -3,7 +3,7 @@ project(kevoree-library)
 
 if(PRAGMA_PLUGIN MATCHES "TRUE")
 set(plugin_pragma_path "${LIBRARY_OUTPUT_PATH}/libplugin-pragma.so")
-set(CMAKE_CXX_FLAGS " -fplugin=${plugin_pragma_path} ${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS " -fplugin=${plugin_pragma_path}  ${CMAKE_CXX_FLAGS}")
 ENDIF()
 
 set(KEVOREEROOT ../../)

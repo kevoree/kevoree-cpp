@@ -9,7 +9,9 @@
 #include "CommandMapper.h"
 #include <MavenResolver.h>
 
-#pragma NodeType "CPPNode"  
+#pragma NodeType "CPPNode"
+#pragma GroupName "org.kevoree.library"
+#pragma Version "1.0"
 class CPPNodeType : public AbstractNodeType
 {
 public:
@@ -20,7 +22,7 @@ public:
     AdaptationModel *plan(ContainerRoot *actualModel,ContainerRoot *targetModel,TraceSequence *traces);
     bool execute(ContainerNode *rootNode,AdaptationModel *adaptionModel,AbstractNodeType *nodeInstance);
     PrimitiveCommand* getPrimitive(AdaptationPrimitive *primitive);
-    
+
 Planner planner;
 CommandMapper *mapper;
 

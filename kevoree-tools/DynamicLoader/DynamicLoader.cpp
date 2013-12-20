@@ -1,5 +1,5 @@
 #include <kevoree-tools/DynamicLoader/DynamicLoader.h>
-
+#include <unordered_map>
 
 DynamicLoader::DynamicLoader(Bootstraper *bootstrap)
 {
@@ -106,7 +106,42 @@ bool DynamicLoader::start_instance(Instance *i)
 		if(inst != NULL && dynamic_cast<AbstractTypeDefinition*>(inst) != 0)
 		{
 			LOGGER_WRITE(Logger::DEBUG,"invoke start "+i->name);
+			
+			Dictionary * dico =i->dictionary;
+			TypeDefinition *type = 	i->typeDefinition;
+			if(type != NULL)
+			{
+				DictionaryType *dtype = type->dictionaryType;
+				if(dtype != NULL)
+				{
+						for (std::unordered_map<string,DictionaryAttribute*>::const_iterator it = dtype->attributes.begin();  it != dtype->attributes.end(); ++it)
+						{
+								DictionaryAttribute *da = it->second;
+								
+							//fragmentDictionary
+								if(dico != NULL && dico->values[da->name] != NULL)
+								{
+										inst->dico[da->name] = dico->values[da->name]->value;
+								}
+								else if(i->fragmentDictionary[mservice->getNodeName()] != NULL && i->fragmentDictionary[mservice->getNodeName()]->values[da->name] != NULL )
+								{
+							
+									LOGGER_WRITE(Logger::DEBUG,"fragmentDictionary "+ i->fragmentDictionary[mservice->getNodeName()]->values[da->name]->value);
+									inst->dico[da->name] = i->fragmentDictionary[mservice->getNodeName()]->values[da->name]->value;
+								}
+								else
+								{
+									cout << da->name << " defaultValue " << da->defaultValue << endl;
+									inst->dico[da->name] = 	da->defaultValue;
+								}
+								
+						}	
+				}		
+			}
+			
+			
 			inst->start();
+			
 			return true;
 		}
 		return false;		

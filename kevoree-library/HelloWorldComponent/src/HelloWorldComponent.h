@@ -4,7 +4,11 @@
 #include <kevoree-core/core/api/AbstractComponent.h>
 
 
-#pragma ComponentType "HelloWorldComponent"  
+#pragma ComponentType "HelloWorldComponent"
+#pragma GroupName "org.kevoree.library"
+#pragma Version "1.0"
+#pragma Dictionary "demo"
+
 class HelloWorldComponent :public AbstractComponent
 {
 	public:

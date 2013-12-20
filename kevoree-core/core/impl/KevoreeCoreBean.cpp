@@ -93,7 +93,7 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel)
 
 		TraceSequence *traces = preCompare->createTraces(currentModel,proposedNewModel);
 
-		// LOGGER_WRITE(Logger::INFO,traces->exportToString());
+		 LOGGER_WRITE(Logger::DEBUG,traces->exportToString());
 
 		AdaptationModel *adaptationModel = nodeInstance->plan(currentModel, proposedNewModel,traces);
 		LOGGER_WRITE(Logger::INFO,("Adaptation model size "+Utils::IntegerUtilstoString(adaptationModel->adaptations.size())));

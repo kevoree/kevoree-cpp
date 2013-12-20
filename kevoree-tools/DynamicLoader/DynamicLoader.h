@@ -3,6 +3,8 @@
 
 #include <kevoree-core/core/api/KevoreeModelHandlerService.h>
 #include <kevoree-core/model/kevoree/TypeDefinition.h>
+#include <kevoree-core/model/kevoree/Dictionary.h>
+#include <kevoree-core/model/kevoree/DictionaryValue.h>
 #include <kevoree-core/model/kevoree/DeployUnit.h>
 #include <kevoree-core/core/api/AbstractTypeDefinition.h>
 #include <kevoree-core/core/api/AbstractNodeType.h>
@@ -10,6 +12,9 @@
 #include <kevoree-core/core/api/Bootstraper.h>
 #include <kevoree-core/core/api/IDynamicLoader.h>
 
+#include <kevoree-core/model/kevoree/FragmentDictionary.h>
+#include <kevoree-core/model/kevoree/DictionaryType.h>
+#include <kevoree-core/model/kevoree/DictionaryAttribute.h>
 
 #include <map>
 #include <string>
