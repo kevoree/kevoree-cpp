@@ -8,6 +8,8 @@
 #include "Planner.h"
 #include "CommandMapper.h"
 #include <MavenResolver.h>
+#include "deploy/PrimitiveCommandExecutionHelper.h"
+
 
 #pragma NodeType "CPPNode"
 #pragma GroupName "org.kevoree.library"
@@ -25,6 +27,7 @@ public:
 
 Planner planner;
 CommandMapper *mapper;
+PrimitiveCommandExecutionHelper execPrimitive;
 
 };
 

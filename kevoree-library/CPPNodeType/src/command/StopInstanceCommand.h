@@ -20,7 +20,8 @@ public:
 	{
 		TypeDefinition *type = (TypeDefinition*)instance->typeDefinition;
 		LOGGER_WRITE(Logger::DEBUG,"StopInstance ->"+instance->name);
-		result.set_value(bootstrapService->getDynamicLoader()->stop_instance(instance));
+		bool stopped = bootstrapService->getDynamicLoader()->stop_instance(instance);
+		result.set_value(stopped);
     }
 
 	void undo()

@@ -69,6 +69,24 @@ void ModelGenerator::close()
 	myfile.open ("target/lib.json");
 	myfile << result;
 	myfile.close();
+	/*
+	ofstream pomfile;
+	pomfile.open ("target/pom.xml");
+	pomfile << "<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\n";
+	pomfile << "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n";
+	pomfile << "xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n";
+	pomfile << "<modelVersion>4.0.0</modelVersion>\n";
+	pomfile << "<groupId>"+du->groupName+"</groupId>\n";
+	pomfile << "<artifactId>"+type->name+"</artifactId>\n";
+	pomfile << "<version>"+type->version+"</version>\n";
+	pomfile << "<packaging>so</packaging>\n";
+	pomfile << "</project>\n";
+	
+	pomfile.close();*/
+	
+	 
+	
+
 }
 
 void ModelGenerator::addNodeType(char *name){

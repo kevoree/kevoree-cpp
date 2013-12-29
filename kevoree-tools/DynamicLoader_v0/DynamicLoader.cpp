@@ -19,7 +19,7 @@ bool DynamicLoader::register_instance(Instance *i)
 		LOGGER_WRITE(Logger::WARNING,"There is no DeployUnit to register");
 		return false;	
 	}
-	for (std::unordered_map<string,DeployUnit*>::iterator iterator = type->deployUnits.begin(), end = type->deployUnits.end(); iterator != end; ++iterator)
+	for (std::map<string,DeployUnit*>::iterator iterator = type->deployUnits.begin(), end = type->deployUnits.end(); iterator != end; ++iterator)
 	{
 			 DeployUnit *du  = iterator->second;
 			// todo check if for me
@@ -60,7 +60,7 @@ AbstractTypeDefinition* DynamicLoader::create_instance(Instance *i)
 		return NULL;	
 	}
 	
-	for (std::unordered_map<string,DeployUnit*>::iterator iterator = type->deployUnits.begin(), end = type->deployUnits.end(); iterator != end; ++iterator)
+	for (std::map<string,DeployUnit*>::iterator iterator = type->deployUnits.begin(), end = type->deployUnits.end(); iterator != end; ++iterator)
 	{
 		DeployUnit *du  = iterator->second;
 		// todo check if for me
@@ -104,7 +104,7 @@ bool DynamicLoader::unload_instance(Instance *i)
 		{
 			LOGGER_WRITE(Logger::DEBUG,"stop of "+i->name);
 			inst->stop();
-			for (std::unordered_map<string,DeployUnit*>::iterator iterator = type->deployUnits.begin(), end = type->deployUnits.end(); iterator != end; ++iterator)
+			for (std::map<string,DeployUnit*>::iterator iterator = type->deployUnits.begin(), end = type->deployUnits.end(); iterator != end; ++iterator)
 			{
 					DeployUnit *du  = iterator->second;
 					// todo check if for me

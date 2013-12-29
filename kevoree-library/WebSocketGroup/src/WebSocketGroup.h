@@ -13,6 +13,15 @@
 #include <thread>
 
 
+typedef websocketpp::server<websocketpp::config::asio> server;
+typedef websocketpp::lib::shared_ptr<websocketpp::lib::thread> thread_ptr;
+
+using websocketpp::lib::placeholders::_1;
+using websocketpp::lib::placeholders::_2;
+using websocketpp::lib::bind;
+
+// pull out the type of messages sent by our config
+typedef server::message_ptr message_ptr;
 
 
 #pragma GroupType "WebSocketGroup"  

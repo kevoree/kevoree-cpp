@@ -1,5 +1,5 @@
 #include <kevoree-tools/DynamicLoader/DynamicLoader.h>
-#include <unordered_map>
+#include <map>
 
 DynamicLoader::DynamicLoader(Bootstraper *bootstrap)
 {
@@ -24,10 +24,10 @@ bool DynamicLoader::register_instance(Instance *i)
 		
 		if(type->deployUnit ==NULL)
 		{
-			cout << type->name << endl;
 			LOGGER_WRITE(Logger::ERROR,"There is no DeployUnit define");	
 			return false;
 		}
+
 		// check if exist
 		map<string, void*>::const_iterator it = deploysUnits.find(type->deployUnit->internalGetKey());
 		if (it != deploysUnits.end())
@@ -35,7 +35,7 @@ bool DynamicLoader::register_instance(Instance *i)
 			LOGGER_WRITE(Logger::INFO,"The DeployUnit is already loaded");	
 			return true;
 		}
-		
+
 		string libpath=	bootstrap->resolveDeployUnit(type->deployUnit);
 		if(!libpath.empty())
 		{
@@ -114,7 +114,7 @@ bool DynamicLoader::start_instance(Instance *i)
 				DictionaryType *dtype = type->dictionaryType;
 				if(dtype != NULL)
 				{
-						for (std::unordered_map<string,DictionaryAttribute*>::const_iterator it = dtype->attributes.begin();  it != dtype->attributes.end(); ++it)
+						for (std::map<string,DictionaryAttribute*>::const_iterator it = dtype->attributes.begin();  it != dtype->attributes.end(); ++it)
 						{
 								DictionaryAttribute *da = it->second;
 								
@@ -153,8 +153,10 @@ bool DynamicLoader::stop_instance(Instance *i)
 		if(inst != NULL && dynamic_cast<AbstractTypeDefinition*>(inst) != 0)
 		{
 			LOGGER_WRITE(Logger::DEBUG,"invoke stop "+i->name);
-	
 			inst->stop();
+			LOGGER_WRITE(Logger::DEBUG,"Clean instance cache");
+			instances.erase(instances.find(i->path()));
+			LOGGER_WRITE(Logger::DEBUG,"Cleaned ");
 			return true;
 		}
 		return false;
@@ -190,8 +192,7 @@ bool DynamicLoader::destroy_instance(Instance *i)
 			}
 			
 			destroyInstance(it->second,inst);
-			LOGGER_WRITE(Logger::DEBUG,"Clean instance cache");
-			instances.erase(instances.find(i->path()));	
+
 				/*
 			deploysUnits.erase(deploysUnits.find(du->internalGetKey()));
 			// class 
@@ -227,7 +228,7 @@ void * DynamicLoader::soloader_load(std::string libpath)
 
 void DynamicLoader::destroyInstance(void *handler,AbstractTypeDefinition *instance)
 {
-				LOGGER_WRITE(Logger::DEBUG,"DynamicLoader destroyInstance");
+			LOGGER_WRITE(Logger::DEBUG,"DynamicLoader destroyInstance");
 			// destructor 
 			void (*destroy)(AbstractTypeDefinition*);
 			destroy = (void (*)(AbstractTypeDefinition*))dlsym(handler, "destroy_object");

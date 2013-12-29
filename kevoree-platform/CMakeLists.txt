@@ -5,6 +5,7 @@ project(kevoree-platform)
 
 include_directories(${BOOST_ROOT}/include)
 link_directories(${BOOST_ROOT}/lib)
+message("${BOOST_ROOT}")
 include_directories(.)
 include_directories(../)
 include_directories(../kevoree-core/model/)
@@ -23,8 +24,8 @@ add_executable(
 
 TARGET_LINK_LIBRARIES(main 	${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
 TARGET_LINK_LIBRARIES(main  ${LIBRARY_OUTPUT_PATH}/libkevoree-core-impl.a )
-TARGET_LINK_LIBRARIES(main  boost_thread.a)
-TARGET_LINK_LIBRARIES(main  boost_system.a)
+TARGET_LINK_LIBRARIES(main  boost_thread)
+TARGET_LINK_LIBRARIES(main  boost_system)
 TARGET_LINK_LIBRARIES(main dl)
 
 

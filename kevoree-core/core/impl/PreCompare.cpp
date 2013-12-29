@@ -1,6 +1,5 @@
 #include <kevoree-core/core/PreCompare.h>
-
-#include <unordered_map>
+#include <map>
 
 PreCompare::PreCompare(std::string _nodeName){
 	this->nodeName = _nodeName;
@@ -8,7 +7,7 @@ PreCompare::PreCompare(std::string _nodeName){
 void PreCompare::createTracesGroupsAndChannels(ContainerRoot *currentModel,ContainerRoot *targetModel,ContainerNode *currentNode,ContainerNode *targetNode,TraceSequence *traces)
 {
 	TraceSequence *seq;
-	for ( std::unordered_map<string,ContainerNode*>::const_iterator it = targetNode->hosts.begin();  it != targetNode->hosts.end(); ++it)
+	for ( std::map<string,ContainerNode*>::const_iterator it = targetNode->hosts.begin();  it != targetNode->hosts.end(); ++it)
 	{
 		ContainerNode *n = it->second;
 		ContainerNode *previousNode =(ContainerNode*)currentModel->findByPath(n->path());
@@ -25,7 +24,7 @@ void PreCompare::createTracesGroupsAndChannels(ContainerRoot *currentModel,Conta
 		}
 	}
 
-	for ( std::unordered_map<string,Group*>::const_iterator it = targetNode->groups.begin();  it != targetNode->groups.end(); ++it) 
+	for ( std::map<string,Group*>::const_iterator it = targetNode->groups.begin();  it != targetNode->groups.end(); ++it)
 	{
 		Group *n = it->second;
 		Group *previousGroup =(Group*)currentModel->findByPath(n->path());

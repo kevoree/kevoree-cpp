@@ -1,5 +1,5 @@
 #include "Planner.h"
-#include <unordered_map>
+#include <map>
 
 
 AdaptationPrimitive* Planner::adapt(Primitives p,KMFContainer *elem)
@@ -17,7 +17,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 	ContainerNode *currentNode = currentModel->findnodesByID(nodeName);
 	ContainerNode *targetNode = targetModel->findnodesByID(nodeName);
 
-	std::unordered_map<string,std::list<TupleObjPrim> > elementAlreadyProcessed; 
+	std::map<string,std::list<TupleObjPrim> > elementAlreadyProcessed;
 
 	//LOGGER_WRITE(Logger::DEBUG,"Planner::compareModels TRACES =>\n"+traces->exportToString());
 
@@ -41,6 +41,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 				}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
 				{
 					KMFContainer *elemToAdd=currentModel->findByPath(((ModelRemoveTrace*)trace)->objPath);
+					adaptationModel->addadaptations(adapt(StopInstance, elemToAdd));
 					adaptationModel->addadaptations(adapt(RemoveInstance, elemToAdd));
 				}
 
@@ -60,6 +61,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 					}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
 					{
 						KMFContainer *elemToAdd=currentModel->findByPath(((ModelRemoveTrace*)trace)->objPath);
+						adaptationModel->addadaptations(adapt(StopInstance, elemToAdd));
 						adaptationModel->addadaptations(adapt(RemoveInstance, elemToAdd));
 					}
 
@@ -81,8 +83,9 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 					}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
 					{
 						KMFContainer *elemToAdd=currentModel->findByPath(( (ModelRemoveTrace*)trace)->objPath);
-						adaptationModel->addadaptations(adapt(RemoveInstance, elemToAdd));
 						adaptationModel->addadaptations(adapt(StopInstance, elemToAdd));
+						adaptationModel->addadaptations(adapt(RemoveInstance, elemToAdd));
+
 					}
 				}
 			}
@@ -124,7 +127,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 						bool stillUsed = (channel != NULL);
 						if(channel != NULL)
 						{
-							for (std::unordered_map<string,MBinding*>::iterator iterator = channel->bindings.begin(), end = channel->bindings.end(); iterator != end; ++iterator)
+							for (std::map<string,MBinding*>::iterator iterator = channel->bindings.begin(), end = channel->bindings.end(); iterator != end; ++iterator)
 							{
 
 								MBinding *loopBinding = iterator->second;
@@ -269,8 +272,7 @@ AdaptationModel* Planner::schedule(AdaptationModel *adaptationmodel,std::string 
 	step_AddBinding->nextStep=step_UpdateDictionaryInstance;
 	step_UpdateDictionaryInstance->nextStep=step_StartInstance;
 	step_StartInstance->nextStep=NULL;
-	// TODO delete in memory 
-
+	
 	//STOP INSTANCEs
 	// REMOVE BINDINGS
 	// REMOVE INSTANCEs
@@ -282,7 +284,8 @@ AdaptationModel* Planner::schedule(AdaptationModel *adaptationmodel,std::string 
 	// UPDATE DICTIONARYs
 	// START INSTANCEs
 
-	for (std::unordered_map<string,AdaptationPrimitive*>::iterator it = adaptationmodel->adaptations.begin();  it != adaptationmodel->adaptations.end(); ++it)
+
+	for (std::map<string,AdaptationPrimitive*>::iterator it = adaptationmodel->adaptations.begin();  it != adaptationmodel->adaptations.end(); ++it)
 	{
 		AdaptationPrimitive *adaptation = it->second;
 
@@ -307,27 +310,9 @@ AdaptationModel* Planner::schedule(AdaptationModel *adaptationmodel,std::string 
 		}else
 		{
 
-			LOGGER_WRITE(Logger::ERROR,"Scheduler TODO manage => "+	adaptation->primitiveType);
+			LOGGER_WRITE(Logger::ERROR,"Scheduler TODO  => "+	adaptation->primitiveType);
 
 		}
 	}
-
-
-
-	//STOP INSTANCEs
-	// REMOVE BINDINGS
-	// REMOVE INSTANCEs
-	// REMOVE DEPLOYUNITS
-	// UPDATE DEPLOYUNITS
-	// ADD DEPLOYUNITS
-	// ADD INSTANCES
-	// ADD BINDINGs
-	// UPDATE DICTIONARYs
-	// START INSTANCEs
-
-
-
-
-
 	return adaptationmodel;
 }

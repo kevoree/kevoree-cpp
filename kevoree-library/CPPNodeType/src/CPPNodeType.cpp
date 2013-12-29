@@ -1,5 +1,5 @@
 #include "CPPNodeType.h"
-#include "deploy/PrimitiveCommandExecutionHelper.h"
+
 
 extern "C"{  
 AbstractNodeType* create(){
@@ -40,7 +40,7 @@ AdaptationModel *CPPNodeType::plan(ContainerRoot *currentModel,ContainerRoot *ta
 
 bool CPPNodeType::execute(ContainerNode *rootNode,AdaptationModel *adaptionModel,AbstractNodeType *nodeInstance)
 {
-	return	PrimitiveCommandExecutionHelper::execute(rootNode,adaptionModel,nodeInstance);
+	return	execPrimitive.execute(rootNode,adaptionModel,nodeInstance);
 }
 
 PrimitiveCommand *CPPNodeType::getPrimitive(AdaptationPrimitive *primitive)

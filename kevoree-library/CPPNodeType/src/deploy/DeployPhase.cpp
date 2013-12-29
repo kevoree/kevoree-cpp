@@ -1,15 +1,15 @@
-#include "KevoreeParDeployPhase.h"
+#include "DeployPhase.h"
 #include <iostream>
 #include <exception>
 #include <boost/thread.hpp>
 using namespace std;
 
 
-KevoreeParDeployPhase::KevoreeParDeployPhase(){
+DeployPhase::DeployPhase(){
 	maxTimeout=10000;
 }
 
-KevoreeParDeployPhase::~KevoreeParDeployPhase(){
+DeployPhase::~DeployPhase(){
 	for (std::list<PrimitiveCommand*>::const_iterator it = primitives.begin();  it != primitives.end(); ++it) 
 	{
 		PrimitiveCommand *cmd =*it;
@@ -17,20 +17,20 @@ KevoreeParDeployPhase::~KevoreeParDeployPhase(){
 	}
 }
 
-void KevoreeParDeployPhase::setMaxTime(long mt)
+void DeployPhase::setMaxTime(long mt)
 {
 	maxTimeout=mt;
 }
 
-long KevoreeParDeployPhase::getMaxTime(){
+long DeployPhase::getMaxTime(){
 	return maxTimeout;
 }
 
-void KevoreeParDeployPhase::populate(PrimitiveCommand *cmd)
+void DeployPhase::populate(PrimitiveCommand *cmd)
 {
 	primitives.push_back(cmd);
 }
-void KevoreeParDeployPhase::rollback()
+void DeployPhase::rollback()
 {
 	primitives.reverse();
 	for (std::list<PrimitiveCommand*>::const_iterator it = primitives.begin();  it != primitives.end(); ++it) 

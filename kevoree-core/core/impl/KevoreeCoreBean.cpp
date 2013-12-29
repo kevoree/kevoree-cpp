@@ -93,10 +93,18 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel)
 
 		TraceSequence *traces = preCompare->createTraces(currentModel,proposedNewModel);
 
-		 LOGGER_WRITE(Logger::DEBUG,traces->exportToString());
+	//	 LOGGER_WRITE(Logger::DEBUG,traces->exportToString());
 
 		AdaptationModel *adaptationModel = nodeInstance->plan(currentModel, proposedNewModel,traces);
 		LOGGER_WRITE(Logger::INFO,("Adaptation model size "+Utils::IntegerUtilstoString(adaptationModel->adaptations.size())));
+
+		for (std::map<string,AdaptationPrimitive*>::iterator it = adaptationModel->adaptations.begin();  it != adaptationModel->adaptations.end(); ++it)
+		{
+			AdaptationPrimitive *adaptation = it->second;
+
+			 LOGGER_WRITE(Logger::DEBUG," "+adaptation->primitiveType+" "+adaptation->ref->path());
+
+		}
 
 		ContainerNode *rootNode = currentModel->findnodesByID(getNodeName());
 

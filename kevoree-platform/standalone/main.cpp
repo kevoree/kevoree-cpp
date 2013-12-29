@@ -26,26 +26,55 @@ KevoreeBootStrap *kb=NULL;
 
 void my_handler(int s)
 {
-	/*
+
 	if(kb !=NULL){
 		//kb->stop();	
 		delete kb;
 	}
 	if(model != NULL)
 		delete model;
-	*/
+
     exit(1); 
 }
 
 int main(int argc,char **argv)
 	{
+		LOGGER_START(Logger::DEBUG, "kevoree.log");
+		/*
+		for(int i=0;i<100000;i++){
+		 void* handle = dlopen("/home/jed/KEVOREE_PROJECT/kevoree-cpp/build/libwebsocketgroup.so",RTLD_NOW);
+		
+			AbstractTypeDefinition* (*create)();
+			create =  (AbstractTypeDefinition* (*)())dlsym(handle, "create");
+			if(!create){
+				LOGGER_WRITE(Logger::DEBUG,"cannot find symbol newInstance");	
+			}
+			AbstractTypeDefinition* c = (AbstractTypeDefinition*)create();
+			c->dico["port"] = "9000";
+			//c->start();
+			
+			boost::thread api_caller(boost::bind(&AbstractTypeDefinition::start, c));
+			api_caller.timed_join(boost::posix_time::milliseconds(10000000));
+		
+		
+			boost::thread api_caller_stop(boost::bind(&AbstractTypeDefinition::stop, c));
+			api_caller_stop.timed_join(boost::posix_time::milliseconds(10000000));
+		
+		
+		
+			void (*destroy)(AbstractTypeDefinition*);
+			destroy = (void (*)(AbstractTypeDefinition*))dlsym(handle, "destroy_object");
+			destroy(c);
+		}
+			
+		return 0;*/
 		DefaultkevoreeFactory factory;
 		JSONModelLoader loader;	 
 		
 		signal (SIGINT,my_handler);
 		int exit=0;
 		clock_t start = clock();
-		LOGGER_START(Logger::DEBUG, "kevoree.log");
+	
 		kb = new KevoreeBootStrap(); 	
 		kb->setNodeName("node0");	
 
