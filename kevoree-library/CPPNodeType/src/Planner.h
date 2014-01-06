@@ -1,12 +1,13 @@
 #ifndef __Planner_H
 #define __Planner_H
 
+
+#include <kevoree-core/api/adaptation/AdaptationModel.h>
+#include <kevoree-core/api/adaptation/AdaptationPrimitive.h>
+#include <kevoree-core/model/kevoree/kevoree.h>
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
 #include <kevoree-core/model/kevoree/ContainerNode.h>
 #include <microframework/api/trace/TraceSequence.h>
-#include <kevoree-core/core/adaptation/AdaptationModel.h>
-#include <kevoree-core/core/adaptation/AdaptationPrimitive.h>
-#include <kevoree-core/model/kevoree/kevoree.h>
 #include <set>
 #include <map>
 #include "Primitives.h"

@@ -1,8 +1,8 @@
 #ifndef __StartInstanceCommand_H
 #define __StartInstanceCommand_H
 
-#include <kevoree-core/core/api/PrimitiveCommand.h>
-#include <kevoree-core/core/api/Bootstraper.h>
+#include <kevoree-core/api/PrimitiveCommand.h>
+#include <kevoree-core/api/Bootstraper.h>
 #include "StopInstanceCommand.h"
 
 

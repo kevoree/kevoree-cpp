@@ -1,13 +1,11 @@
 #ifndef __CommandMapper_H
 #define __CommandMapper_H
 
+
+#include <kevoree-core/api/AbstractNodeType.h>
+#include <kevoree-core/api/PrimitiveCommand.h>
 #include <microframework/api/trace/TraceSequence.h>
-#include <kevoree-core/core/api/AbstractNodeType.h>
-#include <kevoree-core/core/api/PrimitiveCommand.h>
-
-
-
-
+#include <microframework/api/json/JSONModelSerializer.h>
 
 class CommandMapper 
 {

@@ -1,8 +1,8 @@
 #ifndef __AddInstance_H
 #define __AddInstance_H
 
-#include <kevoree-core/core/api/PrimitiveCommand.h>
-#include <kevoree-core/core/api/Bootstraper.h>
+#include <kevoree-core/api/PrimitiveCommand.h>
+#include <kevoree-core/api/Bootstraper.h>
 #include "RemoveInstanceCommand.h"
 
 class AddInstanceCommand : public  PrimitiveCommand

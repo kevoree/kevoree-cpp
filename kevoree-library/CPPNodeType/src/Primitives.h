@@ -22,15 +22,15 @@ static int Priority_Primitives(Primitives e)
 {
 	  switch(e)
 	  {
-	  case  StartInstance: return 11;
+	  case StartInstance: return 11;
 	  case UpdateInstance: return 10;
 	  case UpdateDictionaryInstance : return 9;
 	  case AddBinding: return 8;
-	  case  AddInstance: return 7;
-	  case  AddDeployUnit : return 6;
+	  case AddInstance: return 7;
+	  case AddDeployUnit : return 6;
 	  case UpdateDeployUnit: return 5;
 	  case UpdateBinding: return 4;
-	  case  RemoveDeployUnit: return 3;
+	  case RemoveDeployUnit: return 3;
 	  case RemoveInstance: return 2;
 	  case RemoveBinding : return 1;
 	  case StopInstance: return 0;

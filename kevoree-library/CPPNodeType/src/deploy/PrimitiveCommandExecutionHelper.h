@@ -1,8 +1,8 @@
 #ifndef __PrimitiveCommandExecutionHelper_H
 #define __PrimitiveCommandExecutionHelper_H
 
-#include <kevoree-core/core/KevoreeCoreBean.h>
-#include <kevoree-core/core/api/Bootstraper.h>
+#include <kevoree-core/api/KevoreeCoreBean.h>
+#include <kevoree-core/api/Bootstraper.h>
 #include "DeployPhase.h"
 #include <string>
 class PrimitiveCommandExecutionHelper{

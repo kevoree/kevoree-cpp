@@ -1,7 +1,7 @@
 #ifndef __WebSocketGroup_H
 #define __WebSocketGroup_H
 
-#include <kevoree-core/core/api/AbstractGroup.h>
+#include <kevoree-core/api/AbstractGroup.h>
 #include <kevoree-core/model/kevoree/DefaultkevoreeFactory.h>
 #include <microframework/api/json/JSONModelSerializer.h>
 #include <websocketpp/config/asio_no_tls.hpp>

@@ -5,7 +5,7 @@
 #include "command/StopInstanceCommand.h"
 #include "command/UpdateDictionaryInstanceCommand.h"
 #include "Primitives.h"
-#include <microframework/api/json/JSONModelSerializer.h>
+
 
 CommandMapper::CommandMapper(AbstractNodeType *nodeType)
 {

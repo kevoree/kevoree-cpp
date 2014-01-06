@@ -1,8 +1,8 @@
 #ifndef __UpdateDictionaryInstanceCommand_H
 #define __UpdateDictionaryInstanceCommand_H
 
-#include <kevoree-core/core/api/PrimitiveCommand.h>
-#include <kevoree-core/core/api/Bootstraper.h>
+#include <kevoree-core/api/PrimitiveCommand.h>
+#include <kevoree-core/api/Bootstraper.h>
 
 
 class UpdateDictionaryInstanceCommand : public  PrimitiveCommand 
