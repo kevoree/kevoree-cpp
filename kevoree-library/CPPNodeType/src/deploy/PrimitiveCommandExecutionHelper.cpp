@@ -4,28 +4,29 @@
 #include <boost/thread.hpp>
 #include <stdexcept>
 #include <map>
+#include <iostream>
+#include <queue>
 
 bool PrimitiveCommandExecutionHelper::execute(ContainerNode *rootNode,AdaptationModel *adaptionModel,AbstractNodeType *nodeInstance)
 {
-	bool res;
+	bool res=true;
 	DeployPhase *phase=NULL;
-	ParallelStep *orderedPrimitiveSet = adaptionModel->orderedPrimitiveSet;
-	if(orderedPrimitiveSet == NULL)
-	{
-		LOGGER_WRITE(Logger::ERROR,"orderedPrimitiveSet is NULL");
-		return false;
-	}
+
 	phase = new DeployPhase();
-	res = executeStep(rootNode,orderedPrimitiveSet,nodeInstance,phase);
+
+	while ( !adaptionModel->steps.empty()  && res ==true)
+	{
+		ParallelStep *step = adaptionModel->steps.top();
+		res = executeStep(rootNode,step,nodeInstance,phase);
+		adaptionModel->steps.pop();
+	}
 
 	if(!res)
 	{
 		LOGGER_WRITE(Logger::INFO,"Rollback");
 		phase->rollback();	
 	}
-	LOGGER_WRITE(Logger::DEBUG,"Clean ParallelStep");
-	cleanParallelStep(orderedPrimitiveSet);
-	adaptionModel->orderedPrimitiveSet = NULL;	  
+
 	if(phase != NULL)
 	{
 		delete phase;
@@ -33,61 +34,46 @@ bool PrimitiveCommandExecutionHelper::execute(ContainerNode *rootNode,Adaptation
 	return res;
 }
 
-bool PrimitiveCommandExecutionHelper::cleanParallelStep(ParallelStep *step)
-{
-	if (step == NULL)
-	{
-		return true;
-	}
-	ParallelStep *next = step->nextStep;
-	delete step;
-	return  cleanParallelStep(next);
-}
 
 bool PrimitiveCommandExecutionHelper::executeStep(ContainerNode *rootNode,ParallelStep *step,AbstractNodeType *nodeInstance,DeployPhase *phase){
-	if (step == NULL)
+	if (step->adaptations.size() == 0)
 	{
 		return true;
 	}
-	try
+
+	while ( !step->adaptations.empty() )
 	{
-		for (std::map<string,AdaptationPrimitive*>::const_iterator it = step->adaptations.begin();  it != step->adaptations.end(); ++it)
+
+		AdaptationPrimitive *adaptation = step->adaptations.top();
+		PrimitiveCommand *primitive = nodeInstance->getPrimitive(adaptation);
+		if(primitive != NULL)
 		{
-			AdaptationPrimitive *adaptation = it->second;
-			PrimitiveCommand *primitive = nodeInstance->getPrimitive(adaptation);
-			if(primitive != NULL)
-			{
-				phase->populate(primitive);
-				boost::promise<bool> result;
-				LOGGER_WRITE(Logger::DEBUG," START PrimitiveCommand "+adaptation->primitiveType);
-				boost::thread api_caller(boost::bind(&PrimitiveCommand::execute, primitive,boost::ref(result)));
+			phase->populate(primitive);
+			boost::promise<bool> result;
 
-				if (!api_caller.timed_join(boost::posix_time::milliseconds(phase->getMaxTime())))
-				{
-					LOGGER_WRITE(Logger::ERROR,"PrimitiveCommand call timed out for "+adaptation->primitiveType+ " "+adaptation->ref->path());
-					return false;
-				}else
-				{
-					if(!result.get_future().get())
-					{
-						LOGGER_WRITE(Logger::ERROR,"PrimitiveCommand false for"+adaptation->primitiveType+ " "+adaptation->ref->path());
-						return false;
-					}
-				}
-				LOGGER_WRITE(Logger::DEBUG," FINISH PrimitiveCommand ");
-			}
-			else
+			boost::thread api_caller(boost::bind(&PrimitiveCommand::execute, primitive,boost::ref(result)));
+
+			if (!api_caller.timed_join(boost::posix_time::milliseconds(phase->getMaxTime())))
 			{
-				LOGGER_WRITE(Logger::ERROR,"PrimitiveCommand is NULL");
+				LOGGER_WRITE(Logger::ERROR,"PrimitiveCommand call timed out for "+adaptation->name+ " "+adaptation->ref->path());
 				return false;
+			}else
+			{
+				if(!result.get_future().get())
+				{
+					LOGGER_WRITE(Logger::ERROR,"PrimitiveCommand false for"+adaptation->name+ " "+adaptation->ref->path());
+					return false;
+				}
 			}
+			LOGGER_WRITE(Logger::DEBUG," FINISH PrimitiveCommand ");
 		}
+		else
+		{
+			LOGGER_WRITE(Logger::ERROR,"PrimitiveCommand is NULL");
+			return false;
+		}
+		step->adaptations.pop();
 
-		return executeStep(rootNode,step->nextStep,nodeInstance,phase);
 	}
-	catch ( const std::exception & e )
-	{
-		std::cerr << e.what() << endl;
-		return false;
-	}
+	return true;
 }

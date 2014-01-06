@@ -3,8 +3,8 @@
 
 #include <microframework/api/trace/TraceSequence.h>
 #include <kevoree-core/core/api/AbstractNodeType.h>
-#include <kevoree-core/model/kevoreeadaptation/DefaultkevoreeadaptationFactory.h>
-#include <kevoree-core/model/kevoreeadaptation/AdaptationPrimitive.h>
+
+#include <kevoree-core/core/adaptation/AdaptationPrimitive.h>
 #include "Planner.h"
 #include "CommandMapper.h"
 #include <MavenResolver.h>

@@ -2,19 +2,40 @@
 #define __Primitives_H
 
 enum  Primitives {
-	UpdateDeployUnit,
-    AddDeployUnit,
-    RemoveDeployUnit,
-    UpdateInstance,
-    UpdateBinding,
-    UpdateDictionaryInstance,
-    AddInstance,
-    RemoveInstance,
-    AddBinding,
-    RemoveBinding,
     StartInstance,
+    UpdateInstance,
+    UpdateDictionaryInstance,
+    AddBinding,
+    AddInstance,
+    AddDeployUnit,
+	UpdateDeployUnit,
+    UpdateBinding,
+    RemoveDeployUnit,
+    RemoveInstance,
+    RemoveBinding,
     StopInstance
 };
+
+// schedule
+
+static int Priority_Primitives(Primitives e)
+{
+	  switch(e)
+	  {
+	  case  StartInstance: return 11;
+	  case UpdateInstance: return 10;
+	  case UpdateDictionaryInstance : return 9;
+	  case AddBinding: return 8;
+	  case  AddInstance: return 7;
+	  case  AddDeployUnit : return 6;
+	  case UpdateDeployUnit: return 5;
+	  case UpdateBinding: return 4;
+	  case  RemoveDeployUnit: return 3;
+	  case RemoveInstance: return 2;
+	  case RemoveBinding : return 1;
+	  case StopInstance: return 0;
+	  }
+}
 
 
 static std::string TO_STRING_Primitives(Primitives e)

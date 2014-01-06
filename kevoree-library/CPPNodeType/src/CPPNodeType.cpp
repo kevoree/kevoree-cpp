@@ -35,7 +35,7 @@ void CPPNodeType::stop(){
 AdaptationModel *CPPNodeType::plan(ContainerRoot *currentModel,ContainerRoot *targetModel,TraceSequence *traces)
 {
 	AdaptationModel *adaptationmodel = planner.compareModels(currentModel,targetModel,getNodeName(),traces);
-	return planner.schedule(adaptationmodel,getNodeName());
+	return adaptationmodel;
 }
 
 bool CPPNodeType::execute(ContainerNode *rootNode,AdaptationModel *adaptionModel,AbstractNodeType *nodeInstance)
