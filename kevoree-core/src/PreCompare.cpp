@@ -1,4 +1,4 @@
-#include <kevoree-core/core/PreCompare.h>
+#include <kevoree-core/api/PreCompare.h>
 #include <map>
 
 PreCompare::PreCompare(std::string _nodeName){

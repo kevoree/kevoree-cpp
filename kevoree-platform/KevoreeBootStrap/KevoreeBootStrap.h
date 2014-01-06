@@ -1,9 +1,9 @@
 #ifndef __KevoreeBootStrap_H
 #define __KevoreeBootStrap_H
+
+#include <kevoree-core/api/KevoreeCoreBean.h>
 #include <kevoree-tools/BootstrapHelper/NodeTypeBootstrapHelper.h>
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
-#include <kevoree-core/core/KevoreeCoreBean.h>
-
 
 class KevoreeBootStrap {
 public:

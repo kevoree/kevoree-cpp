@@ -1,23 +1,23 @@
 #ifndef __KevoreeCoreBean_H
 #define __KevoreeCoreBean_H
 
-#include <kevoree-core/core/api/KevoreeModelHandlerService.h>
-#include <kevoree-core/core/api/Bootstraper.h>
-#include <kevoree-core/core/api/AbstractNodeType.h>
-#include <kevoree-core/core/KevoreeListeners.h>
-
-#include <microframework/api/json/JSONModelLoader.h>
-#include <microframework/api/compare/ModelCompare.h>
+#include <kevoree-core/api/KevoreeModelHandlerService.h>
+#include <kevoree-core/api/Bootstraper.h>
+#include <kevoree-core/api/AbstractNodeType.h>
+#include <kevoree-core/api/KevoreeListeners.h>
+#include  <kevoree-core/api/adaptation/AdaptationModel.h>
+#include <kevoree-core/api/PreCompare.h>
 
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
 #include <kevoree-core/model/kevoree/DefaultkevoreeFactory.h>
-#include <kevoree-core/core/PreCompare.h>
-#include <list>
-#include <string>
-#include <set>
+#include <microframework/api/json/JSONModelLoader.h>
+#include <microframework/api/compare/ModelCompare.h>
 #include <microframework/api/trace/TraceSequence.h>
 #include <microframework/api/utils/Logger.h>
 #include <pthread.h>
+#include <list>
+#include <string>
+#include <set>
 
 
 class KevoreeCoreBean : public  KevoreeModelHandlerService {

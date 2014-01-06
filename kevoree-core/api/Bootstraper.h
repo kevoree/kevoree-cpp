@@ -1,8 +1,8 @@
 #ifndef __Bootstraper_H
 #define __Bootstraper_H
-#include <kevoree-core/core/api/AbstractNodeType.h>
-#include <kevoree-core/core/api/KevoreeModelHandlerService.h>
-#include <kevoree-core/core/api/IDynamicLoader.h>
+#include <kevoree-core/api/AbstractNodeType.h>
+#include <kevoree-core/api/KevoreeModelHandlerService.h>
+#include <kevoree-core/api/IDynamicLoader.h>
 #include <string>
 #include <map>
 

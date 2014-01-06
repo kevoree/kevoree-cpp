@@ -4,7 +4,6 @@
 	#include <microframework/api/json/JSONModelLoader.h>
 	#include <microframework/api/json/JSONModelSerializer.h>
 	#include <microframework/api/compare/ModelCompare.h>
-	#include <kevoree-core/model/kevoreeadaptation/kevoreeadaptation.h>
 	#include <kevoree-core/model/kevoree/ContainerRoot.h>
 	#include <kevoree-core/model/kevoree/Instance.h>
 	#include <iostream>

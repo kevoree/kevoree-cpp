@@ -3,7 +3,7 @@
 
 
 #include <kevoree-core/model/kevoree/ComponentInstance.h>
-#include <kevoree-core/core/api/AbstractTypeDefinition.h>
+#include <kevoree-core/api/AbstractTypeDefinition.h>
 #include <string>
 
 class AbstractComponent: public AbstractTypeDefinition

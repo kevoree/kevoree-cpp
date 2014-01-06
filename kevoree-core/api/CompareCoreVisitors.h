@@ -6,18 +6,20 @@
  * Date: 20/11/13
  * Time: 17:39
  */
-#include <string>
-#include <microframework/api/KMFContainer.h>
-#include <microframework/api/trace/TraceSequence.h>
+
+
+#include <kevoree-core/api/adaptation/AdaptationModel.h>
+#include <kevoree-core/api/PreCompare.h>
+
+
 #include <kevoree-core/model/kevoree/DeployUnit.h>
 #include <kevoree-core/model/kevoree/ContainerNode.h>
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
-#include <kevoree-core/model/kevoreeadaptation/AdaptationModel.h>
-
-#include <kevoree-core/core/PreCompare.h>
+#include <microframework/api/KMFContainer.h>
+#include <microframework/api/trace/TraceSequence.h>
 
 #include <set>
-
+#include <string>
 class CurrentNodeVisitor :public ModelVisitor
 {
   public:

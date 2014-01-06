@@ -103,9 +103,7 @@ IF(NOT EXISTS "${SRC_KEVOREE_MODEL}")
  message("Downloading model generator")
  execute_process(COMMAND wget ${URL_MODEL_GENERATOR} --quiet)
   message("Generate KEVOREE MODEL")
- execute_process(COMMAND java -jar org.kevoree.modeling.cpp.generator-1.1-20131217.093441-9.jar -i kevoree-core/model/metamodel/kevoree.ecore -t kevoree-core/model)
-   message("Generate KEVOREE MODEL ADAPTATION")
- execute_process(COMMAND java -jar org.kevoree.modeling.cpp.generator-1.1-20131217.093441-9.jar -i kevoree-core/model/metamodel/kevoree.adaptation.ecore -t kevoree-core/model)
+ #execute_process(COMMAND java -jar org.kevoree.modeling.cpp.generator-1.1-20131217.093441-9.jar -i kevoree-core/model/metamodel/kevoree.ecore -t kevoree-core/model)
 ENDIF()
 
 

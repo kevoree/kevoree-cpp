@@ -2,9 +2,10 @@
 #define __NodeTypeBootstrapHelper_H
 
 
+#include <kevoree-core/api/AbstractNodeType.h>
+#include <kevoree-core/api/Bootstraper.h>
+
 #include <kevoree-tools/BootstrapHelper/NodeTypeBootstrapHelper.h>
-#include <kevoree-core/core/api/AbstractNodeType.h>
-#include <kevoree-core/core/api/Bootstraper.h>
 #include <kevoree-tools/DynamicLoader/DynamicLoader.h>
 #include <MavenResolver.h>
 #include <iostream>

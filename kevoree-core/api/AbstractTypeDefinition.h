@@ -1,7 +1,7 @@
 #ifndef __AbstractTypeDefinition_H
 #define __AbstractTypeDefinition_H
 
-#include <kevoree-core/core/api/KevoreeModelHandlerService.h>
+#include <kevoree-core/api/KevoreeModelHandlerService.h>
 #include <map>
 
 class Bootstraper;

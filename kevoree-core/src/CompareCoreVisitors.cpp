@@ -1,4 +1,4 @@
-#include <kevoree-core/core/CompareCoreVisitors.h>
+#include <kevoree-core/api/CompareCoreVisitors.h>
 
 
 

@@ -4,7 +4,7 @@
 
 #include <kevoree-core/model/kevoree/Group.h>
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
-#include <kevoree-core/core/api/AbstractTypeDefinition.h>
+#include <kevoree-core/api/AbstractTypeDefinition.h>
 #include <string>
 
 
