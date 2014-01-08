@@ -5,75 +5,62 @@
 #include <stdexcept>
 #include <map>
 #include <iostream>
-#include <queue>
 
+/*
+ *
+ * decouper pour permettre la réutilisation
+ */
 bool PrimitiveCommandExecutionHelper::execute(ContainerNode *rootNode,AdaptationModel *adaptionModel,AbstractNodeType *nodeInstance)
 {
 	bool res=true;
 	DeployPhase *phase=NULL;
-
 	phase = new DeployPhase();
+	for (std::vector<AdaptationPrimitive*>::iterator it=adaptionModel->adaptations.begin(); it!=adaptionModel->adaptations.end(); ++it){
 
-	while ( !adaptionModel->steps.empty()  && res ==true)
-	{
-		ParallelStep *step = adaptionModel->steps.top();
-		res = executeStep(rootNode,step,nodeInstance,phase);
-		adaptionModel->steps.pop();
+		AdaptationPrimitive *adaptation = *it;
+		PrimitiveCommand *primitive = nodeInstance->getPrimitive(adaptation);
+		if(primitive != NULL)
+		{
+			phase->populate(primitive);
+			boost::promise<bool> result;
+			boost::thread api_caller(boost::bind(&PrimitiveCommand::execute, primitive,boost::ref(result)));
+			if (!api_caller.timed_join(boost::posix_time::milliseconds(phase->getMaxTime())))
+			{
+				break;
+				res= false;
+			}else
+			{
+
+				if(!result.get_future().get())
+				{
+					break;
+					res= false;
+				}
+			}
+		}
+		else
+		{
+			Logger::Write(Logger::ERROR,"PrimitiveCommand is NULL");
+			break;
+			res= false;
+		}
 	}
 
 	if(!res)
 	{
-		LOGGER_WRITE(Logger::INFO,"Rollback");
-		phase->rollback();	
+		Logger::Write(Logger::WARNING,"Rollback to the previous point in time.");
+		phase->rollback();
 	}
+
+	Logger::Write(Logger::DEBUG,"Cleaning adaptation Primitives");
+	for (std::vector<AdaptationPrimitive*>::iterator it=adaptionModel->adaptations.begin(); it!=adaptionModel->adaptations.end(); ++it){
+		delete *it;
+	}
+
 
 	if(phase != NULL)
 	{
 		delete phase;
 	}
 	return res;
-}
-
-
-bool PrimitiveCommandExecutionHelper::executeStep(ContainerNode *rootNode,ParallelStep *step,AbstractNodeType *nodeInstance,DeployPhase *phase){
-	if (step->adaptations.size() == 0)
-	{
-		return true;
-	}
-
-	while ( !step->adaptations.empty() )
-	{
-
-		AdaptationPrimitive *adaptation = step->adaptations.top();
-		PrimitiveCommand *primitive = nodeInstance->getPrimitive(adaptation);
-		if(primitive != NULL)
-		{
-			phase->populate(primitive);
-			boost::promise<bool> result;
-
-			boost::thread api_caller(boost::bind(&PrimitiveCommand::execute, primitive,boost::ref(result)));
-
-			if (!api_caller.timed_join(boost::posix_time::milliseconds(phase->getMaxTime())))
-			{
-				LOGGER_WRITE(Logger::ERROR,"PrimitiveCommand call timed out for "+adaptation->name+ " "+adaptation->ref->path());
-				return false;
-			}else
-			{
-				if(!result.get_future().get())
-				{
-					LOGGER_WRITE(Logger::ERROR,"PrimitiveCommand false for"+adaptation->name+ " "+adaptation->ref->path());
-					return false;
-				}
-			}
-			LOGGER_WRITE(Logger::DEBUG," FINISH PrimitiveCommand ");
-		}
-		else
-		{
-			LOGGER_WRITE(Logger::ERROR,"PrimitiveCommand is NULL");
-			return false;
-		}
-		step->adaptations.pop();
-
-	}
-	return true;
 }

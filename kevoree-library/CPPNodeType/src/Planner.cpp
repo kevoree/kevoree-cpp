@@ -1,38 +1,13 @@
 #include "Planner.h"
 #include <map>
 #include <iostream>
-#include <queue>
+#include <algorithm>
 #include <string>
-
-// http://cpp.developpez.com/faq/cpp/?page=STL#STL_custom_sort
-
-/*#include <iostream>
-#include <queue>
-
-using namespace std;
-
-int main()
-{
-   typedef queue<int> file;
-   //On crée une file d’attente:
-   file ma_file;
-   //On ajoute quelques éléments :
-   ma_file.push(1);
-   ma_file.push(2);
-   ma_file.push(3);
-
-  while (!ma_file.empty()) //tant que la file n’est pas vide
-  {
-  cout << ma_file.front() << endl; //on affiche l’élément de tête
-   ma_file.pop();                  //puis on le supprime
-   }
-}*/
-
 
 AdaptationPrimitive* Planner::adapt(Primitives p,KMFContainer *elem)
 {
 	AdaptationPrimitive *ccmd = new AdaptationPrimitive();
-	ccmd->name =TO_STRING_Primitives(p);
+	ccmd->primitiveType =p;
 	ccmd->priority = Priority_Primitives(p);
 	ccmd->ref = elem;
 	return ccmd;
@@ -50,9 +25,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 	//LOGGER_WRITE(Logger::DEBUG,"Planner::compareModels TRACES =>\n"+traces->exportToString());
 
 	AdaptationModel  *adaptationModel =   new AdaptationModel();
-	ParallelStep *step = new ParallelStep();
-	step->name = "global";
-	adaptationModel->addsteps(step);
+
 
 	for (std::list<ModelTrace*>::iterator iterator = traces->traces.begin(), end = traces->traces.end(); iterator != end; ++iterator)
 	{
@@ -67,12 +40,12 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 				if(dynamic_cast<ModelAddTrace*>(trace) != 0)
 				{
 					KMFContainer *elemToAdd=targetModel->findByPath(((ModelAddTrace*)trace)->previousPath);
-					step->addadaptations(adapt(AddInstance, elemToAdd));
+					adaptationModel->add(adapt(AddInstance, elemToAdd));
 				}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
 				{
 					KMFContainer *elemToAdd=currentModel->findByPath(((ModelRemoveTrace*)trace)->objPath);
-					step->addadaptations(adapt(StopInstance, elemToAdd));
-					step->addadaptations(adapt(RemoveInstance, elemToAdd));
+					adaptationModel->add(adapt(StopInstance, elemToAdd));
+					adaptationModel->add(adapt(RemoveInstance, elemToAdd));
 				}
 
 			}
@@ -80,21 +53,18 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 		}else if(trace->refName.compare("hosts") ==0)
 		{
 
+
 			if(trace->srcPath.compare(targetNode->path()) == 0)
 			{
-				if(trace->srcPath.compare(targetNode->path()) == 0)
+				if(dynamic_cast<ModelAddTrace*>(trace) != 0)
 				{
-					if(dynamic_cast<ModelAddTrace*>(trace) != 0)
-					{
-						KMFContainer *elemToAdd=targetModel->findByPath(((ModelAddTrace*)trace)->previousPath);
-						step->addadaptations(adapt(AddInstance, elemToAdd));
-					}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
-					{
-						KMFContainer *elemToAdd=currentModel->findByPath(((ModelRemoveTrace*)trace)->objPath);
-						step->addadaptations(adapt(StopInstance, elemToAdd));
-						step->addadaptations(adapt(RemoveInstance, elemToAdd));
-					}
-
+					KMFContainer *elemToAdd=targetModel->findByPath(((ModelAddTrace*)trace)->previousPath);
+					adaptationModel->add(adapt(AddInstance, elemToAdd));
+				}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
+				{
+					KMFContainer *elemToAdd=currentModel->findByPath(((ModelRemoveTrace*)trace)->objPath);
+					adaptationModel->add(adapt(StopInstance, elemToAdd));
+					adaptationModel->add(adapt(RemoveInstance, elemToAdd));
 				}
 
 			}
@@ -104,19 +74,16 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 
 			if(trace->srcPath.compare(targetNode->path()) == 0)
 			{
-				if(trace->srcPath.compare(targetNode->path()) == 0)
+				if(dynamic_cast<ModelAddTrace*>(trace) != 0)
 				{
-					if(dynamic_cast<ModelAddTrace*>(trace) != 0)
-					{
-						KMFContainer *elemToAdd=targetModel->findByPath(( (ModelAddTrace*)trace)->previousPath);
-						step->addadaptations(adapt(AddInstance, elemToAdd));
-					}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
-					{
-						KMFContainer *elemToAdd=currentModel->findByPath(( (ModelRemoveTrace*)trace)->objPath);
-						step->addadaptations(adapt(StopInstance, elemToAdd));
-						step->addadaptations(adapt(RemoveInstance, elemToAdd));
+					KMFContainer *elemToAdd=targetModel->findByPath(( (ModelAddTrace*)trace)->previousPath);
+					adaptationModel->add(adapt(AddInstance, elemToAdd));
+				}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
+				{
+					KMFContainer *elemToAdd=currentModel->findByPath(( (ModelRemoveTrace*)trace)->objPath);
+					adaptationModel->add(adapt(StopInstance, elemToAdd));
+					adaptationModel->add(adapt(RemoveInstance, elemToAdd));
 
-					}
 				}
 			}
 
@@ -142,12 +109,12 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 							TupleObjPrim tuple(channel,AddInstance);
 							if(!tuple.equals(modelElement->path(),elementAlreadyProcessed))
 							{
-								step->addadaptations(adapt(AddInstance, channel));
+								adaptationModel->add(adapt(AddInstance, channel));
 								tuple.add(elementAlreadyProcessed);
 							}
 
 						}
-						step->addadaptations(adapt(AddBinding, binding));
+						adaptationModel->add(adapt(AddBinding, binding));
 
 					}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
 					{
@@ -171,7 +138,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 									TupleObjPrim tuple(channel,RemoveInstance);
 									if(!tuple.equals(modelElement->path(),elementAlreadyProcessed))
 									{
-										step->addadaptations(adapt(RemoveInstance, channel));
+										adaptationModel->add(adapt(RemoveInstance, channel));
 										tuple.add(elementAlreadyProcessed);
 									}
 
@@ -179,7 +146,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 
 							}
 						}
-						step->addadaptations(adapt(RemoveBinding, binding));
+						adaptationModel->add(adapt(RemoveBinding, binding));
 					}
 
 				}
@@ -220,7 +187,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 						if(!tuple.equals(modelElement->path()+"StartInstance",elementAlreadyProcessed))
 						{
 
-							step->addadaptations(adapt(StartInstance, modelElement));
+							adaptationModel->add(adapt(StartInstance, modelElement));
 							tuple.add(elementAlreadyProcessed);
 						}
 					}else
@@ -229,7 +196,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 						TupleObjPrim tuple(modelElement,StopInstance);
 						if(!tuple.equals(modelElement->path()+"StopInstance",elementAlreadyProcessed))
 						{
-							step->addadaptations(adapt(StopInstance, modelElement));
+							adaptationModel->add(adapt(StopInstance, modelElement));
 							tuple.add(elementAlreadyProcessed);
 						}
 					}
@@ -247,7 +214,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 				TupleObjPrim tuple(modelElement,UpdateDictionaryInstance);
 				if(!tuple.equals(modelElement->path(),elementAlreadyProcessed))
 				{
-					step->addadaptations(adapt(UpdateDictionaryInstance, modelElement));
+					adaptationModel->add(adapt(UpdateDictionaryInstance, modelElement));
 					tuple.add(elementAlreadyProcessed);
 				}
 			}else {
@@ -262,3 +229,24 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 	return adaptationModel;
 }
 
+
+AdaptationModel* Planner::schedule(AdaptationModel *adaptionModel,std::string nodeName)
+{
+
+	struct {
+		bool operator()(const AdaptationPrimitive* lhs, const AdaptationPrimitive* rhs)
+		{
+			return lhs->priority < rhs->priority;
+		}
+	} customLess;
+	std::sort( adaptionModel->adaptations.begin(), adaptionModel->adaptations.end(), customLess );
+	/*
+	for (std::vector<AdaptationPrimitive*>::iterator it=adaptionModel->adaptations.begin(); it!=adaptionModel->adaptations.end(); ++it){
+		AdaptationPrimitive *adaptation = *it;
+		KMFContainerImpl *c = (KMFContainerImpl*)adaptation->ref;
+		cout << " " << adaptation->primitiveType<< " "<< c->metaClassName() << " key "<< c->internalGetKey() << "  path " << adaptation->ref->path() << endl;
+	}*/
+
+
+	return adaptionModel;
+}

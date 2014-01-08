@@ -18,7 +18,7 @@ enum  Primitives {
 
 // schedule
 
-static int Priority_Primitives(Primitives e)
+static const int Priority_Primitives(Primitives e)
 {
 	  switch(e)
 	  {
@@ -37,7 +37,7 @@ static int Priority_Primitives(Primitives e)
 	  }
 }
 
-
+/*m
 static std::string TO_STRING_Primitives(Primitives e)
 {
 	  switch(e)
@@ -59,6 +59,6 @@ static std::string TO_STRING_Primitives(Primitives e)
 		  default: return "ERROR";
 	  }
 }
-
+*/
 
 #endif

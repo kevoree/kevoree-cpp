@@ -16,6 +16,7 @@ class Planner
 {
 	public:
 	AdaptationModel* compareModels(ContainerRoot *actualModel,ContainerRoot *targetModel,string nodeName,TraceSequence *traces);
+	AdaptationModel* schedule(AdaptationModel *adaptationModel,std::string nodeName);
 	private:
 	AdaptationPrimitive* adapt(Primitives p,KMFContainer *elem);
 };

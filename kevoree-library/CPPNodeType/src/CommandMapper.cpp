@@ -16,22 +16,22 @@ CommandMapper::CommandMapper(AbstractNodeType *nodeType)
 PrimitiveCommand* CommandMapper::buildPrimitiveCommand(AdaptationPrimitive *p, std::string nodeName)
 {
 	Instance *instance = (Instance*)p->ref;
-	if(p->name.compare(TO_STRING_Primitives(AddInstance)) == 0)
+	if(p->primitiveType ==AddInstance)
 	{
 		return new AddInstanceCommand(instance,nodeName,nodeType->getBootStrapperService(),nodeType->getModelService());
-	}else if(p->name.compare(TO_STRING_Primitives(StartInstance)) == 0)
+	}else if(p->primitiveType == StartInstance)
 	{
 		return new StartInstanceCommand(instance,nodeName,nodeType->getBootStrapperService(),nodeType->getModelService());
-	}else if(p->name.compare(TO_STRING_Primitives(StopInstance)) == 0)
+	}else if(p->primitiveType == StopInstance)
 	{
 		return new StopInstanceCommand(instance,nodeName,nodeType->getBootStrapperService(),nodeType->getModelService());
-	}else if(p->name.compare(TO_STRING_Primitives(RemoveInstance)) == 0)
+	}else if(p->primitiveType == RemoveInstance)
 	{
 		return new RemoveInstanceCommand(instance,nodeName,nodeType->getBootStrapperService(),nodeType->getModelService());
-	}else if(p->name.compare(TO_STRING_Primitives(UpdateDictionaryInstance)) == 0)
+	}else if(p->primitiveType == UpdateDictionaryInstance)
 	{
 		return new UpdateDictionaryInstanceCommand(instance,nodeName,nodeType->getBootStrapperService(),nodeType->getModelService());
 	}
-	LOGGER_WRITE(Logger::ERROR,"CommandMapper cannot manage => "+	p->name);
+	Logger::Write(Logger::ERROR,"CommandMapper cannot manage");
 	return NULL;
 }
