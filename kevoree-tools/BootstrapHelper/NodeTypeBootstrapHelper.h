@@ -18,8 +18,6 @@ public:
 	AbstractNodeType *bootstrapNodeType(ContainerRoot *model,std::string destNodeName, KevoreeModelHandlerService *mservice);
 	IDynamicLoader* getDynamicLoader();
 	std::string resolveDeployUnit(DeployUnit *du);
-
-
 	
 private:
 DynamicLoader *dynamicLoader;
