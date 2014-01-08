@@ -7,34 +7,15 @@ AdaptationModel::AdaptationModel(){
 }
 
 AdaptationModel::~AdaptationModel(){
-
+	adaptations.clear();
 }
-void AdaptationModel::addsteps(ParallelStep *ptr)
+
+
+
+void AdaptationModel::add(AdaptationPrimitive *ptr)
 {
-	if(ptr != NULL){
-		steps.push(ptr);
-	}else
-	{
-		Logger::Write(Logger::ERROR,"AdaptationModel cannot add null step");
-	}
+	adaptations.push_back(ptr);
 }
-
-
-int AdaptationModel::size(){
-	int count=0;
-	int i=0;
-	while ( i < steps.size() )
-	{
-		ParallelStep *step = steps.top();
-		count += step->adaptations.size();
-		i++;
-	}
-	return count;
-}
-
-
-
-
 
 
 

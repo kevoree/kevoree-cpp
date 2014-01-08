@@ -41,11 +41,9 @@ public:
 	{
 		if(service != NULL && service->getLastModel() != NULL )
 		{
-			//LOGGER_WRITE(Logger::DEBUG,"getModelElement -> "+path);
 			return service->getLastModel()->findByPath(path);
 		}else 
 		{
-			//LOGGER_WRITE(Logger::ERROR,"getModelElement ->"+path);
 			return NULL;	
 		}
 

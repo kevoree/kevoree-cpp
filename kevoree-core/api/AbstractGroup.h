@@ -13,10 +13,8 @@ class AbstractGroup  : public AbstractTypeDefinition
 public:	
 	virtual bool push(ContainerRoot *root){};
 	virtual ContainerRoot* pull(std::string nodeName){};
-
 private:
 KevoreeModelHandlerService *service;
-
 };
 
 

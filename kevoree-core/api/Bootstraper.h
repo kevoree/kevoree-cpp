@@ -3,8 +3,6 @@
 #include <kevoree-core/api/AbstractNodeType.h>
 #include <kevoree-core/api/KevoreeModelHandlerService.h>
 #include <kevoree-core/api/IDynamicLoader.h>
-#include <string>
-#include <map>
 
 class Bootstraper
 {

@@ -8,11 +8,9 @@ class KevoreeListeners {
 	
 public:
 	KevoreeListeners();
-	
     void start(std::string nodeName);
     void stop();
-	
-	
+
 };
 
 #endif

@@ -3,7 +3,6 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 
-
 KevoreeCoreBean::KevoreeCoreBean(){
 	currentModel=NULL;
 	nodeInstance=NULL;
@@ -46,7 +45,7 @@ void KevoreeCoreBean::checkBootstrapNode(ContainerRoot *model)
 				nodeInstance->setBootStrapperService(_bootstraper);
 				nodeInstance->setModelService(this);
 				nodeInstance->start();
-				LOGGER_WRITE(Logger::DEBUG,"Sucessfully Bootstrap node  =>"+getNodeName());
+				LOGGER_WRITE(Logger::DEBUG,"Done Bootstrap node  =>"+getNodeName());
 			} else
 			{
 				LOGGER_WRITE(Logger::ERROR,"The installation of the Typedefintion of the NodeType has fail, the runtime cannot start !");
@@ -96,15 +95,8 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel)
 	//	 LOGGER_WRITE(Logger::DEBUG,traces->exportToString());
 
 		AdaptationModel *adaptationModel = nodeInstance->plan(currentModel, proposedNewModel,traces);
-		LOGGER_WRITE(Logger::INFO,("Adaptation model size "+Utils::IntegerUtilstoString(adaptationModel->size())));
-/*
-		for (std::map<string,AdaptationPrimitive*>::iterator it = adaptationModel->adaptations.begin();  it != adaptationModel->adaptations.end(); ++it)
-		{
-			AdaptationPrimitive *adaptation = it->second;
+		LOGGER_WRITE(Logger::INFO,("Adaptation model size "+Utils::IntegerUtilstoString(adaptationModel->adaptations.size())));
 
-			 LOGGER_WRITE(Logger::DEBUG," "+adaptation->primitiveType+" "+adaptation->ref->path());
-
-		}*/
 
 		ContainerNode *rootNode = currentModel->findnodesByID(getNodeName());
 

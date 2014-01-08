@@ -20,17 +20,17 @@ public:
 	virtual AdaptationModel *plan(ContainerRoot *actualModel,ContainerRoot *targetModel,TraceSequence *traces){};
 	virtual bool execute(ContainerNode *rootNode,AdaptationModel *adaptionModel,AbstractNodeType *nodeInstance){};
 	virtual PrimitiveCommand* getPrimitive(AdaptationPrimitive *primitive){};
-	
+
 	virtual std::string getNodeName()
 	{
 		return nodename;
 	}
-	
+
 	virtual void setnodeName(std::string nodeName){
 		this->nodename = nodeName;
 	}
 private:
-std::string nodename;
+	std::string nodename;
 
 };
 

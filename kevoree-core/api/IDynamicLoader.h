@@ -10,8 +10,6 @@
 #include <kevoree-core/model/kevoree/TypeDefinition.h>
 #include <kevoree-core/model/kevoree/DeployUnit.h>
 
-
-
 class IDynamicLoader  
 {
 public:
