@@ -22,5 +22,5 @@ include_directories(${SRC_MICROFRAMEWORK}/)
 
 file(GLOB_RECURSE files src/*)
 ADD_LIBRARY(plugin-pragma  SHARED  ${files})
-TARGET_LINK_LIBRARIES(plugin-pragma   ${LIBRARY_OUTPUT_PATH}/libkevoree-core-model.a)
+TARGET_LINK_LIBRARIES(plugin-pragma   ${LIBRARY_OUTPUT_PATH}/libkevoree-model.so)
 TARGET_LINK_LIBRARIES(plugin-pragma rt)
