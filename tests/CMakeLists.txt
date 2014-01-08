@@ -10,12 +10,20 @@ include_directories(${KEVOREEROOT}/)
 include_directories(${SRC_MICROFRAMEWORK}/)
 
 
+FIND_PACKAGE(CPPUNIT REQUIRED)
 
 
-#COMPILE MAIN
+SET(COMMON_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")
+SET(COMMON_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/libs")
+
+
+
+file(GLOB_RECURSE files_tests src/tests/*.cpp)
 add_executable(
-        kmf1
-        src/kmf1.cpp
+        run_tests
+        src/run_tests.cpp
+        ${files_tests}
 )
-TARGET_LINK_LIBRARIES(kmf1  ${LIBRARY_OUTPUT_PATH}/libkevoree-core-model.a)
-TARGET_LINK_LIBRARIES(kmf1 rt)
+TARGET_LINK_LIBRARIES(run_tests cppunit)
+TARGET_LINK_LIBRARIES(run_tests ${LIBRARY_OUTPUT_PATH}/libkevoree-model.so)
+TARGET_LINK_LIBRARIES(run_tests rt)
