@@ -17,13 +17,13 @@ CurrentNodeVisitor::CurrentNodeVisitor (ContainerNode *_currentNode,std::set<std
 void CurrentNodeVisitor::visit (KMFContainer * elem, string refNameInParent,KMFContainer * parent)
 {
 	//cout << "BEGIN -- CurrentNodeVisitor" << endl;
-	if(	dynamic_cast<DeployUnit*>(elem) != 0)
+	if(	elem->metaClassName().compare("DeployUnit") == 0)
 	{
 		//	cout << "Insert" << elem->path() << endl;
 		foundDeployUnitsToRemove->insert(elem->path());
 	}
 	//optimization purpose
-	if( (	dynamic_cast<ContainerNode*>(elem) != 0 && elem != currentNode))
+	if( (	elem->metaClassName().compare("ContainerNode") == 0 && elem != currentNode))
 	{
 		noChildrenVisit();
 		noReferencesVisit();
@@ -48,7 +48,7 @@ TargetNodeVisitor::TargetNodeVisitor (ContainerRoot *_targetModel,ContainerNode 
 void TargetNodeVisitor::visit (KMFContainer * elem, string refNameInParent,KMFContainer * parent)
 {
 	//cout << "BEGIN -- TargetNodeVisitor" << endl;
-	if(	dynamic_cast<DeployUnit*>(elem) != 0)
+	if(	elem->metaClassName().compare("DeployUnit") == 0)
 	{
 		DeployUnit *deployunit = (DeployUnit*)elem;
 		std::set<string>::iterator srcPath;
@@ -67,7 +67,7 @@ void TargetNodeVisitor::visit (KMFContainer * elem, string refNameInParent,KMFCo
 
 	}
 	//optimization purpose
-	if( (dynamic_cast<ContainerNode*>(elem) != 0  && elem != currentNode))
+	if( (	elem->metaClassName().compare("ContainerNode") == 0 && elem != currentNode))
 	{
 		noChildrenVisit();
 		noReferencesVisit();

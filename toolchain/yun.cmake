@@ -14,7 +14,7 @@ set( CMAKE_SYSTEM_NAME Linux )
 # this one not so much
 set( CMAKE_SYSTEM_VERSION 1 )
 
-SET(CMAKE_C_COMPILER mips-linux-gnu-gcc) 
-SET(CMAKE_CXX_COMPILER mips-linux-gnu-g++)
+SET(CMAKE_C_COMPILER mips-openwrt-linux-gcc) 
+SET(CMAKE_CXX_COMPILER mips-openwrt-linux-g++)
 set(arch_hint "MIPS")
 
