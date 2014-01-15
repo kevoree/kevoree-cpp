@@ -16,5 +16,5 @@ set( CMAKE_SYSTEM_VERSION 1 )
 
 SET(CMAKE_C_COMPILER mips-openwrt-linux-gcc) 
 SET(CMAKE_CXX_COMPILER mips-openwrt-linux-g++)
-set(arch_hint "MIPS")
+set(arch_hint "Yun")
 
