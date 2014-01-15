@@ -214,7 +214,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 				TupleObjPrim tuple(modelElement,UpdateDictionaryInstance);
 				if(!tuple.equals(modelElement->path(),elementAlreadyProcessed))
 				{
-					adaptationModel->add(adapt(UpdateDictionaryInstance, modelElement));
+					adaptationModel->add(adapt(UpdateDictionaryInstance,  modelElement->eContainer()->eContainer()));
 					tuple.add(elementAlreadyProcessed);
 				}
 			}else {

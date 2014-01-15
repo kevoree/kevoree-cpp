@@ -13,7 +13,7 @@ link_directories(${BOOST_ROOT}/lib)
 
 include_directories(${SRC_MICROFRAMEWORK}/)
 file(GLOB_RECURSE websocket_group src/*)
-ADD_LIBRARY(websocketgroup   MODULE    ${websocket_group})
+ADD_LIBRARY(websocketgroup   SHARED    ${websocket_group})
 TARGET_LINK_LIBRARIES(websocketgroup boost_system)
 TARGET_LINK_LIBRARIES(websocketgroup boost_random)
 TARGET_LINK_LIBRARIES(websocketgroup boost_thread)

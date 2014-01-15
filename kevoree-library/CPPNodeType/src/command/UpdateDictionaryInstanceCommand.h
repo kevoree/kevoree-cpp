@@ -18,15 +18,14 @@ public:
 	
 	void execute(boost::promise<bool> & result)
 	{
-		TypeDefinition *type = (TypeDefinition*)instance->typeDefinition;
 		LOGGER_WRITE(Logger::DEBUG,"UpdateDictionaryInstance ->"+instance->name+" "+instance->path());
-
-		result.set_value(true);
+		bool updated = bootstrapService->getDynamicLoader()->update_instance(instance);
+		result.set_value(updated);
     }
 
 	void undo()
 	{
-		
+		cout << " TODO " << endl;
 	}
 	
 

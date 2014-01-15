@@ -77,7 +77,7 @@ WebSocketGroup::WebSocketGroup()
 
 void WebSocketGroup::start()
 {
-	LOGGER_WRITE(Logger::DEBUG,"The Group is listenning on port "+this->dico["port"]);
+	LOGGER_WRITE(Logger::DEBUG,"The Group is listenning on port "+this->params["port"]);
 
 	group.set_access_channels(websocketpp::log::alevel::none);
 	group.clear_access_channels(websocketpp::log::alevel::none);
@@ -89,7 +89,7 @@ void WebSocketGroup::start()
 	// Register our message handler
 	group.set_message_handler(bind(&on_message,&group,::_1,::_2,this));
 
-	int port = atoi(this->dico["port"].c_str());
+	int port = atoi(this->params["port"].c_str());
 
 	// Listen on port 9002
 	group.listen(port);
@@ -131,7 +131,7 @@ void WebSocketGroup::stop()
 void WebSocketGroup::update()
 {
 
-
+cout << "update " << endl;
 }
 
 

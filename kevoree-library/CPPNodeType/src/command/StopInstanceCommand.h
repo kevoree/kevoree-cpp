@@ -18,7 +18,6 @@ public:
 	
 	void execute(boost::promise<bool> & result)
 	{
-		TypeDefinition *type = (TypeDefinition*)instance->typeDefinition;
 		LOGGER_WRITE(Logger::DEBUG,"StopInstance ->"+instance->name);
 		bool stopped = bootstrapService->getDynamicLoader()->stop_instance(instance);
 		result.set_value(stopped);
@@ -28,6 +27,7 @@ public:
 	{
 		//	StartInstanceCommand(instance, nodename, bootstrapService, mservice).execute();
 		// TODO BREAK A<->B
+		cout << " TODO " << endl;
 	}
 	
 private:
