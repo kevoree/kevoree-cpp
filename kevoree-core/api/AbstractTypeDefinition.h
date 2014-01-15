@@ -48,8 +48,10 @@ public:
 		}
 
 	};
-
-	std::map<std::string, string> dico;
+	virtual void updateParam(string key,string value){
+		params[key] =value;
+	}
+	std::map<std::string, string> params;
 private:
 	KevoreeModelHandlerService *service;
 	Bootstraper *bootstrapService;

@@ -18,6 +18,7 @@ public:
 	virtual bool destroy_instance(Instance *i)=0;
 	virtual bool start_instance(Instance *i)=0;
 	virtual bool stop_instance(Instance *i)=0;
+	virtual bool update_instance(Instance *i)=0;
 };
 
 

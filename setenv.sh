@@ -13,4 +13,6 @@ export CMAKE_OSX=`pwd`/toolchain/osx.toolchain.cmake
 
 export LD_LIBRARY_PATH=build/
 
+export PATH=$PATH:/opt/toolchain-mips_r2_gcc-4.6-linaro_uClibc-0.9.33.2/bin
+export STAGING_DIR=/opt/toolchain-mips_r2_gcc-4.6-linaro_uClibc-0.9.33.2
 
