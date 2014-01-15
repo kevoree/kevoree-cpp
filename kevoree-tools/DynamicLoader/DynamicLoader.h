@@ -30,12 +30,13 @@ public:
 	
 	bool start_instance(Instance *i);
 	bool stop_instance(Instance *i);
-	
+	bool update_instance(Instance *i);
 	
 	
 	void setModelService(KevoreeModelHandlerService *mservice);
 
-
+private:
+	bool update_param(Instance *i,AbstractTypeDefinition *inst);
 	void * soloader_load(std::string type);
 	AbstractTypeDefinition * newInstance(void *handle);
 	void destroyInstance(void *handler,AbstractTypeDefinition *instance);
