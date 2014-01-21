@@ -4,9 +4,37 @@
 PreCompare::PreCompare(std::string _nodeName){
 	this->nodeName = _nodeName;
 }
+
+void PreCompare::fillPort(std::map<string,Port*> ports,ContainerRoot *currentModel,TraceSequence *traces){
+	TraceSequence *seq;
+	for ( std::map<string,Port*>::const_iterator it = ports.begin();  it != ports.end(); ++it)
+	{
+		Port *port = it->second;
+		for ( std::map<string,MBinding*>::const_iterator it_port = port->bindings.begin();  it_port != port->bindings.end(); ++it_port)
+		{
+			MBinding *port = it_port->second;
+			if(port->hub != NULL)
+			{
+				Channel *previousChannel =(Channel*)currentModel->findByPath(port->hub->path());
+				if(previousChannel != NULL)
+				{
+					seq =modelCompare.diff(previousChannel,port->hub);
+					traces->append(seq);
+					seq->traces.clear();
+					delete seq;
+				} else {
+					traces->populate(port->hub->toTraces(true, true));
+				}
+			}
+		}
+	}
+
+}
 void PreCompare::createTracesGroupsAndChannels(ContainerRoot *currentModel,ContainerRoot *targetModel,ContainerNode *currentNode,ContainerNode *targetNode,TraceSequence *traces)
 {
 	TraceSequence *seq;
+
+	// HOSTS
 	for ( std::map<string,ContainerNode*>::const_iterator it = targetNode->hosts.begin();  it != targetNode->hosts.end(); ++it)
 	{
 		ContainerNode *n = it->second;
@@ -24,6 +52,7 @@ void PreCompare::createTracesGroupsAndChannels(ContainerRoot *currentModel,Conta
 		}
 	}
 
+	// GROUPS
 	for ( std::map<string,Group*>::const_iterator it = targetNode->groups.begin();  it != targetNode->groups.end(); ++it)
 	{
 		Group *n = it->second;
@@ -41,42 +70,14 @@ void PreCompare::createTracesGroupsAndChannels(ContainerRoot *currentModel,Conta
 
 	}
 
+	// CHANNELS
+	for ( std::map<string,ComponentInstance*>::const_iterator it = targetNode->components.begin();  it != targetNode->components.end(); ++it)
+	{
+		ComponentInstance *n = it->second;
+		fillPort(n->provided,currentModel,traces);
+		fillPort(n->required,currentModel,traces);
+	}
 
-	/*for(n in targetNode!!.hosts){
-               val previousNode = currentModel.findByPath(n.path()!!)
-               if(previousNode != null){
-                   traces!!.append(modelCompare.diff(previousNode, n))
-               } else {
-                   traces!!.populate(n.toTraces(true, true))
-               }
-           }
-           for(g in targetNode.groups){
-               val previousGroup = currentModel.findByPath(g.path()!!)
-               if(previousGroup != null){
-                   traces!!.append(modelCompare.diff(previousGroup, g))
-               } else {
-                   traces!!.populate(g.toTraces(true, true))
-               }
-           }
-           //This process can really slow down
-           for(comp in targetNode.components){
-               fun fillPort(ports: List<Port>) {
-                   for(port in ports){
-                       for(b in port.bindings){
-                           if(b.hub != null){
-                               val previousChannel = currentModel.findByPath(b.hub!!.path()!!)
-                               if(previousChannel != null){
-                                   traces!!.append(modelCompare.diff(previousChannel, b.hub!!))
-                               } else {
-                                   traces!!.populate(b.hub!!.toTraces(true, true))
-                               }
-                           }
-                       }
-                   }
-               }
-               fillPort(comp.provided)
-               fillPort(comp.required)
-           }*/
 }
 TraceSequence *PreCompare::createTraces(ContainerRoot *currentModel,ContainerRoot *targetModel)
 {

@@ -22,6 +22,8 @@ public:
 	TraceSequence *createTraces(ContainerRoot *currentModel,ContainerRoot *targetModel);
 	void createTracesGroupsAndChannels(ContainerRoot *currentModel,ContainerRoot *targetModel,ContainerNode *currentNode,ContainerNode *targetNode,TraceSequence *traces);
 
+private:
+	void fillPort(std::map<string,Port*> ports,ContainerRoot *currentModel,TraceSequence *traces);
 	ModelCompare modelCompare;
 	std::string nodeName;
 };
