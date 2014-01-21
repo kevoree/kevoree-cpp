@@ -26,29 +26,30 @@ bool PrimitiveCommandExecutionHelper::execute(ContainerNode *rootNode,Adaptation
 			boost::thread api_caller(boost::bind(&PrimitiveCommand::execute, primitive,boost::ref(result)));
 			if (!api_caller.timed_join(boost::posix_time::milliseconds(phase->getMaxTime())))
 			{
-				break;
 				res= false;
+				break;
+
 			}else
 			{
 
 				if(!result.get_future().get())
 				{
-					break;
 					res= false;
+					break;
 				}
 			}
 		}
 		else
 		{
 			Logger::Write(Logger::ERROR,"PrimitiveCommand is NULL");
-			break;
 			res= false;
+			break;
 		}
 	}
 
-	if(!res)
+	if(res ==false)
 	{
-		Logger::Write(Logger::WARNING,"Rollback to the previous point in time.");
+		Logger::Write(Logger::INFO,"Rollback to the previous point in time.");
 		phase->rollback();
 	}
 
