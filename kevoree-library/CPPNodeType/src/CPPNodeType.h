@@ -7,7 +7,7 @@
 #include <microframework/api/trace/TraceSequence.h>
 #include "Planner.h"
 #include "CommandMapper.h"
-#include <MavenResolver.h>
+#include <maven-resolver/api/MavenResolver.h>
 #include "deploy/PrimitiveCommandExecutionHelper.h"
 
 

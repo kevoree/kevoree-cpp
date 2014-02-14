@@ -257,9 +257,9 @@ void ThreadFunction(WebSocketGatewayTCPComponent *ptr)
 {
 	try {
 
-			unsigned short websocketPort = 18883;
-			Connection::hostname = "localhost";
-			Connection::port = "1883";
+			unsigned short websocketPort = atoi(ptr->params["port_gw"].c_str());
+			Connection::hostname = ptr->params["HOST_MQTT"];
+			Connection::port = ptr->params["port_MQTT"];
 
 			websocketpp::server::handler::ptr serverHandler = websocketpp::server::handler::ptr(new ServerHandler());
 			websocketpp::server websocketServer(serverHandler);
@@ -296,7 +296,7 @@ void WebSocketGatewayTCPComponent::start(){
 }
 void WebSocketGatewayTCPComponent::stop(){
 	server->stop(true);
-t.interrupt();
+	t.interrupt();
 }
 void WebSocketGatewayTCPComponent::update(){
 

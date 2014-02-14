@@ -19,13 +19,13 @@ bool DynamicLoader::register_instance(Instance *i)
 		TypeDefinition *type = i->typeDefinition;
 		if(type == NULL)
 		{
-			LOGGER_WRITE(Logger::ERROR,"There is no TypeDefinition define");
+			LOGGER_WRITE(Logger::ERROR,"There is no TypeDefinition defined");
 			return false;
 		}
 
 		if(type->deployUnit ==NULL)
 		{
-			LOGGER_WRITE(Logger::ERROR,"There is no DeployUnit define");	
+			LOGGER_WRITE(Logger::ERROR,"There is no DeployUnit defined");
 			return false;
 		}
 
@@ -251,7 +251,7 @@ bool DynamicLoader::destroy_instance(Instance *i)
 
 void * DynamicLoader::soloader_load(std::string libpath)
 {
-	void* handle = dlopen(libpath.c_str(),RTLD_NOW);
+	void* handle = dlopen(libpath.c_str(),RTLD_LAZY);
 	if (!handle)
 	{
 

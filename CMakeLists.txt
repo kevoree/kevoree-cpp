@@ -9,7 +9,7 @@ set(KEVOREE_CPP_VERSION ${KEVOREE_CPP_VERSION_MAJOR}.${KEVOREE_CPP_VERSION_MINOR
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic")
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build)
 
-set(PRAGMA_PLUGIN "TRUE")
+set(PRAGMA_PLUGIN "FALSE")
 add_definitions(-DENABLE_LOGGER)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/")
@@ -49,10 +49,15 @@ if(arch_hint MATCHES "x64")
      set(BOOST_FILE boost_efl64-x64)
 endif()      
 
+if(arch_hint MATCHES "Yun")
+     set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/thirdparty/boost_Yun/)
+     set(BOOST_FILE boost_Yun)
+endif()      
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
       set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/thirdparty/boost_x64_osx/)
       set(BOOST_FILE boost_x64_osx)	
 endif()  
+
  
  
 if(ANDROID)
@@ -88,6 +93,7 @@ set(SRC_KEVOREE_TOOLS 						kevoree-tools)
 set(SRC_KEVOREE_PLATFORM 					kevoree-platform)
 set(SRC_KEVOREE_LIBRARY 					kevoree-library)
 set(SRC_KEVOREE_CXX_PLUGIN 					${SRC_KEVOREE_TOOLS}/PluginPragma)
+set(SRC_KEVOREE_HTTPCLIENT					${SRC_KEVOREE_TOOLS}/HttpClient)
 set(SRC_KEVOREE_MODEL 						${SRC_KEVOREE_CORE}/model/kevoree)
 set(SRC_KEVOREE_TESTS 						tests)
 set(SRC_MAVEN_RESOLVER maven-resolver-cpp)
@@ -116,7 +122,9 @@ if(PRAGMA_PLUGIN MATCHES "TRUE")
 message("Compile Pragma plugin")
 add_subdirectory (${SRC_KEVOREE_CXX_PLUGIN}/)
 ENDIF()
+add_subdirectory (${SRC_KEVOREE_HTTPCLIENT}/)
 
 add_subdirectory (${SRC_KEVOREE_LIBRARY}/)
-add_subdirectory (${SRC_KEVOREE_TESTS}/)
+
+#add_subdirectory (${SRC_KEVOREE_TESTS}/)
 

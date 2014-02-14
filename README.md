@@ -65,3 +65,8 @@ clang-llvm 3.2
 ```sh
 cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_OSX
 make
+
+
+
+Boost android
+https://github.com/Jean-Emile/Boost-for-Android.git

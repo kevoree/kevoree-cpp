@@ -18,5 +18,6 @@ include_directories(../maven-resolver-cpp/src/api)
 add_subdirectory (WebSocketGroup/)
 add_subdirectory (HelloWorldComponent/)
 add_subdirectory (CPPNodeType/)
+#add_subdirectory (WebSocketGatewayTCP/)
 
 

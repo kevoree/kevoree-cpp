@@ -69,7 +69,6 @@ WebSocketGroup::WebSocketGroup()
 {
 	loader.setFactory(&factory);
 	num_threads=2;
-
 }
 
 
@@ -130,8 +129,7 @@ void WebSocketGroup::stop()
 
 void WebSocketGroup::update()
 {
-
-cout << "update " << endl;
+	cout << "TODO update " << endl;
 }
 
 

@@ -5,7 +5,7 @@ project(cppnode-cppnodeType)
 
 include_directories(${KEVOREEROOT}/)
 include_directories(${SRC_MICROFRAMEWORK}/)
-
+include_directories(../../maven-resolver-cpp/src)
 include_directories(${BOOST_ROOT}/include)
 link_directories(${BOOST_ROOT}/lib)
 #find_package(Boost REQUIRED  thread)
@@ -24,8 +24,9 @@ TARGET_LINK_LIBRARIES(kevoree-CPPNode   ${LIBRARY_OUTPUT_PATH}/libkevoree-model.
 ENDIF()
 
 if(ANDROID)
-TARGET_LINK_LIBRARIES(kevoree-CPPNode   ${LIBRARY_OUTPUT_PATH}/libkevoree-core-model.so )
+TARGET_LINK_LIBRARIES(kevoree-CPPNode    ${LIBRARY_OUTPUT_PATH}/libkevoree-model.so )
 ENDIF()
+
 
 #execute_process(COMMAND mvn deploy:deploy-file      -Durl=${repository}     -DgroupId=org.kevoree.library     -DartifactId=CPPNODE     -Dversion=1.0      -Dpackaging=json    -Dfile=target/lib.json -DrepositoryId=${repositoryId})
 #execute_process(COMMAND mvn deploy:deploy-file      -Durl=${repository}     -DgroupId=org.kevoree.library     -DartifactId=CPPNODE     -Dversion=1.0      -Dpackaging=so     -Dfile=target/libkevoree-CPPNode.so -DrepositoryId=${repositoryId})

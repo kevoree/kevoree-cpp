@@ -7,8 +7,10 @@
 
 #include <kevoree-tools/BootstrapHelper/NodeTypeBootstrapHelper.h>
 #include <kevoree-tools/DynamicLoader/DynamicLoader.h>
-#include <MavenResolver.h>
-#include <iostream>
+#include <maven-resolver/api/MavenResolver.h>
+
+#include <network/http/impl/BoostHTTPClient.h>
+#include <network/http/api/HTTPRequest.h>
 
 class NodeTypeBootstrapHelper : public Bootstraper 
 {
@@ -21,7 +23,7 @@ public:
 	
 private:
 DynamicLoader *dynamicLoader;
-MavenResolver resolver;
+maven::resolver::MavenResolver resolver;
 KevoreeModelHandlerService *mservice;
 };
 #endif

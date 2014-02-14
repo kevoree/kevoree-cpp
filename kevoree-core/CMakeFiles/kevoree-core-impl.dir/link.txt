@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../build/libkevoree-core-impl.a  CMakeFiles/kevoree-core-impl.dir/src/CompareCoreVisitors.cpp.o CMakeFiles/kevoree-core-impl.dir/src/KevoreeCoreBean.cpp.o CMakeFiles/kevoree-core-impl.dir/src/PreCompare.cpp.o CMakeFiles/kevoree-core-impl.dir/src/KevoreeListeners.cpp.o
+/usr/bin/ranlib ../build/libkevoree-core-impl.a

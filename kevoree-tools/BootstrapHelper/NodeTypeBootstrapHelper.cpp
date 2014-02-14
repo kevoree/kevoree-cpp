@@ -4,6 +4,7 @@
 NodeTypeBootstrapHelper::NodeTypeBootstrapHelper()
 {
 	dynamicLoader = new DynamicLoader(this);
+	resolver.setBasePath("/tmp/m2");
 }
 
 NodeTypeBootstrapHelper::~NodeTypeBootstrapHelper()
@@ -14,9 +15,11 @@ NodeTypeBootstrapHelper::~NodeTypeBootstrapHelper()
 
 std::string NodeTypeBootstrapHelper::resolveDeployUnit(DeployUnit *deployunit)
 {
+
 	std::list<std::string> urls;
-	urls.push_back("http://powet.eu/maven");
-	return resolver.resolve(deployunit->groupName,deployunit->name,deployunit->version,deployunit->type,urls);			
+	urls.push_back("http://archiva.reacloud.com/");
+	return resolver.resolve(deployunit->groupName,deployunit->name,deployunit->version,deployunit->type,urls);
+
 }
 
 
