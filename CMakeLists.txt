@@ -126,5 +126,5 @@ add_subdirectory (${SRC_KEVOREE_HTTPCLIENT}/)
 
 add_subdirectory (${SRC_KEVOREE_LIBRARY}/)
 
-#add_subdirectory (${SRC_KEVOREE_TESTS}/)
+add_subdirectory (${SRC_KEVOREE_TESTS}/)
 
