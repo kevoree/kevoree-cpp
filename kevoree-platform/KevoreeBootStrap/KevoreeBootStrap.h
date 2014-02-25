@@ -12,15 +12,18 @@ public:
     KevoreeCoreBean* getCore();
     void setNodeName(std::string nodeName);
     void setBootstrapModel(ContainerRoot *bmodel);
+	void setBasePath(std::string path);
 	void start();
 	
 private:
   std::string nodeName;
+  std::string maven_base_path;
   ContainerRoot *bootstrapModel;
   NodeTypeBootstrapHelper *bootNodeHelper;
   KevoreeCoreBean *coreBean;
   bool started; //false
   DefaultkevoreeFactory factory;
+
 };
 
 

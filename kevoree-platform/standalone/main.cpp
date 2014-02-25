@@ -6,17 +6,8 @@
 #include <microframework/api/compare/ModelCompare.h>
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
 #include <kevoree-core/model/kevoree/Instance.h>
-#include <iostream>
-#include <fstream>
-#include <stdio.h>
-#include <sys/time.h>
 #include <microframework/api/KMFContainer.h>
 #include <microframework/api/utils/Logger.h>
-#include <sys/time.h>
-#include <sys/resource.h>
-#include <signal.h>
-#include <stdlib.h>
-#include <stdio.h>
 
 #include <kevoree-tools/DynamicLoader/DynamicLoader.h>
 
@@ -41,34 +32,7 @@ void my_handler(int s)
 int main(int argc,char **argv)
 {
 	Logger::Start(Logger::DEBUG, "kevoree.log");
-	/*
-		for(int i=0;i<100000;i++){
-		 void* handle = dlopen("/home/jed/KEVOREE_PROJECT/kevoree-cpp/build/libwebsocketgroup.so",RTLD_NOW);
 
-			AbstractTypeDefinition* (*create)();
-			create =  (AbstractTypeDefinition* (*)())dlsym(handle, "create");
-			if(!create){
-				LOGGER_WRITE(Logger::DEBUG,"cannot find symbol newInstance");	
-			}
-			AbstractTypeDefinition* c = (AbstractTypeDefinition*)create();
-			c->dico["port"] = "9000";
-			//c->start();
-
-			boost::thread api_caller(boost::bind(&AbstractTypeDefinition::start, c));
-			api_caller.timed_join(boost::posix_time::milliseconds(10000000));
-
-
-			boost::thread api_caller_stop(boost::bind(&AbstractTypeDefinition::stop, c));
-			api_caller_stop.timed_join(boost::posix_time::milliseconds(10000000));
-
-
-
-			void (*destroy)(AbstractTypeDefinition*);
-			destroy = (void (*)(AbstractTypeDefinition*))dlsym(handle, "destroy_object");
-			destroy(c);
-		}
-
-		return 0;*/
 	DefaultkevoreeFactory factory;
 	JSONModelLoader loader;
 
@@ -77,7 +41,13 @@ int main(int argc,char **argv)
 	clock_t start = clock();
 
 	kb = new KevoreeBootStrap();
+
+	// FIX ME PARAM
 	kb->setNodeName("node0");
+	//kb->setBasePath("/tmp/.m2");
+	kb->setBasePath("/mnt/sdcard/reacloud/");
+
+
 
 	loader.setFactory(&factory);
 
@@ -88,8 +58,8 @@ int main(int argc,char **argv)
 	DeployUnit *d =factory.createDeployUnit();
 	d->name = "CPPNodeType";
 	d->groupName = "org.kevoree.library";
-	d->version = "1.0";
-	d->type ="elf32-i386";
+	d->version = "1.0.0-SNAPSHOT";
+	d->type ="so";
 
 
 	TypeDefinition *nodetype = factory.createNodeType();
@@ -101,8 +71,8 @@ int main(int argc,char **argv)
 	DeployUnit *dg =factory.createDeployUnit();
 	dg->name = "kevoree-group-websocket";
 	dg->groupName = "org.kevoree.library";
-	dg->version = "1.0";
-	dg->type ="elf32-i386";
+	dg->version = "1.0.0-SNAPSHOT";
+	dg->type ="so";
 
 	TypeDefinition *grouptype = factory.createGroupType();
 	grouptype->abstract= false;
@@ -187,8 +157,8 @@ int main(int argc,char **argv)
 	DeployUnit *dc =factory.createDeployUnit();
 	dc->name = "LightComponent";
 	dc->groupName = "org.kevoree.library";
-	dc->version = "1.0";
-	dc->type ="elf32-i386";
+	dc->version = "1.0.0-SNAPSHOT";
+	dc->type ="so";
 
 	comtype->adddeployUnit(dc);
 
@@ -227,8 +197,8 @@ int main(int argc,char **argv)
 	DeployUnit *dcano =factory.createDeployUnit();
 	dcano->name = "TemperatureComponent";
 	dcano->groupName = "org.kevoree.library";
-	dcano->version = "1.0";
-	dcano->type ="elf32-i386";
+	dcano->version = "1.0.0-SNAPSHOT";
+	dcano->type ="so";
 
 	/* GW  */
 
@@ -240,8 +210,8 @@ int main(int argc,char **argv)
 	DeployUnit *dcMQTTgw =factory.createDeployUnit();
 	dcMQTTgw->name = "WebSocketGatewayMQTT";
 	dcMQTTgw->groupName = "org.kevoree.library";
-	dcMQTTgw->version = "1.0";
-	dcMQTTgw->type ="elf32-i386";
+	dcMQTTgw->version = "1.0.0-SNAPSHOT";
+	dcMQTTgw->type ="so";
 
 
 	DictionaryType *typegwMQTT= factory.createDictionaryType();

@@ -1,10 +1,10 @@
 #include <kevoree-tools/BootstrapHelper/NodeTypeBootstrapHelper.h>
 
 
-NodeTypeBootstrapHelper::NodeTypeBootstrapHelper()
+NodeTypeBootstrapHelper::NodeTypeBootstrapHelper(std::string mvn_maven_base_path)
 {
 	dynamicLoader = new DynamicLoader(this);
-	resolver.setBasePath("/tmp/m2");
+	resolver.setBasePath(mvn_maven_base_path);
 }
 
 NodeTypeBootstrapHelper::~NodeTypeBootstrapHelper()
@@ -17,9 +17,9 @@ std::string NodeTypeBootstrapHelper::resolveDeployUnit(DeployUnit *deployunit)
 {
 
 	std::list<std::string> urls;
-	urls.push_back("http://archiva.reacloud.com/");
+	// FIX ME ADD
+	urls.push_back("http://maven.reacloud.com/repository/reacloud");
 	return resolver.resolve(deployunit->groupName,deployunit->name,deployunit->version,deployunit->type,urls);
-
 }
 
 

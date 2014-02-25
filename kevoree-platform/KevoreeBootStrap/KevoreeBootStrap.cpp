@@ -23,6 +23,10 @@ void KevoreeBootStrap::setBootstrapModel(ContainerRoot *bmodel)
 	  bootstrapModel = bmodel;
 }
 
+void KevoreeBootStrap::setBasePath(std::string path)
+{
+	this->maven_base_path = path;
+}
 
 KevoreeCoreBean* KevoreeBootStrap::getCore()
 {
@@ -41,7 +45,7 @@ void KevoreeBootStrap::start()
 	{
 		return;
 	}  
-	bootNodeHelper = new NodeTypeBootstrapHelper(); 
+	bootNodeHelper = new NodeTypeBootstrapHelper(maven_base_path);
 	coreBean = new KevoreeCoreBean();
 	coreBean->setNodeName(this->nodeName);
 	coreBean->setBootstraper(bootNodeHelper);

@@ -15,7 +15,7 @@
 class NodeTypeBootstrapHelper : public Bootstraper 
 {
 public:
-	 NodeTypeBootstrapHelper();
+	 NodeTypeBootstrapHelper(std::string mvn_maven_base_path);
 	~NodeTypeBootstrapHelper();
 	AbstractNodeType *bootstrapNodeType(ContainerRoot *model,std::string destNodeName, KevoreeModelHandlerService *mservice);
 	IDynamicLoader* getDynamicLoader();
