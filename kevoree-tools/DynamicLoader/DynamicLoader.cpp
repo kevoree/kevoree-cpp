@@ -251,7 +251,7 @@ bool DynamicLoader::destroy_instance(Instance *i)
 
 void * DynamicLoader::soloader_load(std::string libpath)
 {
-	void* handle = dlopen(libpath.c_str(),RTLD_LAZY);
+	void* handle = dlopen(libpath.c_str(),RTLD_LAZY|RTLD_GLOBAL);
 	if (!handle)
 	{
 
