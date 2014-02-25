@@ -125,6 +125,8 @@ ENDIF()
 add_subdirectory (${SRC_KEVOREE_HTTPCLIENT}/)
 
 add_subdirectory (${SRC_KEVOREE_LIBRARY}/)
-
+if(NOT ANDROID)
 add_subdirectory (${SRC_KEVOREE_TESTS}/)
+ENDIF()
+
 

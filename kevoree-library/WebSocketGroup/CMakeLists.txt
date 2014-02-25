@@ -18,8 +18,9 @@ TARGET_LINK_LIBRARIES(websocketgroup boost_system)
 TARGET_LINK_LIBRARIES(websocketgroup boost_random)
 TARGET_LINK_LIBRARIES(websocketgroup boost_thread)
 
+
 if(ANDROID)
-	TARGET_LINK_LIBRARIES(websocketgroup  ${LIBRARY_OUTPUT_PATH}/libkevoree-model.so )
+TARGET_LINK_LIBRARIES(websocketgroup  -Wl,-no-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-model-static.a -Wl,-no-whole-archive)
 ENDIF()
 
 

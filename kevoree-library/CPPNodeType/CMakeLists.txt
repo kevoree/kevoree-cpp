@@ -24,13 +24,9 @@ TARGET_LINK_LIBRARIES(kevoree-CPPNode   ${LIBRARY_OUTPUT_PATH}/libkevoree-model.
 ENDIF()
 
 if(ANDROID)
-TARGET_LINK_LIBRARIES(kevoree-CPPNode    ${LIBRARY_OUTPUT_PATH}/libkevoree-model.so )
+
+TARGET_LINK_LIBRARIES(kevoree-CPPNode  -Wl,-no-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-model-static.a -Wl,-no-whole-archive)
 ENDIF()
-
-
-#execute_process(COMMAND mvn deploy:deploy-file      -Durl=${repository}     -DgroupId=org.kevoree.library     -DartifactId=CPPNODE     -Dversion=1.0      -Dpackaging=json    -Dfile=target/lib.json -DrepositoryId=${repositoryId})
-#execute_process(COMMAND mvn deploy:deploy-file      -Durl=${repository}     -DgroupId=org.kevoree.library     -DartifactId=CPPNODE     -Dversion=1.0      -Dpackaging=so     -Dfile=target/libkevoree-CPPNode.so -DrepositoryId=${repositoryId})
-
 
 
 # END --  KEVOREE-CPPNode

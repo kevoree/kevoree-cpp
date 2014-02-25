@@ -1,1 +1,0 @@
-mvn deploy:deploy-file      -Durl=http://archiva.powet.eu/repository/internal    -DgroupId=org.kevoree.library     -DartifactId=CPPNODE     -Dversion=1.0      -Dpackaging=so     -Dfile=libkevoree-CPPNode.so -DrepositoryId=reacloud

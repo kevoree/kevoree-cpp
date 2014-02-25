@@ -16,5 +16,9 @@ file(GLOB_RECURSE microframework_files ${SRC_MICROFRAMEWORK}/*)
 file(GLOB_RECURSE model_files ${SRC_KEVOREE_MODEL}/*)
 file(GLOB_RECURSE adaptation_model_files ${SRC_KEVOREE_ADAPTATION_MODEL_KEVOREE}/*)
 
-ADD_LIBRARY(kevoree-core-model  STATIC   ${microframework_files} ${model_files} ${adaptation_model_files})
-ADD_LIBRARY(kevoree-model  SHARED   ${microframework_files} ${model_files} ${adaptation_model_files})
+ADD_LIBRARY(kevoree-model-static  	STATIC   ${microframework_files} ${model_files} ${adaptation_model_files})
+ADD_LIBRARY(kevoree-model-dynamic   SHARED   ${microframework_files} ${model_files} ${adaptation_model_files})
+
+if(NOT ANDROID)
+	TARGET_LINK_LIBRARIES(kevoree-model-dynamic rt)
+ENDIF()
