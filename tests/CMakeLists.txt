@@ -24,5 +24,5 @@ add_executable(
         ${files_tests}
 )
 TARGET_LINK_LIBRARIES(run_tests cppunit)
-TARGET_LINK_LIBRARIES(run_tests ${LIBRARY_OUTPUT_PATH}/libkevoree-model.so)
+TARGET_LINK_LIBRARIES(run_tests ${LIBRARY_OUTPUT_PATH}/libkevoree-model-dynamic.so)
 TARGET_LINK_LIBRARIES(run_tests rt)

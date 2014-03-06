@@ -23,13 +23,13 @@ public:
 
 	void execute(boost::promise<bool> & result)
 	{
-
+		// TODO
 	}
 
 
 	void undo()
 	{
-
+		// TODO
 	}
 
 };

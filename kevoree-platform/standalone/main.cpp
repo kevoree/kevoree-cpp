@@ -44,8 +44,8 @@ int main(int argc,char **argv)
 
 	// FIX ME PARAM
 	kb->setNodeName("node0");
-	//kb->setBasePath("/tmp/.m2");
-	kb->setBasePath("/mnt/sdcard/reacloud/");
+	kb->setBasePath("/tmp/.m2"); // FIX ME $HOME/.m2
+
 
 
 

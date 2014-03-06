@@ -3,7 +3,7 @@
 
 #include <kevoree-core/api/PrimitiveCommand.h>
 #include <kevoree-core/api/Bootstraper.h>
-#include "StartInstanceCommand.h"
+
 
 class StopInstanceCommand : public  PrimitiveCommand 
 {
@@ -16,19 +16,8 @@ public:
 		this->mservice =_mservice;
 	}
 	
-	void execute(boost::promise<bool> & result)
-	{
-		LOGGER_WRITE(Logger::DEBUG,"StopInstance ->"+instance->name);
-		bool stopped = bootstrapService->getDynamicLoader()->stop_instance(instance);
-		result.set_value(stopped);
-    }
-
-	void undo()
-	{
-		//	StartInstanceCommand(instance, nodename, bootstrapService, mservice).execute();
-		// TODO BREAK A<->B
-		cout << " TODO " << endl;
-	}
+	void execute(boost::promise<bool> & result);
+	void undo();
 	
 private:
 	Instance *instance;

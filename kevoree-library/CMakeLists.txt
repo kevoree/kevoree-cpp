@@ -22,7 +22,7 @@ add_subdirectory (CPPNodeType/)
 
 
 # deploy CPPNodeType
-#execute_process(COMMAND mvn deploy:deploy-file      -Durl=${repository}     -DgroupId=org.kevoree.library     -DartifactId=CPPNodeType     -Dversion=1.0.0-SNAPSHOT      -Dpackaging=so     -Dfile=${LIBRARY_OUTPUT_PATH}/libkevoree-CPPNode.so -DrepositoryId=${repositoryId})
+execute_process(COMMAND mvn deploy:deploy-file      -Durl=${repository}     -DgroupId=org.kevoree.library     -DartifactId=CPPNodeType     -Dversion=1.0.0-SNAPSHOT      -Dpackaging=so     -Dfile=${LIBRARY_OUTPUT_PATH}/libkevoree-CPPNode.so -DrepositoryId=${repositoryId})
 
 # deploy WebSocketGroup
 execute_process(COMMAND mvn deploy:deploy-file      -Durl=${repository}     -DgroupId=org.kevoree.library     -DartifactId=kevoree-group-websocket     -Dversion=1.0.0-SNAPSHOT      -Dpackaging=so     -Dfile=${LIBRARY_OUTPUT_PATH}/libwebsocketgroup.so -DrepositoryId=${repositoryId})

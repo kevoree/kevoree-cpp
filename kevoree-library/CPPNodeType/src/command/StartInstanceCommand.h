@@ -27,7 +27,7 @@ public:
     
 	void undo()
 	{
-	  boost::promise<bool> result;
+	   boost::promise<bool> result;
 	   StopInstanceCommand(instance, nodename, bootstrapService, mservice).execute(result);
 	}
 	
