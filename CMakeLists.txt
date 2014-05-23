@@ -97,7 +97,7 @@ set(SRC_KEVOREE_HTTPCLIENT					${SRC_KEVOREE_TOOLS}/HttpClient)
 set(SRC_KEVOREE_MODEL 						${SRC_KEVOREE_CORE}/model/kevoree)
 set(SRC_KEVOREE_TESTS 						tests)
 set(SRC_MAVEN_RESOLVER maven-resolver-cpp)
-set(URL_MODEL_GENERATOR "http://oss.sonatype.org/content/repositories/snapshots/org/kevoree/modeling/org.kevoree.modeling.cpp.generator/1.1-SNAPSHOT/org.kevoree.modeling.cpp.generator-1.1-20140108.101410-11.jar")
+set(URL_MODEL_GENERATOR "http://maven.reacloud.com/repository/reacloud/snapshots/org/kevoree/modeling/org.kevoree.modeling.cpp.generator/1.1-SNAPSHOT/org.kevoree.modeling.cpp.generator-1.1-20140321.171353-2.jar")
 
 set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}")
 
@@ -109,7 +109,7 @@ IF(NOT EXISTS "${SRC_KEVOREE_MODEL}")
  message("Downloading model generator")
  execute_process(COMMAND wget ${URL_MODEL_GENERATOR} --quiet)
  message("Generate KEVOREE MODEL")
- execute_process(COMMAND java -jar org.kevoree.modeling.cpp.generator-1.1-20140108.101410-11.jar -i kevoree-core/model/metamodel/kevoree.ecore -t kevoree-core/model)
+ execute_process(COMMAND java -jar org.kevoree.modeling.cpp.generator-1.1-20140321.171353-2.jar -i kevoree-core/model/metamodel/kevoree.ecore -t kevoree-core/model)
 ENDIF()
 
 
