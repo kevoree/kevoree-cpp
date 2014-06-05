@@ -27,12 +27,15 @@ public:
 	bool register_instance(Instance *i);
 	AbstractTypeDefinition * create_instance(Instance *i);
 	bool destroy_instance(Instance *i);
-	
+
+	// call the start method in the instance
 	bool start_instance(Instance *i);
 	bool stop_instance(Instance *i);
 	bool update_instance(Instance *i);
-	
-	
+
+	// select the good deploy unit depending on architecture os ; ....
+	DeployUnit * select_du_architecture(TypeDefinition *type);
+
 	void setModelService(KevoreeModelHandlerService *mservice);
 
 private:

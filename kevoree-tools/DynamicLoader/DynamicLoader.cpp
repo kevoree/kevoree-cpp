@@ -11,33 +11,48 @@ void DynamicLoader::setModelService(KevoreeModelHandlerService *mservice){
 }
 
 
+DeployUnit * DynamicLoader::select_du_architecture(TypeDefinition *type) {
+	DeployUnit *du=NULL;
+
+	// TODO need to add in the metamodel
+	for ( std::map<string,DeployUnit*>::const_iterator it = (type->deployUnit).begin();  it != (type->deployUnit).end(); ++it) {
+		return it->second;
+	}
+	return du;
+}
+
 
 bool DynamicLoader::register_instance(Instance *i)
 {
+
 	try
 	{
 		TypeDefinition *type = i->typeDefinition;
+		DeployUnit *du=NULL;
+
 		if(type == NULL)
 		{
 			LOGGER_WRITE(Logger::ERROR,"There is no TypeDefinition defined");
 			return false;
 		}
 
-		if(type->deployUnit ==NULL)
+		if(type->deployUnit.size() == 0)
 		{
 			LOGGER_WRITE(Logger::ERROR,"There is no DeployUnit defined");
 			return false;
 		}
 
+		du =select_du_architecture(type);
+
 		// check if exist
-		map<string, void*>::const_iterator it = deploysUnits.find(type->deployUnit->internalGetKey());
+		map<string, void*>::const_iterator it = deploysUnits.find(du->internalGetKey());
 		if (it != deploysUnits.end())
 		{
 			LOGGER_WRITE(Logger::INFO,"The DeployUnit is already loaded");	
 			return true;
 		}
 
-		string libpath=	bootstrap->resolveDeployUnit(type->deployUnit);
+		string libpath=	bootstrap->resolveDeployUnit(du);
 		if(!libpath.empty())
 		{
 			LOGGER_WRITE(Logger::DEBUG,"install_deploy_unit "+libpath);
@@ -48,7 +63,7 @@ bool DynamicLoader::register_instance(Instance *i)
 				return false;
 			}
 			LOGGER_WRITE(Logger::DEBUG,"done "+libpath);
-			deploysUnits[type->deployUnit->internalGetKey()] = handler;		
+			deploysUnits[du->internalGetKey()] = handler;
 			return true;	
 		}else
 		{
@@ -62,6 +77,7 @@ bool DynamicLoader::register_instance(Instance *i)
 		LOGGER_WRITE(Logger::ERROR,"");
 		return false;
 	}
+
 }
 
 AbstractTypeDefinition* DynamicLoader::create_instance(Instance *i)
@@ -75,7 +91,8 @@ AbstractTypeDefinition* DynamicLoader::create_instance(Instance *i)
 			return NULL;
 		}
 
-		DeployUnit *du  =type->deployUnit;
+		DeployUnit *du  =select_du_architecture(type);
+
 		// todo check if for me
 		map<string, void*>::const_iterator it = deploysUnits.find(du->internalGetKey());
 		if (it == deploysUnits.end())
@@ -98,11 +115,13 @@ AbstractTypeDefinition* DynamicLoader::create_instance(Instance *i)
 		std::cerr << e.what() << endl;
 		return NULL;
 	}
+
 }
 
 
 bool DynamicLoader::start_instance(Instance *i)
 {
+
 	AbstractTypeDefinition *inst = (AbstractTypeDefinition*)instances.find(i->path())->second;
 	if(inst != NULL && dynamic_cast<AbstractTypeDefinition*>(inst) != 0)
 	{
@@ -121,11 +140,13 @@ bool DynamicLoader::start_instance(Instance *i)
 		return true;
 	}
 	return false;
+
 }
 
 
 bool DynamicLoader::update_param(Instance *i,AbstractTypeDefinition *inst)
 {
+
 	TypeDefinition *type = 	i->typeDefinition;
 	if(type != NULL && dynamic_cast<TypeDefinition*>(type) != 0)
 	{
@@ -161,6 +182,7 @@ bool DynamicLoader::update_param(Instance *i,AbstractTypeDefinition *inst)
 
 
 bool DynamicLoader::update_instance(Instance *i){
+
 	AbstractTypeDefinition *inst = (AbstractTypeDefinition*)instances.find(i->path())->second;
 	if(inst != NULL && dynamic_cast<AbstractTypeDefinition*>(inst) != 0)
 	{
@@ -178,6 +200,7 @@ bool DynamicLoader::update_instance(Instance *i){
 		return true;
 	}
 	return false;
+
 }
 
 
@@ -217,7 +240,8 @@ bool DynamicLoader::destroy_instance(Instance *i)
 		{
 
 			LOGGER_WRITE(Logger::DEBUG,"Clean deployUnits");
-			DeployUnit *du  = type->deployUnit;
+			DeployUnit *du  = select_du_architecture(type);
+
 			// todo check if for me
 			map<string, void*>::const_iterator it = deploysUnits.find(du->internalGetKey());
 			if (it == deploysUnits.end())
@@ -228,13 +252,13 @@ bool DynamicLoader::destroy_instance(Instance *i)
 
 			destroyInstance(it->second,inst);
 
-			/*FIX ME
-			deploysUnits.erase(deploysUnits.find(du->internalGetKey()));
+			//FIX ME
+			//deploysUnits.erase(deploysUnits.find(du->internalGetKey()));
 			// class 
-			if(dlclose(handler) != 0){
+		//	if(dlclose(handler) != 0){
 					LOGGER_WRITE(Logger::WARNING,"dlclose");
-			}
-			 */
+		//	}
+
 
 
 		}else 
