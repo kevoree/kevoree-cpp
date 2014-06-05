@@ -85,7 +85,7 @@ int main(int argc,char **argv)
 	attport->datatype = "int";
 	attport->fragmentDependant = true;
 	attport->name ="port";
-	attport->defaultValue = "9001";
+	attport->defaultValue = "9000";
 	typegroup->addattributes(attport);
 
 	grouptype->adddictionaryType(typegroup);
@@ -110,7 +110,7 @@ int main(int argc,char **argv)
 	dico->name ="node0";
 	DictionaryValue *valport = factory.createDictionaryValue();
 	valport->name ="port";
-	valport->value ="9001";
+	valport->value ="9000";
 
 	dico->addvalues(valport);
 
