@@ -22,43 +22,6 @@ void destroy_object( HelloWorldComponent * object )
 
 
 
-using namespace std;
-
-void ThreadFunction(HelloWorldComponent *ptr)
-{
-	int counter = 0;
-
-	network::http::api::HTTPRequest request;
-	request.addHeader("User-Agent", "Kevoree");
-
-	std::string url = "http://127.0.0.1/arduino/digital/";
-	url += ptr->params["pin"];
-	url += "/";
-
-	if(ptr->params["enable"].compare("true") == 0)
-	{
-		url += "1";
-	}else {
-		url += "0";
-	}
-	request.setUrl(url);
-	try
-	{
-		BoostHTTPClient * client = new BoostHTTPClient();
-		network::http::api::HTTPResponse * response = client->doGet(request);
-		std::cout << response->getContentAsString() << std::endl;
-		delete response;
-		//delete client;
-	}
-	catch(boost::thread_interrupted&)
-	{
-		cout << "Thread is stopped" << endl;
-		return;
-	}
-
-}
-
-
 HelloWorldComponent::HelloWorldComponent()
 {
 
@@ -72,20 +35,17 @@ HelloWorldComponent::~HelloWorldComponent()
 void HelloWorldComponent::start()
 {
 
-
-	boost::thread t(&ThreadFunction,this);
-
-
+	cout <<"The HelloWorld component is starting"  << endl;
 }
 
 void HelloWorldComponent::stop(){
-	cout <<"The HelloWorld Component STOP" << endl;
+	cout <<"The HelloWorld component is stopping" << endl;
 }
 
 
 void HelloWorldComponent::update()
 {	
-	boost::thread t(&ThreadFunction,this);
+	cout <<"The HelloWorld component is updating" << endl;
 }
 
 
