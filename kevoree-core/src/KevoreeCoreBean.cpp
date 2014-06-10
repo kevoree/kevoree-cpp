@@ -29,14 +29,14 @@ void KevoreeCoreBean::updateModel(ContainerRoot *_model){
 
 
 
-void KevoreeCoreBean::checkBootstrapNode(ContainerRoot *model)
+void KevoreeCoreBean::checkBootstrapNode(ContainerRoot *proposedNewModel)
 {
 	if (nodeInstance == NULL) 
 	{
-		ContainerNode *foundNode = model->findnodesByID(getNodeName());
+		ContainerNode *foundNode = proposedNewModel->findnodesByID(getNodeName());
 		if(foundNode != NULL)
 		{
-			nodeInstance = _bootstraper->bootstrapNodeType(model, getNodeName(), this);
+			nodeInstance = _bootstraper->bootstrapNodeType(getNodeName(), this);
 			if(nodeInstance != NULL)
 			{
 				LOGGER_WRITE(Logger::DEBUG,"Starting Node =>"+getNodeName());
@@ -53,7 +53,7 @@ void KevoreeCoreBean::checkBootstrapNode(ContainerRoot *model)
 			}
 		}else 
 		{
-			LOGGER_WRITE(Logger::ERROR," Node instance name {} not found in bootstrap model !");
+			LOGGER_WRITE(Logger::ERROR,"The instance o fNodeName  "+getNodeName()+" is not found in the bootstrap model !");
 		}
 	}
 }
@@ -76,11 +76,15 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel)
 			LOGGER_WRITE(Logger::WARNING, "Asking for update with a NULL model or node name (" + getNodeName() +") was not found in target model !");
 			return false;
 		}
+
 		if(checkModel(proposedNewModel))
 		{
 
 		}
+		// set proposedNewModel
+		_bootstraper->setproposedNewModel(proposedNewModel);
 
+		//  if the platforme is starting we need to load the nodeType
 		checkBootstrapNode(proposedNewModel);
 
 		ContainerRoot *currentModel = getLastModel(); 
@@ -92,7 +96,7 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel)
 
 		TraceSequence *traces = preCompare->createTraces(currentModel,proposedNewModel);
 
-	//	 LOGGER_WRITE(Logger::DEBUG,traces->exportToString());
+		//	 LOGGER_WRITE(Logger::DEBUG,traces->exportToString());
 
 		AdaptationModel *adaptationModel = nodeInstance->plan(currentModel, proposedNewModel,traces);
 		LOGGER_WRITE(Logger::INFO,("Adaptation model size "+Utils::IntegerUtilstoString(adaptationModel->adaptations.size())));
@@ -112,12 +116,7 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel)
 		if(deployResult)
 		{
 			switchToNewModel(proposedNewModel);
-			//http://linux.die.net/man/2/getrusage
-			int who = RUSAGE_SELF;
-			struct rusage usage;
-			getrusage(who,&usage);
-
-			LOGGER_WRITE(Logger::INFO,"Update sucessfully completed. "+Utils::IntegerUtilstoString(usage.ru_maxrss)+" octets");
+			LOGGER_WRITE(Logger::INFO,"Update sucessfully completed.");
 		}
 		else
 		{
@@ -171,6 +170,6 @@ void KevoreeCoreBean::stop()
 }
 
 bool KevoreeCoreBean::checkModel(ContainerRoot *targetModel){
-	LOGGER_WRITE(Logger::INFO,"Model Checker");
+	LOGGER_WRITE(Logger::INFO,"TODO Model Checker");
 	return true;
 }

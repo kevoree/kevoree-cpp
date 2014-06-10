@@ -7,9 +7,10 @@
 class Bootstraper
 {
 public:
- virtual AbstractNodeType *bootstrapNodeType(ContainerRoot *model,std::string destNodeName, KevoreeModelHandlerService *mservice)=0;
+ virtual AbstractNodeType *bootstrapNodeType(std::string destNodeName, KevoreeModelHandlerService *mservice)=0;
  virtual std::string resolveDeployUnit(DeployUnit *du)=0;
  virtual IDynamicLoader* getDynamicLoader()=0;
+ virtual void setproposedNewModel(ContainerRoot *root)=0;
 };
 
 #endif
