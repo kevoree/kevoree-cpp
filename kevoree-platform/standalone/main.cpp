@@ -120,48 +120,11 @@ int main(int argc,char **argv)
 
 
 
-
-	TypeDefinition *comtype  = factory.createComponentType();
-	comtype->name = "Light";
-	comtype->abstract = false;
-
-	PortTypeRef *reglight = new PortTypeRef();
-	reglight->name ="port";
-	reglight->optional = true;
-
-	((ComponentType*)comtype)->addrequired(reglight);
-
-	DictionaryType *typegroup2= factory.createDictionaryType();
-	DictionaryAttribute *attport2 = factory.createDictionaryAttribute();
-	attport2->optional = false;
-	attport2->datatype = "Boolean";
-	attport2->fragmentDependant = false;
-	attport2->name ="enable";
-	attport2->defaultValue = "true";
-	typegroup2->addattributes(attport2);
-
-
-
-
-	DictionaryAttribute *attport3 = factory.createDictionaryAttribute();
-	attport3->optional = false;
-	attport3->datatype = "int";
-	attport3->fragmentDependant = false;
-	attport3->name ="pin";
-	attport3->defaultValue = "7";
-
-	typegroup2->addattributes(attport3);
-	comtype->adddictionaryType(typegroup2);
-
-
 	DeployUnit *dc =factory.createDeployUnit();
-	dc->name = "LightComponent";
+	dc->name = "HelloWorldComponent";
 	dc->groupName = "org.kevoree.library";
 	dc->version = "1.0.0-SNAPSHOT";
 	dc->type ="so";
-
-	comtype->adddeployUnit(dc);
-
 
 
 
@@ -170,29 +133,13 @@ int main(int argc,char **argv)
 
 
 	/* Temperature */
-	TypeDefinition *anenotype  = factory.createComponentType();
-	anenotype->name = "Temperature";
-	anenotype->abstract = false;
-
-	PortTypeRef *reg = new PortTypeRef();
-	reg->name ="port";
-	reg->optional = true;
-
-	((ComponentType*)anenotype)->addrequired(reg);
+	TypeDefinition *helloworldtype  = factory.createComponentType();
+	helloworldtype->name = "HelloWorldComponent10101";
+	helloworldtype->abstract = false;
 
 
 
 
-	DictionaryType *typeanomo= factory.createDictionaryType();
-	anenotype->adddictionaryType(typeanomo);
-
-	DictionaryAttribute *attportanom = factory.createDictionaryAttribute();
-	attportanom->optional = false;
-	attportanom->datatype = "int";
-	attportanom->fragmentDependant = false;
-	attportanom->name ="pin";
-	attportanom->defaultValue = "7";
-	typeanomo->addattributes(attportanom);
 
 	DeployUnit *dcano =factory.createDeployUnit();
 	dcano->name = "TemperatureComponent";
@@ -200,67 +147,19 @@ int main(int argc,char **argv)
 	dcano->version = "1.0.0-SNAPSHOT";
 	dcano->type ="so";
 
-	/* GW  */
 
-	TypeDefinition *gwMQTTtype  = factory.createComponentType();
-	gwMQTTtype->name = "WebSocketGatewayMQTT";
-	gwMQTTtype->abstract = false;
+	helloworldtype->adddeployUnit(dcano);
 
-
-	DeployUnit *dcMQTTgw =factory.createDeployUnit();
-	dcMQTTgw->name = "WebSocketGatewayMQTT";
-	dcMQTTgw->groupName = "org.kevoree.library";
-	dcMQTTgw->version = "1.0.0-SNAPSHOT";
-	dcMQTTgw->type ="so";
-
-
-	DictionaryType *typegwMQTT= factory.createDictionaryType();
-	DictionaryAttribute *attportGW = factory.createDictionaryAttribute();
-	attportGW->optional = false;
-	attportGW->datatype = "int";
-	attportGW->fragmentDependant = false;
-	attportGW->name ="port_gw";
-	attportGW->defaultValue = "18883";
-	typegwMQTT->addattributes(attportGW);
-	gwMQTTtype->adddictionaryType(typegwMQTT);
-
-
-	DictionaryAttribute *attportGW2 = factory.createDictionaryAttribute();
-	attportGW2->optional = false;
-	attportGW2->datatype = "int";
-	attportGW2->fragmentDependant = false;
-	attportGW2->name ="port_MQTT";
-	attportGW2->defaultValue = "1883";
-	typegwMQTT->addattributes(attportGW2);
-
-
-
-
-	DictionaryAttribute *attportGW3 = factory.createDictionaryAttribute();
-	attportGW3->optional = false;
-	attportGW3->datatype = "int";
-	attportGW3->fragmentDependant = false;
-	attportGW3->name ="HOST_MQTT";
-	attportGW3->defaultValue = "localhost";
-	typegwMQTT->addattributes(attportGW3);
-
-	gwMQTTtype->adddictionaryType(typegwMQTT);
-
-
-	gwMQTTtype->adddeployUnit(dcMQTTgw);
-
-
-	model->addtypeDefinitions(anenotype);
+	model->addtypeDefinitions(helloworldtype);
 	model->addtypeDefinitions(grouptype);
 	model->addtypeDefinitions(nodetype);
-	model->addtypeDefinitions(comtype);
-	model->addtypeDefinitions(gwMQTTtype);
+
 
 	model->adddeployUnits(d);
 	model->adddeployUnits(dg);
 	model->adddeployUnits(dc);
 	model->adddeployUnits(dcano);
-	model->adddeployUnits(dcMQTTgw);
+
 
 	model->addnodes(node0);
 
@@ -268,6 +167,13 @@ int main(int argc,char **argv)
 	group->addsubNodes(node0);
 	node0->addgroups(group);
 
+
+
+
+	Repository *repo = factory.createRepository();
+	repo->url = "http://maven.reacloud.com/repository/reacloud";
+
+	model->addrepositories(repo);
 
 	kb->setBootstrapModel(model); // boostrapmodel
 	kb->start();
