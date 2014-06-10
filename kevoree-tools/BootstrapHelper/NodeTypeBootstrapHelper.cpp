@@ -15,10 +15,23 @@ NodeTypeBootstrapHelper::~NodeTypeBootstrapHelper()
 
 std::string NodeTypeBootstrapHelper::resolveDeployUnit(DeployUnit *deployunit)
 {
-
 	std::list<std::string> urls;
-	// FIX ME ADD
-	urls.push_back("http://maven.reacloud.com/repository/reacloud");
+	ContainerRoot * model = proposedNewModel;
+	if(model == NULL)
+	{
+		LOGGER_WRITE(Logger::ERROR,"The model is null");
+		return "";
+	}
+
+	for ( std::map<string,Repository*>::const_iterator it = (model->repositories).begin();  it != (model->repositories).end(); ++it)
+	{
+		Repository *repo = it->second;
+		if(repo != NULL)
+		{
+			urls.push_back(repo->url);
+		}
+	}
+
 	return resolver.resolve(deployunit->groupName,deployunit->name,deployunit->version,deployunit->type,urls);
 }
 
@@ -26,20 +39,28 @@ std::string NodeTypeBootstrapHelper::resolveDeployUnit(DeployUnit *deployunit)
 
 IDynamicLoader* NodeTypeBootstrapHelper::getDynamicLoader()
 {
-	 return dynamicLoader;
+	return dynamicLoader;
 }
-	 
-AbstractNodeType *NodeTypeBootstrapHelper::bootstrapNodeType(ContainerRoot *model,std::string destNodeName, KevoreeModelHandlerService *mservice)
+void NodeTypeBootstrapHelper::setproposedNewModel(ContainerRoot *model){
+	this->proposedNewModel = model;
+}
+AbstractNodeType *NodeTypeBootstrapHelper::bootstrapNodeType(std::string destNodeName, KevoreeModelHandlerService *mservice)
 {
-    ContainerNode *node = model->findnodesByID(destNodeName);
-    if(node !=NULL)
-    {
-		    	
+	if(proposedNewModel == NULL)
+	{
+		LOGGER_WRITE(Logger::ERROR,"The proposed model is not defined !");
+		return NULL;
+	}
+
+	ContainerNode *node = proposedNewModel->findnodesByID(destNodeName);
+	if(node !=NULL)
+	{
+
 		TypeDefinition *type = node->typeDefinition;
 
 		if(type != NULL)
 		{
-	
+
 			LOGGER_WRITE(Logger::DEBUG,"Bootstraping NodeType => "+type->name);
 			dynamicLoader->register_instance(node);
 			dynamicLoader->setModelService(mservice);
@@ -57,10 +78,10 @@ AbstractNodeType *NodeTypeBootstrapHelper::bootstrapNodeType(ContainerRoot *mode
 		}
 		else
 		{
-			cout << "The TypeDefinition is not define" << endl;
+			LOGGER_WRITE(Logger::ERROR,"The TypeDefinition is not define ! TODO ADD IN MODEL CHECKER");
 			return NULL;
 		}
 	}
-         
-         
+
+
 }
