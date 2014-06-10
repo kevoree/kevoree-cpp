@@ -18,12 +18,12 @@ include_directories(../maven-resolver-cpp/src/api)
 add_subdirectory (WebSocketGroup/)
 add_subdirectory (HelloWorldComponent/)
 add_subdirectory (CPPNodeType/)
-#add_subdirectory (WebSocketGatewayTCP/)
 
 
-# deploy CPPNodeType
-#execute_process(COMMAND mvn deploy:deploy-file      -Durl=${repository}     -DgroupId=org.kevoree.library     -DartifactId=CPPNodeType     -Dversion=1.0.0-SNAPSHOT      -Dpackaging=so     -Dfile=${LIBRARY_OUTPUT_PATH}/libkevoree-CPPNode.so -DrepositoryId=${repositoryId})
 
-# deploy WebSocketGroup
-#execute_process(COMMAND mvn deploy:deploy-file      -Durl=${repository}     -DgroupId=org.kevoree.library     -DartifactId=kevoree-group-websocket     -Dversion=1.0.0-SNAPSHOT      -Dpackaging=so     -Dfile=${LIBRARY_OUTPUT_PATH}/libwebsocketgroup.so -DrepositoryId=${repositoryId})
-
+# deploy on the repository using maven
+ADD_CUSTOM_TARGET(upload
+COMMAND mvn deploy:deploy-file      -Durl=${repository}     -DgroupId=org.kevoree.library     -DartifactId=HelloWorldComponent   	   -Dversion=1.0.0-SNAPSHOT      -Dpackaging=so     -Dfile=${LIBRARY_OUTPUT_PATH}/libhelloworld_component.so -DrepositoryId=${repositoryId}
+COMMAND mvn deploy:deploy-file      -Durl=${repository}     -DgroupId=org.kevoree.library     -DartifactId=kevoree-group-websocket     -Dversion=1.0.0-SNAPSHOT      -Dpackaging=so     -Dfile=${LIBRARY_OUTPUT_PATH}/libwebsocketgroup.so -DrepositoryId=${repositoryId}
+COMMAND mvn deploy:deploy-file      -Durl=${repository}     -DgroupId=org.kevoree.library     -DartifactId=CPPNodeType                 -Dversion=1.0.0-SNAPSHOT      -Dpackaging=so     -Dfile=${LIBRARY_OUTPUT_PATH}/libkevoree-CPPNode.so -DrepositoryId=${repositoryId}
+)
