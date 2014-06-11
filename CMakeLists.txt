@@ -80,7 +80,7 @@ message("${ENABLE_CXX11}")
 
  IF(NOT EXISTS "${BOOST_ROOT}")
             message("Downloading boost for ${arch_hint}")
-			execute_process(COMMAND wget http://powet.eu/kevoree/${BOOST_FILE}.tar.gz --quiet)
+			execute_process(COMMAND wget https://github.com/kevoree/kevoree-cpp/raw/master/kevoree-extra/${BOOST_FILE}.tar.gz --quiet)
 			execute_process(COMMAND tar xvf ${BOOST_FILE}.tar.gz)
 			execute_process(COMMAND mkdir thirdparty/)
 			execute_process(COMMAND mv  ${BOOST_FILE}/ thirdparty/)
