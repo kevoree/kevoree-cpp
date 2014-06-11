@@ -106,10 +106,10 @@ IF(NOT EXISTS "${SRC_MAVEN_RESOLVER}" )
 ENDIF()
 
 IF(NOT EXISTS "${SRC_KEVOREE_MODEL}")
- message("Downloading model generator")
- execute_process(COMMAND wget ${URL_MODEL_GENERATOR} --quiet)
+# message("Downloading model generator")
+ #execute_process(COMMAND wget ${URL_MODEL_GENERATOR} --quiet)
  message("Generate KEVOREE MODEL")
- execute_process(COMMAND java -jar org.kevoree.modeling.cpp.generator-1.1-20140321.171353-2.jar -i kevoree-core/model/metamodel/kevoree.ecore -t kevoree-core/model)
+ execute_process(COMMAND java -jar kevoree-extra/org.kevoree.modeling.cpp.generator-1.3.1.jar -i kevoree-core/model/metamodel/kevoree.ecore -t kevoree-core/model)
 ENDIF()
 
 
