@@ -21,11 +21,17 @@ add_executable(
         standalone/main.cpp
         ${kevoree-platform_files}
 )
-
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 TARGET_LINK_LIBRARIES(main 	${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
 TARGET_LINK_LIBRARIES(main  -Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-core-impl.a  -Wl,-no-whole-archive)
 TARGET_LINK_LIBRARIES(main  -Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-model-static.a -Wl,-no-whole-archive)
-TARGET_LINK_LIBRARIES(main  -Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-kevscript-static.a -Wl,-no-whole-archive)
+ENDIF()
+
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+TARGET_LINK_LIBRARIES(main 	${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
+TARGET_LINK_LIBRARIES(main  -Wl,-all_load ${LIBRARY_OUTPUT_PATH}/libkevoree-core-impl.a)
+TARGET_LINK_LIBRARIES(main  -Wl,-all_load ${LIBRARY_OUTPUT_PATH}/libkevoree-model-static.a)
+ENDIF()
 
 TARGET_LINK_LIBRARIES(main maven-resolver-cpp )
 TARGET_LINK_LIBRARIES(main  boost_thread)
@@ -33,6 +39,7 @@ TARGET_LINK_LIBRARIES(main  boost_system)
 TARGET_LINK_LIBRARIES(main  boost_random)
 TARGET_LINK_LIBRARIES(main boost_regex)
 TARGET_LINK_LIBRARIES(main dl)
+
 
 
 
