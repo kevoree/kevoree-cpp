@@ -4,6 +4,7 @@ project(kevoree-core)
 
 
 add_subdirectory (model/)
+add_subdirectory (kevscript/)
 
 
 include_directories(model)
