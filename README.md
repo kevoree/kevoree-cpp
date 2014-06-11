@@ -11,7 +11,7 @@ Cross Compile Raspberry Pi http://elinux.org/RPi_Kernel_Compilation
 ```sh
 sudo apt-get install gcc-arm-linux-gnueabi make ncurses-dev
 ```
- 
+
  
 ### Getting started
 ```sh
@@ -19,7 +19,10 @@ git clone https://github.com/kevoree/kevoree-cpp.git
 cd kevoree-cpp
 ./setenv.sh
 ```
- 
+
+#### Setting up the IDE:
+Download Eclipse.
+File > Import > C/C++ > Existing code as MakeFile Project > In existing code location select Kevoree-CPP directory that you've clone
 ### Compile for Linux  
 ```sh
 cmake .
