@@ -1,5 +1,8 @@
 # kevoree C++
  
+ Continuous integration : http://jenkins.reacloud.com
+ 
+ 
 ##### Requirements:
 Install git and java if you do not have it yet. cc
 #### Linux Ubuntu :
