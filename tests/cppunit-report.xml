@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding='ISO-8859-1' standalone='yes' ?>
+<TestRun>
+  <FailedTests></FailedTests>
+  <SuccessfulTests>
+    <Test id="1">
+      <Name>KmfCppTest::testKmfFactory</Name>
+    </Test>
+    <Test id="2">
+      <Name>KmfCppTest::testKmfTraces</Name>
+    </Test>
+    <Test id="3">
+      <Name>KmfCppTest::testKmfLoader</Name>
+    </Test>
+    <Test id="4">
+      <Name>KmfCppTest::testKmfSerializer</Name>
+    </Test>
+    <Test id="5">
+      <Name>KmfCppTest::testKmfCompare</Name>
+    </Test>
+    <Test id="6">
+      <Name>KevScriptTest::testkev</Name>
+    </Test>
+  </SuccessfulTests>
+  <Statistics>
+    <Tests>6</Tests>
+    <FailuresTotal>0</FailuresTotal>
+    <Errors>0</Errors>
+    <Failures>0</Failures>
+  </Statistics>
+</TestRun>

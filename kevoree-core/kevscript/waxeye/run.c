@@ -3,7 +3,7 @@
  * www.waxeye.org
  * Copyright (C) 2008-2010 Orlando Hill
  * Licensed under the MIT license. See 'LICENSE' for details.
-
+*/
 #include "parser.h"
 
 int main() {
@@ -27,4 +27,5 @@ int main() {
 
     return 0;
 }
- */
+
+

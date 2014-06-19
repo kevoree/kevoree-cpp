@@ -97,7 +97,6 @@ int main(int argc,char **argv)
 	ContainerNode *node0 = factory.createContainerNode();
 	node0->name = "node0";
 	node0->started= true;
-	node0->started = true;
 
 
 	Group *group = factory.createGroup();

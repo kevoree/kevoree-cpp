@@ -1,15 +1,24 @@
 cmake_minimum_required(VERSION 2.8)
 project(kevscript)
 
-set(SRC_KEVOREE_KEVSCRIPT 						src/)
+
 
 
 include_directories(.)
-include_directories(${SRC_KEVOREE_KEVSCRIPT}/)
-include_directories(${SRC_KEVOREE_KEVSCRIPT}/waxeye/include)
+include_directories(src/)
+include_directories(waxeye/include)
 
-file(GLOB_RECURSE kevscript_files ${SRC_KEVOREE_KEVSCRIPT}/*)
+file(GLOB_RECURSE kevscript_files src/*)
+file(GLOB_RECURSE waxeye_files waxeye/*)
 
 
+ADD_LIBRARY(kevscript   STATIC   ${kevscript_files})
 
-ADD_LIBRARY(kevoree-kevscript-static  	STATIC   ${kevscript_files})
+ADD_LIBRARY(waxeye   STATIC   ${waxeye_files})
+
+
+add_executable(
+        kevscript-parser
+        ${kevscript_files}
+)
+TARGET_LINK_LIBRARIES(kevscript-parser waxeye )

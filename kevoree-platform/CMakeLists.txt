@@ -33,6 +33,9 @@ TARGET_LINK_LIBRARIES(main  -Wl,-all_load ${LIBRARY_OUTPUT_PATH}/libkevoree-core
 TARGET_LINK_LIBRARIES(main  -Wl,-all_load ${LIBRARY_OUTPUT_PATH}/libkevoree-model-static.a)
 ENDIF()
 
+#TARGET_LINK_LIBRARIES(main  -Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-kevscript-static.a -Wl,-no-whole-archive)
+
+
 TARGET_LINK_LIBRARIES(main maven-resolver-cpp )
 TARGET_LINK_LIBRARIES(main  boost_thread)
 TARGET_LINK_LIBRARIES(main  boost_system)
