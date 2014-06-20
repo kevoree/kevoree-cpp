@@ -40,6 +40,7 @@ TARGET_LINK_LIBRARIES(main maven-resolver-cpp )
 TARGET_LINK_LIBRARIES(main  boost_thread)
 TARGET_LINK_LIBRARIES(main  boost_system)
 TARGET_LINK_LIBRARIES(main  boost_random)
+TARGET_LINK_LIBRARIES(main  boost_program_options)
 TARGET_LINK_LIBRARIES(main boost_regex)
 TARGET_LINK_LIBRARIES(main dl)
 
