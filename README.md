@@ -8,7 +8,7 @@ Install git and java if you do not have it yet. cc
 #### Linux Ubuntu :
 Linux Debian Procedure should work on Ubuntu and similar distributions: install appropriate packages:
 ```sh
-sudo apt-get install cmake make gcc g++ git ant wget gcc-4.6-plugin-dev libcppunit-doc libcppunit-dev
+sudo apt-get install cmake make gcc g++ git ant wget curl libcppunit-doc libcppunit-dev
 ```
 Cross Compile Raspberry Pi http://elinux.org/RPi_Kernel_Compilation
 ```sh
