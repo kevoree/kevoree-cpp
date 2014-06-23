@@ -5,14 +5,18 @@ set(KEVOREE_CPP_VERSION_MINOR 1)
 set(KEVOREE_CPP_VERSION ${KEVOREE_CPP_VERSION_MAJOR}.${KEVOREE_CPP_VERSION_MINOR})
 
 
-#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -pedantic")
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic")
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -stdlib=libstdc++ -Wall -pedantic")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -stdlib=libstdc++  -Wall -pedantic")
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build)
 
 set(PRAGMA_PLUGIN "FALSE")
 add_definitions(-DENABLE_LOGGER)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/")
+
+
+include(add_boost) 
+
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
