@@ -13,7 +13,7 @@ include_directories(${SRC_MICROFRAMEWORK}/)
 include_directories(${SRC_KEVSCRIPT}/src)
 include_directories(${SRC_KEVSCRIPT}/waxeye/include)
 
-FIND_PACKAGE(CPPUNIT REQUIRED)
+#FIND_PACKAGE(CPPUNIT REQUIRED)
 
 
 SET(COMMON_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")

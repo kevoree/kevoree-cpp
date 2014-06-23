@@ -12,9 +12,7 @@ class KMFFactory
 {
 
 public:
-virtual KMFContainer* create(std::string metaClassName){}
-
-
+	virtual KMFContainer* create(std::string metaClassName)=0;
 };
 
 

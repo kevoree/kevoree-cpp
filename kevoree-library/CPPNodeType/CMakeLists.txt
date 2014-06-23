@@ -15,8 +15,8 @@ link_directories(${BOOST_ROOT}/lib)
 # BEGIN -- KEVOREE- CPPNode
 file(GLOB_RECURSE cppnodetype_library_files src/*)
 ADD_LIBRARY(kevoree-CPPNode  SHARED    ${cppnodetype_library_files} )
-TARGET_LINK_LIBRARIES(kevoree-CPPNode  boost_thread)
-TARGET_LINK_LIBRARIES(kevoree-CPPNode  boost_system)
+TARGET_LINK_LIBRARIES(kevoree-CPPNode  boost_thread-mt)
+TARGET_LINK_LIBRARIES(kevoree-CPPNode  boost_system-mt)
 
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")

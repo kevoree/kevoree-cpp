@@ -48,8 +48,8 @@ else()
   cmake_minimum_required(VERSION 2.8.12.1 FATAL_ERROR)
 endif()
 
-set(BoostVersion 1.55.0)
-set(BoostSHA1 cef9a0cc7084b1d639e06cd3bc34e4251524c840)
+set(BoostVersion 1.53.0)
+set(BoostSHA1 e6dd1b62ceed0a51add3dda6f3fc3ce0f636a7f3)
 
 
 if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Third_Parties/boost_${BoostVersion}/")

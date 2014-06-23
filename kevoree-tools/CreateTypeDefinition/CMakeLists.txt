@@ -31,8 +31,7 @@ ENDIF()
 
 
 
-TARGET_LINK_LIBRARIES(createType maven-resolver-cpp )
-TARGET_LINK_LIBRARIES(createType  boost_thread)
-TARGET_LINK_LIBRARIES(createType  boost_system)
-TARGET_LINK_LIBRARIES(createType  boost_random)
-TARGET_LINK_LIBRARIES(createType boost_regex)
+TARGET_LINK_LIBRARIES(createType  boost_thread-mt)
+TARGET_LINK_LIBRARIES(createType  boost_system-mt)
+TARGET_LINK_LIBRARIES(createType  boost_random-mt)
+TARGET_LINK_LIBRARIES(createType boost_regex-mt)

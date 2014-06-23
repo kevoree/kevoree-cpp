@@ -17,6 +17,9 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/CMakeMod
 
 include(add_boost) 
 
+message(boost_ ${CMAKE_CURRENT_SOURCE_DIR}/Third_Parties/boost_${BoostVersion}/)
+set(BOOST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/Third_Parties/boost_${BoostVersion}/)
+   
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
@@ -29,67 +32,11 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 endif()
 
 
-if("${CMAKE_GENERATOR}" MATCHES "(Win64|IA64)")
-    set(arch_hint "x64")
-  elseif("${CMAKE_GENERATOR}" MATCHES "ARM")
-    set(arch_hint "ARM")
-  elseif("${CMAKE_SIZEOF_VOID_P}" STREQUAL "8")
-    set(arch_hint "x64")
-  elseif("$ENV{LIB}" MATCHES "(amd64|ia64)")
-    set(arch_hint "x64")
-  endif()
-
-if(NOT arch_hint)
-   set(arch_hint "x86")
-   set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/thirdparties/boost_elf32-i386/)
-   set(BOOST_FILE boost_elf32-i386)	
- endif()
-if(arch_hint MATCHES "ARM")
-     set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/thirdparties/boost_elf32-arm/)
-     set(BOOST_FILE boost_elf32-arm)	
- endif() 
-if(arch_hint MATCHES "x64")
-     set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/thirdparties/boost_efl64-x64/)
-     set(BOOST_FILE boost_efl64-x64)
-endif()      
-
-if(arch_hint MATCHES "Yun")
-     set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/thirdparties/boost_Yun/)
-     set(BOOST_FILE boost_Yun)
-endif()      
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-      set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/thirdparties/boost_x64_osx/)
-      set(BOOST_FILE boost_x64_osx)	
-endif()  
-
- 
- 
-if(ANDROID)
- set(arch_hint "ARM")
-#jni is available by default on android
-#find_package(JNI REQUIRED)
-#include_directories(${JNI_INCLUDE_DIRS})
-set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/thirdparties/boost_android_r8e/)
-set(BOOST_FILE boost_android_r8e)	
-set(BOOST_INCLUDEDIR ${CMAKE_SOURCE_DIR}/thirdparties/boost_android_r8e/)
-set(ANDROID_PACKAGE_NAME "org.kevoreecpp.runtime")
-set(android_target "android-9")
-endif()
-
 message("Current OS	         : ${CMAKE_SYSTEM_NAME}")
 message("Current Architecture: ${CMAKE_GENERATOR}")
 message("Target  Architecture: ${arch_hint}")
-message("Boost: ${BOOST_ROOT}")
-message("${ENABLE_CXX11}")
 
- IF(NOT EXISTS "${BOOST_ROOT}")
-            message("Downloading boost for ${arch_hint}")
-			execute_process(COMMAND curl -OL https://github.com/Jean-Emile/boost-extra/raw/master/${BOOST_FILE}.tar.gz )
-			execute_process(COMMAND tar xvf ${BOOST_FILE}.tar.gz)
-			execute_process(COMMAND mkdir thirdparties/)
-			execute_process(COMMAND mv  ${BOOST_FILE}/ thirdparties/)
-			execute_process(COMMAND rm  ${BOOST_FILE}.tar.gz)
- ENDIF()
+message("${ENABLE_CXX11}")
 
 
 set(SRC_KEVOREE_CORE 						kevoree-core)
