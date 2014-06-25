@@ -14,7 +14,6 @@ add_definitions(-DENABLE_LOGGER)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/")
 
-
 include(add_boost) 
 
 message(boost_ ${CMAKE_CURRENT_SOURCE_DIR}/Third_Parties/boost_${BoostVersion})
@@ -35,13 +34,14 @@ IF(APPLE)
  
     SET(ENABLELIBC "-stdlib=libc++")
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ENABLELIBC}")
-     
+  
 endif()
 
 
 message("Current OS	         : ${CMAKE_SYSTEM_NAME}")
 message("Current Architecture: ${CMAKE_GENERATOR}")
 message("Target  Architecture: ${arch_hint}")
+message("Compiler            : ${CMAKE_CXX_COMPILER}")
 
 message("${ENABLELIBC}")
 
@@ -71,19 +71,19 @@ IF(NOT EXISTS "${SRC_KEVOREE_MODEL}")
 ENDIF()
 
 
-
 add_subdirectory (${SRC_MAVEN_RESOLVER}/)
-
 add_subdirectory (${SRC_KEVOREE_CORE}/)
+add_subdirectory (${SRC_KEVOREE_LIBRARY}/)
 add_subdirectory (${SRC_KEVOREE_TOOLS}/)
-add_subdirectory (${SRC_KEVOREE_PLATFORM}/)
+
+
 if(PRAGMA_PLUGIN MATCHES "TRUE")
 message("Compile Pragma plugin")
 add_subdirectory (${SRC_KEVOREE_CXX_PLUGIN}/)
 ENDIF()
 add_subdirectory (${SRC_KEVOREE_HTTPCLIENT}/)
 
-add_subdirectory (${SRC_KEVOREE_LIBRARY}/)
+
 if(NOT ANDROID)
 add_subdirectory (${SRC_KEVOREE_TESTS}/)
 ENDIF()
