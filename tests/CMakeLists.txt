@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 2.8)
 project(tests)
 
+
+include_directories(${BOOST_ROOT}/include)
+link_directories(${BOOST_ROOT}/lib)
 set(KEVOREEROOT ../)
 set(SRC_KEVOREE_CORE  ${KEVOREEROOT}/kevoree-core)
 set(SRC_MICROFRAMEWORK ${SRC_KEVOREE_CORE}/model/)
