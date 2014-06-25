@@ -75,13 +75,13 @@ add_subdirectory (${SRC_MAVEN_RESOLVER}/)
 add_subdirectory (${SRC_KEVOREE_CORE}/)
 add_subdirectory (${SRC_KEVOREE_LIBRARY}/)
 add_subdirectory (${SRC_KEVOREE_TOOLS}/)
-
+add_subdirectory (${SRC_KEVOREE_PLATFORM}/)
 
 if(PRAGMA_PLUGIN MATCHES "TRUE")
 message("Compile Pragma plugin")
 add_subdirectory (${SRC_KEVOREE_CXX_PLUGIN}/)
 ENDIF()
-add_subdirectory (${SRC_KEVOREE_HTTPCLIENT}/)
+
 
 
 if(NOT ANDROID)

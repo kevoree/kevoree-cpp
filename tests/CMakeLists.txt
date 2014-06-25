@@ -27,11 +27,15 @@ add_executable(
         src/run_tests.cpp
         ${files_tests}
 )
-TARGET_LINK_LIBRARIES(run_tests ${LIBRARY_OUTPUT_PATH}/libkevoree-model-dynamic.so)
+
+
+TARGET_LINK_LIBRARIES(run_tests 	kevoree-tools)
+TARGET_LINK_LIBRARIES(run_tests  kevoree-core-impl)
+TARGET_LINK_LIBRARIES(run_tests  kevoree-model-dynamic)
 TARGET_LINK_LIBRARIES(run_tests waxeye)
 
 
-TARGET_LINK_LIBRARIES(run_tests rt)
+#TARGET_LINK_LIBRARIES(run_tests rt)
 TARGET_LINK_LIBRARIES(run_tests cppunit)
 
 ADD_CUSTOM_TARGET(test

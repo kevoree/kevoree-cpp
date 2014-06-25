@@ -3,7 +3,7 @@ project(createtypedef)
 
 include_directories(${BOOST_ROOT}/include)
 link_directories(${BOOST_ROOT}/lib)
-message("${BOOST_ROOT}")
+
 include_directories(.)
 include_directories(../)
 include_directories(../kevoree-core/model/)
@@ -17,6 +17,7 @@ add_executable(
         createType
         ${files}
 )
+
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 TARGET_LINK_LIBRARIES(createType 	${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
 TARGET_LINK_LIBRARIES(createType  -Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-core-impl.a  -Wl,-no-whole-archive)
@@ -35,3 +36,4 @@ TARGET_LINK_LIBRARIES(createType  boost_thread-mt)
 TARGET_LINK_LIBRARIES(createType  boost_system-mt)
 TARGET_LINK_LIBRARIES(createType  boost_random-mt)
 TARGET_LINK_LIBRARIES(createType boost_regex-mt)
+TARGET_LINK_LIBRARIES(createType maven-resolver-cpp )

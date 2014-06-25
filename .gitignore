@@ -17,3 +17,4 @@
 /Third_Parties/
 /thirdparties/
 /build/
+*.DS_Store

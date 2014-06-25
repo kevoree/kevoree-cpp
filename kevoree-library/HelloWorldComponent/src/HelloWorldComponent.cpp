@@ -1,10 +1,6 @@
 #include "HelloWorldComponent.h"
 
-#include <network/http/impl/BoostHTTPClient.h>
-#include <network/http/api/HTTPRequest.h>
-#include <boost/thread.hpp>
 
-using namespace network::http::impl;
 
 // todo generate
 extern "C"{  
