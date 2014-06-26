@@ -29,6 +29,6 @@ public:
 	void testKmfTraces();
 	void testKmfSerializer();
 	void testKmfCompare();
-};
 
+};
 #endif /* KMFCPPTEST_H_ */

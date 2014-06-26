@@ -1,11 +1,14 @@
 /*
- * KmfCppTest.cpp
+ * DebugBootstrapTest.h
  *
- *  Created on: 8 janv. 2014
- *      Author: jed
+ *  Created on: 26 juin 2014
+ *      Author: Aymeric
  */
 
-#include "KmfCppTest.h"
+
+
+#include "DebugBootstrapTest.h"
+
 
 #include <microframework/api/trace/DefaultTraceConverter.h>
 #include <microframework/api/json/JSONModelLoader.h>
@@ -22,82 +25,20 @@
 #include <string>
 #include <microframework/api/trace/TraceSequence.h>
 
-CPPUNIT_TEST_SUITE_REGISTRATION( KmfCppTest );
+CPPUNIT_TEST_SUITE_REGISTRATION( DebugBootstrapTest );
 
-KmfCppTest::KmfCppTest(){
+DebugBootstrapTest::DebugBootstrapTest(){
+
+
+}
+
+DebugBootstrapTest::~DebugBootstrapTest(){
 
 
 }
 
-KmfCppTest::~KmfCppTest(){
 
-
-}
-void KmfCppTest::testKmfFactory(){
-	DefaultkevoreeFactory factory;
-	KMFContainer *c = factory.create("org.kevoree.ContainerRoot");
-	CPPUNIT_ASSERT(c != NULL);
-	c = factory.create("org.kevoree.ContainerNode");
-	CPPUNIT_ASSERT(c != NULL);
-
-
-
-}
-void KmfCppTest::testKmfTraces(){
-	ModelTrace *model_trace = new ModelAddTrace("","nodes","nodes[server-node]","org.kevoree.ContainerNode");
-	// todo
-
-}
-void KmfCppTest::testKmfLoader()
-{
-	DefaultkevoreeFactory factory;
-	JSONModelLoader loader;
-
-	loader.setFactory(&factory);
-	ifstream myfile;
-	myfile.open ("model1.json");
-	if(!myfile){
-		cout << "no file trace" << endl;
-	}
-	CPPUNIT_ASSERT(myfile != NULL);
-	ContainerRoot *model = (ContainerRoot*)loader.loadModelFromStream(myfile)->front();
-
-	CPPUNIT_ASSERT(model != NULL);
-	CPPUNIT_ASSERT(model->nodes.size() ==1);
-	CPPUNIT_ASSERT(model->groups.size() ==2);
-
-
-	CPPUNIT_ASSERT(	model->findByPath("nodes[node0]") != NULL);
-	ContainerNode *node = (ContainerNode*)model->findByPath("nodes[node0]");
-
-	CPPUNIT_ASSERT(	node->name.compare("node0")  == 0);
-
-	delete model;
-}
-
-
-void KmfCppTest::testKmfSerializer(){
-
-	DeployUnit *d =new DeployUnit();
-	d->name = "CPPNodeType";
-	d->groupName = "org.kevoree.library";
-	d->version = "1.0";
-	d->type ="elf32-i386";
-
-	DeployUnit *d2 =new DeployUnit();
-	d2->name = "CPPNodeType";
-	d2->groupName = "org.kevoree.library";
-	d2->version = "1.0";
-	d2->type ="elf32-i386";
-
-	JSONModelSerializer ser;
-	CPPUNIT_ASSERT( ser.serialize(d).compare(ser.serialize(d2)) == 0);
-
-
-
-
-}
-void KmfCppTest::testKmfCompare(){
+void DebugBootstrapTest::testBug(){
 
 	DefaultkevoreeFactory factory;
 	ContainerRoot   *model = factory.createContainerRoot();
@@ -205,7 +146,7 @@ void KmfCppTest::testKmfCompare(){
 	TraceSequence *sequencemerge = compare->merge(model,model);
 
 	TraceSequence *sequencediff2 = compare->diff(model2,model);
-	//std::cout << sequencediff2->exportToString() << std::endl;
+	std::cout << sequencediff2->exportToString() << std::endl;
 
 	CPPUNIT_ASSERT(sequencediff2->traces.size()  != 0);
 	CPPUNIT_ASSERT(sequencediff->traces.size()  == 0);
