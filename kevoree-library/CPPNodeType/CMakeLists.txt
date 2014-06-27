@@ -12,7 +12,7 @@ file(GLOB_RECURSE cppnodetype_library_files src/*)
 ADD_LIBRARY(kevoree-CPPNode  SHARED    ${cppnodetype_library_files} )
 TARGET_LINK_LIBRARIES(kevoree-CPPNode  boost_thread-mt)
 TARGET_LINK_LIBRARIES(kevoree-CPPNode  boost_system-mt)
-TARGET_LINK_LIBRARIES(kevoree-CPPNode  kevoree-model-dynamic)
+#TARGET_LINK_LIBRARIES(kevoree-CPPNode  kevoree-model-dynamic)
 
 
 #IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")

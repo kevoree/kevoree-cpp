@@ -18,7 +18,6 @@ TARGET_LINK_LIBRARIES(websocketgroup boost_system-mt)
 TARGET_LINK_LIBRARIES(websocketgroup boost_random-mt)
 TARGET_LINK_LIBRARIES(websocketgroup boost_thread-mt)
 
-TARGET_LINK_LIBRARIES(websocketgroup  kevoree-model-dynamic)
 
 if(ANDROID)
 TARGET_LINK_LIBRARIES(websocketgroup  -Wl,-no-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-model-static.a -Wl,-no-whole-archive)
