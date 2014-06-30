@@ -4,8 +4,12 @@
  
  
 ##### Requirements:
-Install git and java if you do not have it yet. 
-CPP unit
+
+* Git 
+* Java
+* CPP unit
+
+
 #### Linux Ubuntu :
 Linux Debian Procedure should work on Ubuntu and similar distributions: install appropriate packages:
 ```sh
