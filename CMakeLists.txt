@@ -8,6 +8,7 @@ set(KEVOREE_CPP_VERSION ${KEVOREE_CPP_VERSION_MAJOR}.${KEVOREE_CPP_VERSION_MINOR
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -stdlib=libstdc++ -Wall -pedantic")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -stdlib=libstdc++  -Wall -pedantic")
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build)
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build)
 
 set(PRAGMA_PLUGIN "FALSE")
 add_definitions(-DENABLE_LOGGER)
@@ -61,6 +62,8 @@ set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}")
 
 IF(NOT EXISTS "${SRC_MAVEN_RESOLVER}" )
  execute_process(COMMAND git clone "https://github.com/Jean-Emile/maven-resolver-cpp.git")
+ELSE()
+ execute_process(COMMAND cd maven-resolver-cpp & git pull)
 ENDIF()
 
 IF(NOT EXISTS "${SRC_KEVOREE_MODEL}")

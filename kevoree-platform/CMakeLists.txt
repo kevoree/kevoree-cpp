@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project(kevoree-platform)
 
-
-
 include_directories(${BOOST_ROOT}/include)
 link_directories(${BOOST_ROOT}/lib)
 message("${BOOST_ROOT}")
@@ -21,19 +19,23 @@ add_executable(
         standalone/main.cpp
         ${kevoree-platform_files}
 )
+
+
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-TARGET_LINK_LIBRARIES(main 	${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
-TARGET_LINK_LIBRARIES(main  -Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-core-impl.a  -Wl,-no-whole-archive)
-TARGET_LINK_LIBRARIES(main  -Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-model-static.a -Wl,-no-whole-archive)
+TARGET_LINK_LIBRARIES(main 	-Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
+TARGET_LINK_LIBRARIES(main  -Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-core-impl.a -Wl,-no-whole-archive)
+TARGET_LINK_LIBRARIES(main  -Wl,-whole-archive kevoree-model-static -Wl,-no-whole-archive)
+TARGET_LINK_LIBRARIES(main rt)
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 TARGET_LINK_LIBRARIES(main 	${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
 TARGET_LINK_LIBRARIES(main  -Wl,-all_load ${LIBRARY_OUTPUT_PATH}/libkevoree-core-impl.a)
-TARGET_LINK_LIBRARIES(main  -Wl,-all_load ${LIBRARY_OUTPUT_PATH}/libkevoree-model-static.a)
+TARGET_LINK_LIBRARIES(main 	-Wl,-all_load ${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
 ENDIF()
 
-#TARGET_LINK_LIBRARIES(main  -Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-kevscript-static.a -Wl,-no-whole-archive)
+
+
 
 
 TARGET_LINK_LIBRARIES(main maven-resolver-cpp )
@@ -43,23 +45,7 @@ TARGET_LINK_LIBRARIES(main  boost_random-mt)
 TARGET_LINK_LIBRARIES(main  boost_program_options-mt)
 TARGET_LINK_LIBRARIES(main boost_regex-mt)
 TARGET_LINK_LIBRARIES(main dl)
-
-
-
-
-
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-
-if(NOT ANDROID)
-	TARGET_LINK_LIBRARIES(main rt)
-	TARGET_LINK_LIBRARIES(main pthread)
-ENDIF()
-
-ENDIF()
-
-
-
-
+TARGET_LINK_LIBRARIES(main pthread)
 
 
 
