@@ -15,12 +15,7 @@ Linux Debian Procedure should work on Ubuntu and similar distributions: install 
 ```sh
 sudo apt-get install cmake make gcc g++ git ant wget curl libcppunit-doc libcppunit-dev
 ```
-Cross Compile Raspberry Pi http://elinux.org/RPi_Kernel_Compilation
-```sh
-sudo apt-get install gcc-arm-linux-gnueabi make ncurses-dev
-```
 
- 
 ### Getting started
 ```sh
 git clone https://github.com/kevoree/kevoree-cpp.git
