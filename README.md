@@ -9,6 +9,9 @@
 * Java
 * CPP unit
 
+##### Requirements for MAC OS :
+* clang
+* Xcode
 
 #### Linux Ubuntu :
 Linux Debian Procedure should work on Ubuntu and similar distributions: install appropriate packages:
