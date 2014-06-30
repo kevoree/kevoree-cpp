@@ -11,10 +11,16 @@
 * CPP unit
 * GCC
 * g++
+* Cmake
 
 #### Additional requirements for MAC OS :
 * Xcode
 * Clang llvm
+
+```brew install cppunit
+brew install cmake
+```
+
 
 ##### MacPort:
 ```sh
