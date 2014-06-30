@@ -17,7 +17,9 @@
 * Xcode
 * Clang llvm
 
-```brew install cppunit
+
+```
+brew install cppunit
 brew install cmake
 ```
 
