@@ -24,7 +24,6 @@ add_executable(
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 TARGET_LINK_LIBRARIES(main 	-Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
 TARGET_LINK_LIBRARIES(main  -Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-core-impl.a -Wl,-no-whole-archive)
-TARGET_LINK_LIBRARIES(main  -Wl,-whole-archive kevoree-model-static -Wl,-no-whole-archive)
 TARGET_LINK_LIBRARIES(main rt)
 ENDIF()
 
@@ -35,7 +34,7 @@ TARGET_LINK_LIBRARIES(main 	-Wl,-all_load ${LIBRARY_OUTPUT_PATH}/libkevoree-tool
 ENDIF()
 
 
-
+TARGET_LINK_LIBRARIES(main  kevoree-model-dynamic)
 
 
 TARGET_LINK_LIBRARIES(main maven-resolver-cpp )
