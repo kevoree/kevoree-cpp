@@ -35,8 +35,6 @@ ENDIF()
 
 
 TARGET_LINK_LIBRARIES(main  kevoree-model-dynamic)
-
-
 TARGET_LINK_LIBRARIES(main maven-resolver-cpp )
 TARGET_LINK_LIBRARIES(main  boost_thread-mt)
 TARGET_LINK_LIBRARIES(main  boost_system-mt)
