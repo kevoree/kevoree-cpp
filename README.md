@@ -10,8 +10,19 @@
 * CPP unit
 
 ##### Requirements for MAC OS :
-* clang
 * Xcode
+
+##### Brew:
+`brew install cmake`
+ 
+##### MacPort:
+```sh
+sudo port install cmake_modules
+sudo port install arm-none-eabi-gcc
+sudo port install arm-none-eabi-binutils
+clang-llvm 3.2
+```
+
 
 #### Linux Ubuntu :
 Linux Debian Procedure should work on Ubuntu and similar distributions: install appropriate packages:
