@@ -45,7 +45,7 @@ Download Eclipse.
 File > Import > C/C++ > Existing code as MakeFile Project > In existing code location select Kevoree-CPP directory that you've clone
  
 
-#### Compile   
+#### Compilation   
 ```sh
 cmake .
 make
