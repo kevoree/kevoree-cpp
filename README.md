@@ -3,18 +3,18 @@
  Continuous integration : http://jenkins.reacloud.com
  
  
-##### Requirements:
+### Requirements:
 
 * Git 
 * Java
 * CPP unit
+* GCC
+* g++
 
-##### Requirements for MAC OS :
+#### additional requirements for MAC OS :
 * Xcode
+* Clang llvm
 
-##### Brew:
-`brew install cmake`
- 
 ##### MacPort:
 ```sh
 sudo port install cmake_modules
@@ -27,7 +27,7 @@ clang-llvm 3.2
 #### Linux Ubuntu :
 Linux Debian Procedure should work on Ubuntu and similar distributions: install appropriate packages:
 ```sh
-sudo apt-get install cmake make gcc g++ git ant wget curl libcppunit-doc libcppunit-dev
+sudo apt-get install cmake make gcc g++ git wget curl libcppunit-doc libcppunit-dev
 ```
 
 ### Getting started
