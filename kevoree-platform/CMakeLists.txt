@@ -13,6 +13,8 @@ include_directories(../maven-resolver-cpp/src)
 file(GLOB_RECURSE kevoree-platform_files KevoreeBootStrap/*)
 
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin)
+
 #COMPILE MAIN
 add_executable(
         main
