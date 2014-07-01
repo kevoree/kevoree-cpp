@@ -48,16 +48,19 @@ git clone https://github.com/kevoree/kevoree-cpp.git
 cd kevoree-cpp
 ```
 
-#### Setting up the IDE:
-Download Eclipse.
-File > Import > C/C++ > Existing code as MakeFile Project > In existing code location select Kevoree-CPP directory that you've clone
- 
 
 #### Compilation   
 ```sh
 cmake .
 make
 ./kevoree-platform/main
+
+
+
+#### Setting up the IDE:
+Download Eclipse.
+File > Import > C/C++ > Existing code as MakeFile Project > In existing code location select Kevoree-CPP directory that you've clone
+ 
 ```
  
 
