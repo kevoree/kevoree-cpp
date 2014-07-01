@@ -1,2 +1,4 @@
 /CMakeFiles/
 /*.cmake
+/.idea/
+*.iml

@@ -12,8 +12,6 @@
 
 
 #pragma NodeType "CPPNode"
-#pragma GroupName "org.kevoree.library"
-#pragma Version "1.0"
 class CPPNodeType : public AbstractNodeType
 {
 public:

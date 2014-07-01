@@ -1,3 +1,5 @@
 /CMakeFiles/
 /*.cmake
 /Makefile
+*.xml~
+/target/
