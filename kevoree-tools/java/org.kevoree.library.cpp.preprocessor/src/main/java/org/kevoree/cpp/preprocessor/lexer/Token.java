@@ -10,8 +10,11 @@ public class Token {
     public enum  TokenType {
         PRAGMA,
         SOURCE,
-        VALUE
-        ,COMMA,END_OF_FILE
+        NodeType,
+        ComponentType,
+        Dictionary,
+        GroupType,
+        END_OF_FILE
     };
 
     TokenType type;

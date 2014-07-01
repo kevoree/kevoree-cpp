@@ -70,7 +70,7 @@ public class Lexer {
 
             if(isPragma())
             {
-                token.setType(Token.TokenType.PRAGMA);
+
                 while (isDone() != true && isSpace(c)!=true ) {
                     c = nextChar();
                 }
@@ -82,6 +82,22 @@ public class Lexer {
                 }while (isDone() != true && isSpace(c) != true);
                 token.setId(id);
 
+                if(id.toLowerCase().trim().equals("nodetype"))
+                {
+                    token.setType(Token.TokenType.NodeType);
+                }else  if(id.toLowerCase().trim().equals("grouptype"))
+                {
+                    token.setType(Token.TokenType.GroupType);
+                }else  if(id.toLowerCase().trim().equals("componenttype")){
+                    token.setType(Token.TokenType.ComponentType);
+                }else  if(id.toLowerCase().trim().equals("dictionary"))
+                {
+                    token.setType(Token.TokenType.Dictionary);
+                }else
+
+                {
+                    token.setType(Token.TokenType.PRAGMA);
+                }
                 String value="";
                 do
                 {

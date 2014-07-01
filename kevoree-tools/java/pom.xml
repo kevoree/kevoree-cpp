@@ -14,51 +14,32 @@
     </modules>
 
 
-    <repositories>
-        <repository>
-            <id>kevoree-oss</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>jetbrains-release</id>
-            <url>http://repository.jetbrains.com/all</url>
-        </repository>
-        <repository>
-            <id>kevoree-libs-release-local-daum</id>
-            <url>http://maven.kevoree.org/daum/release</url>
-        </repository>
 
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>jetbrains-release</id>
-            <url>http://repository.jetbrains.com/all</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>kevoree-oss.plugin</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>plugin.daum-github</id>
-            <url>http://maven.kevoree.org/daum/release</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>plugin.daum-snapshots</id>
-            <url>http://maven.kevoree.org/daum/snapshots</url>
-        </pluginRepository>
-    </pluginRepositories>
 
     <distributionManagement>
         <repository>
-            <id>maven2.daumdeploy.release</id>
-            <url>http://maven.kevoree.org/archiva/repository/daum/release</url>
+            <id>reacloud</id>
+            <url>http://maven.reacloud.com/repository/reacloud/release</url>
         </repository>
         <snapshotRepository>
-            <id>maven2.daumdeploy.snapshots</id>
-            <url>http://maven.kevoree.org/archiva/repository/daum/snapshots</url>
+            <id>reacloud</id>
+            <url>http://maven.reacloud.com/repository/reacloud/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
