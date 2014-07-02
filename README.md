@@ -51,12 +51,14 @@ cd kevoree-cpp
 
 #### Compilation   
 ```sh
-cmake .
+cmake -DCMAKE_BUILD_TYPE=Debug or cmake -DCMAKE_BUILD_TYPE=Release
 make
 ./kevoree-platform/main
+```
+ 
 
-
-
+```
+ 
 #### Setting up the IDE:
 Download Eclipse.
 File > Import > C/C++ > Existing code as MakeFile Project > In existing code location select Kevoree-CPP directory that you've clone
