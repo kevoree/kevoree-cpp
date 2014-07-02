@@ -21,7 +21,8 @@ add_executable(
         standalone/main.cpp
         ${kevoree-platform_files}
 )
-
+#set_target_properties(main PROPERTIES INSTALL_RPATH "@loader_path/../lib")
+install(TARGETS main DESTINATION ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin)
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 TARGET_LINK_LIBRARIES(main 	-Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
@@ -45,6 +46,8 @@ TARGET_LINK_LIBRARIES(main  boost_program_options-mt)
 TARGET_LINK_LIBRARIES(main boost_regex-mt)
 TARGET_LINK_LIBRARIES(main dl)
 TARGET_LINK_LIBRARIES(main pthread)
+
+
 
 
 
