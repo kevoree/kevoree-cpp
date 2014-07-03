@@ -1,11 +1,9 @@
 package org.kevoree.library.cpp.mavenplugin.utils;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by jed on 01/07/14.
@@ -32,7 +30,27 @@ public class PluginHelper {
 
         }
     }
+public static  void run(String... command){
+    ProcessBuilder builder = new ProcessBuilder(command);
+    builder.redirectErrorStream(true);
+    Map<String, String> environ = builder.environment();
 
+    final Process process;
+    try {
+        process = builder.start();
+
+        InputStream is = process.getInputStream();
+        InputStreamReader isr = new InputStreamReader(is);
+        BufferedReader br = new BufferedReader(isr);
+        String line;
+        while ((line = br.readLine()) != null) {
+            System.out.println(line);
+        }
+        System.out.println("Program terminated!");
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
     public static void writeFile(String path,String data) throws IOException
     {
         File file = new File(path.substring(0,path.lastIndexOf("/")));

@@ -114,6 +114,11 @@ public class AnnotationPreProcessorMojo extends AbstractMojo {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            PluginHelper.run("cmake",".");
+            PluginHelper.run("make");
+       //     PluginHelper.run("make");
+
         }
     }
 }
