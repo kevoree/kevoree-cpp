@@ -1,5 +1,7 @@
 #ifndef __KevoreeParDeployPhase_H
 #define __KevoreeParDeployPhase_H
+
+#include <microframework/api/utils/Logger.h>
 #include <kevoree-core/api/PrimitiveCommand.h>
 #include <list>
 

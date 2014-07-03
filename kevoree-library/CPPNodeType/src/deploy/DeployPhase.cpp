@@ -6,7 +6,7 @@ using namespace std;
 
 
 DeployPhase::DeployPhase(){
-	maxTimeout=10000;
+	maxTimeout=100000; // 10 secondes timeout
 }
 
 DeployPhase::~DeployPhase(){
@@ -46,7 +46,7 @@ void DeployPhase::rollback()
 			}
 			catch (exception& e)
 			{
-				cout << e.what() << '\n';
+				Logger::Write(Logger::ERROR,e.what());
 			}
 		}else 
 		{
