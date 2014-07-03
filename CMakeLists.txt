@@ -3,10 +3,8 @@ project(kevoree-cpp)
 set(KEVOREE_CPP_VERSION_MAJOR 0)
 set(KEVOREE_CPP_VERSION_MINOR 1)
 set(KEVOREE_CPP_VERSION ${KEVOREE_CPP_VERSION_MAJOR}.${KEVOREE_CPP_VERSION_MINOR})
-message("buildtyp")
-message(${CMAKE_BUILD_TYPE})
-if(${CMAKE_BUILD_TYPE} STREQUAL "")
-message("non")
+
+if(NOT EXISTS ${CMAKE_BUILD_TYPE})
 set(CMAKE_BUILD_TYPE Debug)
 endif()
 
