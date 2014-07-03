@@ -53,7 +53,7 @@ cd kevoree-cpp
 ```sh
 cmake -DCMAKE_BUILD_TYPE=Debug or cmake -DCMAKE_BUILD_TYPE=Release
 make
-./kevoree-platform/main
+./Debug/bin/main
 ```
  
 

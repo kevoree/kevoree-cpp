@@ -8,23 +8,18 @@
     <name>Kevoree CPP :: Library :: Root</name>
     <version>1.0-SNAPSHOT</version>
 
+    <parent>
+        <groupId>org.kevoree.cpp</groupId>
+        <artifactId>root</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
     <modules>
         <module>CPPNodeType</module>
         <module>HelloWorldComponent</module>
         <module>WebSocketGroup</module>
     </modules>
-
-
-    <distributionManagement>
-        <repository>
-            <id>reacloud</id>
-            <url>http://maven.reacloud.com/repository/reacloud/release</url>
-        </repository>
-        <snapshotRepository>
-            <id>reacloud</id>
-            <url>http://maven.reacloud.com/repository/reacloud/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
 
 
 

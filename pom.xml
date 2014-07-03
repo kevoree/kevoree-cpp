@@ -4,9 +4,50 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.kevoree.library</groupId>
-    <artifactId>preprocessor</artifactId>
+    <groupId>org.kevoree.cpp</groupId>
+    <artifactId>root</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <name>Kevoree CPP :: Root</name>
 
-    
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>kevoree-library</module>
+        <module>kevoree-tools/java</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>reacloud</id>
+            <url>http://maven.reacloud.com/repository/reacloud</url>
+        </repository>
+    </repositories>
+
+
+    <distributionManagement>
+        <repository>
+            <id>reacloud</id>
+            <url>http://maven.reacloud.com/repository/reacloud/release</url>
+        </repository>
+        <snapshotRepository>
+            <id>reacloud</id>
+            <url>http://maven.reacloud.com/repository/reacloud/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+
 </project>

@@ -6,7 +6,7 @@ set(plugin_pragma_path "${LIBRARY_OUTPUT_PATH}/libplugin-pragma.so")
 set(CMAKE_CXX_FLAGS " -fplugin=${plugin_pragma_path}  ${CMAKE_CXX_FLAGS}")
 ENDIF()
 
-set(repository "http://maven.reacloud.com/repository/reacloud")
+set(repository "http://maven.reacloud.com/repository/reacloud32")
 set(repositoryId "reacloud")
 
 set(KEVOREEROOT ../../)
