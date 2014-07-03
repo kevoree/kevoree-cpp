@@ -12,8 +12,7 @@ include_directories(../)
 
 
 
-file(GLOB_RECURSE INCS "*.h")
-file(COPY  ${INCS} DESTINATION ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/include)
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/kevoree-core DESTINATION ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/include FILES_MATCHING PATTERN "*.h")
 
 include_directories(${BOOST_ROOT}/include)
 link_directories(${BOOST_ROOT}/lib)
