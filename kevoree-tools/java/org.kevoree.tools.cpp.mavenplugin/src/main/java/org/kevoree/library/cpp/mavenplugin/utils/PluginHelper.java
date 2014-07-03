@@ -1,7 +1,6 @@
 package org.kevoree.library.cpp.mavenplugin.utils;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

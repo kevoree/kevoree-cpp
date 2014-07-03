@@ -11,11 +11,11 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>org.kevoree.tools.cpp</groupId>
-    <artifactId>mavenplugin</artifactId>
+    <groupId>org.kevoree.tools.cpp.maven.plugin</groupId>
+    <artifactId>generator-maven-plugin</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
-    <name>MavenPlugin</name>
+    <name>Kevoree CPP :: Tools :: MavenPlugin</name>
 
     <dependencies>
         <dependency>
@@ -27,14 +27,18 @@
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
-            <version>3.0.3</version>
+            <version>3.0.4</version>
         </dependency>
 
-
+        <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <version>3.3</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-core</artifactId>
-            <version>3.0.3</version>
+            <version>3.0.4</version>
         </dependency>
 
         <dependency>

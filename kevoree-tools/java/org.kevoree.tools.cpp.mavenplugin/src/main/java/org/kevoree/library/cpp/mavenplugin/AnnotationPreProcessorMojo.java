@@ -24,6 +24,7 @@ import java.util.List;
  * @author jedartois
  * @author <a href="mailto:jedartois@gmail.com">Jean-Emile DARTOIS</a>
  * @version $Id$
+ * @execute phase="compile"
  * @goal generate
  * @phase generate-sources
  * @requiresDependencyResolution compile
@@ -53,6 +54,8 @@ public class AnnotationPreProcessorMojo extends AbstractMojo {
      */
 
     protected MavenProject project;
+
+
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
 
@@ -115,9 +118,6 @@ public class AnnotationPreProcessorMojo extends AbstractMojo {
                 e.printStackTrace();
             }
 
-            PluginHelper.run("cmake",".");
-            PluginHelper.run("make");
-       //     PluginHelper.run("make");
 
         }
     }
