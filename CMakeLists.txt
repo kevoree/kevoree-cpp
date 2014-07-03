@@ -3,6 +3,12 @@ project(kevoree-cpp)
 set(KEVOREE_CPP_VERSION_MAJOR 0)
 set(KEVOREE_CPP_VERSION_MINOR 1)
 set(KEVOREE_CPP_VERSION ${KEVOREE_CPP_VERSION_MAJOR}.${KEVOREE_CPP_VERSION_MINOR})
+message("buildtyp")
+message(${CMAKE_BUILD_TYPE})
+if(${CMAKE_BUILD_TYPE} STREQUAL "")
+message("non")
+set(CMAKE_BUILD_TYPE Debug)
+endif()
 
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -stdlib=libstdc++ -Wall -pedantic")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -stdlib=libstdc++  -Wall -pedantic")
@@ -29,7 +35,7 @@ SET(CMAKE_SKIP_BUILD_RPATH  FALSE)
 # (but later on when installing)
 #SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE) 
 set(CMAKE_MACOSX_RPATH 1)
-SET(CMAKE_INSTALL_RPATH "$ORIGIN/../lib")
+SET(CMAKE_INSTALL_RPATH "@executable_path/../lib/")
 
 # add the automatically determined parts of the RPATH
 # which point to directories outside the build tree to the install RPATH
@@ -81,7 +87,11 @@ set(SRC_KEVOREE_TESTS 						tests)
 set(SRC_MAVEN_RESOLVER maven-resolver-cpp)
 set(URL_MODEL_GENERATOR "https://github.com/Jean-Emile/boost-extra/raw/master/org.kevoree.modeling.cpp.generator-1.1-20140321.171353-2.jar")
 
+if(${CMAKE_BUILD_TYPE} STREQUAL "Release")
+set(CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS}")
+else()
 set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}")
+endif()
 
 IF(NOT EXISTS "${SRC_MAVEN_RESOLVER}" )
  execute_process(COMMAND git clone "https://github.com/Jean-Emile/maven-resolver-cpp.git")
@@ -109,11 +119,14 @@ add_subdirectory (${SRC_KEVOREE_CXX_PLUGIN}/)
 ENDIF()
 
 
-
 if(NOT ANDROID)
 add_subdirectory (${SRC_KEVOREE_TESTS}/)
 ENDIF()
 
 
+if(APPLE)
+ execute_process(COMMAND install_name_tool -change @rpath/libkevoree-model-dynamic.dylib @executable_path/../lib/libkevoree-model-dynamic.dylib ${CMAKE_BUILD_TYPE}/bin/main)
+endif(APPLE)
 
+unset(${CMAKE_BUILD_TYPE})
 
