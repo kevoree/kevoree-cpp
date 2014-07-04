@@ -290,7 +290,7 @@ void defaultbootstrapmodel(std::string nodename){
 
 
 	Repository *repo = factory.createRepository();
-	repo->url = "http://maven.reacloud.com/repository/reacloud32";
+	repo->url = "http://maven.reacloud.com/repository/reacloud";
 
 	model->addrepositories(repo);
 
