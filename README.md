@@ -73,11 +73,12 @@ make install
 ```
 
 Parameters: 
-*-h: help
-*-n: node name
-*-v: version
-*-m: model
-*-l: debug level (0: Debug, 1: info, 2: Error)
+
+* -h: help
+* -n: node name
+* -v: version
+* -m: model
+* -l: debug level (0: Debug, 1: info, 2: Error)
  
 
 
