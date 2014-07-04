@@ -47,23 +47,37 @@ sudo apt-get install cmake make gcc g++ git wget curl libcppunit-doc libcppunit-
 git clone https://github.com/kevoree/kevoree-cpp.git
 cd kevoree-cpp
 ```
+#### Setting up the IDE:
+Download Eclipse.
 
+File > Import > C/C++ > Existing code as MakeFile Project > In existing code location select Kevoree-CPP directory that you've clone
+ 
 
 #### Compilation   
+#####Debug:
 ```sh
-cmake -DCMAKE_BUILD_TYPE=Debug or cmake -DCMAKE_BUILD_TYPE=Release
+cmake -DCMAKE_BUILD_TYPE=Debug 
 make
 ./Debug/bin/main
 ```
- 
+#####Release:
+```sh
+cmake cmake -DCMAKE_BUILD_TYPE=Release
+make install
+./Release/bin/main
+```
 
+####Start Kevoree
+ ```
+./Release/bin/main
 ```
- 
-#### Setting up the IDE:
-Download Eclipse.
-File > Import > C/C++ > Existing code as MakeFile Project > In existing code location select Kevoree-CPP directory that you've clone
- 
-```
+
+Parameters: 
+*-h: help
+*-n: node name
+*-v: version
+*-m: model
+*-l: debug level (0: Debug, 1: info, 2: Error)
  
 
 
