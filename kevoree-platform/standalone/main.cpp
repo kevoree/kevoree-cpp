@@ -127,6 +127,8 @@ int main (int argc, char *argv[])
 
 
 	signal (SIGINT,sig_handler);
+	signal(SIGABRT, sig_handler);
+	signal(SIGTERM, sig_handler);
 	int exit=0;
 	clock_t start = clock();
 
