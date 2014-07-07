@@ -12,7 +12,7 @@ endif()
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build)
 #set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build)
 
-set(PRAGMA_PLUGIN "FALSE")
+
 add_definitions(-DENABLE_LOGGER)
 
 # when building, don't use the install RPATH already
@@ -110,11 +110,6 @@ add_subdirectory (${SRC_KEVOREE_LIBRARY}/)
 add_subdirectory (${SRC_KEVOREE_TOOLS}/)
 add_subdirectory (${SRC_KEVOREE_PLATFORM}/)
 
-if(PRAGMA_PLUGIN MATCHES "TRUE")
-message("Compile Pragma plugin")
-add_subdirectory (${SRC_KEVOREE_CXX_PLUGIN}/)
-ENDIF()
-
 
 if(NOT ANDROID)
 add_subdirectory (${SRC_KEVOREE_TESTS}/)
@@ -125,7 +120,10 @@ if(APPLE)
  execute_process(COMMAND install_name_tool -change @rpath/libkevoree-model-dynamic.dylib @executable_path/../lib/libkevoree-model-dynamic.dylib ${CMAKE_BUILD_TYPE}/bin/main)
 endif(APPLE)
 
-unset(${CMAKE_BUILD_TYPE})
+
+
+#************************************** INSTALL ****************************************************
+
 install(DIRECTORY ${BOOST_ROOT}/include/boost DESTINATION  ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/include FILES_MATCHING PATTERN "*.hpp")
 install(DIRECTORY ${BOOST_ROOT}/lib/ DESTINATION  ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib FILES_MATCHING PATTERN "*.a")
 

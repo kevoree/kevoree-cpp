@@ -22,7 +22,7 @@ add_executable(
         ${kevoree-platform_files}
 )
 #set_target_properties(main PROPERTIES INSTALL_RPATH "@loader_path/../lib")
-install(TARGETS main DESTINATION ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin)
+#install(TARGETS main DESTINATION ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin)
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 TARGET_LINK_LIBRARIES(main 	-Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
