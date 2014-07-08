@@ -10,7 +10,6 @@
 /main
 /*.log
 /tester/
-/thirdparty/
 /download/
 /bin/
 /boost_1_53_0_GNU_4_8_2/
@@ -20,3 +19,12 @@
 *.DS_Store
 /Debug/
 *.txt
+*.o
+*.marks
+*.make
+Makefile
+*.cmake
+*.internal
+*.includecache
+run_tests
+cppunit-report.xml
