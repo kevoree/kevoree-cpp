@@ -17,20 +17,15 @@ add_executable(
         createType
         ${files}
 )
+TARGET_LINK_LIBRARIES(createType  kevoree-model-dynamic)
+TARGET_LINK_LIBRARIES(createType 	${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-TARGET_LINK_LIBRARIES(createType 	${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
 TARGET_LINK_LIBRARIES(createType  -Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-core-impl.a  -Wl,-no-whole-archive)
-TARGET_LINK_LIBRARIES(createType  -Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-model-static.a -Wl,-no-whole-archive)
 ENDIF()
-
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-TARGET_LINK_LIBRARIES(createType 	${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
 TARGET_LINK_LIBRARIES(createType  -Wl,-all_load ${LIBRARY_OUTPUT_PATH}/libkevoree-core-impl.a)
-TARGET_LINK_LIBRARIES(createType  -Wl,-all_load ${LIBRARY_OUTPUT_PATH}/libkevoree-model-static.a)
 ENDIF()
-
-
 
 TARGET_LINK_LIBRARIES(createType  boost_thread-mt)
 TARGET_LINK_LIBRARIES(createType  boost_system-mt)

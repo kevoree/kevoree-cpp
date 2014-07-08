@@ -146,7 +146,7 @@ void DebugBootstrapTest::testBug(){
 	TraceSequence *sequencemerge = compare->merge(model,model);
 
 	TraceSequence *sequencediff2 = compare->diff(model2,model);
-	std::cout << sequencediff2->exportToString() << std::endl;
+//	std::cout << sequencediff2->exportToString() << std::endl;
 
 	CPPUNIT_ASSERT(sequencediff2->traces.size()  != 0);
 	CPPUNIT_ASSERT(sequencediff->traces.size()  == 0);

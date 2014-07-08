@@ -24,7 +24,7 @@ SET(COMMON_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/libs")
 
 
 
-file(GLOB_RECURSE files_tests src/tests/*.cpp)
+file(GLOB_RECURSE files_tests src/tests/*)
 add_executable(
         run_tests
         src/run_tests.cpp
@@ -36,6 +36,8 @@ TARGET_LINK_LIBRARIES(run_tests kevoree-tools)
 TARGET_LINK_LIBRARIES(run_tests kevoree-core-impl)
 TARGET_LINK_LIBRARIES(run_tests kevoree-model-dynamic)
 TARGET_LINK_LIBRARIES(run_tests waxeye)
+TARGET_LINK_LIBRARIES(run_tests kevscript)
+
 
 
 #TARGET_LINK_LIBRARIES(run_tests rt)
