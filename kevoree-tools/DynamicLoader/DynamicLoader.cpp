@@ -287,6 +287,9 @@ bool is_ELF(Elf32_Ehdr eh)
 		return 0;
 	}
 }
+#ifdef __MACH__
+// TODO
+#else
 
 int DynamicLoader::read_elf_header(const char *elf_file){
 
@@ -537,11 +540,18 @@ void DynamicLoader::print_elf_header(Elf32_Ehdr elf_header)
 	printf("\n");	End of ELF header */
 
 }
+
+#endif
 void * DynamicLoader::soloader_load(std::string libpath)
 {
 	read_elf_header(libpath.c_str());
 	void* handle = dlopen(libpath.c_str(),RTLD_LAZY|RTLD_GLOBAL);
+
+#ifdef __MACH__
+	// TODO
+#else
 	read_elf_header(libpath.c_str());
+#endif
 	if (!handle)
 	{
 

@@ -20,6 +20,9 @@
 #include <string>
 #include <dlfcn.h>
 
+    #ifdef __MACH__
+ // TODO
+    #else
 #include <elf.h>
 #include <stdio.h>
 #include <assert.h>
@@ -29,6 +32,8 @@
 #include <string.h>
 #include <errno.h>
 #include <stdbool.h>
+    #endif
+
 
 class DynamicLoader : public IDynamicLoader
 {
@@ -53,8 +58,14 @@ private:
 	void * soloader_load(std::string type);
 	AbstractTypeDefinition * newInstance(void *handle);
 	void destroyInstance(void *handler,AbstractTypeDefinition *instance);
+
+#ifdef __MACH__
+// TODO
+#else
 	int read_elf_header(const char *elf_file);
 	void print_elf_header(Elf32_Ehdr elf_header);
+#endif
+
 
 	map<string, void*>	deploysUnits;
 	map<string, void*>	instances;
