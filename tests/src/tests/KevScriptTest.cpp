@@ -17,17 +17,18 @@ extern "C" {
 
 CPPUNIT_TEST_SUITE_REGISTRATION( KevScriptTest );
 
-KevScriptTest::KevScriptTest() {
+ KevScriptTest::KevScriptTest() {
 	CPPUNIT_ASSERT(test() == 0);
 
 
 }
 
+
 KevScriptTest::~KevScriptTest() {
 
 }
 
-void KevScriptTest::testkev() {
-
+void KevScriptTest::testkevAllModel() {
+	CPPUNIT_ASSERT(readAllmodel() == 0);
 
 }

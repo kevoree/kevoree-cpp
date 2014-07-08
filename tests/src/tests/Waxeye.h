@@ -12,5 +12,7 @@ char* ReadFile(char *filename);
 
 int test();
 
+int readAllmodel();
 
+int readModel();
 #endif

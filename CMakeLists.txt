@@ -98,7 +98,7 @@ ENDIF()
 
 
 #************************************** INSTALL ****************************************************
-
+if(EXISTS ${BOOST})
 install(DIRECTORY ${BOOST_ROOT}/include/boost DESTINATION  ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/include FILES_MATCHING PATTERN "*.hpp")
 install(DIRECTORY ${BOOST_ROOT}/lib/ DESTINATION  ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib FILES_MATCHING PATTERN "*.a")
-
+endif()

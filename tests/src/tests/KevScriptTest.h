@@ -12,13 +12,13 @@
 
 class KevScriptTest : public CppUnit::TestFixture {
 	CPPUNIT_TEST_SUITE( KevScriptTest );
-	CPPUNIT_TEST(testkev);
+	CPPUNIT_TEST(testkevAllModel);
 	CPPUNIT_TEST_SUITE_END();
 
 public:
 	KevScriptTest();
 	virtual ~KevScriptTest();
-	void testkev();
+	void testkevAllModel();
 };
 
 #endif /* KEVSCRIPTTEST_H_ */
