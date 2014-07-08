@@ -62,7 +62,7 @@ make
 ```
 #####Release:
 ```sh
-cmake cmake -DCMAKE_BUILD_TYPE=Release
+cmake -DCMAKE_BUILD_TYPE=Release
 make install
 ./Release/bin/main
 ```
