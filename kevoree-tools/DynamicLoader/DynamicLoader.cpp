@@ -544,7 +544,7 @@ void DynamicLoader::print_elf_header(Elf32_Ehdr elf_header)
 #endif
 void * DynamicLoader::soloader_load(std::string libpath)
 {
-	read_elf_header(libpath.c_str());
+
 	void* handle = dlopen(libpath.c_str(),RTLD_LAZY|RTLD_GLOBAL);
 
 #ifdef __MACH__
