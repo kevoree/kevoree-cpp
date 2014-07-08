@@ -272,6 +272,10 @@ bool DynamicLoader::destroy_instance(Instance *i)
 
 	return true;
 }
+
+#ifdef __MACH__
+// TODO
+#else
 bool is_ELF(Elf32_Ehdr eh)
 {
 	/* ELF magic bytes are 0x7f,'E','L','F'
@@ -287,10 +291,6 @@ bool is_ELF(Elf32_Ehdr eh)
 		return 0;
 	}
 }
-#ifdef __MACH__
-// TODO
-#else
-
 int DynamicLoader::read_elf_header(const char *elf_file){
 
 	int32_t fd;
