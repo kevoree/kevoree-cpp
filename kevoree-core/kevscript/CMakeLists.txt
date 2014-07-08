@@ -2,7 +2,14 @@ cmake_minimum_required(VERSION 2.8)
 project(kevscript)
 
 
+set(KEVOREEROOT ../../)
+set(SRC_KEVOREE_CORE  ${KEVOREEROOT}/kevoree-core)
+set(SRC_MICROFRAMEWORK ${SRC_KEVOREE_CORE}/model/)
 
+
+
+include_directories(${KEVOREEROOT})
+include_directories(${SRC_MICROFRAMEWORK})
 
 include_directories(.)
 include_directories(src/)
