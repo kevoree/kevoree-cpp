@@ -60,13 +60,18 @@ cmake -DCMAKE_BUILD_TYPE=Debug
 make
 ./Debug/bin/main
 ```
-#####Release:
+#####Release with boost:
 ```sh
-cmake -DCMAKE_BUILD_TYPE=Release
+cmake -DBOOST=y -DCMAKE_BUILD_TYPE=Release
 make install
 ./Release/bin/main
 ```
-
+#####Release without boost:
+```sh
+cmake  -DCMAKE_BUILD_TYPE=Release
+make install
+./Release/bin/main
+```
 ####Start Kevoree
  ```
 ./Release/bin/main
