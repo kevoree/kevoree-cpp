@@ -22,22 +22,6 @@ SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
 # the RPATH to be used when installing
 SET(CMAKE_INSTALL_RPATH "")
 
-if(APPLE)
-#set(CMAKE_MACOSX_RPATH 1)
-#SET(CMAKE_INSTALL_RPATH  "./../lib") 
-# use, i.e. don't skip the full RPATH for the build tree
-SET(CMAKE_SKIP_BUILD_RPATH  FALSE)
-
-# when building, don't use the install RPATH already
-# (but later on when installing)
-#SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE) 
-set(CMAKE_MACOSX_RPATH 1)
-SET(CMAKE_INSTALL_RPATH "@executable_path/../lib/")
-
-# add the automatically determined parts of the RPATH
-# which point to directories outside the build tree to the install RPATH
-SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-endif(APPLE)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/")
 
@@ -57,12 +41,6 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ENABLE_CXX11}")
 endif()
 
-IF(APPLE)
- 
-    SET(ENABLELIBC "-stdlib=libc++")
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ENABLELIBC}")
-  
-endif()
 
 
 message("Current OS	         : ${CMAKE_SYSTEM_NAME}")
@@ -116,9 +94,6 @@ add_subdirectory (${SRC_KEVOREE_TESTS}/)
 ENDIF()
 
 
-if(APPLE)
- execute_process(COMMAND install_name_tool -change @rpath/libkevoree-model-dynamic.dylib @executable_path/../lib/libkevoree-model-dynamic.dylib ${CMAKE_BUILD_TYPE}/bin/main)
-endif(APPLE)
 
 
 
