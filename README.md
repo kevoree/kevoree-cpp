@@ -91,24 +91,26 @@ make install
 The Annotation API is made to provide a simple and flexible way to decorate your existing code to declare it as a component, channel, node or group.
 
 #### Components
-
+ ```
 #pragma ComponentType "ComponentName"
-
+ ```
 #### Channels
+ ```
 #pragma ChannelType "ChannelName"
-
+ ```
 #### GroupType
+ ```
 #pragma GroupType "WebSocketGroup"  
-
+ ```
 
 #### Nodes
-
+ ```
 #pragma NodeType "CPPNode"
-
+ ```
 #### Dictionnay
-
+ ```
 #pragma Dictionary "port" 
-
+ ```
 
 ###  Create your first component
  ```
