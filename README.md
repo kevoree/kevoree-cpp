@@ -1,12 +1,8 @@
 # KevC++
 
-The KevC++  project aims to offers runtime of kevoree for native application and helping you to develop your adaptable software from embedded devices!
+The KevC++ project aims to offers runtime of kevoree for native application and helping you to develop your adaptable software from embedded devices!
+Select the download for your platform below to try it !
 KevC++ is open source project LGPL v3. 
-
-Continuous integration : http://jenkins.reacloud.com
-
-
-Select the download for your platform below.
 
 ### Requirements:
 
@@ -51,9 +47,7 @@ clang-llvm 3.2
 
 #### Start downloading the kevoree-cpp package that's right for you.
 
-
-
-Linux 32 bit 
+Linux 32 bit  
 
 Linux 64 bit
 
@@ -68,6 +62,14 @@ Mac OS X 10.5 and up 64 bit
  ```
  ./runtime in your shell window
  ```
+### Kevoree Runtime options : 
+
+* -h: help
+* -n: nodename  allows to associate a node name with the runtime
+* -v: version
+* -m: model  allows to give an initial bootstrap model (.json,.kev.kevs accepted)
+* -l: debug level (0: Debug, 1: info, 2: Error)
+
 
 ### Mac notes
 
@@ -80,13 +82,7 @@ This binary release has been built and tested under :
 - GLIBCXX_3.4.16 
 - gcc and g++ 4.8.2
 
-### Kevoree Runtime options : 
 
-* -h: help
-* -n: nodename  allows to associate a node name with the runtime
-* -v: version
-* -m: model  allows to give an initial bootstrap model (.json,.kev.kevs accepted)
-* -l: debug level (0: Debug, 1: info, 2: Error)
  
 ## Building Your First App
 
@@ -210,9 +206,10 @@ The Kevoree Maven plugin is used to extract the Component-Model from the #pragma
 
 
 
-### Compile the platform 
+## Compile the platform 
 
 
+Continuous integration : http://jenkins.reacloud.com
 
 
 #### Get the source code:
