@@ -12,11 +12,15 @@
     </parent>
 
     <groupId>org.kevoree.tools.cpp.maven.plugin</groupId>
-    <artifactId>generator-maven-plugin</artifactId>
+    <artifactId>kevcpp-maven-plugin</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <name>Kevoree CPP :: Tools :: MavenPlugin</name>
+    <properties>
+        <kevoree.model.version>3.6.8</kevoree.model.version>
+    </properties>
 
+    
     <dependencies>
         <dependency>
             <groupId>org.kevoree.tools.cpp</groupId>
@@ -44,7 +48,15 @@
         <dependency>
             <groupId>org.kevoree</groupId>
             <artifactId>org.kevoree.model</artifactId>
-            <version>3.7.0</version>
+            <version>${kevoree.model.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-exec</artifactId>
+            <version>1.1</version>
+        </dependency>
+
+
     </dependencies>
 </project>

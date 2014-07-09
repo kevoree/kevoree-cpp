@@ -5,8 +5,6 @@
 
 
 #pragma ComponentType "HelloWorldComponent"
-#pragma Dictionary "demo"
-
 class HelloWorldComponent :public AbstractComponent
 {
 	public:

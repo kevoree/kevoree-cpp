@@ -21,19 +21,3 @@ add_subdirectory (HelloWorldComponent/)
 
 add_subdirectory (CPPNodeType/)
 
-# deploy on the repository using maven
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-ADD_CUSTOM_TARGET(upload
-COMMAND mvn deploy:deploy-file      -Durl=${repository}     -DgroupId=org.kevoree.library     -DartifactId=HelloWorldComponent   	   -Dversion=1.0.0-SNAPSHOT      -Dpackaging=so     -Dfile=${LIBRARY_OUTPUT_PATH}/libhelloworld_component.dylib -DrepositoryId=${repositoryId}
-COMMAND mvn deploy:deploy-file      -Durl=${repository}     -DgroupId=org.kevoree.library     -DartifactId=kevoree-group-websocket     -Dversion=1.0.0-SNAPSHOT      -Dpackaging=so     -Dfile=${LIBRARY_OUTPUT_PATH}/libwebsocketgroup.dylib -DrepositoryId=${repositoryId}
-COMMAND mvn deploy:deploy-file      -Durl=${repository}     -DgroupId=org.kevoree.library     -DartifactId=CPPNodeType                 -Dversion=1.0.0-SNAPSHOT      -Dpackaging=so     -Dfile=${LIBRARY_OUTPUT_PATH}/libkevoree-CPPNode.dylib -DrepositoryId=${repositoryId}
-)
-ENDIF()
-
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-ADD_CUSTOM_TARGET(upload
-COMMAND mvn deploy:deploy-file      -Durl=${repository}     -DgroupId=org.kevoree.library     -DartifactId=HelloWorldComponent   	   -Dversion=1.0.0-SNAPSHOT      -Dpackaging=so     -Dfile=${LIBRARY_OUTPUT_PATH}/libhelloworld_component.so -DrepositoryId=${repositoryId}
-COMMAND mvn deploy:deploy-file      -Durl=${repository}     -DgroupId=org.kevoree.library     -DartifactId=kevoree-group-websocket     -Dversion=1.0.0-SNAPSHOT      -Dpackaging=so     -Dfile=${LIBRARY_OUTPUT_PATH}/libwebsocketgroup.so -DrepositoryId=${repositoryId}
-COMMAND mvn deploy:deploy-file      -Durl=${repository}     -DgroupId=org.kevoree.library     -DartifactId=CPPNodeType                 -Dversion=1.0.0-SNAPSHOT      -Dpackaging=so     -Dfile=${LIBRARY_OUTPUT_PATH}/libkevoree-CPPNode.so -DrepositoryId=${repositoryId}
-)
-ENDIF()

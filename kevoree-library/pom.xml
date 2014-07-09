@@ -22,6 +22,34 @@
     </modules>
 
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.kevoree.tools.cpp.maven.plugin</groupId>
+                <artifactId>kevcpp-maven-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <id>gen</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
+
+    <repositories>
+        <repository>
+            <id>reacloud-release</id>
+            <url>http://maven.reacloud.com/repository/reacloud/releases</url>
+        </repository>
+        <repository>
+            <id>reacloud-snapshot</id>
+            <url>http://maven.reacloud.com/repository/reacloud/snapshots</url>
+        </repository>
+    </repositories>
 </project>
 

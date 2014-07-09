@@ -9,23 +9,25 @@ import java.util.Map;
  */
 public class PluginHelper {
 
-    public static void scanForHeader(File path, List<File> allFiles) {
+    public static void scanForHeader(File path, List<File> allFiles,List<String> filters) {
 
         if (path.isDirectory()) {
             File[] list = path.listFiles();
             if (list != null) {
                 for (int i = 0; i < list.length; i++) {
-                    scanForHeader(list[i], allFiles);
+                    scanForHeader(list[i], allFiles,filters);
                 }
             } else {
                 System.err.println(path + " : Erreur de lecture.");
             }
         } else {
             String currentFilePath = path.getAbsolutePath();
-
-            if(currentFilePath.contains(".h")){
-                allFiles.add(new File(currentFilePath));
+            for(String filter :filters){
+                if(currentFilePath.contains(filter)){
+                    allFiles.add(new File(currentFilePath));
+                }
             }
+
 
         }
     }
@@ -61,5 +63,23 @@ public static  void run(String... command){
         out_j.close();
 
 
+    }
+
+
+    public static void copyFileUsingStream(File source, File dest) throws IOException {
+        InputStream is = null;
+        OutputStream os = null;
+        try {
+            is = new FileInputStream(source);
+            os = new FileOutputStream(dest);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = is.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
+            }
+        } finally {
+            is.close();
+            os.close();
+        }
     }
 }

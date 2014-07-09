@@ -18,10 +18,10 @@ add_executable(
         ${files}
 )
 TARGET_LINK_LIBRARIES(createType  kevoree-model-dynamic)
-TARGET_LINK_LIBRARIES(createType 	${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
+TARGET_LINK_LIBRARIES(createType  kevoree-tools)
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-TARGET_LINK_LIBRARIES(createType  -Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-core-impl.a  -Wl,-no-whole-archive)
+TARGET_LINK_LIBRARIES(createType kevoree-core-impl)
 ENDIF()
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 TARGET_LINK_LIBRARIES(createType  -Wl,-all_load ${LIBRARY_OUTPUT_PATH}/libkevoree-core-impl.a)

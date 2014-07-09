@@ -1,14 +1,14 @@
 /.idea/
 /CMakeFiles/
-/*.a
+*.a
 /.cproject
 /.project
 /Makefile
-/*.so
+*.so
 /CMakeCache.txt
 /cmake_install.cmake
 /main
-/*.log
+*.log
 /tester/
 /download/
 /bin/

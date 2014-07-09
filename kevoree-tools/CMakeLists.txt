@@ -14,5 +14,4 @@ file(GLOB_RECURSE tools_BootstrapHelper BootstrapHelper/*)
 ADD_LIBRARY(kevoree-tools  STATIC  ${tools_loader} ${tools_BootstrapHelper})
 TARGET_LINK_LIBRARIES(kevoree-tools  maven-resolver-cpp)
 
-
-add_subdirectory (CreateTypeDefinition/)
+#add_subdirectory (CreateTypeDefinition/)

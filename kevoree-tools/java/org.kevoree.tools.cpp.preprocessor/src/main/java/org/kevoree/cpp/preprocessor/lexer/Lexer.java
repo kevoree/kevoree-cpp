@@ -7,6 +7,15 @@ import java.io.InputStream;
 /**
  * Created by jed on 30/06/14.
  */
+
+/* TODO
+DICO
+optional
+datatype
+fragmentDependant
+defaultValue
+ */
+
 public class Lexer {
     byte[]  buffer;
     int index;
@@ -80,7 +89,7 @@ public class Lexer {
                     c = nextChar();
                     id +=(char)c;
                 }while (isDone() != true && isSpace(c) != true);
-                token.setId(id);
+                token.setId(id.replace("\"",""));
 
                 if(id.toLowerCase().trim().equals("nodetype"))
                 {
@@ -104,7 +113,7 @@ public class Lexer {
                     c = nextChar();
                     value +=(char)c;
                 }while (isDone() != true && isSpace(c) != true);
-                token.setValue(value.trim());
+                token.setValue(value.trim().replace("\"",""));
 
             }
             else

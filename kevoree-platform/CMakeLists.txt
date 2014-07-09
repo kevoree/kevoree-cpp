@@ -21,31 +21,24 @@ add_executable(
         standalone/main.cpp
         ${kevoree-platform_files}
 )
-#set_target_properties(main PROPERTIES INSTALL_RPATH "@loader_path/../lib")
-#install(TARGETS main DESTINATION ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin)
-
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-TARGET_LINK_LIBRARIES(main 	-Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
-TARGET_LINK_LIBRARIES(main  -Wl,-whole-archive ${LIBRARY_OUTPUT_PATH}/libkevoree-core-impl.a -Wl,-no-whole-archive)
-TARGET_LINK_LIBRARIES(main rt)
-ENDIF()
-
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-TARGET_LINK_LIBRARIES(main 	${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
-TARGET_LINK_LIBRARIES(main  -Wl,-all_load ${LIBRARY_OUTPUT_PATH}/libkevoree-core-impl.a)
-TARGET_LINK_LIBRARIES(main 	-Wl,-all_load ${LIBRARY_OUTPUT_PATH}/libkevoree-tools.a)
-ENDIF()
-
-
+TARGET_LINK_LIBRARIES(main 	kevoree-tools)
+TARGET_LINK_LIBRARIES(main  kevoree-core-impl)
 TARGET_LINK_LIBRARIES(main  kevoree-model-dynamic)
-TARGET_LINK_LIBRARIES(main maven-resolver-cpp )
+TARGET_LINK_LIBRARIES(main  maven-resolver-cpp )
 TARGET_LINK_LIBRARIES(main  libboost_thread-mt.a)
 TARGET_LINK_LIBRARIES(main  libboost_system-mt.a)
 TARGET_LINK_LIBRARIES(main  libboost_random-mt.a)
 TARGET_LINK_LIBRARIES(main  libboost_program_options-mt.a)
-TARGET_LINK_LIBRARIES(main libboost_regex-mt.a)
-TARGET_LINK_LIBRARIES(main dl)
-TARGET_LINK_LIBRARIES(main pthread)
+TARGET_LINK_LIBRARIES(main  libboost_iostreams-mt.a)
+TARGET_LINK_LIBRARIES(main  libboost_regex-mt.a)
+TARGET_LINK_LIBRARIES(main  dl)
+TARGET_LINK_LIBRARIES(main  pthread)
+
+
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+TARGET_LINK_LIBRARIES(main rt)
+ENDIF()
+
 
 
 

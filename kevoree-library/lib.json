@@ -1,0 +1,10 @@
+
+{"eClass":"org.kevoree.ContainerRoot","generated_KMF_ID":"14000244221404825204304","nodes":[],"typeDefinitions":[
+{"eClass":"org.kevoree.NodeType","name":"CPPNode","abstract":"false","version":"","factoryBean":"","bean":"","deployUnit":["deployUnits[org.kevoree.library.cpp//CPPNode/1.0-SNAPSHOT]"],"superTypes":[],"dictionaryType":[]}
+,
+{"eClass":"org.kevoree.ComponentType","name":"HelloWorldComponent","abstract":"false","version":"","factoryBean":"","bean":"","deployUnit":["deployUnits[org.kevoree.library.cpp//HelloWorldComponent/1.0-SNAPSHOT]"],"superTypes":[],"dictionaryType":[],"required":[],"provided":[]}
+],"repositories":[],"dataTypes":[],"libraries":[],"hubs":[],"mBindings":[],"deployUnits":[
+{"eClass":"org.kevoree.DeployUnit","groupName":"org.kevoree.library.cpp","hashcode":"","name":"HelloWorldComponent","type":"so","version":"1.0-SNAPSHOT","url":"","requiredLibs":[]}
+,
+{"eClass":"org.kevoree.DeployUnit","groupName":"org.kevoree.library.cpp","hashcode":"","name":"CPPNode","type":"so","version":"1.0-SNAPSHOT","url":"","requiredLibs":[]}
+],"nodeNetworks":[],"groups":[]}

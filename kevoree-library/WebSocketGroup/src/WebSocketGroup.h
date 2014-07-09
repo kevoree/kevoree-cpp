@@ -25,9 +25,6 @@ typedef server::message_ptr message_ptr;
 
 
 #pragma GroupType "WebSocketGroup"  
-#pragma GroupName "org.kevoree.library"
-#pragma Version "1.0"
-
 #pragma Dictionary "port"
 #pragma Dictionary "num_threads"
 class WebSocketGroup :public AbstractGroup

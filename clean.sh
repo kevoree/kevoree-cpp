@@ -7,6 +7,8 @@ find . -name "cmake_install.cmake_modules" | xargs rm -rf
 find . -name "cmake_install.cmake" | xargs rm -rf
 find . -name "CMakeCache.txt" | xargs rm -rf       
 rm -rf thirdparties/
-#rm -rf maven-resolver-cpp/
+rm -rf Debug/
+rm -rf Release/
+rm -rf maven-resolver-cpp/
 
 

@@ -291,11 +291,14 @@ void defaultbootstrapmodel(std::string nodename){
 
 
 
-	Repository *repo = factory.createRepository();
-	repo->url = "http://maven.reacloud.com/repository/reacloud";
+	Repository *repo_release = factory.createRepository();
+	repo_release->url = "http://maven.reacloud.com/repository/reacloud/releases";
 
-	model->addrepositories(repo);
+	Repository *repo_snap = factory.createRepository();
+	repo_snap->url = "http://maven.reacloud.com/repository/reacloud/snapshots";
 
+	model->addrepositories(repo_release);
+	model->addrepositories(repo_snap);
 }
 
 

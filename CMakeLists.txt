@@ -9,7 +9,7 @@ set(CMAKE_BUILD_TYPE Debug)
 endif()
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -stdlib=libstdc++ -Wall -pedantic")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -stdlib=libstdc++  -Wall -pedantic")
-set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build)
+#set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build)
 #set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build)
 
 
