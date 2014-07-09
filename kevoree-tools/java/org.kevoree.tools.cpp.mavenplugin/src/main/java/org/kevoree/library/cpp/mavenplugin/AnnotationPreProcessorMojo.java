@@ -94,7 +94,7 @@ public class AnnotationPreProcessorMojo extends AbstractMojo {
                         du.setName(token.getValue());
                         du.setGroupName(project.getGroupId());
                         du.setVersion(project.getVersion());
-                        du.setType("jar");
+                        du.setType("so");
 
 
 

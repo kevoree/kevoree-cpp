@@ -1,5 +1,5 @@
 
-{"eClass":"org.kevoree.ContainerRoot","generated_KMF_ID":"12254049211404912059903","nodes":[],"typeDefinitions":[
+{"eClass":"org.kevoree.ContainerRoot","generated_KMF_ID":"19095266631404913728183","nodes":[],"typeDefinitions":[
 {"eClass":"org.kevoree.NodeType","name":"CPPNode","abstract":"false","version":"","factoryBean":"","bean":"","deployUnit":["deployUnits[org.kevoree.library.cpp//CPPNode/1.0.0]"],"superTypes":[],"dictionaryType":[]}
 ,
 {"eClass":"org.kevoree.ComponentType","name":"HelloWorldComponent","abstract":"false","version":"","factoryBean":"","bean":"","deployUnit":["deployUnits[org.kevoree.library.cpp//HelloWorldComponent/1.0.0]"],"superTypes":[],"dictionaryType":[],"required":[],"provided":[]}
@@ -10,7 +10,7 @@
 ,
 {"eClass":"org.kevoree.Repository","url":"http://maven.reacloud.com/repository/reacloud/releases"}
 ],"dataTypes":[],"libraries":[],"hubs":[],"mBindings":[],"deployUnits":[
-{"eClass":"org.kevoree.DeployUnit","groupName":"org.kevoree.library.cpp","hashcode":"","name":"HelloWorldComponent","type":"jar","version":"1.0.0","url":"","requiredLibs":[]}
+{"eClass":"org.kevoree.DeployUnit","groupName":"org.kevoree.library.cpp","hashcode":"","name":"HelloWorldComponent","type":"so","version":"1.0.0","url":"","requiredLibs":[]}
 ,
-{"eClass":"org.kevoree.DeployUnit","groupName":"org.kevoree.library.cpp","hashcode":"","name":"CPPNode","type":"jar","version":"1.0.0","url":"","requiredLibs":[]}
+{"eClass":"org.kevoree.DeployUnit","groupName":"org.kevoree.library.cpp","hashcode":"","name":"CPPNode","type":"so","version":"1.0.0","url":"","requiredLibs":[]}
 ],"nodeNetworks":[],"groups":[]}

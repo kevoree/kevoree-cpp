@@ -1,5 +1,5 @@
 
-{"eClass":"org.kevoree.ContainerRoot","generated_KMF_ID":"14303434251404912128072","nodes":[],"typeDefinitions":[
+{"eClass":"org.kevoree.ContainerRoot","generated_KMF_ID":"6257614111404913733069","nodes":[],"typeDefinitions":[
 {"eClass":"org.kevoree.NodeType","name":"CPPNode","abstract":"false","version":"","factoryBean":"","bean":"","deployUnit":["deployUnits[org.kevoree.library//CPPNode/1.0.0]"],"superTypes":[],"dictionaryType":[]}
 ],"repositories":[
 {"eClass":"org.kevoree.Repository","url":"http://repo.maven.apache.org/maven2"}
@@ -8,5 +8,5 @@
 ,
 {"eClass":"org.kevoree.Repository","url":"http://maven.reacloud.com/repository/reacloud/releases"}
 ],"dataTypes":[],"libraries":[],"hubs":[],"mBindings":[],"deployUnits":[
-{"eClass":"org.kevoree.DeployUnit","groupName":"org.kevoree.library","hashcode":"","name":"CPPNode","type":"jar","version":"1.0.0","url":"","requiredLibs":[]}
+{"eClass":"org.kevoree.DeployUnit","groupName":"org.kevoree.library","hashcode":"","name":"CPPNode","type":"so","version":"1.0.0","url":"","requiredLibs":[]}
 ],"nodeNetworks":[],"groups":[]}

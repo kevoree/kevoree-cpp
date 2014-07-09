@@ -1,6 +1,0 @@
-
-{"eClass":"org.kevoree.ContainerRoot","generated_KMF_ID":"4446445901404825205205","nodes":[],"typeDefinitions":[
-{"eClass":"org.kevoree.ComponentType","name":"HelloWorldComponent","abstract":"false","version":"","factoryBean":"","bean":"","deployUnit":["deployUnits[org.kevoree.library//HelloWorldComponent/1.0.0-SNAPSHOT]"],"superTypes":[],"dictionaryType":[],"required":[],"provided":[]}
-],"repositories":[],"dataTypes":[],"libraries":[],"hubs":[],"mBindings":[],"deployUnits":[
-{"eClass":"org.kevoree.DeployUnit","groupName":"org.kevoree.library","hashcode":"","name":"HelloWorldComponent","type":"so","version":"1.0.0-SNAPSHOT","url":"","requiredLibs":[]}
-],"nodeNetworks":[],"groups":[]}
