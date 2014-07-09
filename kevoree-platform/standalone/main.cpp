@@ -27,7 +27,7 @@ KevoreeBootStrap *kb=NULL;
 /* configuration */
 const string log_file ="kevoree.log";
 const std::string name = "Kevoree Platform";
-const std::string version = "BETA 1.0.0";
+const std::string version = "1.0.0-BETA";
 std::string path_bootstrap_model = "";
 std::string nodename = "node0";
 
@@ -198,7 +198,7 @@ void defaultbootstrapmodel(std::string nodename){
 	TypeDefinition *grouptype = factory.createGroupType();
 	grouptype->abstract= false;
 	grouptype->name ="WebSocketGroup";
-	grouptype->version = "1.0";
+	grouptype->version = "1.0.0";
 
 	DictionaryType *typegroup= factory.createDictionaryType();
 	DictionaryAttribute *attport = factory.createDictionaryAttribute();

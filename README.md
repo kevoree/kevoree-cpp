@@ -66,11 +66,15 @@ bin/runtime
  ```
 ##### Output
 ```
+jed@jed:~/kev1.0.0/# bin/runtime
 INFO: Kevoree Start event : node name = node0
+INFO: TODO Model Checker
+Downloading File  => http://maven.reacloud.com/repository/reacloud/release/org/kevoree/library/CPPNodeType/1.0.0/CPPNodeType-1.0.0.so
 INFO: PreCompare BootStraping
 INFO: Adaptation model size 2
-INFO: Adaptation time delta (ms) = 4
-INFO: Update sucessfully completed
+Downloading File  => http://maven.reacloud.com/repository/reacloud/release/org/kevoree/library/kevoree-group-websocket/1.0.0/kevoree-group-websocket-1.0.0.so
+INFO: Adaptation time delta (ms) = 8
+INFO: Update sucessfully completed.
  ```
 
 ### Kevoree Runtime options : 
@@ -84,10 +88,8 @@ INFO: Update sucessfully completed
 
 ### Kevoree Editor: 
 
-The kevC++ platform bootstrap by default with a group which listen on port 9000 you can pull the model with the great web editor :
- ```
-http://editor.kevoree.org/
- ```
+The kevC++ platform bootstrap by default with a group which listen on port 9000 you can pull the model with the awesome web editor :
+http://editor.kevoree.org
 For more information => https://github.com/kevoree/kevoree-web-editor
 
 
@@ -269,11 +271,12 @@ make install
 ```
 
 FAQ:
+```
 bin/runtime: error while loading shared libraries: libkevoree-model-dynamic.so: cannot open shared object file: No such file or directory
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$KEVORE_CPP_FOLDER/lib
 
 export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$KEVORE_CPP_FOLDER/lib
-
+```
  
 
 
