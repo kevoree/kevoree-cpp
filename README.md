@@ -48,7 +48,8 @@ clang-llvm 3.2
 ##### Start downloading the kevoree-cpp package that's right for you.
 
 
-Linux 64 bit https://github.com/kevoree/kevoree-cpp/releases/download/Linux64_1.0.1beta/kevCPP_1.0.0-BETA_64.tar.gz
+Linux 64 bit
+[Here]( https://github.com/kevoree/kevoree-cpp/releases/download/Linux64_1.0.1beta/kevCPP_1.0.0-BETA_64.tar.gz)
 
 Linux 32 bit  (no available, soon !)
 
