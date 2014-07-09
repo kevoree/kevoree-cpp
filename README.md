@@ -1,5 +1,12 @@
-# Kevoree C++
+# KevC++
 
+The KevC++  project aims to offers runtime of kevoree for native application and helping you to develop your adaptable software from embedded devices!
+KevC++ is open source project LGPL v3. 
+
+Continuous integration : http://jenkins.reacloud.com
+
+
+Select the download for your platform below.
 
 ### Requirements:
 
@@ -14,7 +21,16 @@ Linux - a fairly recent linux distro with libc >= 2.6
 * g++
 * Cmake
 
-#### Additional requirements for MAC OS :
+#### Installing Requirements Linux Ubuntu :
+Linux Debian Procedure should work on Ubuntu and similar distributions: install appropriate packages:
+```sh
+sudo apt-get install cmake make gcc g++ git wget curl libcppunit-doc libcppunit-dev
+```
+
+#### Installing Requirements on Mac OS X 
+
+You will need to have Homebrew installed.
+
 * Xcode
 * Clang llvm
 
@@ -31,17 +47,11 @@ sudo port install arm-none-eabi-binutils
 clang-llvm 3.2
 ```
 
-
-#### Linux Ubuntu :
-Linux Debian Procedure should work on Ubuntu and similar distributions: install appropriate packages:
-```sh
-sudo apt-get install cmake make gcc g++ git wget curl libcppunit-doc libcppunit-dev
-```
-
 ### Getting started platform 
 
-
 #### Start downloading the kevoree-cpp package that's right for you.
+
+
 
 Linux 32 bit 
 
@@ -202,8 +212,6 @@ The Kevoree Maven plugin is used to extract the Component-Model from the #pragma
 
 ### Compile the platform 
 
-
-Continuous integration : http://jenkins.reacloud.com
 
 
 
