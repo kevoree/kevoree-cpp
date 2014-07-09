@@ -6,12 +6,11 @@
     <artifactId>org.kevoree.library.cpp.root</artifactId>
     <packaging>pom</packaging>
     <name>Kevoree CPP :: Library :: Root</name>
-    <version>1.0-SNAPSHOT</version>
-
+    <version>1.0.0</version>
     <parent>
         <groupId>org.kevoree.cpp</groupId>
         <artifactId>root</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -27,7 +26,7 @@
             <plugin>
                 <groupId>org.kevoree.tools.cpp.maven.plugin</groupId>
                 <artifactId>kevcpp-maven-plugin</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.0.0</version>
                 <executions>
                     <execution>
                         <id>gen</id>

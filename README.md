@@ -45,7 +45,7 @@ clang-llvm 3.2
 
 ### Getting started platform 
 
-#### Start downloading the kevoree-cpp package that's right for you.
+##### Start downloading the kevoree-cpp package that's right for you.
 
 Linux 32 bit  
 
@@ -55,13 +55,24 @@ Mac OS X 10.5 and up 32 bit
 
 Mac OS X 10.5 and up 64 bit
 
-#### Unzip your kevoree-cpp folder somewhere convenient on your hard drive.
+##### Unzip your kevoree-cpp folder somewhere convenient on your hard drive.
 
 
-#### To start kevoree-cpp :
+##### To start kevoree-cpp :
  ```
- ./runtime in your shell window
+in your shell : 
+. ./setenv.sh 
+bin/runtime
  ```
+##### Output
+```
+INFO: Kevoree Start event : node name = node0
+INFO: PreCompare BootStraping
+INFO: Adaptation model size 2
+INFO: Adaptation time delta (ms) = 4
+INFO: Update sucessfully completed
+ ```
+
 ### Kevoree Runtime options : 
 
 * -h: help
@@ -69,6 +80,15 @@ Mac OS X 10.5 and up 64 bit
 * -v: version
 * -m: model  allows to give an initial bootstrap model (.json,.kev.kevs accepted)
 * -l: debug level (0: Debug, 1: info, 2: Error)
+
+
+### Kevoree Editor: 
+
+The kevC++ platform bootstrap by default with a group which listen on port 9000 you can pull the model with the great web editor :
+ ```
+http://editor.kevoree.org/
+ ```
+For more information => https://github.com/kevoree/kevoree-web-editor
 
 
 ### Mac notes
@@ -81,6 +101,7 @@ This binary release has been built and tested under :
 - cmake version 2.8.12.2
 - GLIBCXX_3.4.16 
 - gcc and g++ 4.8.2
+
 
 
  
@@ -247,7 +268,12 @@ make install
 ./Release/bin/runtime
 ```
 
+FAQ:
+bin/runtime: error while loading shared libraries: libkevoree-model-dynamic.so: cannot open shared object file: No such file or directory
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$KEVORE_CPP_FOLDER/lib
 
+export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$KEVORE_CPP_FOLDER/lib
 
+ 
 
 

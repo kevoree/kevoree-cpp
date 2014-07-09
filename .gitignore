@@ -29,3 +29,4 @@ Makefile
 *.includecache
 run_tests
 cppunit-report.xml
+*.iml

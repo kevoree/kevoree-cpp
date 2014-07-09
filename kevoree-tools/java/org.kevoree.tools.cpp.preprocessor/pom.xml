@@ -7,13 +7,13 @@
     <parent>
        <groupId>org.kevoree.tools.cpp</groupId>
         <artifactId>org.kevoree.tools.cpp.root</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>org.kevoree.tools.cpp</groupId>
     <artifactId>preprocessor</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>Kevoree CPP :: Tools :: Preprocessor</name>
     
 

@@ -45,9 +45,9 @@ int main (int argc, char *argv[])
 
 	description.add_options()
 			("help,h", "Display this help message")
-			("nodeName,n",po::value<std::string>(&nodename), "  allows to associate a node name with the runtime")
+			("nodeName,n",po::value<std::string>(&nodename), "Allows to associate a node name with the runtime")
 			("version,v", "Display the version number")
-			("model,m", po::value<std::string>(),"allows to give an initial bootstrap model (.json,.kev.kevs accepted)")
+			("model,m", po::value<std::string>(),"Allows to give an initial bootstrap model (.json,.kev.kevs accepted)")
 			("level,l", po::value<int>(),"debug level");
 
 
@@ -176,11 +176,10 @@ void defaultbootstrapmodel(std::string nodename){
 	model = factory.createContainerRoot();
 
 
-
 	DeployUnit *d =factory.createDeployUnit();
 	d->name = "CPPNodeType";
 	d->groupName = "org.kevoree.library";
-	d->version = "1.0.0-SNAPSHOT";
+	d->version = "1.0.0";
 	d->type ="so";
 
 
@@ -193,7 +192,7 @@ void defaultbootstrapmodel(std::string nodename){
 	DeployUnit *dg =factory.createDeployUnit();
 	dg->name = "kevoree-group-websocket";
 	dg->groupName = "org.kevoree.library";
-	dg->version = "1.0.0-SNAPSHOT";
+	dg->version = "1.0.0";
 	dg->type ="so";
 
 	TypeDefinition *grouptype = factory.createGroupType();
@@ -244,34 +243,11 @@ void defaultbootstrapmodel(std::string nodename){
 	DeployUnit *dc =factory.createDeployUnit();
 	dc->name = "HelloWorldComponent";
 	dc->groupName = "org.kevoree.library";
-	dc->version = "1.0.0-SNAPSHOT";
+	dc->version = "1.0.0";
 	dc->type ="so";
 
 
-
-
 	node0->addtypeDefinition(nodetype);
-
-
-	/* Temperature
-	TypeDefinition *helloworldtype  = factory.createComponentType();
-	helloworldtype->name = "HelloWorldComponent10101";
-	helloworldtype->abstract = false;
-
-
-
-
-
-	DeployUnit *dcano =factory.createDeployUnit();
-	dcano->name = "TemperatureComponent";
-	dcano->groupName = "org.kevoree.library";
-	dcano->version = "1.0.0-SNAPSHOT";
-	dcano->type ="so";
-
-
-	helloworldtype->adddeployUnit(dcano);
-	 */
-	//	model->addtypeDefinitions(helloworldtype);
 	model->addtypeDefinitions(grouptype);
 	model->addtypeDefinitions(nodetype);
 
@@ -279,7 +255,6 @@ void defaultbootstrapmodel(std::string nodename){
 	model->adddeployUnits(d);
 	model->adddeployUnits(dg);
 	model->adddeployUnits(dc);
-	//	model->adddeployUnits(dcano);
 
 
 	model->addnodes(node0);
@@ -289,11 +264,8 @@ void defaultbootstrapmodel(std::string nodename){
 	node0->addgroups(group);
 
 
-
-
 	Repository *repo_release = factory.createRepository();
-	repo_release->url = "http://maven.reacloud.com/repository/reacloud/releases";
-
+	repo_release->url = "http://maven.reacloud.com/repository/reacloud/release";
 	Repository *repo_snap = factory.createRepository();
 	repo_snap->url = "http://maven.reacloud.com/repository/reacloud/snapshots";
 
