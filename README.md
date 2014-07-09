@@ -1,15 +1,16 @@
 # Kevoree C++
- 
- Continuous integration : http://jenkins.reacloud.com
-
 
 
 ### Requirements:
 
+Please make sure your system satisfies one of these requirements:
+Mac - OSX 10.5 and up
+Linux - a fairly recent linux distro with libc >= 2.6
+
 * Git 
 * Java
 * CPP unit
-* GCC
+* gcc 
 * g++
 * Cmake
 
@@ -17,12 +18,10 @@
 * Xcode
 * Clang llvm
 
-
 ```
 brew install cppunit
 brew install cmake
 ```
-
 
 ##### MacPort:
 ```sh
@@ -33,49 +32,43 @@ clang-llvm 3.2
 ```
 
 
- 
 #### Linux Ubuntu :
 Linux Debian Procedure should work on Ubuntu and similar distributions: install appropriate packages:
 ```sh
 sudo apt-get install cmake make gcc g++ git wget curl libcppunit-doc libcppunit-dev
 ```
 
-### Getting started
+### Getting started platform 
 
-#### Get the source code:
-```sh
-git clone https://github.com/kevoree/kevoree-cpp.git
-cd kevoree-cpp
-```
-#### Setting up the IDE:
-Download Eclipse.
 
-File > Import > C/C++ > Existing code as MakeFile Project > In existing code location select Kevoree-CPP directory that you've clone
- 
+#### Start downloading the kevoree-cpp package that's right for you.
 
-#### Compilation   
-#####Debug:
-```sh
-cmake -DCMAKE_BUILD_TYPE=Debug 
-make
-./Debug/bin/main
-```
-#####Release with boost:
-```sh
-cmake -DBOOST=y -DCMAKE_BUILD_TYPE=Release
-make install
-./Release/bin/main
-```
-#####Release without boost:
-```sh
-cmake  -DCMAKE_BUILD_TYPE=Release
-make install
-./Release/bin/main
-```
-####Start Kevoree
+Linux 32 bit 
+
+Linux 64 bit
+
+Mac OS X 10.5 and up 32 bit
+
+Mac OS X 10.5 and up 64 bit
+
+#### Unzip your kevoree-cpp folder somewhere convenient on your hard drive.
+
+
+#### To start kevoree-cpp :
  ```
-./Release/bin/main
-```
+ ./runtime in your shell window
+ ```
+
+### Mac notes
+
+
+### Linux notes
+
+This binary release has been built and tested under :
+- Ubuntu 14.04 LTS.
+- cmake version 2.8.12.2
+- GLIBCXX_3.4.16 
+- gcc and g++ 4.8.2
 
 ### Kevoree Runtime options : 
 
@@ -85,6 +78,9 @@ make install
 * -m: model  allows to give an initial bootstrap model (.json,.kev.kevs accepted)
 * -l: debug level (0: Debug, 1: info, 2: Error)
  
+## Building Your First App
+
+Welcome to kevoree-cpp application development!
 
 ### The Annotation API :
 
@@ -202,6 +198,49 @@ The Kevoree Maven plugin is used to extract the Component-Model from the #pragma
  ```
 
 
+
+
+### Compile the platform 
+
+
+Continuous integration : http://jenkins.reacloud.com
+
+
+
+#### Get the source code:
+```sh
+git clone https://github.com/kevoree/kevoree-cpp.git
+cd kevoree-cpp
+```
+#### Setting up the IDE:
+Download Eclipse.
+
+File > Import > C/C++ > Existing code as MakeFile Project > In existing code location select Kevoree-CPP directory that you've clone
+ 
+
+#### Compilation   
+#####Debug:
+```sh
+cmake -DCMAKE_BUILD_TYPE=Debug 
+make
+./Debug/bin/runtime
+```
+#####Release with boost:
+```sh
+cmake -DBOOST=y -DCMAKE_BUILD_TYPE=Release
+make install
+./Release/bin/runtime
+```
+#####Release without boost:
+```sh
+cmake  -DCMAKE_BUILD_TYPE=Release
+make install
+./Release/bin/runtime
+```
+####Start Kevoree
+ ```
+./Release/bin/runtime
+```
 
 
 
