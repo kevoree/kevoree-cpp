@@ -44,8 +44,6 @@ set (CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake_modules")
 
 if(APPLE)
   cmake_minimum_required(VERSION 2.8.12.2 FATAL_ERROR)
-else()
-  cmake_minimum_required(VERSION 2.8.11.1 FATAL_ERROR)
 endif()
 
 set(BoostVersion 1.53.0)
