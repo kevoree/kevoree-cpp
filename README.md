@@ -77,7 +77,7 @@ make install
 ./Release/bin/main
 ```
 
-Kevoree Runtime options : 
+### Kevoree Runtime options : 
 
 * -h: help
 * -n: nodename  allows to associate a node name with the runtime
@@ -86,31 +86,31 @@ Kevoree Runtime options :
 * -l: debug level (0: Debug, 1: info, 2: Error)
  
 
-The Annotation API :
+### The Annotation API :
 
 The Annotation API is made to provide a simple and flexible way to decorate your existing code to declare it as a component, channel, node or group.
 
-- Components
+#### Components
 
 #pragma ComponentType "ComponentName"
 
-- Channels
+#### Channels
 #pragma ChannelType "ChannelName"
 
-- GroupType
+#### GroupType
 #pragma GroupType "WebSocketGroup"  
 
 
-- Nodes
+#### Nodes
 
 #pragma NodeType "CPPNode"
 
-- Dictionnay
+#### Dictionnay
 
 #pragma Dictionary "port" 
 
 
-Create your first component
+###  Create your first component
  ```
 #include <kevoree-core/api/AbstractComponent.h>
 
@@ -130,7 +130,7 @@ class HelloWorldComponent :public AbstractComponent
   ```
   
   
-Create your first GroupType
+###  Create your first GroupType
 
   ```
 #include <kevoree-core/api/AbstractGroup.h>
@@ -149,7 +149,7 @@ public:
 
   ```
 
-Create your first NodeType
+###  Create your first NodeType
  ```
 
 #include <kevoree-core/api/AbstractNodeType.h>
@@ -166,15 +166,15 @@ public:
 };
  ```
 
-Enhance your TypeDefintion
+### Enhance your TypeDefintion
 
-Create a dictionary attribute
+#### Create a dictionary attribute
  ```
 #pragma Dictionary "port" 
  ```
 
 
-The Kevoree- Maven Plugin
+###  The Kevoree- Maven Plugin
 
 The Kevoree Maven plugin is used to extract the Component-Model from the #pragma placed in your code, and store it into a Kevoree Model (lib.json)
 
