@@ -157,7 +157,7 @@ public class AnnotationPreProcessorMojo extends AbstractMojo {
                 if(types_so.size() > 0){
                     //    PluginHelper.copyFileUsingStream( types_so.get(0),new File(path+types_so.get(0).getName()));
 
-                    DeploymentRepository repo;
+                    DeploymentRepository repo=null;
                     if(project.getVersion().contains("SNAPSHOT")){
                         repo =   project.getDistributionManagement().getSnapshotRepository();
 
@@ -165,10 +165,16 @@ public class AnnotationPreProcessorMojo extends AbstractMojo {
                     {
                         repo = project.getDistributionManagement().getRepository();
                     }
-                    deployer = new MavenDeployer(repo.getId(),repo.getUrl());
+                    if(repo != null ){
+                        deployer = new MavenDeployer(repo.getId(),repo.getUrl());
 
-                    deployer.deploy(project.getGroupId(),project.getArtifactId(),project.getVersion(),types_so.get(0).getAbsolutePath(),"so");
-                    deployer.deploy(project.getGroupId(),project.getArtifactId(),project.getVersion(),path+"lib.json","json");
+                        deployer.deploy(project.getGroupId(),project.getArtifactId(),project.getVersion(),types_so.get(0).getAbsolutePath(),"so");
+                        deployer.deploy(project.getGroupId(),project.getArtifactId(),project.getVersion(),path+"lib.json","json");
+                    }else{
+                        getLog().error("there is not repository specify for deploy artifact");
+
+                    }
+
 
                 }
             } catch (IOException e) {
