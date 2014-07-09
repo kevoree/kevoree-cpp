@@ -45,9 +45,9 @@ int main (int argc, char *argv[])
 
 	description.add_options()
 			("help,h", "Display this help message")
-			("nodeName,n",po::value<std::string>(&nodename), " nodeName")
+			("nodeName,n",po::value<std::string>(&nodename), "  allows to associate a node name with the runtime")
 			("version,v", "Display the version number")
-			("model,m", po::value<std::string>(),"bootstrap model path")
+			("model,m", po::value<std::string>(),"allows to give an initial bootstrap model (.json,.kev.kevs accepted)")
 			("level,l", po::value<int>(),"debug level");
 
 
