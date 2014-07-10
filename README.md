@@ -98,16 +98,14 @@ INFO: Update sucessfully completed.
 ### Kevoree Editor: 
 
 The kevC++ platform bootstrap by default with a group which listen on port 9000 you can pull the model with the awesome web editor :
-http://editor.kevoree.org
+http://editor.kevoree.org/
 
 Model > From Custom Repo
-http://maven.reacloud.com/nexus/content/groups/public
-
-example : 
-org.kevoree.library.cpp
-CPPNodeType
-1.0.0
-
+repo  		http://maven.reacloud.com/nexus/content/groups/public
+artifactId 	org.kevoree.library.cpp
+artifactId 	CPPNodeType
+version 	1.0.0
+Jean-Emile Dartois <
 
 For more information => https://github.com/kevoree/kevoree-web-editor
 
