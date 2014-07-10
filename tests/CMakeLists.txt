@@ -37,11 +37,12 @@ TARGET_LINK_LIBRARIES(run_tests kevoree-core-impl)
 TARGET_LINK_LIBRARIES(run_tests kevoree-model-dynamic)
 TARGET_LINK_LIBRARIES(run_tests waxeye)
 TARGET_LINK_LIBRARIES(run_tests kevscript)
-
-
-
-#TARGET_LINK_LIBRARIES(run_tests rt)
 TARGET_LINK_LIBRARIES(run_tests cppunit)
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+TARGET_LINK_LIBRARIES(runtime rt)
+ENDIF()
+
+
 
 ADD_CUSTOM_TARGET(test
 COMMAND  ${KEVOREEROOT}/tests/run_tests)

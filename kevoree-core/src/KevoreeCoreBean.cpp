@@ -170,6 +170,8 @@ void KevoreeCoreBean::stop()
 }
 
 bool KevoreeCoreBean::checkModel(ContainerRoot *targetModel){
-	LOGGER_WRITE(Logger::INFO,"TODO Model Checker");
+	LOGGER_WRITE(Logger::INFO,"Model Checker");
+
+
 	return true;
 }
