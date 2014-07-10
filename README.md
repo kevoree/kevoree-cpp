@@ -101,11 +101,12 @@ The kevC++ platform bootstrap by default with a group which listen on port 9000 
 http://editor.kevoree.org/
 
 Model > From Custom Repo
+```
 repo  		http://maven.reacloud.com/nexus/content/groups/public
 artifactId 	org.kevoree.library.cpp
 artifactId 	CPPNodeType
 version 	1.0.0
-Jean-Emile Dartois <
+```
 
 For more information => https://github.com/kevoree/kevoree-web-editor
 
