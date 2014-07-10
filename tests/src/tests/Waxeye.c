@@ -44,16 +44,16 @@ char* ReadFile(char *filename)
 int readAllmodel(){
 
 	int res1 = readModel("./dataTest/KevScriptTest/bigScript.kevs");
-	int res2 = readModel("dataTest/KevScriptTest/empty.kevs");
-	int res3 = readModel("dataTest/KevScriptTest/fragDic.kevs");
-	int res4 = readModel("dataTest/KevScriptTest/hostedNodes.kevs");
-	int res5 = readModel("dataTest/KevScriptTest/lifecycle.kevs");
-	int res6 = readModel("dataTest/KevScriptTest/multilineAttr.kevs");
-	int res7 = readModel("dataTest/KevScriptTest/removes.kevs");
-	int res8 = readModel("dataTest/KevScriptTest/repo.kevs");
-	int res9 = readModel("dataTest/KevScriptTest/test-parser.kevs");
-	int res10 = readModel("dataTest/KevScriptTest/versions.kevs");
-	int res = res1 + res2 + res3+ res4 + res5 + res6+ res7+res8+res9+res10 ;
+	int res2 = readModel("./dataTest/KevScriptTest/empty.kevs");
+	int res3 = readModel("./dataTest/KevScriptTest/fragDic.kevs");
+	int res4 = readModel("./dataTest/KevScriptTest/hostedNodes.kevs");
+	int res5 = readModel("./dataTest/KevScriptTest/lifecycle.kevs");
+	int res6 = readModel("./dataTest/KevScriptTest/multilineAttr.kevs");
+	int res7 = readModel("./dataTest/KevScriptTest/removes.kevs");
+	int res8 = readModel("./dataTest/KevScriptTest/repo.kevs");
+	int res9 = readModel("./dataTest/KevScriptTest/test-parser.kevs");
+	int res10 = readModel("./dataTest/KevScriptTest/versions.kevs");
+	int res = res1 + res2 + res3+ res4 + res5 + res6 + res7 + res8 + res9 + res10 ;
 
 	return res ;
 
@@ -96,6 +96,26 @@ int readModel(char *filename)
 
 }
 
+
+
+
+struct ast_t* getAst(char *filename)
+		{
+	struct parser_t *parser = parser_new();
+	char *data =	ReadFile(filename);
+		if(data){
+			struct input_t *input = input_new(data, strlen(data));
+			struct ast_t *ast = parse(parser, input);
+			if(ast == NULL){
+				return NULL;
+			}
+			return ast ;
+		}
+		return NULL ;
+		}
+
+
+
 int test(){
 
 
@@ -103,7 +123,7 @@ int test(){
 	struct parser_t *parser = parser_new();
 
 	// Setup our input
-	char *data =	ReadFile("bigScript.kevs");
+	char *data = readModel("./dataTest/KevScriptTest/bigScript.kevs");
 	if(data){
 		struct input_t *input = input_new(data, strlen(data));
 

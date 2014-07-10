@@ -10,9 +10,14 @@
 
 char* ReadFile(char *filename);
 
+struct ast_t* getAst(  char *filename);
+
 int test();
 
 int readAllmodel();
 
 int readModel();
+
+
+
 #endif
