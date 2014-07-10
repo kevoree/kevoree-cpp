@@ -274,7 +274,7 @@ make install
 ./Release/bin/runtime
 ```
 
-## FAQ:
+## FAQ
 
 #### Dynamic library not found 
 ```
