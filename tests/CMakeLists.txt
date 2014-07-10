@@ -39,7 +39,7 @@ TARGET_LINK_LIBRARIES(run_tests waxeye)
 TARGET_LINK_LIBRARIES(run_tests kevscript)
 TARGET_LINK_LIBRARIES(run_tests cppunit)
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-TARGET_LINK_LIBRARIES(runtime rt)
+TARGET_LINK_LIBRARIES(run_tests rt)
 ENDIF()
 
 
