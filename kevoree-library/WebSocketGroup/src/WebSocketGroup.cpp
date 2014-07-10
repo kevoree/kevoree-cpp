@@ -110,6 +110,8 @@ void WebSocketGroup::start()
 void WebSocketGroup::stop()
 {
 	LOGGER_WRITE(Logger::DEBUG,"stop group");
+
+	// FIX ME CHECK IF STARTED
 	group.stop();
 
 	if(num_threads != 1)

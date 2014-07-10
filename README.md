@@ -8,7 +8,7 @@ For more information :
 Official website 		: http://www.kevoree.org
 
 
-Continuous integration 	: http://jenkins.reacloud.com
+Continuous integration 	: http://jenkins.reacloud.com and https://drone.io/github.com/kevoree/kevoree-cpp
 Maven repository  		: http://maven.reacloud.com/nexus
 
 ### Requirements:

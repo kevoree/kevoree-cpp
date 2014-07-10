@@ -9,16 +9,16 @@ class DeployPhase
 {
 public:
 	DeployPhase();
-~DeployPhase();
-void setMaxTime(long mt);
-long getMaxTime();
-void populate(PrimitiveCommand *cmd);
-void rollback();
+	~DeployPhase();
+	void setMaxTime(long mt);
+	long getMaxTime();
+	void populate(PrimitiveCommand *cmd);
+	void rollback();
 
 
-long maxTimeout;
-std::list<PrimitiveCommand*> primitives;
-DeployPhase *sucessor;
+	long maxTimeout;
+	std::list<PrimitiveCommand*> primitives;
+	DeployPhase *sucessor;
 };
 #endif
 
