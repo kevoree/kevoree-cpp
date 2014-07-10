@@ -178,7 +178,7 @@ void defaultbootstrapmodel(std::string nodename){
 
 	DeployUnit *d =factory.createDeployUnit();
 	d->name = "CPPNodeType";
-	d->groupName = "org.kevoree.library";
+	d->groupName = "org.kevoree.library.cpp";
 	d->version = "1.0.0";
 	d->type ="so";
 
@@ -191,7 +191,7 @@ void defaultbootstrapmodel(std::string nodename){
 
 	DeployUnit *dg =factory.createDeployUnit();
 	dg->name = "kevoree-group-websocket";
-	dg->groupName = "org.kevoree.library";
+	dg->groupName = "org.kevoree.library.cpp";
 	dg->version = "1.0.0";
 	dg->type ="so";
 
@@ -242,7 +242,7 @@ void defaultbootstrapmodel(std::string nodename){
 
 	DeployUnit *dc =factory.createDeployUnit();
 	dc->name = "HelloWorldComponent";
-	dc->groupName = "org.kevoree.library";
+	dc->groupName = "org.kevoree.library.cpp";
 	dc->version = "1.0.0";
 	dc->type ="so";
 
