@@ -119,29 +119,7 @@ AbstractTypeDefinition* DynamicLoader::create_instance(Instance *i)
 }
 
 
-bool DynamicLoader::start_instance(Instance *i)
-{
 
-	AbstractTypeDefinition *inst = (AbstractTypeDefinition*)instances.find(i->path())->second;
-	if(inst != NULL && dynamic_cast<AbstractTypeDefinition*>(inst) != 0)
-	{
-		LOGGER_WRITE(Logger::DEBUG,"invoke start "+i->name);
-		try
-		{
-			update_param(i,inst);
-			inst->start();
-		}
-		catch ( const std::exception & e )
-		{
-			std::cerr << e.what() << endl;
-			return false;
-		}
-
-		return true;
-	}
-	return false;
-
-}
 
 
 bool DynamicLoader::update_param(Instance *i,AbstractTypeDefinition *inst)
@@ -203,6 +181,29 @@ bool DynamicLoader::update_instance(Instance *i){
 
 }
 
+bool DynamicLoader::start_instance(Instance *i)
+{
+
+	AbstractTypeDefinition *inst = (AbstractTypeDefinition*)instances.find(i->path())->second;
+	if(inst != NULL && dynamic_cast<AbstractTypeDefinition*>(inst) != 0)
+	{
+		LOGGER_WRITE(Logger::DEBUG,"invoke start "+i->name);
+		try
+		{
+			update_param(i,inst);
+			inst->start();
+		}
+		catch ( const std::exception & e )
+		{
+			std::cerr << e.what() << endl;
+			return false;
+		}
+
+		return true;
+	}
+	return false;
+
+}
 
 
 bool DynamicLoader::stop_instance(Instance *i)
@@ -210,11 +211,12 @@ bool DynamicLoader::stop_instance(Instance *i)
 	AbstractTypeDefinition *inst = (AbstractTypeDefinition*)instances.find(i->path())->second;
 	if(inst != NULL && dynamic_cast<AbstractTypeDefinition*>(inst) != 0)
 	{
-		LOGGER_WRITE(Logger::DEBUG,"invoke stop "+i->name);
-		inst->stop();
-		LOGGER_WRITE(Logger::DEBUG,"Clean instance cache");
-		instances.erase(instances.find(i->path()));
-		LOGGER_WRITE(Logger::DEBUG,"Cleaned ");
+		LOGGER_WRITE(Logger::DEBUG,"Invoke stop "+i->name);
+		if(instances.find(i->path()) != instances.end()){
+			inst->stop();
+		}else {
+			LOGGER_WRITE(Logger::WARNING,"Invoke stop but instance is not started "+i->name);
+		}
 		return true;
 	}
 	return false;
@@ -239,9 +241,12 @@ bool DynamicLoader::destroy_instance(Instance *i)
 		if(inst != NULL && dynamic_cast<AbstractTypeDefinition*>(inst) != 0)
 		{
 
-			LOGGER_WRITE(Logger::DEBUG,"Clean deployUnits");
-			DeployUnit *du  = select_du_architecture(type);
 
+
+
+
+			DeployUnit *du  = select_du_architecture(type);
+			LOGGER_WRITE(Logger::DEBUG,"Destroying deployunit "+du->name);
 			// todo check if for me
 			map<string, void*>::const_iterator it = deploysUnits.find(du->internalGetKey());
 			if (it == deploysUnits.end())
@@ -252,12 +257,22 @@ bool DynamicLoader::destroy_instance(Instance *i)
 
 			destroyInstance(it->second,inst);
 
-			//FIX ME
-			//deploysUnits.erase(deploysUnits.find(du->internalGetKey()));
+			LOGGER_WRITE(Logger::DEBUG,"Cleaning instance cache "+i->path());
+			instances.erase(instances.find(i->path()));
+
+
+
+
+
+
 			// class 
-			//	if(dlclose(handler) != 0){
-			LOGGER_WRITE(Logger::WARNING,"dlclose");
-			//	}
+			if(dlclose(it->second) != 0)
+			{
+				LOGGER_WRITE(Logger::WARNING,"dlclose");
+			}else {
+
+				deploysUnits.erase(deploysUnits.find(du->internalGetKey()));
+			}
 
 
 
