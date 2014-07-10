@@ -48,10 +48,17 @@ bool DynamicLoader::register_instance(Instance *i)
 		map<string, void*>::const_iterator it = deploysUnits.find(du->internalGetKey());
 		if (it != deploysUnits.end())
 		{
-			LOGGER_WRITE(Logger::INFO,"The DeployUnit is already loaded");	
+			LOGGER_WRITE(Logger::DEBUG,"The DeployUnit is already loaded");
+			// increment reference to this du
+			references[du->internalGetKey()] +=1;
 			return true;
+		}else
+		{
+			// increment reference to this du
+			references[du->internalGetKey()] =1;
 		}
 
+		// the deploy unit need to be loaded for the first time
 		string libpath=	bootstrap->resolveDeployUnit(du);
 		if(!libpath.empty())
 		{
@@ -228,7 +235,7 @@ bool DynamicLoader::destroy_instance(Instance *i)
 	TypeDefinition *type = i->typeDefinition;
 	if(type == NULL)
 	{
-		LOGGER_WRITE(Logger::ERROR,"There is no TypeDefinition define");
+		LOGGER_WRITE(Logger::ERROR,"There is no typeDefinition defined");
 		return false;
 	}
 
@@ -242,11 +249,8 @@ bool DynamicLoader::destroy_instance(Instance *i)
 		{
 
 
-
-
-
 			DeployUnit *du  = select_du_architecture(type);
-			LOGGER_WRITE(Logger::DEBUG,"Destroying deployunit "+du->name);
+
 			// todo check if for me
 			map<string, void*>::const_iterator it = deploysUnits.find(du->internalGetKey());
 			if (it == deploysUnits.end())
@@ -254,25 +258,29 @@ bool DynamicLoader::destroy_instance(Instance *i)
 				LOGGER_WRITE(Logger::ERROR,"destroy instance but can't find deploy unit of STOP done");
 				return false;
 			}
-
+			LOGGER_WRITE(Logger::DEBUG,"The instance is destroyed from memory "+i->path());
+			// call the destructor of my instance to free memory
 			destroyInstance(it->second,inst);
 
-			LOGGER_WRITE(Logger::DEBUG,"Cleaning instance cache "+i->path());
+			LOGGER_WRITE(Logger::DEBUG,"The instance is unloaded from cache "+i->path());
 			instances.erase(instances.find(i->path()));
 
-
-
-
-
-
-			// class 
-			if(dlclose(it->second) != 0)
+			// decrements the reference count
+			//If the reference count drops to zero and no other loaded libraries use symbols in it, then the dynamic library is unloaded.
+			references[du->internalGetKey()] -=1;
+			if(references[du->internalGetKey()] ==0)
 			{
-				LOGGER_WRITE(Logger::WARNING,"dlclose");
-			}else {
-
+				LOGGER_WRITE(Logger::DEBUG,"The dynamic library is unloaded for "+du->path());
 				deploysUnits.erase(deploysUnits.find(du->internalGetKey()));
+				// ref remove
+				references.erase(references.find(du->internalGetKey()));
+
+				if(dlclose(it->second) != 0)
+				{
+					LOGGER_WRITE(Logger::ERROR,"dlclose");
+				}
 			}
+
 
 
 

@@ -15,6 +15,7 @@
 #include <kevoree-core/model/kevoree/FragmentDictionary.h>
 #include <kevoree-core/model/kevoree/DictionaryType.h>
 #include <kevoree-core/model/kevoree/DictionaryAttribute.h>
+#include <kevoree-core/model/kevoree/TypeDefinition.h>
 
 #include <map>
 #include <string>
@@ -66,9 +67,9 @@ private:
 	void print_elf_header(Elf32_Ehdr elf_header);
 #endif
 
-
-	map<string, void*>	deploysUnits;
-	map<string, void*>	instances;
+	map<string, int>	references; 	//  reference count on the dynamic library and deployUnits
+	map<string, void*>	deploysUnits; 	// reference on the dynamic library
+	map<string, void*>	instances;		// reference on the instance
 	Bootstraper *bootstrap;
 	KevoreeModelHandlerService *mservice;
 };
