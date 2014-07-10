@@ -40,7 +40,7 @@ void KevScriptTest::TestGetAst() {
 	struct ast_t *ast =	getAst("./dataTest/KevScriptTest/bigScript.kevs") ;
 	DefaultkevoreeFactory factory;
 	ContainerRoot   *model = factory.createContainerRoot();
-	KevScriptEngine::interpret(ast,model);
+	//interpret(ast,model);
 	//display_ast(ast, type_strings);
 
 	CPPUNIT_ASSERT(1);
