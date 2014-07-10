@@ -4,6 +4,12 @@ The KevC++ project aims to offers runtime of kevoree for native application and 
 Select the download for your platform below to try it !
 KevC++ is open source project LGPL v3. 
 
+For more information :
+Official website 		: http://www.kevoree.org
+
+
+Continuous integration 	: http://jenkins.reacloud.com
+
 ### Requirements:
 
 Please make sure your system satisfies one of these requirements:
@@ -233,10 +239,6 @@ The Kevoree Maven plugin is used to extract the Component-Model from the #pragma
 
 ## Compile the platform 
 
-
-Continuous integration : http://jenkins.reacloud.com
-
-
 #### Get the source code:
 ```sh
 git clone https://github.com/kevoree/kevoree-cpp.git
@@ -272,13 +274,28 @@ make install
 ./Release/bin/runtime
 ```
 
-FAQ:
+## FAQ:
+
+#### Dynamic library not found 
 ```
 bin/runtime: error while loading shared libraries: libkevoree-model-dynamic.so: cannot open shared object file: No such file or directory
+```
+##### Fix 
+```
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$KEVORE_CPP_FOLDER/lib
 
 export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$KEVORE_CPP_FOLDER/lib
 ```
- 
 
-
+#### Version of libc and libstdc++ 
+```
+bin/runtime: /lib/libc.so.6: version `GLIBC_2.14' not found (required by bin/runtime)
+bin/runtime: /usr/lib/libstdc++.so.6: version `GLIBCXX_3.4.15' not found (required by bin/runtime)
+bin/runtime: /lib/libc.so.6: version `GLIBC_2.17' not found (required by /home/jed/Bureau/kevCPP_1.0.0-BETA_64/lib/libkevoree-model-dynamic.so)
+bin/runtime: /usr/lib/libstdc++.so.6: version `CXXABI_1.3.5' not found (required by /home/jed/Bureau/kevCPP_1.0.0-BETA_64/lib/libkevoree-model-dynamic.so)
+bin/runtime: /usr/lib/libstdc++.so.6: version `GLIBCXX_3.4.15' not found (required by /home/jed/Bureau/kevCPP_1.0.0-BETA_64/lib/libkevoree-model-dynamic.so)
+```
+##### Fix 
+```
+upgrade your version ;-) 
+```
