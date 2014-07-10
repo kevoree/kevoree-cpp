@@ -10,8 +10,8 @@ class KevScriptEngine : public KevScriptService
 public:
 	KevScriptEngine();
 	~KevScriptEngine();
-	 void execute(std::string nodeName,ContainerRoot *model);
-	void executeFromStream(istream	&inputstream,ContainerRoot *model);
+	 void execute(std::string script,ContainerRoot *model);
+	void executeFromStream(istream	&script,ContainerRoot *model);
 };
 
 

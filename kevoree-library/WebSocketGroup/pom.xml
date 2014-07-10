@@ -10,11 +10,10 @@
         <version>1.0.0</version>
     </parent>
 
-    <groupId>org.kevoree.library</groupId>
+    <groupId>org.kevoree.library.cpp</groupId>
     <artifactId>kevoree-group-websocket</artifactId>
     <version>1.0.0</version>
     <name>Kevoree CPP :: Tools :: WebSocketGroup</name>
-
 
 
 

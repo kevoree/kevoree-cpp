@@ -12,7 +12,7 @@ KevScriptEngine::~KevScriptEngine()
 }
 
 
-void KevScriptEngine::execute(std::string nodeName,ContainerRoot *model){
+void KevScriptEngine::execute(std::string script,ContainerRoot *model){
 
 }
 void KevScriptEngine::executeFromStream(istream	&inputstream,ContainerRoot *model){
