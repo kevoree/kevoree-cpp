@@ -146,7 +146,7 @@ public class AnnotationPreProcessorMojo extends AbstractMojo {
 
                 String model = serializer.serialize(root);
                 getLog().debug("Generate Model Json => " + model);
-                String path =inputCFile.getPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator;
+                String path =inputCFile.getPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"KEV-INF"+File.separator;
                 PluginHelper.writeFile(path+"lib.json",model);
 
                 List<String> list = new ArrayList<String>();

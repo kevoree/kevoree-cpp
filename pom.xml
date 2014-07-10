@@ -33,11 +33,11 @@
     <repositories>
         <repository>
             <id>reacloud-snapshot</id>
-            <url>http://maven.reacloud.com/repository/reacloud/snapshots</url>
+            <url>http://maven.reacloud.com/nexus/content/repositories/reacloud/snapshots</url>
         </repository>
         <repository>
             <id>reacloud-release</id>
-            <url>http://maven.reacloud.com/repository/reacloud/release</url>
+            <url>ttp://maven.reacloud.com/nexus/content/repositories/reacloud/release</url>
         </repository>
     </repositories>
 
@@ -45,11 +45,11 @@
     <distributionManagement>
         <repository>
             <id>reacloud</id>
-            <url>http://maven.reacloud.com/repository/reacloud/release</url>
+            <url>http://maven.reacloud.com/nexus/content/repositories/reacloud/release</url>
         </repository>
         <snapshotRepository>
             <id>reacloud</id>
-            <url>http://maven.reacloud.com/repository/reacloud/snapshots</url>
+            <url>http://maven.reacloud.com/nexus/content/repositories/reacloud/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 

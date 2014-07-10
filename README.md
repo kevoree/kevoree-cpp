@@ -9,6 +9,7 @@ Official website 		: http://www.kevoree.org
 
 
 Continuous integration 	: http://jenkins.reacloud.com
+Maven repository  		: http://maven.reacloud.com/nexus
 
 ### Requirements:
 
@@ -98,6 +99,16 @@ INFO: Update sucessfully completed.
 
 The kevC++ platform bootstrap by default with a group which listen on port 9000 you can pull the model with the awesome web editor :
 http://editor.kevoree.org
+
+Model > From Custom Repo
+http://maven.reacloud.com/nexus/content/groups/public
+
+example : 
+org.kevoree.library.cpp
+CPPNodeType
+1.0.0
+
+
 For more information => https://github.com/kevoree/kevoree-web-editor
 
 

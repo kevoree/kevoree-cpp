@@ -93,8 +93,7 @@ if(NOT ANDROID)
 add_subdirectory (${SRC_KEVOREE_TESTS}/)
 ENDIF()
 
-
-
+ADD_CUSTOM_TARGET(upload COMMAND  mvn deploy)
 
 
 #************************************** INSTALL ****************************************************
