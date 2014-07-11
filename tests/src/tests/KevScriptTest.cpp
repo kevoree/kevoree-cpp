@@ -6,7 +6,7 @@
  */
 
 #include "KevScriptTest.h"
-#include "KevScriptEngine.h"
+#include "kevScriptEngine/KevScriptEngine.h"
 #include <kevoree-core/model/kevoree/DefaultkevoreeFactory.h>
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
 #include <iostream>
@@ -37,11 +37,13 @@ void KevScriptTest::testkevAllModel() {
 
 
 void KevScriptTest::TestGetAst() {
-	struct ast_t *ast =	getAst("./dataTest/KevScriptTest/bigScript.kevs") ;
+	const string log_file ="kevoree.log";
+	Logger::Start(Logger::DEBUG, log_file);
+	struct ast_t *ast =	getAst("./dataTest/KevScriptTest/repo.kevs") ;
 	DefaultkevoreeFactory factory;
 	ContainerRoot   *model = factory.createContainerRoot();
-	//interpret(ast,model);
-	//display_ast(ast, type_strings);
+	KevScriptEngine *kse = new KevScriptEngine() ;
+	kse->interpret(ast,model);
 
 	CPPUNIT_ASSERT(1);
 
