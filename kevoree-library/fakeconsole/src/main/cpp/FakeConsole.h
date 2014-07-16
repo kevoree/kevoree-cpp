@@ -5,6 +5,8 @@
 
 
 #pragma ComponentType "FakeConsole"
+#pragma Input   "fuck"
+#pragma Provides "fuck"
 class FakeConsole :public AbstractComponent
 {
 	public:
