@@ -2,7 +2,7 @@
 #include "Waxeye.h"
 #include "stdio.h"
 
-char* ReadFile(char *filename)
+char* ReadFile(const char *filename)
 {
 	char *buffer = NULL;
 	int string_size,read_size;
@@ -59,7 +59,7 @@ int readAllmodel(){
 
 }
 
-int readModel(char *filename)
+int readModel(const char *filename)
 {
 
 
@@ -99,7 +99,7 @@ int readModel(char *filename)
 
 
 
-struct ast_t* getAst(char *filename)
+struct ast_t* getAst(const char *filename)
 		{
 	struct parser_t *parser = parser_new();
 	char *data =	ReadFile(filename);
@@ -122,8 +122,9 @@ int test(){
 	// Create our parser
 	struct parser_t *parser = parser_new();
 
+	const char *file = "./dataTest/KevScriptTest/bigScript.kevs";
 	// Setup our input
-	char *data = readModel("./dataTest/KevScriptTest/bigScript.kevs");
+	char *data = readModel(file);
 	if(data){
 		struct input_t *input = input_new(data, strlen(data));
 

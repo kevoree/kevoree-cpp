@@ -8,9 +8,9 @@
 #define KEVSCRIPTTEST_C__H_
 
 
-char* ReadFile(char *filename);
+char* ReadFile(const char *filename);
 
-struct ast_t* getAst(  char *filename);
+struct ast_t* getAst(const char *filename);
 
 int test();
 

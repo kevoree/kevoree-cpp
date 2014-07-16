@@ -46,5 +46,9 @@ void KevScriptTest::TestGetAst() {
 	kse->interpret(ast,model);
 
 	CPPUNIT_ASSERT(1);
+	delete model;
+	delete kse;
+
+	//parser_delete(ast);
 
 }
