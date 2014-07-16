@@ -158,9 +158,13 @@ The Annotation API is made to provide a simple and flexible way to decorate your
  ```
 #### Dictionnay
  ```
-#pragma Dictionary "port" 
- ```
+#pragma Param "port" defaultValue="9000" fragdep optionnal
 
+#pragma Param "core_cpu" defaultValue="10"  
+
+ ```
+fragdep 	: the annotation precise that the paramater is shared 
+optionnal 	: 
 ###  Create your first component
  ```
 #include <kevoree-core/api/AbstractComponent.h>
@@ -250,7 +254,9 @@ The Kevoree Maven plugin is used to extract the Component-Model from the #pragma
  </build>
  ```
 
-
+mvn kevcpp:generate
+ 
+mvn kevcpp:deploy
 
 
 ## Compile the platform 
