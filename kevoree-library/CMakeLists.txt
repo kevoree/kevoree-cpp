@@ -15,9 +15,8 @@ set(SRC_MICROFRAMEWORK ${SRC_KEVOREE_CORE}/model/)
 include_directories(../maven-resolver-cpp/src/api)
 include_directories(../kevoree-core/src/api)
 #set(LIBRARY_OUTPUT_PATH target)
-add_subdirectory (WebSocketGroup/)
 
-add_subdirectory (HelloWorldComponent/)
-
-add_subdirectory (CPPNodeType/)
-
+add_subdirectory (websocketgroup/)
+add_subdirectory (helloworldcomponet/)
+add_subdirectory (cppNode/)
+add_subdirectory (fakeconsole/)

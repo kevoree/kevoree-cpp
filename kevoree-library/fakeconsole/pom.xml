@@ -5,16 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-       <groupId>org.kevoree.tools.cpp</groupId>
-        <artifactId>org.kevoree.tools.cpp.root</artifactId>
+        <groupId>org.kevoree.library.cpp</groupId>
+        <artifactId>org.kevoree.library.cpp.root</artifactId>
         <version>1.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>org.kevoree.tools.cpp</groupId>
-    <artifactId>preprocessor</artifactId>
+    <groupId>org.kevoree.library.cpp</groupId>
+    <artifactId>fakeconsole</artifactId>
     <version>1.0.1-SNAPSHOT</version>
-    <name>Kevoree CPP :: Tools :: Preprocessor</name>
-    
+    <name>Kevoree CPP :: Library :: fakeconsole</name>
+
 
 </project>
+

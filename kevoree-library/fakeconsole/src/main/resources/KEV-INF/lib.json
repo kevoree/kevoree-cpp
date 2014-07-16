@@ -1,0 +1,12 @@
+
+{"eClass":"org.kevoree.ContainerRoot","generated_KMF_ID":"15047633821405521229363","nodes":[],"typeDefinitions":[
+{"eClass":"org.kevoree.ComponentType","name":"fakeconsole","abstract":"false","version":"","factoryBean":"","bean":"","deployUnit":["deployUnits[org.kevoree.library.cpp//fakeconsole/1.0.0]"],"superTypes":[],"dictionaryType":[],"required":[],"provided":[]}
+],"repositories":[
+{"eClass":"org.kevoree.Repository","url":"http://repo.maven.apache.org/maven2"}
+,
+{"eClass":"org.kevoree.Repository","url":"http://maven.reacloud.com/repository/reacloud/snapshots"}
+,
+{"eClass":"org.kevoree.Repository","url":"http://maven.reacloud.com/repository/reacloud/releases"}
+],"dataTypes":[],"libraries":[],"hubs":[],"mBindings":[],"deployUnits":[
+{"eClass":"org.kevoree.DeployUnit","groupName":"org.kevoree.library.cpp","hashcode":"","name":"fakeconsole","type":"so","version":"1.0.0","url":"","requiredLibs":[]}
+],"nodeNetworks":[],"groups":[]}

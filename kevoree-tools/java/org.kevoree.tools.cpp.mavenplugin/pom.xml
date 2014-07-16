@@ -7,13 +7,13 @@
     <parent>
         <groupId>org.kevoree.tools.cpp</groupId>
         <artifactId>org.kevoree.tools.cpp.root</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>org.kevoree.tools.cpp.maven.plugin</groupId>
     <artifactId>kevcpp-maven-plugin</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <name>Kevoree CPP :: Tools :: MavenPlugin</name>
     <properties>
@@ -25,7 +25,7 @@
         <dependency>
             <groupId>org.kevoree.tools.cpp</groupId>
             <artifactId>preprocessor</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>

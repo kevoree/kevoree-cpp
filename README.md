@@ -65,7 +65,13 @@ Mac OS X 10.5 and up 32 bit (no available, soon !)
 Mac OS X 10.5 and up 64 bit (no available, soon !)
 
 ##### Unzip your kevoree-cpp folder somewhere convenient on your hard drive.
-
+ ```
+├── bin
+│   └── runtime
+├── setenv.sh
+└── lib
+    └── libkevoree-model-dynamic.so
+ ```
 
 ##### To start kevoree-cpp :
  ```

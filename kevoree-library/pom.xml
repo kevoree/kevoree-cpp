@@ -6,18 +6,19 @@
     <artifactId>org.kevoree.library.cpp.root</artifactId>
     <packaging>pom</packaging>
     <name>Kevoree CPP :: Library :: Root</name>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <parent>
         <groupId>org.kevoree.cpp</groupId>
         <artifactId>root</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modules>
-        <module>CPPNodeType</module>
-        <module>HelloWorldComponent</module>
-        <module>WebSocketGroup</module>
+        <module>cppNode</module>
+        <module>helloworldcomponet</module>
+        <module>websocketgroup</module>
+        <module>fakeconsole</module>
     </modules>
 
 
@@ -26,7 +27,7 @@
             <plugin>
                 <groupId>org.kevoree.tools.cpp.maven.plugin</groupId>
                 <artifactId>kevcpp-maven-plugin</artifactId>
-                <version>1.0.0</version>
+                <version>1.0.1-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <id>gen</id>
@@ -39,16 +40,5 @@
         </plugins>
     </build>
 
-
-    <repositories>
-        <repository>
-            <id>reacloud-release</id>
-            <url>http://maven.reacloud.com/repository/reacloud/releases</url>
-        </repository>
-        <repository>
-            <id>reacloud-snapshot</id>
-            <url>http://maven.reacloud.com/repository/reacloud/snapshots</url>
-        </repository>
-    </repositories>
 </project>
 

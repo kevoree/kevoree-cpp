@@ -6,7 +6,7 @@
 
     <groupId>org.kevoree.cpp</groupId>
     <artifactId>root</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>Kevoree CPP :: Root</name>
 
     <packaging>pom</packaging>
@@ -37,7 +37,7 @@
         </repository>
         <repository>
             <id>reacloud-release</id>
-            <url>ttp://maven.reacloud.com/nexus/content/repositories/reacloud/release</url>
+            <url>http://maven.reacloud.com/nexus/content/repositories/reacloud/release</url>
         </repository>
     </repositories>
 

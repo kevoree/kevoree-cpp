@@ -6,12 +6,12 @@
     <artifactId>org.kevoree.tools.cpp.root</artifactId>
     <packaging>pom</packaging>
     <name>Kevoree CPP :: Tools :: Root</name>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <parent>
         <groupId>org.kevoree.cpp</groupId>
         <artifactId>root</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 

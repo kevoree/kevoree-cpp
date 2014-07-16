@@ -113,7 +113,7 @@ public class Lexer {
                     c = nextChar();
                     value +=(char)c;
                 }while (isDone() != true && isSpace(c) != true);
-                token.setValue(value.trim().replace("\"",""));
+                token.setValue(value.trim().replace("\"","").toLowerCase());
 
             }
             else
