@@ -36,6 +36,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     size_t i;
     TypeDefinition *td  ;
     DefaultkevoreeFactory factory;
+    Repository *rep ;
 
     switch (tree->type) {
 
@@ -49,8 +50,9 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     		interpret((struct ast_t*) vector_get(chil, i), model);
     		}
     	}
+    	LOGGER_WRITE(Logger::DEBUG,"TYPE_KEVSCRIPT");
 
-
+    	break ;
     case TYPE_STATEMENT:
        	chil = ast->data.tree->children;
         	if(chil != NULL)
@@ -60,12 +62,19 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
         		interpret((struct ast_t*) vector_get(chil, i), model);
         		}
         	}
-
+        	LOGGER_WRITE(Logger::DEBUG,"TYPE_STATEMENT");
+        	break ;
+    case TYPE_ADDREPO:
+    	chil = ast->data.tree->children;
+      	rep = factory.createRepository();
+      	rep->url = ast_children_as_string((struct ast_t*) vector_get(chil,0)) ;
+      	model->addrepositories(rep);
+      	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADDREPO");
+    	break ;
 
     case TYPE_ADD:
-    	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADD");
+			td = TypeDefinitionResolver::resolve((struct ast_t*) vector_get(chil, 0),model) ;
 
-    /*	td = TypeDefinitionResolver::resolve((struct ast_t*) vector_get(chil, 1),model) ;
     	if(td == NULL)
     	{
     		throw string("TypeDefinition not found : " + string(ast_children_as_string((struct ast_t*) vector_get(chil,1))))	;
@@ -81,42 +90,45 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 					LOGGER_WRITE(Logger::DEBUG,"Todo : ApplyAdd");
 									}
     		}
-    	}*/
+    	}
+       	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADD");
+    	break ;
+    case TYPE_INCLUDE:
+    	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE");
+    	break ;
+
     case TYPE_REMOVE:
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_REMOVE");
-
+    	break ;
     case TYPE_MOVE:
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_MOVE");
-
+    	break ;
     case TYPE_ATTACH:
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_ATTACH");
-
+    	break ;
     case TYPE_DETACH:
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_DETACH");
+    	break ;
 
-    case TYPE_ADDREPO:
-    	cout <<"add rep" << endl ;
-    	chil = ast->data.tree->children;
-    	cout<< ast_children_as_string((struct ast_t*) vector_get(chil,0))<<endl ;
-      	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADDREPO");
 
     case TYPE_NETWORK:
      	LOGGER_WRITE(Logger::DEBUG,"TYPE_NETWORK");
-
+    	break ;
     case TYPE_INCLUDE:
        	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE");
-
+    	break ;
     case TYPE_ADDBINDING:
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADDBINDING");
-
+    	break ;
     case TYPE_DELBINDING:
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_DELBINDING");
-
+    	break ;
     default:
     	LOGGER_WRITE(Logger::DEBUG,"default");
-
+    	break ;
     }
 
+   delete tree ;
 
 
 	}

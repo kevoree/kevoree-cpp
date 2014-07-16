@@ -15,8 +15,7 @@ extern "C" {
 TypeDefinition* TypeDefinitionResolver::resolve(struct ast_t *ast, ContainerRoot *model)
 {
 
-
-	if(!(ast->type == TYPE_TYPEDEF))
+	if(ast->type != TYPE_TYPEDEF)
 	{
 		throw string("Parse error, should be a type definition : " + ast->type);
 	}

@@ -36,7 +36,7 @@ void KevScriptTest::testkevAllModel() {
 }
 
 
-void KevScriptTest::TestGetAst() {
+void KevScriptTest::TestAddRepo() {
 	const string log_file ="kevoree.log";
 	Logger::Start(Logger::DEBUG, log_file);
 	struct ast_t *ast =	getAst("./dataTest/KevScriptTest/repo.kevs") ;
@@ -45,7 +45,7 @@ void KevScriptTest::TestGetAst() {
 	KevScriptEngine *kse = new KevScriptEngine() ;
 	kse->interpret(ast,model);
 
-	CPPUNIT_ASSERT(1);
+	CPPUNIT_ASSERT(model->repositories.size() == 1);
 	delete model;
 	delete kse;
 
