@@ -31,8 +31,16 @@
                 <executions>
                     <execution>
                         <id>gen</id>
+                        <phase>install</phase>
                         <goals>
                             <goal>generate</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>de</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
                         </goals>
                     </execution>
                 </executions>
