@@ -14,7 +14,7 @@ char* ReadFile(const char *filename)
 		fseek(handler,0,SEEK_END);
 		//offset from the first to the last byte, or in other words, filesize
 		string_size = ftell (handler);
-		printf("KevScript size %d octets \n",string_size);
+		//printf("KevScript size %d octets \n",string_size);
 		//go back to the start of the file
 		rewind(handler);
 

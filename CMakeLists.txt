@@ -94,6 +94,8 @@ add_subdirectory (${SRC_KEVOREE_TESTS}/)
 ENDIF()
 
 ADD_CUSTOM_TARGET(upload COMMAND  mvn deploy)
+ADD_CUSTOM_TARGET(run  COMMAND  ${CMAKE_BUILD_TYPE}/bin/runtime)
+
 
 
 #************************************** INSTALL ****************************************************
