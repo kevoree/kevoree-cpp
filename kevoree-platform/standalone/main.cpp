@@ -27,7 +27,7 @@ KevoreeBootStrap *kb=NULL;
 /* configuration */
 const string log_file ="kevoree.log";
 const std::string name = "Kevoree Platform";
-const std::string version = "1.0.0-BETA";
+const std::string version = "1.0.1-SNAPSHOT";
 std::string path_bootstrap_model = "";
 std::string nodename = "node0";
 
@@ -179,7 +179,7 @@ void defaultbootstrapmodel(std::string nodename){
 	DeployUnit *d =factory.createDeployUnit();
 	d->name = "CPPNodeType";
 	d->groupName = "org.kevoree.library.cpp";
-	d->version = "1.0.0";
+	d->version = version;
 	d->type ="so";
 
 
@@ -192,13 +192,13 @@ void defaultbootstrapmodel(std::string nodename){
 	DeployUnit *dg =factory.createDeployUnit();
 	dg->name = "kevoree-group-websocket";
 	dg->groupName = "org.kevoree.library.cpp";
-	dg->version = "1.0.0";
+	dg->version = version;
 	dg->type ="so";
 
 	TypeDefinition *grouptype = factory.createGroupType();
 	grouptype->abstract= false;
 	grouptype->name ="WebSocketGroup";
-	grouptype->version = "1.0.0";
+	grouptype->version = version;
 
 	DictionaryType *typegroup= factory.createDictionaryType();
 	DictionaryAttribute *attport = factory.createDictionaryAttribute();
@@ -243,7 +243,7 @@ void defaultbootstrapmodel(std::string nodename){
 	DeployUnit *dc =factory.createDeployUnit();
 	dc->name = "HelloWorldComponent";
 	dc->groupName = "org.kevoree.library.cpp";
-	dc->version = "1.0.0";
+	dc->version = version;
 	dc->type ="so";
 
 
@@ -265,9 +265,9 @@ void defaultbootstrapmodel(std::string nodename){
 
 
 	Repository *repo_release = factory.createRepository();
-	repo_release->url = "http://maven.reacloud.com/nexus/content/repositories/reacloud/release";
+	repo_release->url = "http://maven.reacloud.com/nexus/content/repositories/releases";
 	Repository *repo_snap = factory.createRepository();
-	repo_snap->url = "http://maven.reacloud.com/nexus/content/repositories/reacloud/snapshots";
+	repo_snap->url = "http://maven.reacloud.com/nexus/content/repositories/snapshots";
 
 	model->addrepositories(repo_release);
 	model->addrepositories(repo_snap);
