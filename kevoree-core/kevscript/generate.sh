@@ -1,2 +1,2 @@
 #!/bin/sh
-waxeye -g c src/ kevscript.waxeye 
+waxeye -g c src/ grammar/kevscript.waxeye 
