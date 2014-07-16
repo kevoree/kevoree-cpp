@@ -11,6 +11,8 @@ import java.util.Map;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.PumpStreamHandler;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 
 
 public class MavenDeployer {
@@ -27,7 +29,7 @@ public class MavenDeployer {
         this.repositoryUrl = repositoryUrl;
     }
 
-    public void deploy(final String groupId, final String artifactId, final String version, final String artifactPath,final String packaging) throws IOException {
+    public void deploy(final String groupId, final String artifactId, final String version, final String artifactPath,final String packaging) throws IOException, MojoFailureException, MojoExecutionException {
 
 
         final Map<String,String> params = new HashMap<String, String>();
@@ -47,7 +49,10 @@ public class MavenDeployer {
         PumpStreamHandler streamHandler = new PumpStreamHandler(outputStream);
         executor.setStreamHandler(streamHandler);
         executor.execute(deployCmd);
-        System.out.println(outputStream.toString());
+        if(!outputStream.toString().contains("SUCCESS")){
+            System.err.println(outputStream.toString());
+        }
+
 
     }
 }

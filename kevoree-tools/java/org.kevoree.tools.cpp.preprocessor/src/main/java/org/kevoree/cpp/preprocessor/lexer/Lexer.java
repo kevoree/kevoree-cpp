@@ -99,7 +99,7 @@ public class Lexer {
                     token.setType(Token.TokenType.GroupType);
                 }else  if(id.toLowerCase().trim().equals("componenttype")){
                     token.setType(Token.TokenType.ComponentType);
-                }else  if(id.toLowerCase().trim().equals("dictionary"))
+                }else  if(id.toLowerCase().trim().equals("param"))
                 {
                     token.setType(Token.TokenType.Dictionary);
                 }else

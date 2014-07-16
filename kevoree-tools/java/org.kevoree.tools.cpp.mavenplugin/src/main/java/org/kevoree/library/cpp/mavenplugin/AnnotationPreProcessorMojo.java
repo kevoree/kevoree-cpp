@@ -25,11 +25,7 @@ import java.util.List;
 /**
  * @author jedartois
  * @author <a href="mailto:jedartois@gmail.com">Jean-Emile DARTOIS</a>
- * @version $Id$
- * @execute phase="compile"
  * @goal generate
- * @phase generate-sources
- * @requiresDependencyResolution compile
  */
 public class AnnotationPreProcessorMojo extends AbstractMojo {
 
@@ -140,43 +136,10 @@ public class AnnotationPreProcessorMojo extends AbstractMojo {
 
             try
             {
-
-                // looking for so
-                List<File> types_so = new ArrayList<File>();
-
                 String model = serializer.serialize(root);
                 getLog().debug("Generate Model Json => " + model);
                 String path =inputCFile.getPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"KEV-INF"+File.separator;
                 PluginHelper.writeFile(path+"lib.json",model);
-
-                List<String> list = new ArrayList<String>();
-                list.add(".so");
-                list.add(".dylib");
-                PluginHelper.scanForHeader(inputCFile,types_so,list);
-
-                if(types_so.size() > 0){
-                    //    PluginHelper.copyFileUsingStream( types_so.get(0),new File(path+types_so.get(0).getName()));
-
-                    DeploymentRepository repo=null;
-                    if(project.getVersion().contains("SNAPSHOT")){
-                        repo =   project.getDistributionManagement().getSnapshotRepository();
-
-                    }else
-                    {
-                        repo = project.getDistributionManagement().getRepository();
-                    }
-                    if(repo != null ){
-                        deployer = new MavenDeployer(repo.getId(),repo.getUrl());
-
-                        deployer.deploy(project.getGroupId(),project.getArtifactId(),project.getVersion(),types_so.get(0).getAbsolutePath(),"so");
-                        deployer.deploy(project.getGroupId(),project.getArtifactId(),project.getVersion(),path+"lib.json","json");
-                    }else{
-                        getLog().error("there is not repository specify for deploy artifact");
-
-                    }
-
-
-                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
