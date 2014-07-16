@@ -25,8 +25,8 @@ typedef server::message_ptr message_ptr;
 
 
 #pragma GroupType "WebSocketGroup"  
-#pragma Dictionary "port"
-#pragma Dictionary "num_threads"
+#pragma Param "port" defaultValue="9000" fragdep
+
 class WebSocketGroup :public AbstractGroup
 {
 public:
