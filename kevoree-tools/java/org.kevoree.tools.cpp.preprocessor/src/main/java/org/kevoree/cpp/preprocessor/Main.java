@@ -1,7 +1,10 @@
 package org.kevoree.cpp.preprocessor;
 
+import org.kevoree.cpp.preprocessor.ast.EOF;
+import org.kevoree.cpp.preprocessor.ast.Statment;
+import org.kevoree.cpp.preprocessor.ast.Unsupported;
 import org.kevoree.cpp.preprocessor.lexer.Lexer;
-import org.kevoree.cpp.preprocessor.lexer.Token;
+
 
 
 import java.io.*;
@@ -48,12 +51,13 @@ public class Main {
         for(String file :files){
        //     System.out.println(file);
             Lexer te = new Lexer(new FileInputStream(new File(file)));
-            Token token =   te.nextToken();
+            Statment token =   te.nextToken();
 
-            while(  token.getType() != Token.TokenType.END_OF_FILE  ){
+            while(  !(token instanceof EOF )  ){
 
-                if(token.getType() == Token.TokenType.PRAGMA){
+                if(!(token instanceof       Unsupported)){
                     System.out.println(token);
+
                 }
 
                 token =   te.nextToken();

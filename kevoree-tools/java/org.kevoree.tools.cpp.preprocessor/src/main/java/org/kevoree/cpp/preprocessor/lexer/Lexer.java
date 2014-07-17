@@ -1,8 +1,12 @@
 package org.kevoree.cpp.preprocessor.lexer;
 
+import org.kevoree.cpp.preprocessor.ast.*;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jed on 30/06/14.
@@ -61,12 +65,78 @@ public class Lexer {
             return false;
         }
     }
-
-    public  Token nextToken(){
+    public String parseToken(){
+        // name
         byte   c;
-        Token token= new Token();
+        String value="";
+        do
+        {
+            c = nextChar();
+            value +=(char)c;
+        }while (isDone() != true && isSpace(c) != true );
+        return value.trim().replace("\"","").toLowerCase();
+    }
+
+
+    public   String  parsedefaultValue(){
+        int indice=index;
+        byte   c= ' ';
+        do {
+            String value="";
+            do
+            {
+                c = nextChar();
+                value +=(char)c;
+            }while (isDone() != true && isSpace(c) != true );
+
+            if(value.toLowerCase().startsWith("defaultvalue")){
+
+                index = indice;
+                return value.substring(value.indexOf("=")+1,value.length()).trim().replace("\"","").toLowerCase();
+            }
+
+            return "";
+
+        }
+        while (isDone() != true &&  c != '#');
+
+
+
+
+    }
+
+    public   List<String>  parseOptions(){
+        int indice =index;
+        List<String> tokens = new ArrayList<String>();
+        byte   c= ' ';
+        do {
+            String value="";
+            do
+            {
+                c = nextChar();
+                value +=(char)c;
+            }while (isDone() != true && isSpace(c) != true );
+            value = value.trim().replace("\"","").toLowerCase();
+
+                tokens.add(value);
+
+
+        }
+        while (isDone() != true &&  c != '#');
+
+
+
+        return tokens;
+    }
+
+
+    public  Statment nextToken(){
+        byte   c;
+
+        Statment statment=null;
         if (isDone()) {
-            token.type = Token.TokenType.END_OF_FILE;
+            EOF token= new EOF();
+
             return token;
         }
         c=nextChar();
@@ -75,61 +145,110 @@ public class Lexer {
             c = nextChar();
         }
 
+
         if(c == '#'){
 
             if(isPragma())
             {
 
+                // id
                 while (isDone() != true && isSpace(c)!=true ) {
                     c = nextChar();
                 }
-                String id="";
-                do
-                {
-                    c = nextChar();
-                    id +=(char)c;
-                }while (isDone() != true && isSpace(c) != true);
-                token.setId(id.replace("\"",""));
 
-                if(id.toLowerCase().trim().equals("nodetype"))
+                String type = parseToken();
+                if(type.equals(NodeType.class.getSimpleName().toLowerCase()))
+                {
+                    statment = new NodeType();
+                    statment.setName(parseToken());
+
+                }else  if(type.equals(ComponentType.class.getSimpleName().toLowerCase())){
+
+                    statment = new ComponentType();
+                    statment.setName(parseToken());
+                }else  if(type.equals(ChannelType.class.getSimpleName().toLowerCase())){
+                    statment  = new ChannelType();
+                    statment.setName(parseToken());
+
+                }else  if(type.equals(GroupType.class.getSimpleName().toLowerCase())){
+                    statment  = new GroupType();
+                    statment.setName(parseToken());
+                } else if(type.equals(Param.class.getSimpleName().toLowerCase())){
+                    statment  = new Param();
+                    statment.setName(parseToken());
+
+                    String defaultvalue = parsedefaultValue();
+                    List<String> options =parseOptions();
+                    if(defaultvalue.length() > 0){
+                        ((Param)statment).setDefaultValue(defaultvalue);
+                    }
+                    if(options.contains("fragdep")){
+                        statment.setFragdep(true);
+                    }
+                    if(options.contains("optional")){
+                        statment.setOptional(true);
+                    }
+                }
+                else if(type.equals(Input.class.getSimpleName().toLowerCase())){
+                    statment  = new Input();
+                    statment.setName(parseToken());
+
+
+
+
+
+                }else if(type.equals(Provide.class.getSimpleName().toLowerCase())) {
+                    statment = new Provide();
+                    statment.setName(parseToken());
+                }
+                else {
+                    // no managed
+                    System.out.println(type+" ");
+                    statment = new Unsupported();
+                }
+
+/*
+                if(token.getId().toLowerCase().trim().equals(Token.type_strings[0]))
                 {
                     token.setType(Token.TokenType.NodeType);
-                }else  if(id.toLowerCase().trim().equals("grouptype"))
+                    parseName(token);
+                }else  if(token.getId().toLowerCase().trim().equals(Token.type_strings[1]))
                 {
                     token.setType(Token.TokenType.GroupType);
-                }else  if(id.toLowerCase().trim().equals("componenttype")){
+                    parseName(token);
+                }else  if(token.getId().toLowerCase().trim().equals(Token.type_strings[2])){
                     token.setType(Token.TokenType.ComponentType);
-                }else  if(id.toLowerCase().trim().equals("param"))
+                    parseName(token);
+                }else  if(token.getId().toLowerCase().trim().equals(Token.type_strings[3]))
                 {
-                    token.setType(Token.TokenType.Dictionary);
+                    token.setType(Token.TokenType.Param);
+                    parseName(token);
+
+                    parsedefaultValue(token);
+
+
                 }else
 
                 {
                     token.setType(Token.TokenType.PRAGMA);
-                }
-                String value="";
-                do
-                {
-                    c = nextChar();
-                    value +=(char)c;
-                }while (isDone() != true && isSpace(c) != true);
-                token.setValue(value.trim().replace("\"","").toLowerCase());
+                }*/
+
 
             }
             else
             {
                 // next
-                token.setType(Token.TokenType.SOURCE);
+                statment = new Unsupported();
             }
 
 
         }else {
-            token.setType(Token.TokenType.SOURCE);
+            statment = new Unsupported();
         }
 
 
 
-        return token;
+        return statment;
     }
 
     private byte nextChar() {
