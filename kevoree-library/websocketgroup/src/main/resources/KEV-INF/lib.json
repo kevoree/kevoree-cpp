@@ -1,8 +1,0 @@
-
-{"eClass":"org.kevoree.ContainerRoot","generated_KMF_ID":"6305492651405525938084","nodes":[],"typeDefinitions":[],"repositories":[
-{"eClass":"org.kevoree.Repository","url":"http://maven.reacloud.com/nexus/content/repositories/releases/"}
-,
-{"eClass":"org.kevoree.Repository","url":"http://maven.reacloud.com/nexus/content/repositories/snapshots/"}
-,
-{"eClass":"org.kevoree.Repository","url":"http://repo.maven.apache.org/maven2"}
-],"dataTypes":[],"libraries":[],"hubs":[],"mBindings":[],"deployUnits":[],"nodeNetworks":[],"groups":[]}
