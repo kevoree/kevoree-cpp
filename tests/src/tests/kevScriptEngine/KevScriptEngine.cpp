@@ -1,5 +1,6 @@
 #include "KevScriptEngine.h"
 #include <iostream>
+#include <string>
 #include <kevoree-core/model/kevoree/DefaultkevoreeFactory.h>
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
 #include "utils/TypeDefinitionResolver.h"
@@ -95,6 +96,10 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	break ;
     case TYPE_INCLUDE:
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE");
+    	chil = ast->data.tree->children;
+    	string *type  = ast_children_as_string((struct ast_t*) vector_get(chil,0)) ;
+    	string *url = ast_children_as_string((struct ast_t*) vector_get(chil,1));
+    	MergeResolver::merge(model, type, url) ;
     	break ;
 
     case TYPE_REMOVE:
@@ -109,8 +114,15 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     case TYPE_DETACH:
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_DETACH");
     	break ;
-
-
+    case TYPE_START:
+    	LOGGER_WRITE(Logger::DEBUG,"TYPE_START");
+    	break ;
+    case TYPE_PAUSE:
+      	LOGGER_WRITE(Logger::DEBUG,"TYPE_PAUSE");
+    	break ;
+    case TYPE_STOP:
+       	LOGGER_WRITE(Logger::DEBUG,"TYPE_STOP");
+    	break ;
     case TYPE_NETWORK:
      	LOGGER_WRITE(Logger::DEBUG,"TYPE_NETWORK");
     	break ;
@@ -132,14 +144,53 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 
 
 	}
+void KevScriptEngine::applyAttach(Instance *leftH, Instance *rightH, ContainerRoot *model, bool reverse) {
+	ContainerNode* cnL = dynamic_cast<ContainerNode*>(leftH);
+	Group* gR = dynamic_cast<Group*>(rightH);
+	if(cnL == 0)
+	{
+		throw string(leftH -> name + " is not a ContainerNode") ;
+	}if(gR == 0)
+	{
+		throw string(rightH -> name + " is not a Group") ;
+	}
+	if(!reverse)
+	{
+		gR->addsubNodes(cnL);
+	}else
+	{
+		gR->removesubNodes(cnL);
+	}
 
-/*
-case TYPE_START:
-	LOGGER_WRITE(Logger::DEBUG,"TYPE_START");
+}
+void KevScriptEngine::applyMove(Instance *leftH, Instance *rightH, ContainerRoot *model) {
+	ContainerNode* cn = dynamic_cast<ContainerNode*>(rightH);
+	if(cn == 0)
+	{
+		throw string(rightH -> name + " is not a ContainerNode") ;
+	}else
+	{
+		ComponentInstance* ci = dynamic_cast<ComponentInstance*>(leftH);
+		if(ci != 0){
+			cn->addcomponents(ci) ;
+		}else
+		{
+			ContainerNode* cn2 = dynamic_cast<ContainerNode*>(leftH);
+			if(cn2 != 0)
+			{
+				cn->addhost(cn2) ;
+			}else
+			{
+				throw string(rightH -> name + " is not a ContainerNode or component") ;
+			}
+		}
+	}
 
-case TYPE_PAUSE:
-  	LOGGER_WRITE(Logger::DEBUG,"TYPE_PAUSE");
+}
 
-case TYPE_STOP:
-   	LOGGER_WRITE(Logger::DEBUG,"TYPE_STOP");
- */
+bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerRoot *model) {
+	Instance process = NULL;
+
+
+	 return process != NULL;
+}
