@@ -1,6 +1,6 @@
 
 #include <kevoree-core/api/KevScriptService.h>
-
+#include <kevoree-core/model/kevoree/Instance.h>
 #ifndef __KevScriptEngine_H
 #define __KevScriptEngine_H
 

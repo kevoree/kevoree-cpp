@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <kevoree-core/model/kevoree/DefaultkevoreeFactory.h>
+#include <kevoree-core/model/kevoree/Instance.h>
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
 #include "utils/TypeDefinitionResolver.h"
 
@@ -205,7 +206,19 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 				throw string("Node already exists with name: " + newNodeName) ;
 			}
 			model->addnodes(instance);
-
+			process = instance ;
+		}else
+		{
+			string parentNodeName = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
+			string newNodeName = ast_children_as_string((struct ast_t*) vector_get(child,1)) ;
+			instance->name = newNodeName ;
+			ContainerNode *parentNode = model->findnodesByID(parentNodeName) ;
+			if(parentNode == NULL){
+				throw string("Node" +parentNodeName +"doesn't exist");
+			}
+			model->addnodes(instance);
+			parentNode->addhost(instance);
+			process = instance ;
 		}
 	}
 
