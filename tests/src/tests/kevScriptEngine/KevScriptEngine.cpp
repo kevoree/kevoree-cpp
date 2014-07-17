@@ -226,7 +226,72 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 			process = instance ;
 		}
 	}
+	ComponentType* ct = dynamic_cast<ComponentType*>(td);
+	if(ct != 0){
+		ComponentInstance* instance = factory.createComponentInstance();
+		instance->typeDefinition = td ;
+		if((ast->type == TYPE_INSTANCEPATH) && child->size == 2)
+			{
+			string newNodeName = ast_children_as_string((struct ast_t*) vector_get(child,1)) ;
+			instance->name = newNodeName ;
+			map<string,PortTypeRef*> reqPortMap = ct->required ;
+			map<string,PortTypeRef*> provPortMap = ct->required ;
+			for(std::map<string,PortTypeRef*>::iterator it = reqPortMap.begin(); it != reqPortMap.end() ; ++it)
+			{
+				PortTypeRef *curr = it->second ;
+				Port *newPort = factory.createPort() ;
+				newPort->portTypeRef = curr ;
+				newPort->name = curr->name ;
+				instance->addrequired(newPort) ;
+			}
+			for(std::map<string,PortTypeRef*>::iterator it = provPortMap.begin(); it != provPortMap.end() ; ++it)
+			{
+				PortTypeRef *curr = it->second ;
+				Port *newPort = factory.createPort() ;
+				newPort->portTypeRef = curr ;
+				newPort->name = curr->name ;
+				instance->addprovided(newPort) ;
+			}
+			string parentNodeName = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
+			ContainerNode *parentNode = model->findnodesByID(parentNodeName) ;
+			if(parentNode == NULL){
+						throw string("Node" +parentNodeName +"doesn't exist");
+					}
+			else{
+				parentNode->addcomponents(instance);
+				process = instance ;
+			}
 
+			}
+		ChannelType* cht = dynamic_cast<ChannelType*>(td);
+		if(cht != 0){
+			Channel *instance = factory.createChannel() ;
+			instance->typeDefinition = td ;
+			if((ast->type == TYPE_INSTANCEPATH) && child->size == 1)
+						{
+				string channelname = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
+				instance->name = channelname ;
+				model->addhubs(instance) ;
+				process = instance ;
+						}else{
+							throw string("wrong channel name : ") ;
+						}
+		}
+		GroupType* gt = dynamic_cast<GroupType*>(td);
+		if(gt != 0){
+			Group *instance = factory.createGroup() ;
+				instance->typeDefinition = td ;
+				if((ast->type == TYPE_INSTANCEPATH) && child->size == 1)
+							{
+					string channelname = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
+					instance->name = channelname ;
+					model->addgroups(instance) ;
+					process = instance ;
+							}else{
+								throw string("wrong channel name : " ) ;
+							}
+			}
+	}
 	return process != NULL;
 
 }
