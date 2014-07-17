@@ -99,8 +99,8 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     case TYPE_INCLUDE:
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE");
     	chil = ast->data.tree->children;
-    	string *type  = ast_children_as_string((struct ast_t*) vector_get(chil,0)) ;
-    	string *url = ast_children_as_string((struct ast_t*) vector_get(chil,1));
+    	string *type = string(ast_children_as_string((struct ast_t*) vector_get(chil,0))) ;
+    	string *url = string(ast_children_as_string((struct ast_t*) vector_get(chil,1)));
     	MergeResolver::merge(model, type, url) ;
     	break ;
 
@@ -193,7 +193,7 @@ void KevScriptEngine::applyMove(Instance *leftH, Instance *rightH, ContainerRoot
 }
 
 bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerRoot *model) {
-	Instance process = NULL;
+	Instance process ;
 	struct vector_t *child = ast->data.tree->children;
 	NodeType* nt = dynamic_cast<NodeType*>(td);
 	if(nt != 0)
