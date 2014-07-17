@@ -190,7 +190,24 @@ void KevScriptEngine::applyMove(Instance *leftH, Instance *rightH, ContainerRoot
 
 bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerRoot *model) {
 	Instance process = NULL;
+	struct vector_t *child = ast->data.tree->children;
+	NodeType* nt = dynamic_cast<NodeType*>(td);
+	if(nt != 0)
+	{
+		ContainerNode* instance = factory.createContainerNode() ;
+		instance->typeDefinition = td ;
+		if((ast->type == TYPE_INSTANCEPATH) && child->size == 1)
+		{
+			string newNodeName = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
+			instance->name = newNodeName ;
+			if(model->findnodesByID(newNodeName) != NULL)
+			{
+				throw string("Node already exists with name: " + newNodeName) ;
+			}
+			model->addnodes(instance);
 
+		}
+	}
 
-	 return process != NULL;
+	return process != NULL;
 }
