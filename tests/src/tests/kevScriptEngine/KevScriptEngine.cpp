@@ -33,7 +33,7 @@ void KevScriptEngine::executeFromStream(istream	&inputstream,ContainerRoot *mode
 
 
 void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
-	/*
+
 	struct ast_tree_t *tree = ast->data.tree;
     struct vector_t *chil ;
     size_t num_chil ;
@@ -41,6 +41,8 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     TypeDefinition *td  ;
     DefaultkevoreeFactory factory;
     Repository *rep ;
+    string type ;
+    string url ;
 
     switch (tree->type) {
 
@@ -100,8 +102,8 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     case TYPE_INCLUDE:
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE");
     	chil = ast->data.tree->children;
-    	string type = string(ast_children_as_string((struct ast_t*) vector_get(chil,0))) ;
-    	string url = string(ast_children_as_string((struct ast_t*) vector_get(chil,1)));
+    	type = string(ast_children_as_string((struct ast_t*) vector_get(chil,0))) ;
+    	url = string(ast_children_as_string((struct ast_t*) vector_get(chil,1)));
     	MergeResolver::merge(model, &type, &url) ;
     	break ;
 
@@ -129,15 +131,13 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     case TYPE_NETWORK:
      	LOGGER_WRITE(Logger::DEBUG,"TYPE_NETWORK");
     	break ;
-    case TYPE_INCLUDE:
-       	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE");
-    	break ;
     case TYPE_ADDBINDING:
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADDBINDING");
     	break ;
     case TYPE_DELBINDING:
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_DELBINDING");
     	break ;
+
     default:
     	LOGGER_WRITE(Logger::DEBUG,"default");
     	break ;
@@ -145,10 +145,10 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 
    delete tree ;
 
-*/
+
 	}
 void KevScriptEngine::applyAttach(Instance *leftH, Instance *rightH, ContainerRoot *model, bool reverse) {
-	/*
+
 	ContainerNode* cnL = dynamic_cast<ContainerNode*>(leftH);
 	Group* gR = dynamic_cast<Group*>(rightH);
 	if(cnL == 0)
@@ -165,10 +165,10 @@ void KevScriptEngine::applyAttach(Instance *leftH, Instance *rightH, ContainerRo
 	{
 		gR->removesubNodes(cnL);
 	}
-*/
+
 }
 void KevScriptEngine::applyMove(Instance *leftH, Instance *rightH, ContainerRoot *model) {
-	/*
+
 	ContainerNode* cn = dynamic_cast<ContainerNode*>(rightH);
 	if(cn == 0)
 	{
@@ -194,7 +194,8 @@ void KevScriptEngine::applyMove(Instance *leftH, Instance *rightH, ContainerRoot
 }
 
 bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerRoot *model) {
-	Instance process ;
+	Instance* process ;
+	DefaultkevoreeFactory factory;
 	struct vector_t *child = ast->data.tree->children;
 	NodeType* nt = dynamic_cast<NodeType*>(td);
 	if(nt != 0)
@@ -227,5 +228,5 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 	}
 
 	return process != NULL;
-	*/
+
 }
