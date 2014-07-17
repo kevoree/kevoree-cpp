@@ -4,6 +4,7 @@
 #include <kevoree-core/model/kevoree/DefaultkevoreeFactory.h>
 #include <kevoree-core/model/kevoree/Instance.h>
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
+#include "utils/MergeResolver.h"
 #include "utils/TypeDefinitionResolver.h"
 
 extern "C" {
@@ -99,9 +100,9 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     case TYPE_INCLUDE:
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE");
     	chil = ast->data.tree->children;
-    	string *type = string(ast_children_as_string((struct ast_t*) vector_get(chil,0))) ;
-    	string *url = string(ast_children_as_string((struct ast_t*) vector_get(chil,1)));
-    	MergeResolver::merge(model, type, url) ;
+    	string type = string(ast_children_as_string((struct ast_t*) vector_get(chil,0))) ;
+    	string url = string(ast_children_as_string((struct ast_t*) vector_get(chil,1)));
+    	MergeResolver::merge(model, &type, &url) ;
     	break ;
 
     case TYPE_REMOVE:
