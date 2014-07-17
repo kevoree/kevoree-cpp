@@ -1,6 +1,5 @@
 package org.kevoree.library.cpp.mavenplugin;
 
-import org.apache.maven.model.*;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -8,9 +7,13 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 
 import org.kevoree.*;
+import org.kevoree.ComponentType;
+import org.kevoree.NodeType;
 import org.kevoree.Repository;
+import org.kevoree.cpp.preprocessor.ast.*;
+import org.kevoree.cpp.preprocessor.ast.ChannelType;
+import org.kevoree.cpp.preprocessor.ast.GroupType;
 import org.kevoree.cpp.preprocessor.lexer.Lexer;
-import org.kevoree.cpp.preprocessor.lexer.Token;
 import org.kevoree.impl.DefaultKevoreeFactory;
 import org.kevoree.library.cpp.mavenplugin.utils.MavenDeployer;
 import org.kevoree.library.cpp.mavenplugin.utils.PluginHelper;
@@ -78,57 +81,118 @@ public class AnnotationPreProcessorMojo extends AbstractMojo {
             List<File> types = new ArrayList<File>();
             PluginHelper.scanForHeader(inputCFile,types, Collections.singletonList(".h"));
             for (File f : types) {
-
+                TypeDefinition type=null;
                 try {
                     Lexer te = new Lexer(new FileInputStream(f));
-                    Token token =   te.nextToken();
-                    DictionaryType dictionaryType =    factory.createDictionaryType();
-                    while(  token.getType() != Token.TokenType.END_OF_FILE  )
-                    {
+                    List<Statment> options = new ArrayList<Statment>();
+                    Statment token =   te.nextToken();
 
-                        DeployUnit du =factory.createDeployUnit();
-                        du.setName(token.getValue());
-                        du.setGroupName(project.getGroupId());
-                        du.setVersion(project.getVersion());
-                        du.setType("so");
+                    while(  !(token instanceof EOF)  ){
+
+                        if(!(token instanceof org.kevoree.cpp.preprocessor.ast.Unsupported)){
 
 
+                            DeployUnit du =factory.createDeployUnit();
+                            du.setName(token.getName());
+                            du.setGroupName(project.getGroupId());
+                            du.setVersion(project.getVersion());
+                            du.setType("so");
 
-                        if(token.getType() == Token.TokenType.NodeType)
-                        {
-                            getLog().info("NodeType found =>" +token);
-                            NodeType   type =factory.createNodeType();
+                            getLog().info("Type found =>" +token);
 
-                            type.setName(token.getValue());
-                            type.setDeployUnit(du);
-                            type.setAbstract(false);
-                            root.addTypeDefinitions(type);
-                            root.addDeployUnits(du);
+                            if(token instanceof org.kevoree.cpp.preprocessor.ast.NodeType){
 
-                        }else    if(token.getType() == Token.TokenType.ComponentType){
-                            getLog().info("ComponentType found =>" +token);
-                            ComponentType type= factory.createComponentType();
-                            type.setName(token.getValue());
-                            type.setDeployUnit(du);
-                            type.setAbstract(false);
-                            root.addTypeDefinitions(type);
-                            root.addDeployUnits(du);
-                        }else if(token.getType() == Token.TokenType.Dictionary){
-                            getLog().info("Dictionarys found =>" +token);
+                                type =factory.createNodeType();
+                                type.setName(token.getName());
+                                type.setDeployUnit(du);
+                                type.setVersion(project.getVersion());
+                                type.setAbstract(false);
+                                root.addTypeDefinitions(type);
+                                root.addDeployUnits(du);
 
-                            DictionaryAttribute dictionaryAttribute = factory.createDictionaryAttribute();
 
-                            dictionaryAttribute.setName(token.getValue());
+                            }else if(token instanceof org.kevoree.cpp.preprocessor.ast.ComponentType){
 
+                                type= factory.createComponentType();
+                                type.setName(token.getName());
+                                type.setDeployUnit(du);
+                                type.setVersion(project.getVersion());
+                                type.setAbstract(false);
+                                root.addTypeDefinitions(type);
+                                root.addDeployUnits(du);
+
+                            }else if(token instanceof org.kevoree.cpp.preprocessor.ast.Param){
+                                options.add( token);
+
+                            }else if(token instanceof org.kevoree.cpp.preprocessor.ast.GroupType) {
+                                type = factory.createGroupType();
+                                type.setName(token.getName());
+                                type.setDeployUnit(du);
+                                type.setVersion(project.getVersion());
+                                type.setAbstract(false);
+                                root.addTypeDefinitions(type);
+                                root.addDeployUnits(du);
+                            }      else if(token instanceof ChannelType){
+                                    type= factory.createChannelType();
+                                    type.setName(token.getName());
+                                    type.setDeployUnit(du);
+                                    type.setVersion(project.getVersion());
+                                    type.setAbstract(false);
+                                    root.addTypeDefinitions(type);
+                                    root.addDeployUnits(du);
+
+                            }else if(token instanceof org.kevoree.cpp.preprocessor.ast.Input){
+                                options.add( token);
+
+                            }else if(token instanceof org.kevoree.cpp.preprocessor.ast.Provide){
+                                options.add( token);
+                            }
 
                         }
 
-
-
-
-
                         token =   te.nextToken();
                     }
+                    if(type != null) {
+                        DictionaryType paramtype = factory.createDictionaryType();
+
+                        type.setDictionaryType(paramtype);
+                        for (Statment option : options) {
+
+                            if (option instanceof Param) {
+                                Param param = (Param) option;
+
+                                DictionaryAttribute attport = factory.createDictionaryAttribute();
+
+                                attport.setOptional(param.isOptional());
+                                attport.setDatatype("string");
+                                attport.setFragmentDependant(param.isFragdep());
+                                attport.setName(param.getName());
+                                attport.setDefaultValue(param.getDefaultValue());
+
+                                paramtype.addAttributes(attport);
+
+
+                            }else if (option instanceof Input) {
+
+                                PortTypeRef port=     factory.createPortTypeRef();
+                                port.setName(option.getName());
+
+                                ((ComponentType)type).addRequired(port);
+
+                            }else if (option instanceof Provide) {
+                                PortTypeRef port=     factory.createPortTypeRef();
+                                port.setName(option.getName());
+
+                                ((ComponentType)type).addProvided(port);
+                            }
+                        }
+                    }else {
+
+                        getLog().error("no typedefintion "+type);
+                    }
+
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -137,7 +201,7 @@ public class AnnotationPreProcessorMojo extends AbstractMojo {
             try
             {
                 String model = serializer.serialize(root);
-                getLog().debug("Generate Model Json => " + model);
+                getLog().info("Generate Model Json => " + model);
                 String path =inputCFile.getPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"KEV-INF"+File.separator;
                 PluginHelper.writeFile(path+"lib.json",model);
             } catch (IOException e) {
@@ -148,3 +212,4 @@ public class AnnotationPreProcessorMojo extends AbstractMojo {
         }
     }
 }
+
