@@ -12,7 +12,7 @@ set(SRC_KEVSCRIPT ${SRC_KEVOREE_CORE}/kevscript)
 
 include_directories(${KEVOREEROOT}/)
 include_directories(${SRC_MICROFRAMEWORK}/)
-
+include_directories(../maven-resolver-cpp/src)
 include_directories(${SRC_KEVSCRIPT}/src)
 include_directories(${SRC_KEVSCRIPT}/waxeye/include)
 

@@ -32,3 +32,4 @@ cppunit-report.xml
 *.iml
 lib.json
 *.class
+CMakeCache.txt
