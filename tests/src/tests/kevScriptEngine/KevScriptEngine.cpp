@@ -32,6 +32,7 @@ void KevScriptEngine::executeFromStream(istream	&inputstream,ContainerRoot *mode
 
 
 void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
+	/*
 	struct ast_tree_t *tree = ast->data.tree;
     struct vector_t *chil ;
     size_t num_chil ;
@@ -143,9 +144,10 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 
    delete tree ;
 
-
+*/
 	}
 void KevScriptEngine::applyAttach(Instance *leftH, Instance *rightH, ContainerRoot *model, bool reverse) {
+	/*
 	ContainerNode* cnL = dynamic_cast<ContainerNode*>(leftH);
 	Group* gR = dynamic_cast<Group*>(rightH);
 	if(cnL == 0)
@@ -162,9 +164,10 @@ void KevScriptEngine::applyAttach(Instance *leftH, Instance *rightH, ContainerRo
 	{
 		gR->removesubNodes(cnL);
 	}
-
+*/
 }
 void KevScriptEngine::applyMove(Instance *leftH, Instance *rightH, ContainerRoot *model) {
+	/*
 	ContainerNode* cn = dynamic_cast<ContainerNode*>(rightH);
 	if(cn == 0)
 	{
@@ -223,4 +226,5 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 	}
 
 	return process != NULL;
+	*/
 }

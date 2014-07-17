@@ -5,6 +5,7 @@
 #ifndef MERGERESOLVER_H_
 #define MERGERESOLVER_H_
 
+#include <kevoree-core/model/kevoree/ContainerRoot.h>
 
 class MergeResolver {
 
