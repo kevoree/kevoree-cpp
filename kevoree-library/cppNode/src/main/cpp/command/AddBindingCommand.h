@@ -8,12 +8,12 @@
 class AddBindingCommand : public  PrimitiveCommand
 {
 public:
-	MBinding *instance;
+	Instance *instance;
 	std::string nodename;
 	Bootstraper *bootstrapService;
 	KevoreeModelHandlerService *mservice;
 
-	AddBindingCommand(MBinding *instance,std::string nodename,Bootstraper *bootstrapService,KevoreeModelHandlerService *mservice)
+	AddBindingCommand(Instance *instance,std::string nodename,Bootstraper *bootstrapService,KevoreeModelHandlerService *mservice)
 	{
 		this->instance = instance;
 		this->nodename = nodename;
@@ -24,6 +24,8 @@ public:
 	void execute(boost::promise<bool> & result)
 	{
 		// TODO
+		std::cout << "TODO add binding" << std::endl;
+		result.set_value(true);
 	}
 
 
