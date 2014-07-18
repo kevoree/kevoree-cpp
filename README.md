@@ -98,7 +98,7 @@ INFO: Update sucessfully completed.
 * -n: nodename  allows to associate a node name with the runtime
 * -v: version
 * -m: model  allows to give an initial bootstrap model (.json,.kev.kevs accepted)
-* -l: debug level (0: Debug, 1: info, 2: Error)
+* -l: debug level (0: Debug Model,1: Debug microframework, 2: Debug platform 3: info, 4: Error)
 
 
 ### Kevoree Editor: 
@@ -307,15 +307,15 @@ wget http://maven.reacloud.com/nexus/content/repositories/releases/org/kevoree/m
  ```
  ### Usage 
  ```
-java -jar org.kevoree.modeling.cpp.generator-1.3.2.jar 
-Missing required options: i, t
 usage: App
  -d,--enable <debug>      {true,false}
  -h,--help                prints the help content
  -i,--input <file>        ecore file
- -t,--input <directory>   Root Generation Directory
+ -t,--output <directory>   Root Generation Directory
   ```
- 
+  ```
+  java -jar org.kevoree.modeling.cpp.generator-1.3.2.jar -t kevoree.ecore -t model/
+   ```
 ## FAQ
 
 #### Dynamic library not found 
