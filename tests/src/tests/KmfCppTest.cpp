@@ -99,7 +99,9 @@ void KmfCppTest::testKmfSerializer(){
 }
 void KmfCppTest::testKmfCompare(){
 
+
 	DefaultkevoreeFactory factory;
+	JSONModelLoader loader;
 	ContainerRoot   *model = factory.createContainerRoot();
 	ContainerRoot   *model2 = factory.createContainerRoot();
 
@@ -213,6 +215,27 @@ void KmfCppTest::testKmfCompare(){
 	CPPUNIT_ASSERT(sequencemerge->traces.size()  ==0);
 
 
+	loader.setFactory(&factory);
+	ifstream myfile;
+	myfile.open ("model_channel_fakeconsole.json");
+	if(!myfile){
+		cout << "no file trace" << endl;
+	}
+	CPPUNIT_ASSERT(myfile != NULL);
+	ContainerRoot *model3 = (ContainerRoot*)loader.loadModelFromStream(myfile)->front();
+	TraceSequence *sequencediff3 = compare->diff(model2,model3);
+
+
+	CPPUNIT_ASSERT(sequencediff2->traces.size()  == 70);
+	//std::cout << sequencediff2->traces.size() << std::endl;
+
+	delete model3;
+	delete model;
+	delete sequencediff;
+	delete sequenceinter;
+	delete sequencemerge;
+	delete sequencediff2;
+	delete sequencediff3;
 
 }
 
