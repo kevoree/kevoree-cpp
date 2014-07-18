@@ -79,6 +79,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	break ;
 
     case TYPE_ADD:
+    	/*
 			td = TypeDefinitionResolver::resolve((struct ast_t*) vector_get(chil, 0),model) ;
 
     	if(td == NULL)
@@ -97,7 +98,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 									}
     		}
     	}
-       	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADD");
+       	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADD");*/
     	break ;
     case TYPE_INCLUDE:
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE");
@@ -108,7 +109,11 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	break ;
 
     case TYPE_REMOVE:
+
+    	 display_ast(ast, type_strings);
+
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_REMOVE");
+
     	break ;
     case TYPE_MOVE:
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_MOVE");

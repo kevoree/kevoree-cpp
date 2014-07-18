@@ -16,3 +16,4 @@ set group0.port/node0 = '8000'
 set chan0.port/node0 = '8000'
 
 remove node0
+remove node0, node0.*, sync
