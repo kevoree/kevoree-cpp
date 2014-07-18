@@ -4,6 +4,9 @@
 #include "command/StartInstanceCommand.h"
 #include "command/StopInstanceCommand.h"
 #include "command/UpdateDictionaryInstanceCommand.h"
+#include "command/AddBindingCommand.h"
+#include "command/RemoveBindingCommand.h"
+#include "command/UpdateBindingCommand.h"
 #include "Primitives.h"
 
 
@@ -31,7 +34,21 @@ PrimitiveCommand* CommandMapper::buildPrimitiveCommand(AdaptationPrimitive *p, s
 	}else if(p->primitiveType == UpdateDictionaryInstance)
 	{
 		return new UpdateDictionaryInstanceCommand(instance,nodeName,nodeType->getBootStrapperService(),nodeType->getModelService());
+	}else  if(p->primitiveType == AddBinding)
+	{
+		return new AddBindingCommand(instance,nodeName,nodeType->getBootStrapperService(),nodeType->getModelService());
+
+	}else  if(p->primitiveType == RemoveBinding)
+	{
+		return new RemoveBindingCommand(instance,nodeName,nodeType->getBootStrapperService(),nodeType->getModelService());
+
+	}else  if(p->primitiveType == UpdateBinding)
+	{
+		return new UpdateBindingCommand(instance,nodeName,nodeType->getBootStrapperService(),nodeType->getModelService());
+
 	}
-	Logger::Write(Logger::ERROR,"CommandMapper cannot manage");
+
+
+	Logger::Write(Logger::ERROR,"CommandMapper cannot manage "+instance->path());
 	return NULL;
 }
