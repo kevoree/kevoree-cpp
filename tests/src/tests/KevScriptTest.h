@@ -15,6 +15,7 @@ class KevScriptTest : public CppUnit::TestFixture {
 	CPPUNIT_TEST_SUITE( KevScriptTest );
 	CPPUNIT_TEST(testkevAllModel);
 	CPPUNIT_TEST(TestAddRepo);
+	CPPUNIT_TEST(TestRemove);
 	CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -22,6 +23,7 @@ public:
 	virtual ~KevScriptTest();
 	void testkevAllModel();
 	void TestAddRepo();
+	void TestRemove();
 };
 
 #endif /* KEVSCRIPTTEST_H_ */

@@ -35,7 +35,6 @@ void KevScriptTest::testkevAllModel() {
 
 }
 
-
 void KevScriptTest::TestAddRepo() {
 	const string log_file ="kevoree.log";
 	Logger::Start(Logger::DEBUG, log_file);
@@ -49,6 +48,25 @@ void KevScriptTest::TestAddRepo() {
 	delete model;
 	delete kse;
 
-	//parser_delete(ast);
+}
+
+void KevScriptTest::TestRemove() {
+	const string log_file ="kevoree.log";
+	Logger::Start(Logger::DEBUG, log_file);
+	struct ast_t *ast =	getAst("./dataTest/KevScriptTest/removes.kevs") ;
+	DefaultkevoreeFactory factory;
+	ContainerRoot   *model = factory.createContainerRoot();
+	KevScriptEngine *kse = new KevScriptEngine() ;
+	kse->interpret(ast,model);
+
+	CPPUNIT_ASSERT(model->repositories.size() == 1);
+	delete model;
+	delete kse;
 
 }
+
+
+
+
+
+

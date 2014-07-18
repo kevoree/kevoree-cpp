@@ -165,7 +165,8 @@ void KevScriptEngine::applyAttach(Instance *leftH, Instance *rightH, ContainerRo
 	{
 		gR->removesubNodes(cnL);
 	}
-
+	delete cnL ;
+	delete gR ;
 }
 void KevScriptEngine::applyMove(Instance *leftH, Instance *rightH, ContainerRoot *model) {
 
@@ -190,16 +191,17 @@ void KevScriptEngine::applyMove(Instance *leftH, Instance *rightH, ContainerRoot
 			}
 		}
 	}
-
+	delete cn ;
 }
 
 bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerRoot *model) {
 	Instance* process ;
 	DefaultkevoreeFactory factory;
 	struct vector_t *child = ast->data.tree->children;
-	NodeType* nt = dynamic_cast<NodeType*>(td);
-	if(nt != 0)
+
+	if(dynamic_cast<NodeType*>(td) != 0)
 	{
+		NodeType* nt = dynamic_cast<NodeType*>(td) ;
 		ContainerNode* instance = factory.createContainerNode() ;
 		instance->typeDefinition = td ;
 		if((ast->type == TYPE_INSTANCEPATH) && child->size == 1)
@@ -212,6 +214,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 			}
 			model->addnodes(instance);
 			process = instance ;
+
 		}else
 		{
 			string parentNodeName = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
@@ -226,8 +229,9 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 			process = instance ;
 		}
 	}
-	ComponentType* ct = dynamic_cast<ComponentType*>(td);
-	if(ct != 0){
+
+	if(dynamic_cast<ComponentType*>(td) != 0){
+		ComponentType* ct = dynamic_cast<ComponentType*>(td);
 		ComponentInstance* instance = factory.createComponentInstance();
 		instance->typeDefinition = td ;
 		if((ast->type == TYPE_INSTANCEPATH) && child->size == 2)
@@ -263,8 +267,9 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 			}
 
 			}
-		ChannelType* cht = dynamic_cast<ChannelType*>(td);
-		if(cht != 0){
+
+		if(dynamic_cast<ChannelType*>(td) != 0){
+			ChannelType* cht = dynamic_cast<ChannelType*>(td);
 			Channel *instance = factory.createChannel() ;
 			instance->typeDefinition = td ;
 			if((ast->type == TYPE_INSTANCEPATH) && child->size == 1)
@@ -277,8 +282,9 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 							throw string("wrong channel name : ") ;
 						}
 		}
-		GroupType* gt = dynamic_cast<GroupType*>(td);
-		if(gt != 0){
+
+		if(dynamic_cast<GroupType*>(td) != 0){
+			GroupType* gt = dynamic_cast<GroupType*>(td);
 			Group *instance = factory.createGroup() ;
 				instance->typeDefinition = td ;
 				if((ast->type == TYPE_INSTANCEPATH) && child->size == 1)
