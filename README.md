@@ -296,6 +296,26 @@ make install
 ./Release/bin/runtime
 ```
 
+## Generator Model KMF C++
+
+KMF generates modeling frameworks and API for C++, from a domain metamodel.
+It also offers comparison, merge and incremental synchronisation mechanisms tuned for Runtime use.
+
+###  Start downloading the KMF Generator for C++
+ ```
+wget http://maven.reacloud.com/nexus/content/repositories/releases/org/kevoree/modeling/org.kevoree.modeling.cpp.generator/1.3.2/org.kevoree.modeling.cpp.generator-1.3.2.jar
+ ```
+ ### Usage 
+ ```
+java -jar org.kevoree.modeling.cpp.generator-1.3.2.jar 
+Missing required options: i, t
+usage: App
+ -d,--enable <debug>      {true,false}
+ -h,--help                prints the help content
+ -i,--input <file>        ecore file
+ -t,--input <directory>   Root Generation Directory
+  ```
+ 
 ## FAQ
 
 #### Dynamic library not found 
