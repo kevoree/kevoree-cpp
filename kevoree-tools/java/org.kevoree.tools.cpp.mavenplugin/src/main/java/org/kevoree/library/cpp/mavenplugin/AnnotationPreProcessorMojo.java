@@ -93,7 +93,7 @@ public class AnnotationPreProcessorMojo extends AbstractMojo {
 
 
                             DeployUnit du =factory.createDeployUnit();
-                            du.setName(token.getName());
+                            du.setName(project.getArtifactId());
                             du.setGroupName(project.getGroupId());
                             du.setVersion(project.getVersion());
                             du.setType("so");

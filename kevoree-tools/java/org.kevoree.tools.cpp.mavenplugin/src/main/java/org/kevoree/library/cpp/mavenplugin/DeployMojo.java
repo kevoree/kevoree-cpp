@@ -47,7 +47,7 @@ public class DeployMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        getLog().info("Deploy dynamic library");
+
         // looking for so
         List<File> types_so = new ArrayList<File>();
         List<String> list = new ArrayList<String>();
@@ -70,6 +70,7 @@ public class DeployMojo extends AbstractMojo {
                 deployer = new MavenDeployer(repo.getId(),repo.getUrl());
 
                 try {
+                    getLog().info("Deploy dynamic library "+types_so.get(0).getName()+" "+repo.getUrl());
                     deployer.deploy(project.getGroupId(),project.getArtifactId(),project.getVersion(),types_so.get(0).getAbsolutePath(),"so");
                 } catch (IOException e) {
                     e.printStackTrace();
