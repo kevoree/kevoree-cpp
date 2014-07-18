@@ -18,7 +18,7 @@ class KmfCppTest : public CppUnit::TestFixture {
 	CPPUNIT_TEST( testKmfLoader );
 	CPPUNIT_TEST( testKmfSerializer );
 	CPPUNIT_TEST( testKmfCompare );
-
+	CPPUNIT_TEST( testKmfCompare2);
 	CPPUNIT_TEST_SUITE_END();
 public:
 
@@ -29,6 +29,7 @@ public:
 	void testKmfTraces();
 	void testKmfSerializer();
 	void testKmfCompare();
+	void testKmfCompare2();
 
 };
 #endif /* KMFCPPTEST_H_ */

@@ -239,3 +239,36 @@ void KmfCppTest::testKmfCompare(){
 
 }
 
+void KmfCppTest::testKmfCompare2(){
+
+	DefaultkevoreeFactory factory;
+	JSONModelLoader loader;
+	ContainerRoot   *model_src;
+	ContainerRoot   *model_target;
+	loader.setFactory(&factory);
+
+	ifstream src;
+	src.open ("model_src.json");
+	if(!src){
+		cout << "no file trace" << endl;
+	}
+
+	ifstream target;
+	target.open ("model_target.json");
+	if(!target){
+		cout << "no file trace" << endl;
+	}
+
+	model_src = (ContainerRoot*)loader.loadModelFromStream(src)->front();
+	model_target = (ContainerRoot*)loader.loadModelFromStream(target)->front();
+	CPPUNIT_ASSERT(model_src  !=NULL);
+	CPPUNIT_ASSERT(model_target != NULL);
+	ModelCompare *compare= new ModelCompare();
+
+	// FIX ME
+	//TraceSequence *sequencediff = compare->diff(model_src,model_target);
+
+
+
+}
+
