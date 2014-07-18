@@ -6,6 +6,7 @@
 #include <kevoree-core/api/adaptation/AdaptationPrimitive.h>
 #include <kevoree-core/model/kevoree/kevoree.h>
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
+#include <kevoree-core/model/kevoree/Channel.h>
 #include <kevoree-core/model/kevoree/ContainerNode.h>
 #include <microframework/api/trace/TraceSequence.h>
 #include <set>

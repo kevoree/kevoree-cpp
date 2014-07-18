@@ -89,66 +89,68 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 
 		}else if(trace->refName.compare("bindings") ==0)
 		{
+			LOGGER_WRITE(Logger::DEBUG,trace->toString());
 			//TODO here process potential AddBinding
-			if(trace->srcPath.compare(targetNode->path()) == 0)
-			{
-				if(trace->srcPath.compare(targetNode->path()) == 0)
+			std::cout << trace->srcPath << " "<< targetNode->path() <<trace->srcPath.compare(targetNode->path()) <<  std::endl;
+			if(dynamic_cast<Channel*>(targetNode->findByPath(trace->srcPath)) == 0){
+
+
+				ModelAddTrace *modeladdtrace = (ModelAddTrace*) trace;
+				MBinding *binding=(MBinding*)targetModel->findByPath(modeladdtrace->previousPath);
+				Channel *channel=NULL;
+				if(binding != NULL)
 				{
-					ModelAddTrace *modeladdtrace = (ModelAddTrace*) trace;
-					MBinding *binding=(MBinding*)targetModel->findByPath(modeladdtrace->srcPath);
-					Channel *channel=NULL;
-					if(binding != NULL)
-					{
-						channel = binding->hub;
-					}
-					if(dynamic_cast<ModelAddTrace*>(trace) != 0)
-					{
+					channel = binding->hub;
+				}else
+				{
+					LOGGER_WRITE(Logger::ERROR,"channel null");
+				}
+				if(dynamic_cast<ModelAddTrace*>(trace) != 0)
+				{
 
-						if(channel != NULL){ // todo check registry && !registry.containsKey(channel.path())){
+					if(channel != NULL){ // todo check registry && !registry.containsKey(channel.path())){
 
-							TupleObjPrim tuple(channel,AddInstance);
-							if(!tuple.equals(modelElement->path(),elementAlreadyProcessed))
-							{
-								adaptationModel->add(adapt(AddInstance, channel));
-								tuple.add(elementAlreadyProcessed);
-							}
-
-						}
-						adaptationModel->add(adapt(AddBinding, binding));
-
-					}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
-					{
-						MBinding *previousBinding=(MBinding*)currentModel->findByPath(modeladdtrace->srcPath);
-						Channel *oldChannel=previousBinding->hub;
-						//check if not no current usage of this channel
-						bool stillUsed = (channel != NULL);
-						if(channel != NULL)
+						TupleObjPrim tuple(channel,AddInstance);
+						if(!tuple.equals(modelElement->path(),elementAlreadyProcessed))
 						{
-							for (std::map<string,MBinding*>::iterator iterator = channel->bindings.begin(), end = channel->bindings.end(); iterator != end; ++iterator)
+							adaptationModel->add(adapt(AddInstance, channel));
+							tuple.add(elementAlreadyProcessed);
+						}
+
+					}
+					adaptationModel->add(adapt(AddBinding, binding));
+
+				}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
+				{
+					MBinding *previousBinding=(MBinding*)currentModel->findByPath(modeladdtrace->srcPath);
+					Channel *oldChannel=previousBinding->hub;
+					//check if not no current usage of this channel
+					bool stillUsed = (channel != NULL);
+					if(channel != NULL)
+					{
+						for (std::map<string,MBinding*>::iterator iterator = channel->bindings.begin(), end = channel->bindings.end(); iterator != end; ++iterator)
+						{
+
+							MBinding *loopBinding = iterator->second;
+							if(loopBinding->port->eContainer() == targetNode)
 							{
+								stillUsed = true;
+							}
 
-								MBinding *loopBinding = iterator->second;
-								if(loopBinding->port->eContainer() == targetNode)
+							if(!stillUsed ) //TODO && !registry.containsKey(oldChannel!!)
+							{
+								TupleObjPrim tuple(channel,RemoveInstance);
+								if(!tuple.equals(modelElement->path(),elementAlreadyProcessed))
 								{
-									stillUsed = true;
-								}
-
-								if(!stillUsed ) //TODO && !registry.containsKey(oldChannel!!)
-								{
-									TupleObjPrim tuple(channel,RemoveInstance);
-									if(!tuple.equals(modelElement->path(),elementAlreadyProcessed))
-									{
-										adaptationModel->add(adapt(RemoveInstance, channel));
-										tuple.add(elementAlreadyProcessed);
-									}
-
+									adaptationModel->add(adapt(RemoveInstance, channel));
+									tuple.add(elementAlreadyProcessed);
 								}
 
 							}
-						}
-						adaptationModel->add(adapt(RemoveBinding, binding));
-					}
 
+						}
+					}
+					adaptationModel->add(adapt(RemoveBinding, binding));
 				}
 
 			}
