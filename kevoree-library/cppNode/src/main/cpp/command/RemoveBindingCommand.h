@@ -8,12 +8,12 @@
 class RemoveBindingCommand : public  PrimitiveCommand
 {
 public:
-	MBinding *instance;
+	Instance *instance;
 	std::string nodename;
 	Bootstraper *bootstrapService;
 	KevoreeModelHandlerService *mservice;
 
-	RemoveBindingCommand(MBinding *instance,std::string nodename,Bootstraper *bootstrapService,KevoreeModelHandlerService *mservice)
+	RemoveBindingCommand(Instance *instance,std::string nodename,Bootstraper *bootstrapService,KevoreeModelHandlerService *mservice)
 	{
 		this->instance = instance;
 		this->nodename = nodename;
@@ -23,7 +23,8 @@ public:
 
 	void execute(boost::promise<bool> & result)
 	{
-		// TODO
+		std::cout << "TODO remove binding" << std::endl;
+		result.set_value(true);
 	}
 
 
