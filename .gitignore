@@ -1,5 +1,7 @@
 .idea
 target
+Third_Parties/
+boost_1_53_0.tar.bz2
 cmake_install.cmake
 createType
 kevscript-parser

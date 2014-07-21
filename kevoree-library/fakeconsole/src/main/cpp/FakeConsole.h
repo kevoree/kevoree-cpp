@@ -2,7 +2,7 @@
 #define __FakeConsole_H
 
 #include <kevoree-core/api/AbstractComponent.h>
-
+#include <boost/thread.hpp>
 
 #pragma ComponentType "FakeConsole"
 #pragma Input "showIn"
@@ -17,6 +17,8 @@ class FakeConsole :public AbstractComponent
 	 void start();
 	 void stop();
 	 void update();
+	 boost::thread *t;
+	 int started;
 
 };
 

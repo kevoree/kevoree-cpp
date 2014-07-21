@@ -7,8 +7,8 @@ set(KEVOREE_CPP_VERSION ${KEVOREE_CPP_VERSION_MAJOR}.${KEVOREE_CPP_VERSION_MINOR
 if(NOT CMAKE_BUILD_TYPE)
 set(CMAKE_BUILD_TYPE Debug)
 endif()
-#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -stdlib=libstdc++ -Wall -pedantic")
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -stdlib=libstdc++  -Wall -pedantic")
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -std=c++11  -Wall -pedantic ")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -O2 -std=c++11 -Wall -pedantic")
 #set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build)
 #set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build)
 

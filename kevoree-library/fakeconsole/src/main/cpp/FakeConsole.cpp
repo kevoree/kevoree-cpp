@@ -1,5 +1,6 @@
 
 #include "FakeConsole.h"
+
 // todo generate
 extern "C"{
 	AbstractComponent* create(){
@@ -11,6 +12,24 @@ extern "C" {
 	{
 		delete object;
 	}
+}
+
+
+
+
+using namespace std;
+
+void ThreadFunction(FakeConsole *ptr)
+{
+	while(ptr->started == 1){
+
+ // enqueue
+		std::cout << "enqueue "<< std::endl;
+
+	//	Provide
+		sleep(1);
+	}
+
 }
 
 
@@ -28,12 +47,15 @@ FakeConsole::~FakeConsole()
 
 void FakeConsole::start()
 {
-
+	this->started = 1;
+	 t= new boost::thread(&ThreadFunction,this);
 
 }
 
 void FakeConsole::stop(){
-
+	this->started = 0;
+	t->interrupt();
+	t->join();
 }
 
 
