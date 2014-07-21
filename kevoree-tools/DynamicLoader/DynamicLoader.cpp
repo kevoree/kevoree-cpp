@@ -332,7 +332,7 @@ int DynamicLoader::read_elf_header(const char *elf_file){
 		LOGGER_WRITE(Logger::ERROR,"Error Unable to open file");
 		return 0;
 	}
-	print_elf_header(eh);
+	//print_elf_header(eh);
 
 	close(fd);
 }
