@@ -20,9 +20,10 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 	ContainerNode *currentNode = currentModel->findnodesByID(nodeName);
 	ContainerNode *targetNode = targetModel->findnodesByID(nodeName);
 
-	std::map<string,std::list<TupleObjPrim> > elementAlreadyProcessed;
+	std::map<string,std::tuple<KMFContainer*,Primitives> > elementAlreadyProcessed;
 
-	//LOGGER_WRITE(Logger::DEBUG,"Planner::compareModels TRACES =>\n"+traces->exportToString());
+
+	LOGGER_WRITE(Logger::DEBUG,"Planner::compareModels TRACES =>\n"+traces->exportToString());
 
 	AdaptationModel  *adaptationModel =   new AdaptationModel();
 
@@ -89,12 +90,13 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 
 		}else if(trace->refName.compare("bindings") ==0)
 		{
-			LOGGER_WRITE(Logger::DEBUG,trace->toString());
+
 			//TODO here process potential AddBinding
-			std::cout << trace->srcPath << " "<< targetNode->path() <<trace->srcPath.compare(targetNode->path()) <<  std::endl;
-			if(dynamic_cast<Channel*>(targetNode->findByPath(trace->srcPath)) == 0){
+			//std::cout << trace->srcPath << " "<< targetNode->path() <<trace->srcPath.compare(targetNode->path()) <<  std::endl;
+			if(dynamic_cast<Channel*>(targetNode->findByPath(trace->srcPath)) == 0)
+			{
 
-
+				//LOGGER_WRITE(Logger::DEBUG,"bindings "+trace->toString());
 				ModelAddTrace *modeladdtrace = (ModelAddTrace*) trace;
 				MBinding *binding=(MBinding*)targetModel->findByPath(modeladdtrace->previousPath);
 				Channel *channel=NULL;
@@ -103,22 +105,44 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 					channel = binding->hub;
 				}else
 				{
-					LOGGER_WRITE(Logger::ERROR,"channel null");
+					LOGGER_WRITE(Logger::DEBUG,"Adding a binding to a channel not defined");
 				}
+
 				if(dynamic_cast<ModelAddTrace*>(trace) != 0)
 				{
+					if(binding != NULL)
+					{
 
-					if(channel != NULL){ // todo check registry && !registry.containsKey(channel.path())){
-
-						TupleObjPrim tuple(channel,AddInstance);
-						if(!tuple.equals(modelElement->path(),elementAlreadyProcessed))
+						if(elementAlreadyProcessed.find(binding->path()+"/AddBinding") == elementAlreadyProcessed.end()){
+							adaptationModel->add(adapt(AddBinding, binding));
+							auto tuple = std::make_tuple (binding,AddBinding);
+							elementAlreadyProcessed[binding->path()+"/AddBinding"] = tuple;
+						}else
 						{
-							adaptationModel->add(adapt(AddInstance, channel));
-							tuple.add(elementAlreadyProcessed);
+							LOGGER_WRITE(Logger::WARNING,"AddBinding "+binding->path());
 						}
 
 					}
-					adaptationModel->add(adapt(AddBinding, binding));
+
+					if(channel != NULL){ // todo check registry && !registry.containsKey(channel.path())){
+						LOGGER_WRITE(Logger::DEBUG," modelElement path =>"+channel->path());
+
+
+						if(elementAlreadyProcessed.find(channel->path()+"/AddInstance") == elementAlreadyProcessed.end()){
+							adaptationModel->add(adapt(AddInstance, channel));
+							auto tuple = std::make_tuple (channel,AddInstance);
+							elementAlreadyProcessed[channel->path()+"/AddInstance"] = tuple;
+
+						}else {
+							LOGGER_WRITE(Logger::DEBUG,"AddInstance channel already started");
+						}
+
+
+					}else
+					{
+						LOGGER_WRITE(Logger::ERROR,"Channel not found");
+					}
+
 
 				}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
 				{
@@ -139,18 +163,34 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 
 							if(!stillUsed ) //TODO && !registry.containsKey(oldChannel!!)
 							{
-								TupleObjPrim tuple(channel,RemoveInstance);
-								if(!tuple.equals(modelElement->path(),elementAlreadyProcessed))
-								{
+
+								if(elementAlreadyProcessed.find(channel->path()+"/RemoveInstance") == elementAlreadyProcessed.end()){
 									adaptationModel->add(adapt(RemoveInstance, channel));
-									tuple.add(elementAlreadyProcessed);
+									auto tuple = std::make_tuple (channel,RemoveInstance);
+									elementAlreadyProcessed[channel->path()+"/RemoveInstance"] = tuple;
+
+								}else {
+									LOGGER_WRITE(Logger::DEBUG,"RemoveInstance channel already stopped");
 								}
 
 							}
 
 						}
 					}
-					adaptationModel->add(adapt(RemoveBinding, binding));
+					if(binding != NULL)
+					{
+
+						if(elementAlreadyProcessed.find(binding->path()+"/RemoveBinding") == elementAlreadyProcessed.end()){
+							adaptationModel->add(adapt(RemoveBinding, binding));
+							auto tuple = std::make_tuple (binding,RemoveBinding);
+							elementAlreadyProcessed[binding->path()+"/RemoveBinding"] = tuple;
+						}else
+						{
+							LOGGER_WRITE(Logger::WARNING,"RemoveBinding "+binding->path());
+						}
+					}
+
+
 				}
 
 			}
@@ -185,22 +225,27 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 					if (modelsettrace->content.compare("true") ==0)
 					{
 
-						TupleObjPrim tuple(modelElement,StartInstance);
-						if(!tuple.equals(modelElement->path()+"StartInstance",elementAlreadyProcessed))
-						{
-
+						if(elementAlreadyProcessed.find(modelElement->path()+"/StartInstance") == elementAlreadyProcessed.end()){
 							adaptationModel->add(adapt(StartInstance, modelElement));
-							tuple.add(elementAlreadyProcessed);
+							auto tuple = std::make_tuple (modelElement,RemoveInstance);
+							elementAlreadyProcessed[modelElement->path()+"/StartInstance"] = tuple;
+
+						}else {
+							LOGGER_WRITE(Logger::DEBUG,"StartInstance already in queue "+modelElement->path());
 						}
+
 					}else
 					{
 
-						TupleObjPrim tuple(modelElement,StopInstance);
-						if(!tuple.equals(modelElement->path()+"StopInstance",elementAlreadyProcessed))
-						{
-							adaptationModel->add(adapt(StopInstance, modelElement));
-							tuple.add(elementAlreadyProcessed);
+						if(elementAlreadyProcessed.find(modelElement->path()+"/StopInstance") == elementAlreadyProcessed.end()){
+							adaptationModel->add(adapt(StartInstance, modelElement));
+							auto tuple = std::make_tuple (modelElement,StopInstance);
+							elementAlreadyProcessed[modelElement->path()+"/StopInstance"] = tuple;
+
+						}else {
+							LOGGER_WRITE(Logger::DEBUG,"StopInstance already in queue"+modelElement->path());
 						}
+
 					}
 
 
@@ -213,12 +258,16 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 
 			if(dynamic_cast<DictionaryValue*>(modelElement) != 0)
 			{
-				TupleObjPrim tuple(modelElement,UpdateDictionaryInstance);
-				if(!tuple.equals(modelElement->path(),elementAlreadyProcessed))
-				{
+
+				if(elementAlreadyProcessed.find(modelElement->path()+"/UpdateDictionaryInstance") == elementAlreadyProcessed.end()){
 					adaptationModel->add(adapt(UpdateDictionaryInstance,  modelElement->eContainer()->eContainer()));
-					tuple.add(elementAlreadyProcessed);
+					auto tuple = std::make_tuple (modelElement,StopInstance);
+					elementAlreadyProcessed[modelElement->path()+"/UpdateDictionaryInstance"] = tuple;
+
+				}else {
+					LOGGER_WRITE(Logger::WARNING,"RemoveInstance channel already stopped");
 				}
+
 			}else {
 				// TODO CHECK cout << modelElement->path() << endl;
 

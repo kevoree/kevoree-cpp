@@ -12,6 +12,7 @@
 #include <set>
 #include <map>
 #include "Primitives.h"
+#include <tuple>
 
 class Planner 
 {
@@ -21,58 +22,5 @@ class Planner
 	private:
 	AdaptationPrimitive* adapt(Primitives p,KMFContainer *elem);
 };
-
-
-
-class TupleObjPrim 
-{
-	public:
-	TupleObjPrim(KMFContainer *_obj,Primitives _p){
-		this->obj = _obj;
-		this->p =_p;
-	}
-	bool equals(TupleObjPrim t){
-		if((this->obj->internalGetKey().compare(t.obj->internalGetKey()) == 0) && this->p == t.p)
-		{
-			return true;
-		}else {
-			return false;
-		}
-	}
-	bool equals(std::string path,std::map<string,std::list<TupleObjPrim> > elementAlreadyProcessed)
-	{
-		if(elementAlreadyProcessed.find(path) == elementAlreadyProcessed.end()){
-			return false;
-		}
-		std::list<TupleObjPrim> tuples= elementAlreadyProcessed.find(path)->second;
-	
-		for (std::list<TupleObjPrim>::iterator iterator = tuples.begin(), end = tuples.end(); iterator != end; ++iterator)
-		{
-			if(this->equals(*iterator))
-			{
-				return true;
-			}
-		}
-		return false;
-		
-	}
-	
-	void add(std::map<string,std::list<TupleObjPrim> > elementAlreadyProcessed)
-	{
-		std::list<TupleObjPrim> tuples;
-		if(elementAlreadyProcessed.find(obj->path()) == elementAlreadyProcessed.end())
-		{
-			elementAlreadyProcessed[obj->path()] = tuples;
-		}else
-		{
-			tuples= elementAlreadyProcessed.find(obj->path())->second;
-		}
-		tuples.push_back(*this);
-		
-	}
-KMFContainer *obj;
-Primitives p;		
-};
-
 
 #endif
