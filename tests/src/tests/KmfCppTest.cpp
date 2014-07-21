@@ -266,9 +266,12 @@ void KmfCppTest::testKmfCompare2(){
 	ModelCompare *compare= new ModelCompare();
 
 	// FIX ME
-	//TraceSequence *sequencediff = compare->diff(model_src,model_target);
+	TraceSequence *sequencediff = compare->diff(model_src,model_target);
 
+	CPPUNIT_ASSERT(sequencediff->traces.size()  == 13);
 
-
+	delete sequencediff;
+	delete model_src;
+	delete model_target;
 }
 
