@@ -133,13 +133,16 @@ public class AnnotationPreProcessorMojo extends AbstractMojo {
                                 root.addTypeDefinitions(type);
                                 root.addDeployUnits(du);
                             }      else if(token instanceof ChannelType){
-                                    type= factory.createChannelType();
-                                    type.setName(token.getName());
-                                    type.setDeployUnit(du);
-                                    type.setVersion(project.getVersion());
-                                    type.setAbstract(false);
-                                    root.addTypeDefinitions(type);
-                                    root.addDeployUnits(du);
+
+                                type= factory.createChannelType();
+                                type.setName(token.getName());
+
+                                type.setVersion(project.getVersion());
+                                type.setAbstract(false);
+
+                                type.setDeployUnit(du);
+                                root.addTypeDefinitions(type);
+                                root.addDeployUnits(du);
 
                             }else if(token instanceof org.kevoree.cpp.preprocessor.ast.Input){
                                 options.add( token);
@@ -176,12 +179,16 @@ public class AnnotationPreProcessorMojo extends AbstractMojo {
 
                                 PortTypeRef port=     factory.createPortTypeRef();
                                 port.setName(option.getName());
+                                MessagePortType portType =factory.createMessagePortType();
+                                port.setRef(portType);
 
                                 ((ComponentType)type).addRequired(port);
 
                             }else if (option instanceof Provide) {
                                 PortTypeRef port=     factory.createPortTypeRef();
                                 port.setName(option.getName());
+                                MessagePortType portType =factory.createMessagePortType();
+                                port.setRef(portType);
 
                                 ((ComponentType)type).addProvided(port);
                             }
