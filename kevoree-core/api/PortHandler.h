@@ -15,8 +15,7 @@
 class PortHandler {
 
 
-public:
-	AbstractChannel *channel;
+
 };
 
 

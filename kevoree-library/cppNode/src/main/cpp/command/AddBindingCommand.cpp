@@ -22,14 +22,16 @@ void AddBindingCommand::execute(boost::promise<bool> & result)
 
 				if(c->ports.find(port->internalGetKey()) == c->ports.end())
 				{
-					PortHandler *handler = new PortHandler();
-					handler->channel = h;
+
+					PortHandler *handler = new PortSocketDomainLocal( binding->internalGetKey());
+
+
 
 					Port *provided = component->findprovidedByID(port->internalGetKey());
 					if(provided != NULL)
 					{
 						// provided  IN
-					//		std::cout << " port provided" << std::endl;
+						//		std::cout << " port provided" << std::endl;
 
 
 						//addInternalInputPort(handler);

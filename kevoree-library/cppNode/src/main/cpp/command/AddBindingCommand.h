@@ -7,6 +7,9 @@
 #include <kevoree-core/model/kevoree/Port.h>
 #include <kevoree-core/model/kevoree/ComponentInstance.h>
 #include <kevoree-core/api/AbstractChannel.h>
+#include "../PortSocketDomainLocal.h"
+
+
 
 class AddBindingCommand : public  PrimitiveCommand
 {
