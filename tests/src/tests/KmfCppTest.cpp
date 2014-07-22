@@ -59,7 +59,7 @@ void KmfCppTest::testKmfLoader()
 	if(!myfile){
 		cout << "no file trace" << endl;
 	}
-	CPPUNIT_ASSERT(myfile != NULL);
+
 	ContainerRoot *model = (ContainerRoot*)loader.loadModelFromStream(myfile)->front();
 
 	CPPUNIT_ASSERT(model != NULL);
@@ -221,7 +221,7 @@ void KmfCppTest::testKmfCompare(){
 	if(!myfile){
 		cout << "no file trace" << endl;
 	}
-	CPPUNIT_ASSERT(myfile != NULL);
+
 	ContainerRoot *model3 = (ContainerRoot*)loader.loadModelFromStream(myfile)->front();
 	TraceSequence *sequencediff3 = compare->diff(model2,model3);
 
