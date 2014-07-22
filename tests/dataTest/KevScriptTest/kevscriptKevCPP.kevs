@@ -1,0 +1,11 @@
+repo "http://maven.reacloud.com/nexus/content/repositories/releases"
+repo "http://maven.reacloud.com/nexus/content/repositories/snapshots"
+
+
+include mvn:org.kevoree.library.cpp:CPPNodeType:1.0.1-SNAPSHOT
+include mvn:org.kevoree.library.cpp:kevoree-group-websocket:1.0.1-SNAPSHOT
+include mvn:org.kevoree.library.cpp:fakeconsole:1.0.1-SNAPSHOT
+include mvn:org.kevoree.library.cpp:sharedMemoryChannel:1.0.1-SNAPSHOT
+
+add node0 : fakeconsole
+add chan0 : sharedMemoryChannel
