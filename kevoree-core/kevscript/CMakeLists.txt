@@ -16,7 +16,7 @@ include_directories(src/)
 include_directories(waxeye/include)
 
 file(GLOB_RECURSE kevscript_files src/*)
-file(GLOB_RECURSE waxeye_files waxeye/*)
+file(GLOB_RECURSE waxeye_files waxeye/*.c)
 
 
 ADD_LIBRARY(kevscript   STATIC   ${kevscript_files})

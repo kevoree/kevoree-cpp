@@ -24,7 +24,7 @@ SET(COMMON_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/libs")
 
 
 
-file(GLOB_RECURSE files_tests src/tests/*.cpp)
+file(GLOB_RECURSE files_tests src/tests/*)
 add_executable(
         run_tests
         src/run_tests.cpp
