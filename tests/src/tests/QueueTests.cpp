@@ -32,6 +32,7 @@ QueueTests::~QueueTests(){
 
 
 }
+/*
 
 #define COUNT 100
 //#define COUNT 100000000
@@ -98,8 +99,9 @@ run_test(
 			* ((double) std::chrono::high_resolution_clock::period::num
 					/ std::chrono::high_resolution_clock::period::den);
 }
-
+*/
 void QueueTests::test(){
+	/*
 	{
 		typedef spsc_bounded_queue_t<size_t> queue_t;
 		queue_t queue(65536);
@@ -107,7 +109,7 @@ void QueueTests::test(){
 				std::bind(&consumer_func<queue_t>, &queue));
 
 
-		/*
+
 	        std::cout << "SPSC bound queue completed "
 	                  << COUNT
 	                  << " iterations in "
@@ -115,7 +117,7 @@ void QueueTests::test(){
 	                  << " seconds. "
 	                  << ((long double) COUNT / seconds) / 1000000
 	                  << " million enqueue/dequeue pairs per second."
-	                  << std::endl;*/
+	                  << std::endl;
 	}
 
 	{
@@ -123,7 +125,7 @@ void QueueTests::test(){
 		queue_t queue(65536);
 		long double seconds = run_test(std::bind(&bounded_producer_func<queue_t>, &queue),
 				std::bind(&consumer_func<queue_t>, &queue));
-		/*
+
 	        std::cout << "MPMC bound queue completed "
 	                  << COUNT
 	                  << " iterations in "
@@ -131,7 +133,7 @@ void QueueTests::test(){
 	                  << " seconds. "
 	                  << ((long double) COUNT / seconds) / 1000000
 	                  << " million enqueue/dequeue pairs per second."
-	                  << std::endl; */
+	                  << std::endl;
 	}
 
 	{
@@ -139,7 +141,7 @@ void QueueTests::test(){
 		queue_t queue;
 		long double seconds = run_test(std::bind(&producer_func<queue_t>, &queue),
 				std::bind(&consumer_func<queue_t>, &queue));
-		/*
+
 	        std::cout << "SPSC dynamic queue completed "
 	                  << COUNT
 	                  << " iterations in "
@@ -147,7 +149,7 @@ void QueueTests::test(){
 	                  << " seconds. "
 	                  << ((long double) COUNT / seconds) / 1000000
 	                  << " million enqueue/dequeue pairs per second."
-	                  << std::endl;*/
+	                  << std::endl;
 	}
 
 	{
@@ -155,7 +157,7 @@ void QueueTests::test(){
 		queue_t queue;
 		long double seconds = run_test(std::bind(&producer_func<queue_t>, &queue),
 				std::bind(&consumer_func<queue_t>, &queue));
-		/*
+
 	        std::cout << "MPSC dynamic queue completed "
 	                  << COUNT
 	                  << " iterations in "
@@ -163,7 +165,7 @@ void QueueTests::test(){
 	                  << " seconds. "
 	                  << ((long double) COUNT / seconds) / 1000000
 	                  << " million enqueue/dequeue pairs per second."
-	                  << std::endl;*/
+	                  << std::endl;
 	}
 
 	{
@@ -175,6 +177,6 @@ void QueueTests::test(){
 		CPPUNIT_ASSERT(value == 5);
 	}
 
-
+*/
 
 }
