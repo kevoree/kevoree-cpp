@@ -177,7 +177,7 @@ void defaultbootstrapmodel(std::string nodename){
 
 
 	DeployUnit *d =factory.createDeployUnit();
-	d->name = "CPPNodeType";
+	d->name = "CPPNode";
 	d->groupName = "org.kevoree.library.cpp";
 	d->version = version;
 	d->type ="so";
