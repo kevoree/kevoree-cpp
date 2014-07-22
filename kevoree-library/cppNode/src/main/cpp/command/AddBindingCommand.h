@@ -3,7 +3,10 @@
 
 #include <kevoree-core/api/PrimitiveCommand.h>
 #include <kevoree-core/api/Bootstraper.h>
-
+#include <kevoree-core/model/kevoree/MBinding.h>
+#include <kevoree-core/model/kevoree/Port.h>
+#include <kevoree-core/model/kevoree/ComponentInstance.h>
+#include <kevoree-core/api/AbstractChannel.h>
 
 class AddBindingCommand : public  PrimitiveCommand
 {
@@ -21,18 +24,9 @@ public:
 		this->mservice =mservice;
 	}
 
-	void execute(boost::promise<bool> & result)
-	{
-		// TODO
-		std::cout << "TODO add binding" << std::endl;
-		result.set_value(true);
-	}
+	void execute(boost::promise<bool> & result);
 
-
-	void undo()
-	{
-		// TODO
-	}
+	void undo();
 
 };
 

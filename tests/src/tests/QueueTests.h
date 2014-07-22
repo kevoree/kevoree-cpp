@@ -13,10 +13,10 @@
 #include <iostream>
 #include <boost/thread.hpp>
 
-#include "spsc-queue.hpp"
-#include "mpsc-queue.hpp"
-#include "spsc-bounded-queue.hpp"
-#include "mpmc-bounded-queue.hpp"
+#include <spsc-queue.h>
+#include <mpsc-queue.h>
+#include <spsc-bounded-queue.h>
+#include <mpmc-bounded-queue.h>
 
 
 

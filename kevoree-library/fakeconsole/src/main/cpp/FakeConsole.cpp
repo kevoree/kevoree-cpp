@@ -21,12 +21,10 @@ using namespace std;
 
 void ThreadFunction(FakeConsole *ptr)
 {
-	while(ptr->started == 1){
+	while(ptr->started == 1)
+	{
+		ptr->send("Output","tick");
 
- // enqueue
-		std::cout << "enqueue "<< std::endl;
-
-	//	Provide
 		sleep(1);
 	}
 

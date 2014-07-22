@@ -10,7 +10,14 @@
 
 class AbstractChannel  : public AbstractTypeDefinition
 {
+ //  FIFO IN
 
+public:
+	void write(std::string data){
+
+		std::cout << "Channel "<< data << std::endl;
+	}
+	// FIFO OUT
 };
 
 

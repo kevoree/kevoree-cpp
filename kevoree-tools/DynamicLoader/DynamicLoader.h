@@ -48,6 +48,7 @@ public:
 	bool start_instance(Instance *i);
 	bool stop_instance(Instance *i);
 	bool update_instance(Instance *i);
+	AbstractTypeDefinition* get_instance(Instance *i);
 
 	// select the good deploy unit depending on architecture os ; ....
 	DeployUnit * select_du_architecture(TypeDefinition *type);

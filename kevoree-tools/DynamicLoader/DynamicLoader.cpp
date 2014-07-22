@@ -212,6 +212,14 @@ bool DynamicLoader::start_instance(Instance *i)
 
 }
 
+AbstractTypeDefinition* DynamicLoader::get_instance(Instance *i){
+	AbstractTypeDefinition *inst = (AbstractTypeDefinition*)instances.find(i->path())->second;
+	if(inst != NULL && dynamic_cast<AbstractTypeDefinition*>(inst) != 0)
+	{
+		return inst;
+	}
+	return NULL;
+}
 
 bool DynamicLoader::stop_instance(Instance *i)
 {

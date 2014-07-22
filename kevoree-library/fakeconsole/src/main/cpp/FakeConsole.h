@@ -5,8 +5,8 @@
 #include <boost/thread.hpp>
 
 #pragma ComponentType "FakeConsole"
-#pragma Input "showIn"
-#pragma Provide "Output"
+#pragma Input "Output"
+#pragma Provide "showIn"
 
 class FakeConsole :public AbstractComponent
 {
