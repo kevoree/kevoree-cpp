@@ -230,7 +230,7 @@ public:
 
 
 ## KevScript 
-
+```
 repo "http://maven.reacloud.com/nexus/content/repositories/releases"
 repo "http://maven.reacloud.com/nexus/content/repositories/snapshots"
 repo "http://maven.reacloud.com/nexus/content/repositories/releases/"
@@ -255,6 +255,8 @@ bind node0.comp459.showin chan142
 set group0.port/node0 = '9000'
 
 network node0.ip.lo 127.0.0.1
+
+```
 
 ###  The Kevoree- Maven Plugin
 
