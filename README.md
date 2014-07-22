@@ -229,6 +229,33 @@ public:
  ```
 
 
+## KevScript 
+
+repo "http://maven.reacloud.com/nexus/content/repositories/releases"
+repo "http://maven.reacloud.com/nexus/content/repositories/snapshots"
+repo "http://maven.reacloud.com/nexus/content/repositories/releases/"
+repo "http://maven.reacloud.com/nexus/content/repositories/snapshots/"
+repo "http://repo.maven.apache.org/maven2"
+
+include mvn:org.kevoree.library.cpp:CPPNodeType:1.0.1-SNAPSHOT
+include mvn:org.kevoree.library.cpp:kevoree-group-websocket:1.0.1-SNAPSHOT
+include mvn:org.kevoree.library.cpp:sharedMemoryChannel:1.0.1-SNAPSHOT
+include mvn:org.kevoree.library.cpp:fakeconsole:1.0.1-SNAPSHOT
+
+add node0 : CPPNode
+add node0.comp459 : fakeconsole
+add group0 : WebSocketGroup
+add chan142 : sharedmemorychannel
+
+attach node0 group0
+
+bind node0.comp459.output chan142
+bind node0.comp459.showin chan142
+
+set group0.port/node0 = '9000'
+
+network node0.ip.lo 127.0.0.1
+
 ###  The Kevoree- Maven Plugin
 
 The Kevoree Maven plugin is used to extract the Component-Model from the #pragma placed in your code, and store it into a Kevoree Model (lib.json)
