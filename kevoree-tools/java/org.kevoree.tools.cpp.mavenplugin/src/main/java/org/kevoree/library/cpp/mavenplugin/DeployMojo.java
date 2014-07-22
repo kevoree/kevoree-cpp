@@ -49,13 +49,13 @@ public class DeployMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
 
         // looking for so
-        List<File> types_lib = new ArrayList<File>();
-        List<String> filter_lib = new ArrayList<String>();
-        filter_lib.add(".so");
-        filter_lib.add(".dylib");
-        PluginHelper.scanForHeader(inputCFile, types_lib, filter_lib);
+        List<File> types_so = new ArrayList<File>();
+        List<String> list = new ArrayList<String>();
+        list.add(".so");
+        list.add(".dylib");
+        PluginHelper.scanForHeader(inputCFile, types_so, list);
 
-        if(filter_lib.size() > 0){
+        if(types_so.size() > 0){
             //    PluginHelper.copyFileUsingStream( types_so.get(0),new File(path+types_so.get(0).getName()));
 
             DeploymentRepository repo=null;
@@ -70,23 +70,9 @@ public class DeployMojo extends AbstractMojo {
                 deployer = new MavenDeployer(repo.getId(),repo.getUrl());
 
                 try {
-                    getLog().info("Deploy Typedefintion  "+repo.getUrl());
-                    String path =inputCFile.getPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"KEV-INF"+File.separator;
-                    File json = new File (path+"lib.json");
-                    if(json.exists())
-                    {
-                        deployer.deploy(project.getGroupId(),project.getArtifactId(),project.getVersion(),json.getAbsolutePath(),"json");
-
-                    }else
-                    {
-                        getLog().error("lib.json not found");
-
-                    }
-
-                    getLog().info("Deploy dynamic library "+types_lib.get(0).getName()+" "+repo.getUrl());
-                    deployer.deploy(project.getGroupId(),project.getArtifactId(),project.getVersion(),types_lib.get(0).getAbsolutePath(),"so");
-
-
+                    getLog().info("Deploy dynamic library "+types_so.get(0).getName()+" "+repo.getUrl());
+                    deployer.deploy(project.getGroupId(),project.getArtifactId(),project.getVersion(),types_so.get(0).getAbsolutePath(),"so");
+                    
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

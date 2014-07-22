@@ -35,8 +35,8 @@ void KevScriptEngine::executeFromStream(istream	&inputstream,ContainerRoot *mode
 void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 
 	struct ast_tree_t *tree = ast->data.tree;
-    struct vector_t *chil ;
-    size_t num_chil ;
+    struct vector_t *child ;
+    size_t num_child ;
     size_t i;
     TypeDefinition *td  ;
     DefaultkevoreeFactory factory;
@@ -48,46 +48,54 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 
     case TYPE_KEVSCRIPT:
 
-    	chil = ast->data.tree->children;
-    	if(chil != NULL)
+    	child = ast->data.tree->children;
+    	if(child != NULL)
     	{
-    	num_chil = chil->size;
-    	for (i = 0; i < num_chil; i +=1) {
-    		interpret((struct ast_t*) vector_get(chil, i), model);
+    	num_child = child->size;
+    	for (i = 0; i < num_child; i +=1) {
+    		interpret((struct ast_t*) vector_get(child, i), model);
     		}
     	}
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_KEVSCRIPT");
 
     	break ;
     case TYPE_STATEMENT:
-       	chil = ast->data.tree->children;
-        	if(chil != NULL)
+       	child = ast->data.tree->children;
+        	if(child != NULL)
         	{
-        	num_chil = chil->size;
-        	for (i = 0; i < num_chil; i +=1) {
-        		interpret((struct ast_t*) vector_get(chil, i), model);
+        	num_child = child->size;
+        	for (i = 0; i < num_child; i +=1) {
+        		interpret((struct ast_t*) vector_get(child, i), model);
         		}
         	}
         	LOGGER_WRITE(Logger::DEBUG,"TYPE_STATEMENT");
         	break ;
     case TYPE_ADDREPO:
-    	chil = ast->data.tree->children;
+    	child = ast->data.tree->children;
       	rep = factory.createRepository();
-      	rep->url = ast_children_as_string((struct ast_t*) vector_get(chil,0)) ;
+      	rep->url = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
       	model->addrepositories(rep);
-      	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADDREPO");
+      	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADDREPO" + rep->url);
     	break ;
 
     case TYPE_ADD:
-    	/*
-			td = TypeDefinitionResolver::resolve((struct ast_t*) vector_get(chil, 0),model) ;
+     	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADD");
+      	child = ast->data.tree->children;
+     	try
+     	{
+			td = TypeDefinitionResolver::resolve((struct ast_t*) vector_get(child,1),model) ;
+     	}catch (string s)
+     	{
+     		{ cout << "exception"+s; }
+     	}
+
 
     	if(td == NULL)
     	{
-    		throw string("TypeDefinition not found : " + string(ast_children_as_string((struct ast_t*) vector_get(chil,1))))	;
+    		throw string("TypeDefinition not found : " + string(ast_children_as_string((struct ast_t*) vector_get(child,1))))	;
     	}else
     	{
-    		struct ast_t *instance_name =  (struct ast_t*)  vector_get(chil, 1) ;
+    		struct ast_t *instance_name =  (struct ast_t*)  vector_get(child, 1) ;
     		if(instance_name->type == TYPE_NAMELIST)
     		{
     			struct vector_t *chil_inst =instance_name->data.tree->children;
@@ -98,14 +106,16 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 									}
     		}
     	}
-       	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADD");*/
+
     	break ;
     case TYPE_INCLUDE:
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE");
-    	chil = ast->data.tree->children;
-    	type = string(ast_children_as_string((struct ast_t*) vector_get(chil,0))) ;
-    	url = string(ast_children_as_string((struct ast_t*) vector_get(chil,1)));
-    	MergeResolver::merge(model, &type, &url) ;
+    	child = ast->data.tree->children;
+    	type = string(ast_children_as_string((struct ast_t*) vector_get(child,0))) ;
+    	url = string(ast_children_as_string((struct ast_t*) vector_get(child,1)));
+    	MergeResolver::merge(model, type, url) ;
+    	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE" + type);
+    	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE" + url);
     	break ;
 
     case TYPE_REMOVE:

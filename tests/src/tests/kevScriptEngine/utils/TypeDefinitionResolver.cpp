@@ -15,25 +15,29 @@ extern "C" {
 TypeDefinition* TypeDefinitionResolver::resolve(struct ast_t *ast, ContainerRoot *model)
 {
 
-	if(ast->type != TYPE_TYPEDEF)
+
+if(ast != NULL){
+	if(ast->data.tree->type != TYPE_TYPEDEF)
 	{
-		throw string("Parse error, should be a type definition : " + ast->type);
+		throw string(&"Parse error, should be a type definition : "  [ast->type]);
 	}
-	 struct vector_t *chil = ast->data.tree->children;
-	 string typeDefName = ast_children_as_string((struct ast_t*) vector_get(chil,0)) ;
-	 string version = NULL ;
-	 if(ast->data.tree->end > 0){
-		 struct vector_t *chil = ast->data.tree->children;
-		 version = ast_children_as_string((struct ast_t*) vector_get(chil,1)) ;
-		 LOGGER_WRITE(Logger::DEBUG,version);
+
+	 struct vector_t *child = ast->data.tree->children;
+	 string typeDefName = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
+	 LOGGER_WRITE(Logger::DEBUG,string("Type Definition Name :" + typeDefName));
+	 string version = "" ;
+	 if(child->size > 1){
+		 version = ast_children_as_string((struct ast_t*) vector_get(child,1)) ;
+
 	 }
-
-
 	TypeDefinition *best_td = NULL ;
+
 	std::map<string,TypeDefinition*> type_defs = model->typeDefinitions ;
 	for(std::map<string,TypeDefinition*>::iterator it = type_defs.begin(); it != type_defs.end() ; ++it)
 	{
-		if(version.empty()){
+
+		if(version.compare("") == 0){
+			 LOGGER_WRITE(Logger::DEBUG,string("Version :" + version));
 			if ((it->first.compare(typeDefName)==0) && (version.compare(it->second->version)==0))
 					{
 				return it->second ;
@@ -47,8 +51,6 @@ TypeDefinition* TypeDefinitionResolver::resolve(struct ast_t *ast, ContainerRoot
 						if( (maven::resolver::MavenVersionComparator::max(best_td->version,it->second->version)).compare(it->second->version)  == 0){
 							best_td = it->second ;
 						}
-
-
 					}
 				}
 			}
@@ -59,5 +61,9 @@ TypeDefinition* TypeDefinitionResolver::resolve(struct ast_t *ast, ContainerRoot
 	        }
 
 	        return best_td;
+}else
+{
+	return NULL ;
+}
 }
 

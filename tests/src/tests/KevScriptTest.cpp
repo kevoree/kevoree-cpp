@@ -50,19 +50,19 @@ void KevScriptTest::TestAddRepo() {
 
 }
 
-void KevScriptTest::TestRemove() {/*
+void KevScriptTest::TestRemove() {
 	const string log_file ="kevoree.log";
 	Logger::Start(Logger::DEBUG, log_file);
-	struct ast_t *ast =	getAst("./dataTest/KevScriptTest/removes.kevs") ;
+	struct ast_t *ast =	getAst("./dataTest/KevScriptTest/kevscriptKevCPP.kevs") ;
 	DefaultkevoreeFactory factory;
 	ContainerRoot   *model = factory.createContainerRoot();
 	KevScriptEngine *kse = new KevScriptEngine() ;
 	kse->interpret(ast,model);
 
-	CPPUNIT_ASSERT(model->repositories.size() == 1);
+	CPPUNIT_ASSERT(model->repositories.size() == 2);
 	delete model;
 	delete kse;
-*/
+
 }
 
 
