@@ -12,7 +12,7 @@
     </parent>
 
     <groupId>org.kevoree.library.cpp</groupId>
-    <artifactId>CPPNodeType</artifactId>
+    <artifactId>CPPNode</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <name>Kevoree CPP :: Library :: NodeTypCPP</name>
 

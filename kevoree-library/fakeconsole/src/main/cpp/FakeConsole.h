@@ -4,7 +4,7 @@
 #include <kevoree-core/api/AbstractComponent.h>
 #include <boost/thread.hpp>
 
-#pragma ComponentType "FakeConsole"
+#pragma ComponentType "fakeconsole"
 #pragma Input "Output"
 #pragma Provide "showIn"
 

@@ -1,5 +1,10 @@
 #include "AddBindingCommand.h"
 
+
+
+
+
+
 void AddBindingCommand::execute(boost::promise<bool> & result)
 {
 	bool r=false;

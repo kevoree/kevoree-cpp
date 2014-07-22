@@ -4,7 +4,7 @@
 #include <kevoree-core/api/AbstractChannel.h>
 
 
-#pragma ChannelType "SharedMemoryChannel"
+#pragma ChannelType "sharedMemoryChannel"
 class SharedMemoryChannel :public AbstractChannel
 {
 	public:
