@@ -14,7 +14,7 @@ class InstanceResolver {
 public:
 	InstanceResolver();
 	virtual ~InstanceResolver();
-	static std::list<Instance>* resolve(struct ast_t *ast, ContainerRoot *model);
+	static std::list<Instance*>* resolve(struct ast_t *ast, ContainerRoot *model);
 };
 
 #endif /* INSTANCERESOLVER_H_ */
