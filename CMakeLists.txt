@@ -7,12 +7,12 @@ set(KEVOREE_CPP_VERSION ${KEVOREE_CPP_VERSION_MAJOR}.${KEVOREE_CPP_VERSION_MINOR
 if(NOT CMAKE_BUILD_TYPE)
 set(CMAKE_BUILD_TYPE Debug)
 endif()
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}   -std=c++11 -pedantic -Wextra -Wall ")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}   -std=c++11 -pedantic")
 #set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build)
 #set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build)
 
 
-add_definitions(-DENABLE_LOGGER)
+add_definitions(-DENABLE_LOGGER  )
 
 # when building, don't use the install RPATH already
 # (but later on when installing)
