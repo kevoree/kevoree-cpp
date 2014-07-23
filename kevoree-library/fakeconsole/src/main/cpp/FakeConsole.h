@@ -19,6 +19,7 @@ class FakeConsole :public AbstractComponent
 	 void update();
 	 boost::thread *t;
 	 int started;
+		 void receive(std::string msg);
 
 };
 

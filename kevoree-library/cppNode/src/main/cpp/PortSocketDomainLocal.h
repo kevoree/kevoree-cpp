@@ -3,15 +3,14 @@
 
 
 #include <kevoree-core/api/PortHandler.h>
+#include <kevoree-core/api/AbstractChannel.h>
 
-#include <iostream>
-#include <string>
-#include <cctype>
-#include <boost/asio.hpp>
-#include <boost/thread/thread.hpp>
-#include <boost/array.hpp>
-#include <boost/bind.hpp>
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/fcntl.h>
+#include <sys/select.h>
 
 
 
@@ -20,9 +19,13 @@ class PortSocketDomainLocal : public PortHandler
 {
 public:
 	PortSocketDomainLocal();
-	PortSocketDomainLocal(std::string name);
+	PortSocketDomainLocal(std::string name,AbstractChannel *h);
 	virtual ~PortSocketDomainLocal();
 
+	void writeMSG(std::string msg);
+
+	std::string name;
+	AbstractChannel *channel;
 };
 
 #endif

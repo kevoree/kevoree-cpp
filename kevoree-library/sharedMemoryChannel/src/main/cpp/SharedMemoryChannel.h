@@ -14,6 +14,9 @@ class SharedMemoryChannel :public AbstractChannel
 	 void start();
 	 void stop();
 	 void update();
+     void dispatch(std::string data);
+
+
 
 };
 

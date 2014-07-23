@@ -193,9 +193,6 @@ public class AnnotationPreProcessorMojo extends AbstractMojo {
                                 ((ComponentType)type).addProvided(port);
                             }
                         }
-                    }else {
-
-                        getLog().error("no typedefintion "+type);
                     }
 
 
