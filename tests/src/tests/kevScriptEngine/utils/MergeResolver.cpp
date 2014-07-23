@@ -35,6 +35,7 @@ void MergeResolver::merge(ContainerRoot *model, std::string type, std::string ur
 			if(!target){
 				cout << "no file trace" << endl;
 			}
+
 		DefaultkevoreeFactory factory;
 		loader.setFactory(&factory) ;
 		ContainerRoot *remote = (ContainerRoot*) loader.loadModelFromStream(target)->front();

@@ -57,7 +57,7 @@ if(ast != NULL){
 		}
 	}
 	  if (best_td == NULL) {
-	            throw string("TypeDefinition not found with : " +typeDefName );
+	            throw string(" TypeDefinition not found with : " +typeDefName +"\n" );
 	        }
 
 	        return best_td;
