@@ -83,7 +83,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
       	child = ast->data.tree->children;
      	try
      	{
-			td = TypeDefinitionResolver::resolve((struct ast_t*) vector_get(child,1),model) ;
+    	    td = TypeDefinitionResolver::resolve((struct ast_t*) vector_get(child,1),model) ;
      	}catch (string s)
      	{
      		{ cout << "exception"+s; }
@@ -112,6 +112,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE");
     	child = ast->data.tree->children;
     	type = string(ast_children_as_string((struct ast_t*) vector_get(child,0))) ;
+
     	url = string(ast_children_as_string((struct ast_t*) vector_get(child,1)));
     	MergeResolver::merge(model, type, url) ;
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE" + type);

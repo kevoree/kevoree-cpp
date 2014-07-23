@@ -12,6 +12,9 @@
 
 #include <microframework/api/json/JSONModelLoader.h>
 #include <microframework/api/compare/ModelCompare.h>
+#include <microframework/api/trace/TraceSequence.h>
+#include <microframework/api/trace/ModelTraceApplicator.h>
+
 
 void MergeResolver::merge(ContainerRoot *model, std::string type, std::string url){
 
@@ -40,7 +43,10 @@ void MergeResolver::merge(ContainerRoot *model, std::string type, std::string ur
 		loader.setFactory(&factory) ;
 		ContainerRoot *remote = (ContainerRoot*) loader.loadModelFromStream(target)->front();
 		ModelCompare *compare= new ModelCompare();
-		compare->merge(model,remote);
+		TraceSequence* trace = compare->merge(model,remote);
+		ModelTraceApplicator::ModelTraceApplicator* MTA = new ModelTraceApplicator::ModelTraceApplicator(model,&factory) ;
+		MTA->applyTraceOnModel(trace);
+		delete MTA ;
 		delete remote ;
 		delete compare ;
 	}else
