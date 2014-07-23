@@ -55,7 +55,7 @@ void KmfCppTest::testKmfLoader()
 
 	loader.setFactory(&factory);
 	ifstream myfile;
-	myfile.open ("model1.json");
+	myfile.open ("dataTest/kmf/model1.json");
 	if(!myfile){
 		cout << "no file trace" << endl;
 	}
@@ -217,7 +217,7 @@ void KmfCppTest::testKmfCompare(){
 
 	loader.setFactory(&factory);
 	ifstream myfile;
-	myfile.open ("model_channel_fakeconsole.json");
+	myfile.open ("dataTest/kmf/model_channel_fakeconsole.json");
 	if(!myfile){
 		cout << "no file trace" << endl;
 	}
@@ -248,13 +248,13 @@ void KmfCppTest::testKmfCompare2(){
 	loader.setFactory(&factory);
 
 	ifstream src;
-	src.open ("model_src.json");
+	src.open ("dataTest/kmf/model_src.json");
 	if(!src){
 		cout << "no file trace" << endl;
 	}
 
 	ifstream target;
-	target.open ("model_target.json");
+	target.open ("dataTest/kmf/model_target.json");
 	if(!target){
 		cout << "no file trace" << endl;
 	}
@@ -273,5 +273,39 @@ void KmfCppTest::testKmfCompare2(){
 	delete sequencediff;
 	delete model_src;
 	delete model_target;
+}
+void KmfCppTest::testKmfCompareBinding(){
+	DefaultkevoreeFactory factory;
+		JSONModelLoader loader;
+		ContainerRoot   *model_src;
+		ContainerRoot   *model_target;
+		loader.setFactory(&factory);
+
+		ifstream src;
+		src.open ("dataTest/kmf/bindings.json");
+		if(!src){
+			cout << "no file trace" << endl;
+		}
+
+		ifstream target;
+		target.open ("dataTest/kmf/bindings2.json");
+		if(!target){
+			cout << "no file trace" << endl;
+		}
+
+		model_src = (ContainerRoot*)loader.loadModelFromStream(src)->front();
+		model_target = (ContainerRoot*)loader.loadModelFromStream(target)->front();
+		CPPUNIT_ASSERT(model_src  !=NULL);
+		CPPUNIT_ASSERT(model_target != NULL);
+		ModelCompare *compare= new ModelCompare();
+
+		// FIX ME
+		TraceSequence *sequencediff = compare->diff(model_src,model_target);
+		std::cout << sequencediff->exportToString() << std::endl;
+		//CPPUNIT_ASSERT(sequencediff->traces.size()  == 7);
+
+		delete sequencediff;
+		delete model_src;
+		delete model_target;
 }
 

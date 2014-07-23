@@ -19,6 +19,7 @@ class KmfCppTest : public CppUnit::TestFixture {
 	CPPUNIT_TEST( testKmfSerializer );
 	CPPUNIT_TEST( testKmfCompare );
 	CPPUNIT_TEST( testKmfCompare2);
+	CPPUNIT_TEST( testKmfCompareBinding);
 	CPPUNIT_TEST_SUITE_END();
 public:
 
@@ -30,6 +31,7 @@ public:
 	void testKmfSerializer();
 	void testKmfCompare();
 	void testKmfCompare2();
+	void testKmfCompareBinding();
 
 };
 #endif /* KMFCPPTEST_H_ */
