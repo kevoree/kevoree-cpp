@@ -119,11 +119,8 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	break ;
 
     case TYPE_REMOVE:
-
-    	 display_ast(ast, type_strings);
-
-    	LOGGER_WRITE(Logger::DEBUG,"TYPE_REMOVE");
-
+     	display_ast(ast, type_strings);
+       	LOGGER_WRITE(Logger::DEBUG,"TYPE_REMOVE");
     	break ;
     case TYPE_MOVE:
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_MOVE");
