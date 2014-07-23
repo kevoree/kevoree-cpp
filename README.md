@@ -114,6 +114,37 @@ artifactId 	CPPNodeType
 version 	1.0.0
 ```
 
+
+
+## KevScript 
+```
+repo "http://maven.reacloud.com/nexus/content/repositories/releases"
+repo "http://maven.reacloud.com/nexus/content/repositories/releases/"
+repo "http://maven.reacloud.com/nexus/content/repositories/snapshots"
+repo "http://maven.reacloud.com/nexus/content/repositories/snapshots/"
+repo "http://repo.maven.apache.org/maven2"
+
+include mvn:org.kevoree.library.cpp:CPPNode:1.0.1-SNAPSHOT
+include mvn:org.kevoree.library.cpp:fakeconsole:1.0.1-SNAPSHOT
+include mvn:org.kevoree.library.cpp:kevoree-group-websocket:1.0.1-SNAPSHOT
+include mvn:org.kevoree.library.cpp:sharedMemoryChannel:1.0.1-SNAPSHOT
+
+add node0 : cppnode
+add node0.comp314 : fakeconsole
+add group0 : kevoree-group-websocket
+add chan225 : sharedmemorychannel
+
+attach node0 group0
+
+bind node0.comp314.output chan225
+bind node0.comp314.showin chan225
+
+set group0.port/node0 = '9000'
+
+network node0.ip.lo 127.0.0.1
+
+```
+
 For more information => https://github.com/kevoree/kevoree-web-editor
 
 
@@ -229,34 +260,6 @@ public:
  ```
 
 
-## KevScript 
-```
-repo "http://maven.reacloud.com/nexus/content/repositories/releases"
-repo "http://maven.reacloud.com/nexus/content/repositories/snapshots"
-repo "http://maven.reacloud.com/nexus/content/repositories/releases/"
-repo "http://maven.reacloud.com/nexus/content/repositories/snapshots/"
-repo "http://repo.maven.apache.org/maven2"
-
-include mvn:org.kevoree.library.cpp:CPPNodeType:1.0.1-SNAPSHOT
-include mvn:org.kevoree.library.cpp:kevoree-group-websocket:1.0.1-SNAPSHOT
-include mvn:org.kevoree.library.cpp:sharedMemoryChannel:1.0.1-SNAPSHOT
-include mvn:org.kevoree.library.cpp:fakeconsole:1.0.1-SNAPSHOT
-
-add node0 : CPPNode
-add node0.comp459 : fakeconsole
-add group0 : WebSocketGroup
-add chan142 : sharedmemorychannel
-
-attach node0 group0
-
-bind node0.comp459.output chan142
-bind node0.comp459.showin chan142
-
-set group0.port/node0 = '9000'
-
-network node0.ip.lo 127.0.0.1
-
-```
 
 ###  The Kevoree- Maven Plugin
 
