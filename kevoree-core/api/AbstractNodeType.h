@@ -17,9 +17,9 @@ class AbstractNodeType: public AbstractTypeDefinition
 {
 public:
 
-	virtual AdaptationModel *plan(ContainerRoot *actualModel,ContainerRoot *targetModel,TraceSequence *traces){};
-	virtual bool execute(ContainerNode *rootNode,AdaptationModel *adaptionModel,AbstractNodeType *nodeInstance){};
-	virtual PrimitiveCommand* getPrimitive(AdaptationPrimitive *primitive){};
+	virtual AdaptationModel *plan(ContainerRoot *actualModel,ContainerRoot *targetModel,TraceSequence *traces){return NULL;};
+	virtual bool execute(ContainerNode *rootNode,AdaptationModel *adaptionModel,AbstractNodeType *nodeInstance){return false;};
+	virtual PrimitiveCommand* getPrimitive(AdaptationPrimitive *primitive){return NULL;};
 
 	virtual std::string getNodeName()
 	{

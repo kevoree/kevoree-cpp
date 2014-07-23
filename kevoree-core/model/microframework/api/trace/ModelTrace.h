@@ -19,6 +19,7 @@ public:
 	virtual ~ModelTrace(){}
 	virtual string toString ()
 	{
+		return "";
 	}
 	string srcPath;
 	string refName;

@@ -68,6 +68,7 @@ void KevoreeCoreBean::switchToNewModel(ContainerRoot *update)
 
 bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel)
 {
+	bool deployResult=false;
 	try
 	{
 		pthread_mutex_lock(&lock_core);
@@ -104,7 +105,7 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel)
 
 		ContainerNode *rootNode = currentModel->findnodesByID(getNodeName());
 
-		bool deployResult = nodeInstance->execute(rootNode,adaptationModel,nodeInstance);
+		deployResult = nodeInstance->execute(rootNode,adaptationModel,nodeInstance);
 		clock_t finish = clock();
 
 		LOGGER_WRITE(Logger::INFO,"Adaptation time delta (ms) = "+    Utils::IntegerUtilstoString(Utils::mstimer(start,finish)));
@@ -131,7 +132,7 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel)
 		pthread_mutex_unlock(&lock_core);
 		std::cerr << e.what() << endl;
 	}
-
+	return deployResult;
 }
 
 std::list<ContainerRoot*> KevoreeCoreBean::getPreviousModels(){
