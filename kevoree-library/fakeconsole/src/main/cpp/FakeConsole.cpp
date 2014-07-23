@@ -64,5 +64,5 @@ void FakeConsole::update()
 
 void FakeConsole::receive(std::string msg){
 
-	std::cout << "FakeConsole receive "<<getModelElement()->name msg << std::endl;
+	std::cout << "FakeConsole receive "<< msg << std::endl;
 }
