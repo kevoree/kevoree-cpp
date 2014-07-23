@@ -44,7 +44,7 @@ void MergeResolver::merge(ContainerRoot *model, std::string type, std::string ur
 		ContainerRoot *remote = (ContainerRoot*) loader.loadModelFromStream(target)->front();
 		ModelCompare *compare= new ModelCompare();
 		TraceSequence* trace = compare->merge(model,remote);
-		ModelTraceApplicator::ModelTraceApplicator* MTA = new ModelTraceApplicator::ModelTraceApplicator(model,&factory) ;
+		ModelTraceApplicator* MTA = new ModelTraceApplicator(model,&factory) ;
 		MTA->applyTraceOnModel(trace);
 		delete MTA ;
 		delete remote ;
