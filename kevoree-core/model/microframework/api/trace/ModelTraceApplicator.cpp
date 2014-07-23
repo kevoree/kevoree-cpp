@@ -57,7 +57,7 @@ void ModelTraceApplicator::applyTraceOnModel(TraceSequence *seq){
 
 		KMFContainer* target = targetModel ;
 		ModelTrace* mt = *iterator ;
-		cout << mt->toString()  << endl ;
+
 		if(dynamic_cast<ModelAddTrace*>(mt) != 0){
 			tryClosePending("");
             if(mt->srcPath.compare("") != 0){

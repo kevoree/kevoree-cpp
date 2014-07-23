@@ -9,9 +9,11 @@
 #include <cppunit/BriefTestProgressListener.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/XmlOutputter.h>
-
+#include <microframework/api/utils/Logger.h>
 int main(int argc, char* argv[])
 {
+	const string log_file ="kevoree.log";
+	Logger::Start(Logger::DEBUG, log_file);
 	// Retrieve test path from command line first argument. Default to "" which resolve
 	// to the top level suite.
 	std::string testPath = (argc > 1) ? std::string(argv[1]) : std::string("");

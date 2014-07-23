@@ -36,7 +36,11 @@ if(ast != NULL){
 	for(std::map<string,TypeDefinition*>::iterator it = type_defs.begin(); it != type_defs.end() ; ++it)
 	{
 		cout << "test" << endl ;
-		cout << "type def : " + it->second->version << endl ;
+
+		TypeDefinition * t = it->second ;
+		if(t !=NULL){
+		cout << "type def : " + t->name << endl ;
+
 		if(!version.empty()){
 			LOGGER_WRITE(Logger::DEBUG,string("version not emepty"));
 			if ((it->first.compare(typeDefName)==0) && (version.compare(it->second->version)==0))
@@ -58,7 +62,10 @@ if(ast != NULL){
 				}
 				}
 			}
+		}else{
+			throw string("Error : null type definition");
 		}
+	}
 	  if (best_td == NULL) {
 	            throw string(" TypeDefinition not found with : " +typeDefName +"\n" );
 	        }

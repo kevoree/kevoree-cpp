@@ -36,8 +36,7 @@ void KevScriptTest::testkevAllModel() {
 }
 
 void KevScriptTest::TestAddRepo() {
-	const string log_file ="kevoree.log";
-	Logger::Start(Logger::DEBUG, log_file);
+
 	struct ast_t *ast =	getAst("./dataTest/KevScriptTest/repo.kevs") ;
 	DefaultkevoreeFactory factory;
 	ContainerRoot   *model = factory.createContainerRoot();
@@ -51,8 +50,7 @@ void KevScriptTest::TestAddRepo() {
 }
 
 void KevScriptTest::TestRemove() {
-	const string log_file ="kevoree.log";
-	Logger::Start(Logger::DEBUG, log_file);
+
 	struct ast_t *ast =	getAst("./dataTest/KevScriptTest/kevscriptKevCPP.kevs") ;
 	DefaultkevoreeFactory factory;
 	ContainerRoot   *model = factory.createContainerRoot();
