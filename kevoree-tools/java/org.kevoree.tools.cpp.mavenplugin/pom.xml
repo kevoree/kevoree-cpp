@@ -17,7 +17,7 @@
     <packaging>maven-plugin</packaging>
     <name>Kevoree CPP :: Tools :: MavenPlugin</name>
     <properties>
-        <kevoree.model.version>3.6.8</kevoree.model.version>
+        <kevoree.model.version>3.5.4</kevoree.model.version>
     </properties>
 
     

@@ -122,7 +122,7 @@ bool KevoreeCoreBean::internal_update_model(ContainerRoot *proposedNewModel)
 		else
 		{
 			delete proposedNewModel;
-			LOGGER_WRITE(Logger::ERROR,"Update failed");
+			LOGGER_WRITE(Logger::ERROR,"Update failed, sorry about that");
 		}
 
 		pthread_mutex_unlock(&lock_core);
