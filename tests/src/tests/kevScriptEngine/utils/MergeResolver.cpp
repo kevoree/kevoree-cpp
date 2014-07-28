@@ -26,7 +26,6 @@ void MergeResolver::merge(ContainerRoot *model, std::string type, std::string ur
 		for(std::map<std::string, Repository*>::iterator it = model->repositories.begin(); it != model->repositories.end(); ++it) {
 			urls.push_back(it->second->url) ;
 		}
-
 		maven::resolver::MavenResolver mvnResol;
 		mvnResol.setBasePath("/tmp");
 		std::vector<string> splitted_chain;
@@ -44,6 +43,7 @@ void MergeResolver::merge(ContainerRoot *model, std::string type, std::string ur
 		ContainerRoot *remote = (ContainerRoot*) loader.loadModelFromStream(target)->front();
 		ModelCompare *compare= new ModelCompare();
 		TraceSequence* trace = compare->merge(model,remote);
+		cout << trace->toString() << endl;
 		ModelTraceApplicator* MTA = new ModelTraceApplicator(model,&factory) ;
 		MTA->applyTraceOnModel(trace);
 		delete MTA ;

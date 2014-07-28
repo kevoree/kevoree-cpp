@@ -22,7 +22,8 @@ ModelTraceApplicator::~ModelTraceApplicator(){
 void ModelTraceApplicator::createOrAdd(string previousPath , KMFContainer* target, string refName, string potentialTypeName)
 {
 	KMFContainer* targetElm = NULL ;
-	if(previousPath.compare("") != 0){
+	if(!previousPath.empty()){
+		LOGGER_WRITE(Logger::DEBUG,"prev tpah");
 		targetElm = target->findByPath(previousPath);
 	}
 	if(targetElm != NULL){
@@ -57,10 +58,13 @@ void ModelTraceApplicator::applyTraceOnModel(TraceSequence *seq){
 
 		KMFContainer* target = targetModel ;
 		ModelTrace* mt = *iterator ;
-
+		cout << mt->toString() << endl ;
 		if(dynamic_cast<ModelAddTrace*>(mt) != 0){
+			LOGGER_WRITE(Logger::DEBUG,"Add trace");
 			tryClosePending("");
-            if(mt->srcPath.compare("") != 0){
+			cout << mt->srcPath << endl ;
+            if(!mt->srcPath.empty()){
+
             	 if(targetModel->findByPath(mt->srcPath) != NULL)
             	{
             		 target = targetModel->findByPath(mt->srcPath)	;
@@ -70,6 +74,7 @@ void ModelTraceApplicator::applyTraceOnModel(TraceSequence *seq){
 		}
 
 		if(dynamic_cast<ModelAddAllTrace*>(mt) != 0){
+			LOGGER_WRITE(Logger::DEBUG,"Add All trace");
 			tryClosePending("");
 			int i = 0 ;
 			if( !((ModelAddAllTrace*)mt)->previousPath.empty())
@@ -90,6 +95,7 @@ void ModelTraceApplicator::applyTraceOnModel(TraceSequence *seq){
 		}
 
 		if(dynamic_cast<ModelRemoveTrace*>(mt) != 0){
+			LOGGER_WRITE(Logger::DEBUG,"RM trace");
 			tryClosePending(mt->srcPath);
 			KMFContainer* tmpTarget = targetModel ;
 
@@ -102,6 +108,7 @@ void ModelTraceApplicator::applyTraceOnModel(TraceSequence *seq){
 		}
 
 		if(dynamic_cast<ModelRemoveAllTrace*>(mt) != 0){
+			LOGGER_WRITE(Logger::DEBUG,"RM All trace");
 				tryClosePending(mt->srcPath);
 				KMFContainer* tmpTarget = targetModel ;
 
@@ -114,7 +121,7 @@ void ModelTraceApplicator::applyTraceOnModel(TraceSequence *seq){
 			}
 
 		if(dynamic_cast<ModelSetTrace*> (mt) != 0){
-
+			LOGGER_WRITE(Logger::DEBUG,"Set trace");
 			tryClosePending(mt->srcPath);
 			if(!mt->srcPath.empty() && mt->srcPath.empty() != 0){
 				KMFContainer* target = targetModel->findByPath(mt->srcPath) ;
