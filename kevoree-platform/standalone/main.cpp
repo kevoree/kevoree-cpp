@@ -177,14 +177,14 @@ void defaultbootstrapmodel(std::string nodename){
 
 
 	DeployUnit *d =factory.createDeployUnit();
-	d->name = "CPPNode";
+	d->name = "cppnode";
 	d->groupName = "org.kevoree.library.cpp";
 	d->version = version;
 	d->type ="so";
 
 
 	TypeDefinition *nodetype = factory.createNodeType();
-	nodetype->name = "CPPNode";
+	nodetype->name = "cppnode";
 	nodetype->abstract= false;
 	nodetype->adddeployUnit(d);
 

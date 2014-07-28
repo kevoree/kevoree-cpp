@@ -75,7 +75,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
       	rep = factory.createRepository();
       	rep->url = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
       	model->addrepositories(rep);
-      	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADDREPO" + rep->url);
+      	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADDREPO " + rep->url);
     	break ;
 
     case TYPE_ADD:
@@ -109,14 +109,12 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 
     	break ;
     case TYPE_INCLUDE:
-    	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE");
+     	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE");
     	child = ast->data.tree->children;
     	type = string(ast_children_as_string((struct ast_t*) vector_get(child,0))) ;
-
     	url = string(ast_children_as_string((struct ast_t*) vector_get(child,1)));
     	MergeResolver::merge(model, type, url) ;
-    	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE" + type);
-    	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE" + url);
+
     	break ;
 
     case TYPE_REMOVE:

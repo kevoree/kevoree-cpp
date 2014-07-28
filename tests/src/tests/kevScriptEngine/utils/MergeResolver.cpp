@@ -17,14 +17,14 @@
 
 
 void MergeResolver::merge(ContainerRoot *model, std::string type, std::string url){
-
 	if(type.compare("mvn") == 0)
 	{
 		std::list<std::string> urls;
-
 		std::map<std::string, Repository*> map =  model->repositories ;
+		cout << map.size() << endl ;
 		for(std::map<std::string, Repository*>::iterator it = model->repositories.begin(); it != model->repositories.end(); ++it) {
-			urls.push_back(it->second->url) ;
+			string url = it->first ;
+			urls.push_back(url) ;
 		}
 		maven::resolver::MavenResolver mvnResol;
 		mvnResol.setBasePath("/tmp");
@@ -43,7 +43,6 @@ void MergeResolver::merge(ContainerRoot *model, std::string type, std::string ur
 		ContainerRoot *remote = (ContainerRoot*) loader.loadModelFromStream(target)->front();
 		ModelCompare *compare= new ModelCompare();
 		TraceSequence* trace = compare->merge(model,remote);
-		cout << trace->toString() << endl;
 		ModelTraceApplicator* MTA = new ModelTraceApplicator(model,&factory) ;
 		MTA->applyTraceOnModel(trace);
 		delete MTA ;

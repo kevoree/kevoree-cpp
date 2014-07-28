@@ -22,8 +22,6 @@ TypeDefinition* TypeDefinitionResolver::resolve(struct ast_t *ast, ContainerRoot
 
 		struct vector_t *child = ast->data.tree->children;
 		string typeDefName = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
-
-
 		LOGGER_WRITE(Logger::DEBUG,string("Type Definition Name :" + typeDefName));
 		string version = "" ;
 		if(child->size > 1){
@@ -35,11 +33,14 @@ TypeDefinition* TypeDefinitionResolver::resolve(struct ast_t *ast, ContainerRoot
 		std::map<string,TypeDefinition*> type_defs = model->typeDefinitions ;
 		for(std::map<string,TypeDefinition*>::iterator it = type_defs.begin(); it != type_defs.end() ; ++it)
 		{
-			cout << "test" << endl ;
-
+			cout << type_defs.size() << endl ;
+			cout << it->first  << endl ;
 			TypeDefinition * t = it->second ;
+			if(t == NULL)
+			{
+				cout <<"null t" << endl ;
+			}
 
-			if(t !=NULL){
 				cout << "type def : " + t->name << endl ;
 
 				if(!version.empty()){
@@ -63,9 +64,7 @@ TypeDefinition* TypeDefinitionResolver::resolve(struct ast_t *ast, ContainerRoot
 						}
 					}
 				}
-			}else{
-				throw string("Error : null type definition");
-			}
+
 		}
 		if (best_td == NULL) {
 			throw string(" TypeDefinition not found with : " +typeDefName +"\n" );
