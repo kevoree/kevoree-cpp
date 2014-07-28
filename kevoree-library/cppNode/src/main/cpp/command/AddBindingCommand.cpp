@@ -12,13 +12,17 @@ void AddBindingCommand::execute(boost::promise<bool> & result)
 	// TODO
 	MBinding *binding = (MBinding*)instance;
 
-	if(binding->port != NULL){
+	if(instance != NULL && binding->port != NULL){
 
 		Port *port = (Port*)binding->port;
 		Channel *hub = 	(Channel*)	binding->hub;
 		ComponentInstance *component = (ComponentInstance*)binding->port->eContainer();
+
 		if(component !=NULL && port !=NULL && hub !=NULL)
 		{
+
+
+
 
 			AbstractComponent *c =(AbstractComponent*)	 bootstrapService->getDynamicLoader()->get_instance(component);
 			AbstractChannel *h =(AbstractChannel*)	 bootstrapService->getDynamicLoader()->get_instance(hub);
@@ -29,7 +33,7 @@ void AddBindingCommand::execute(boost::promise<bool> & result)
 				if(provided != NULL)
 				{
 					// provided  IN
-					std::cout << component->name+"/"+provided->name << std::endl;
+					LOGGER_WRITE(Logger::DEBUG,"AddBindingCommand "+binding->path()+" Component "+component->name+" Port"+provided->name);
 
 					h->local[component->name+"/"+provided->name] =c;
 
@@ -58,7 +62,6 @@ void AddBindingCommand::execute(boost::promise<bool> & result)
 				if(c->ports.find(port->internalGetKey()) == c->ports.end())
 				{
 					PortHandler *handler = new PortSocketDomainLocal( binding->internalGetKey(),h);
-					std::cout << " SET PORT MANAGER" << std::endl;
 					c->ports[port->internalGetKey()] = handler;
 				}
 				r=true;

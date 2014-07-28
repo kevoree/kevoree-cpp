@@ -13,6 +13,11 @@ PortSocketDomainLocal::~PortSocketDomainLocal()
 
 void PortSocketDomainLocal::writeMSG(std::string msg){
 	// TODO
-	channel->dispatch(msg);
+	if(channel !=NULL){
+		channel->dispatch(msg);
+	}else {
+
+		LOGGER_WRITE(Logger::ERROR,"PortSocketDomainLocal channel is null");
+	}
 }
 

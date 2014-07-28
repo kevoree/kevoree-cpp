@@ -117,32 +117,23 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 							adaptationModel->add(adapt(AddBinding, binding));
 							auto tuple = std::make_tuple (binding,AddBinding);
 							elementAlreadyProcessed[binding->path()+"/AddBinding"] = tuple;
-						}else
-						{
-							LOGGER_WRITE(Logger::WARNING,"AddBinding "+binding->path());
 						}
 
 					}
 
-					if(channel != NULL){ // todo check registry && !registry.containsKey(channel.path())){
-						LOGGER_WRITE(Logger::DEBUG," modelElement path =>"+channel->path());
-
-
+					if(channel != NULL){
+						Channel *exist_channel=(Channel*)currentModel->findByPath(channel->path());
 						if(elementAlreadyProcessed.find(channel->path()+"/AddInstance") == elementAlreadyProcessed.end()){
-							adaptationModel->add(adapt(AddInstance, channel));
-							auto tuple = std::make_tuple (channel,AddInstance);
-							elementAlreadyProcessed[channel->path()+"/AddInstance"] = tuple;
-
-						}else {
-							LOGGER_WRITE(Logger::DEBUG,"AddInstance channel already started");
+							if((exist_channel !=NULL && exist_channel->bindings.size() == 0) || exist_channel ==NULL){
+								adaptationModel->add(adapt(AddInstance, channel));
+								auto tuple = std::make_tuple (channel,AddInstance);
+								elementAlreadyProcessed[channel->path()+"/AddInstance"] = tuple;
+							}
 						}
-
-
 					}else
 					{
 						LOGGER_WRITE(Logger::ERROR,"Channel not found");
 					}
-
 
 				}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
 				{
@@ -161,9 +152,8 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 								stillUsed = true;
 							}
 
-							if(!stillUsed ) //TODO && !registry.containsKey(oldChannel!!)
+							if(!stillUsed )
 							{
-
 								if(elementAlreadyProcessed.find(channel->path()+"/RemoveInstance") == elementAlreadyProcessed.end()){
 									adaptationModel->add(adapt(RemoveInstance, channel));
 									auto tuple = std::make_tuple (channel,RemoveInstance);
@@ -172,7 +162,6 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 								}else {
 									LOGGER_WRITE(Logger::DEBUG,"RemoveInstance channel already stopped");
 								}
-
 							}
 
 						}

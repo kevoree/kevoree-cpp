@@ -37,9 +37,9 @@ public:
 							handler->writeMSG(msg);
 						}
 
-					}else {
+					}else
+					{
 						std::cout <<" not found " << std::endl;
-
 					}
 				}
 
@@ -52,7 +52,7 @@ public:
 			}
 
 		}else {
-			std::cout <<" element null " << std::endl;
+		//	std::cout <<"Model element is not available." << std::endl;
 		}
 
 	}
