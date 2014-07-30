@@ -63,7 +63,7 @@ set(URL_MODEL_GENERATOR "https://github.com/Jean-Emile/boost-extra/raw/master/or
 
 if(${CMAKE_BUILD_TYPE} STREQUAL "Release")
 set(CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS}")
-set(CMAKE_CXX_FLAGS " -O3")
+#set(CMAKE_CXX_FLAGS " -O3")
 else()
 set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}")
 endif()
