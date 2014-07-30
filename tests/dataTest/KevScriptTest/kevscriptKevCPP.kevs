@@ -7,12 +7,11 @@ include mvn:org.kevoree.library.cpp:kevoree-group-websocket:1.0.1-SNAPSHOT
 include mvn:org.kevoree.library.cpp:sharedMemoryChannel:1.0.1-SNAPSHOT
 
 
-//add node579 : cppnode
-/add node579.comp28 : fakeconsole
-//add group575 : kevoree-group-websocket
-//add chan863 : sharedmemorychannel
+add node579 : cppnode
+add node579.comp28 : fakeconsole
+add group575 : kevoree-group-websocket
+add chan863 : sharedmemorychannel
+attach node579 group575
 
-//attach node579 group575
-
-//bind node579.comp28.output chan863
-//bind node579.comp28.showin chan863
+bind node579.comp28.output chan863
+bind node579.comp28.showin chan863
