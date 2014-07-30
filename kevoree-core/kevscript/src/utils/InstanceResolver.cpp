@@ -18,7 +18,7 @@ list<Instance*>* InstanceResolver::resolve(struct ast_t *ast, ContainerRoot *mod
 	list<Instance*>* resolved = new list<Instance*>() ;
 
     struct vector_t *child = ast->data.tree->children;
-	if((ast->type == TYPE_INSTANCEPATH) && child->size < 3){
+	if((ast->data.tree->type == TYPE_INSTANCEPATH) && child->size < 3){
 		if(child->size == 2){
 			string nodeName = ast_children_as_string((struct ast_t*) vector_get(child,0));
 			string childName = ast_children_as_string((struct ast_t*) vector_get(child,1));
@@ -99,7 +99,7 @@ list<Instance*>* InstanceResolver::resolve(struct ast_t *ast, ContainerRoot *mod
 				}
 			}
 		}
-	}	else if(ast->type == TYPE_NAMELIST){
+	}	else if(ast->data.tree->type == TYPE_NAMELIST){
 		child = ast->data.tree->children;
 			if(child != NULL)
 			{

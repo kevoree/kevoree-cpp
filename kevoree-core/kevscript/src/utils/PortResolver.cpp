@@ -11,6 +11,7 @@
 #include <kevoree-core/model/kevoree/ComponentInstance.h>
 #include <kevoree-core/model/kevoree/ComponentType.h>
 #include <kevoree-core/model/kevoree/ContainerNode.h>
+#include <kevoree-core/model/kevoree/PortTypeRef.h>
 extern "C" {
 #include <kevoree-core/kevscript/api/Waxeye.h>
 }
@@ -20,7 +21,7 @@ extern "C" {
 list<Port*>* PortResolver::resolve(struct ast_t *ast, ContainerRoot *model){
 	list<Port*>* resolved = new list<Port*>() ;
     struct vector_t *child = ast->data.tree->children;
-	if((ast->type == TYPE_INSTANCEPATH) && child->size < 3){
+	if((ast->data.tree->type == TYPE_INSTANCEPATH) && child->size < 3){
 		string nodeName = string(ast_children_as_string((struct ast_t*) vector_get(child,0)));
 		string componentname = string(ast_children_as_string((struct ast_t*) vector_get(child,1)));
 		string portName = string(ast_children_as_string((struct ast_t*) vector_get(child,2)));
@@ -57,9 +58,32 @@ list<Port*>* PortResolver::resolve(struct ast_t *ast, ContainerRoot *model){
 				{
 					cil->push_back(cn->findcomponentsByID(componentname));
 				}
+				for(std::list<ComponentInstance *>::iterator itci = cil->begin() ; itci != cil->end(); ++cil){
+					ComponentInstance* currCi = *itci ;
+					for(std::map<string,Port*>::iterator itprov = currCi->provided.begin() ;  itprov != currCi->provided.end() ; ++itprov)
+					{
+						Port* p = itprov->second ;
+						if(p->portTypeRef->name.compare(portName)){
+							resolved->push_back(p) ;
+						}
+					}
+					for(std::map<string,Port*>::iterator itreq = currCi->provided.begin() ;  itreq != currCi->provided.end() ; ++itreq)
+					{
+						Port* p = itreq->second ;
+						if(p->portTypeRef->name.compare(portName))
+						{
+							resolved->push_back(p) ;
+						}
+					}
+					}
 		}
 
-	}
+
+	}else{
+		throw string("Bad name to resolve ports" );
+	}   if (resolved->empty()) {
+        throw string("no port resolved" );
+    }
 	return resolved ;
 
 }

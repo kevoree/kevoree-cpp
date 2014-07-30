@@ -8,6 +8,7 @@
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
 #include <kevoree-core/kevscript/src/utils/InstanceResolver.h>
 #include "utils/MergeResolver.h"
+#include "utils/PortResolver.h"
 #include "utils/TypeDefinitionResolver.h"
 
 extern "C" {
@@ -52,6 +53,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 	list<Instance*>* rightHands;
 	list<Instance*>* instances ;
 	list<Instance*>* channel_instances;
+	list<Port*>* ports ;
 
 
 
@@ -99,8 +101,6 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
      	{
      		{ cout << "exception"+s; }
      	}
-
-
     	if(td == NULL)
     	{
     		throw string("TypeDefinition not found : " + string(ast_children_as_string((struct ast_t*) vector_get(child,1))))	;
@@ -111,10 +111,9 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     		{
     			struct vector_t *chil_inst =instance_name->data.tree->children;
     			size_t num_inst = chil_inst->size;
-
 				for (i = 0; i < num_inst; i +=1) {
 					LOGGER_WRITE(Logger::DEBUG,"Todo : ApplyAdd");
-									}
+				}
     		}
     	}
 
@@ -219,12 +218,39 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADDBINDING");
       	channel_instances = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
       	for(auto it = channel_instances->begin(); it != channel_instances->end(); ++it){
-      	//	Channel * channel = (Channel *)it ;
-      		//list<Port> ports = Port;
+      		Channel* channel = (Channel *)*it ;
+      		ports = PortResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
+      		for(auto itp = ports->begin(); itp != ports->end(); ++itp){
+      			MBinding* mb = factory.createMBinding();
+      			mb->port = *itp ;
+      			mb->hub= channel;
+      			model->addmBindings(mb);
+      		}
       	}
     	break ;
     case TYPE_DELBINDING:
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_DELBINDING");
+      	channel_instances = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
+      	ports = PortResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
+      	for(auto it = channel_instances->begin(); it != channel_instances->end(); ++it){
+      		Channel* channel = (Channel *)*it ;
+      		MBinding* toDrop = NULL ;
+      		for(auto itb = channel->bindings.begin(); itb != channel->bindings.end(); ++itb){
+      			for(auto itp = ports->begin(); itp != ports->end() ; ++ itp){
+      				MBinding* mb = 	itb ->second;
+      				Port* p = *itp ;
+      				if(mb->port->internalGetKey().compare(p->internalGetKey())){
+      					toDrop = mb ;
+      				}
+      			}
+
+      		}
+      		if(toDrop != NULL){
+      			//Todo à verifier
+      			toDrop->deleteContainer() ;
+      		}
+      	}
+
     	break ;
 
 
