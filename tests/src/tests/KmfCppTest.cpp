@@ -301,7 +301,7 @@ void KmfCppTest::testKmfCompareBinding(){
 
 		// FIX ME
 		TraceSequence *sequencediff = compare->diff(model_src,model_target);
-		std::cout << sequencediff->exportToString() << std::endl;
+	//	std::cout << sequencediff->exportToString() << std::endl;
 		//CPPUNIT_ASSERT(sequencediff->traces.size()  == 7);
 
 		delete sequencediff;
