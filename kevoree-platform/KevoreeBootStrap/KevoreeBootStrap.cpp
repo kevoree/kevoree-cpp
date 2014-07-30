@@ -4,6 +4,7 @@ KevoreeBootStrap::KevoreeBootStrap(){
 	started= false;
 	bootNodeHelper=NULL;
 	coreBean=NULL;
+
 }
 
 KevoreeBootStrap::~KevoreeBootStrap(){

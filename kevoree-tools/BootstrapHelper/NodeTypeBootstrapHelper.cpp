@@ -15,6 +15,25 @@ NodeTypeBootstrapHelper::~NodeTypeBootstrapHelper()
 
 std::string NodeTypeBootstrapHelper::resolveDeployUnit(DeployUnit *deployunit)
 {
+/*
+	std::cout <<deployunit->name << std::endl;
+	if(deployunit->name.compare("CPPNode") == 0){
+		return "/home/jed/KEVOREE_PROJECT/kevoree-cpp/kevoree-library/cppNode/libkevoree-CPPNode.so";
+	}
+	if(deployunit->name.compare("kevoree-group-websocket") == 0){
+			return "/home/jed/KEVOREE_PROJECT/kevoree-cpp/kevoree-library/websocketgroup/libwebsocketgroup.so";
+		}
+
+
+	if(deployunit->name.compare("sharedMemoryChannel") == 0){
+				return "/home/jed/KEVOREE_PROJECT/kevoree-cpp/kevoree-library/sharedMemoryChannel/libsharedMemoryChannel.so";
+			}
+
+	if(deployunit->name.compare("fakeconsole") == 0){
+				return "/home/jed/KEVOREE_PROJECT/kevoree-cpp/kevoree-library/fakeconsole/libfakeconsole_component.so";
+			}
+*/
+
 	std::list<std::string> urls;
 	ContainerRoot * model = proposedNewModel;
 	if(model == NULL)
@@ -33,6 +52,7 @@ std::string NodeTypeBootstrapHelper::resolveDeployUnit(DeployUnit *deployunit)
 	}
 
 	return resolver.resolve(deployunit->groupName,deployunit->name,deployunit->version,deployunit->type,urls);
+
 }
 
 

@@ -21,7 +21,7 @@ add_executable(
         standalone/main.cpp
         ${kevoree-platform_files}
 )
-TARGET_LINK_LIBRARIES(runtime 	kevoree-tools)
+TARGET_LINK_LIBRARIES(runtime  kevoree-tools)
 TARGET_LINK_LIBRARIES(runtime  kevoree-core-impl)
 TARGET_LINK_LIBRARIES(runtime  kevoree-model-dynamic)
 TARGET_LINK_LIBRARIES(runtime  maven-resolver-cpp )
@@ -32,14 +32,11 @@ TARGET_LINK_LIBRARIES(runtime  libboost_program_options-mt.a)
 TARGET_LINK_LIBRARIES(runtime  libboost_regex-mt.a)
 TARGET_LINK_LIBRARIES(runtime  dl)
 TARGET_LINK_LIBRARIES(runtime  pthread)
-
+TARGET_LINK_LIBRARIES(runtime waxeye)
+TARGET_LINK_LIBRARIES(runtime kevscript)
+TARGET_LINK_LIBRARIES(runtime pthread)
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 TARGET_LINK_LIBRARIES(runtime rt)
 ENDIF()
-
-
-
-
-
 
 

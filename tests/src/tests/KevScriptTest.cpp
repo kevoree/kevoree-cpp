@@ -12,9 +12,8 @@
 #include <iostream>
 
 extern "C" {
-#include "Waxeye.h"
+#include <kevoree-core/kevscript/api/Waxeye.h>
 }
-
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION( KevScriptTest );
