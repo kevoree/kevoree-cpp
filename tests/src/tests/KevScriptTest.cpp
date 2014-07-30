@@ -19,7 +19,7 @@ extern "C" {
 
 CPPUNIT_TEST_SUITE_REGISTRATION( KevScriptTest );
 
- KevScriptTest::KevScriptTest() {
+KevScriptTest::KevScriptTest() {
 	CPPUNIT_ASSERT(1);
 
 
@@ -41,7 +41,14 @@ void KevScriptTest::TestAddRepo() {
 	DefaultkevoreeFactory factory;
 	ContainerRoot   *model = factory.createContainerRoot();
 	KevScriptEngine *kse = new KevScriptEngine() ;
-	kse->interpret(ast,model);
+	try
+	{
+		kse->interpret(ast,model);
+	}
+	catch (string e)
+	{
+		LOGGER_WRITE(Logger::ERROR,e);
+	}
 
 	CPPUNIT_ASSERT(model->repositories.size() == 1);
 	delete model;
@@ -55,7 +62,16 @@ void KevScriptTest::TestRemove() {
 	DefaultkevoreeFactory factory;
 	ContainerRoot   *model = factory.createContainerRoot();
 	KevScriptEngine *kse = new KevScriptEngine() ;
-	kse->interpret(ast,model);
+
+	try
+	{
+		kse->interpret(ast,model);
+	}
+	catch (string e)
+	{
+		LOGGER_WRITE(Logger::ERROR,e);
+	}
+
 
 	CPPUNIT_ASSERT(1);
 	delete model;
