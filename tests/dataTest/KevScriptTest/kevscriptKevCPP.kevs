@@ -11,6 +11,7 @@ add node579 : cppnode
 add node579.comp28 : fakeconsole
 add group575 : kevoree-group-websocket
 add chan863 : sharedmemorychannel
+
 attach node579 group575
 
 bind node579.comp28.output chan863

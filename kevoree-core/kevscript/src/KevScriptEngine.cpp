@@ -97,7 +97,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	}else
     	{
     		struct ast_t *instance_name =  (struct ast_t*)  vector_get(child, 1) ;
-    		if(instance_name->type == TYPE_NAMELIST)
+    		if(instance_name->data.tree->type == TYPE_NAMELIST)
     		{
     			struct vector_t *chil_inst =instance_name->data.tree->children;
     			size_t num_inst = chil_inst->size;
@@ -124,24 +124,86 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	break ;
     case TYPE_MOVE:
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_MOVE");
+    	list<Instance*>* leftHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
+    	list<Instance*>* rightHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
+    	for(auto itLeft = leftHands->begin() ; itLeft != leftHands->end() ; ++itLeft){
+    		for(auto itRight = rightHands->begin(); itRight != rightHands->end() ; ++ itRight){
+    			applyMove(*itLeft,*itRight,model) ;
+    		}
+    	}
     	break ;
     case TYPE_ATTACH:
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_ATTACH");
+    	list<Instance*>* leftHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
+    	list<Instance*>* rightHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
+    	for(auto itLeft = leftHands->begin() ; itLeft != leftHands->end() ; ++itLeft){
+    		for(auto itRight = rightHands->begin(); itRight != rightHands->end() ; ++ itRight){
+    			applyAttach(*itLeft,*itRight,model,true) ;
+    		}
+    	}
     	break ;
     case TYPE_DETACH:
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_DETACH");
+    	list<Instance*>* leftHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
+    	list<Instance*>* rightHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
+    	for(auto itLeft = leftHands->begin() ; itLeft != leftHands->end() ; ++itLeft){
+    		for(auto itRight = rightHands->begin(); itRight != rightHands->end() ; ++ itRight){
+    			applyAttach(*itLeft,*itRight,model,true) ;
+    		}
+    	}
     	break ;
     case TYPE_START:
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_START");
+    	list<Instance*>* instances = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
+    	for(auto it = instances->begin() ; it != instances->end(); ++it)
+    	{
+    		Instance * ist = it ;
+    		ist->started = true ;
+    	}
     	break ;
     case TYPE_PAUSE:
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_PAUSE");
+      	throw string("Pause statement is not implemented yet.") ;
     	break ;
     case TYPE_STOP:
        	LOGGER_WRITE(Logger::DEBUG,"TYPE_STOP");
+    	list<Instance*>* instances = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
+    	for(auto it = instances->begin() ; it != instances->end(); ++it)
+    	{
+    		Instance * ist = it ;
+    		ist->started = false ;
+    	}
     	break ;
     case TYPE_NETWORK:
      	LOGGER_WRITE(Logger::DEBUG,"TYPE_NETWORK");
+    	struct ast_t *left_hand_Network	= (struct ast_t*)  vector_get(child, 0);
+    	struct vector_t *left_hand_children = left_hand_Network->data.tree->children ;
+    	if(left_hand_children-> size() != 3)
+    	{
+    		throw string("Network must be : network nodeName.propertyType.interfaceName IP") ;
+    	}else{
+    		string nodename = string(ast_children_as_string((struct ast_t*) vector_get(left_hand_children,0)));
+    		string proptype = string(ast_children_as_string((struct ast_t*) vector_get(left_hand_children,1)));
+    		string interfacename = string(ast_children_as_string((struct ast_t*) vector_get(left_hand_children,2)));
+    		ContainerNode* networkTargetNode = model->findnodesByID(nodename);
+    		if(networkTargetNode == NULL){
+    	  		throw string("Node not found for name " + nodename) ;
+    		}
+    		NetworkInfo * info = networkTargetNode->findnetworkInformationByID(proptype) ;
+    		if(info == NULL){
+    			info = factory.createNetworkInfo();
+    			info->name = proptype ;
+    			networkTargetNode->addnetworkInformation(info);
+    		}
+    		NetworkProperty * netprop = info->findvaluesByID(interfacename) ;
+    		if(netprop == NULL){
+    			netprop = factory.createNetworkProperty() ;
+    			netprop->name = interfacename ;
+    			info->addvalues(netprop) ;
+    		}
+    		netprop->value =  string(ast_children_as_string((struct ast_t*) vector_get(child, 1)));
+    	}
+
     	break ;
     case TYPE_ADDBINDING:
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADDBINDING");
@@ -165,10 +227,10 @@ void KevScriptEngine::applyAttach(Instance *leftH, Instance *rightH, ContainerRo
 	Group* gR = dynamic_cast<Group*>(rightH);
 	if(cnL == 0)
 	{
-		throw string(leftH -> name + " is not a ContainerNode") ;
+		throw string(leftH->name + " is not a ContainerNode") ;
 	}if(gR == 0)
 	{
-		throw string(rightH -> name + " is not a Group") ;
+		throw string(rightH->name + " is not a Group") ;
 	}
 	if(!reverse)
 	{
@@ -216,7 +278,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 		NodeType* nt = dynamic_cast<NodeType*>(td) ;
 		ContainerNode* instance = factory.createContainerNode() ;
 		instance->typeDefinition = td ;
-		if((ast->type == TYPE_INSTANCEPATH) && child->size == 1)
+		if((ast->data.tree->type == TYPE_INSTANCEPATH) && child->size == 1)
 		{
 			string newNodeName = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
 			instance->name = newNodeName ;
@@ -246,7 +308,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 		ComponentType* ct = dynamic_cast<ComponentType*>(td);
 		ComponentInstance* instance = factory.createComponentInstance();
 		instance->typeDefinition = td ;
-		if((ast->type == TYPE_INSTANCEPATH) && child->size == 2)
+		if((ast->data.tree->type == TYPE_INSTANCEPATH) && child->size == 2)
 			{
 			string newNodeName = ast_children_as_string((struct ast_t*) vector_get(child,1)) ;
 			instance->name = newNodeName ;
@@ -284,7 +346,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 			ChannelType* cht = dynamic_cast<ChannelType*>(td);
 			Channel *instance = factory.createChannel() ;
 			instance->typeDefinition = td ;
-			if((ast->type == TYPE_INSTANCEPATH) && child->size == 1)
+			if((ast->data.tree->type== TYPE_INSTANCEPATH) && child->size == 1)
 						{
 				string channelname = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
 				instance->name = channelname ;
@@ -299,7 +361,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 			GroupType* gt = dynamic_cast<GroupType*>(td);
 			Group *instance = factory.createGroup() ;
 				instance->typeDefinition = td ;
-				if((ast->type == TYPE_INSTANCEPATH) && child->size == 1)
+				if((ast->data.tree->type == TYPE_INSTANCEPATH) && child->size == 1)
 							{
 					string channelname = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
 					instance->name = channelname ;
