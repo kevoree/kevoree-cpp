@@ -32,7 +32,7 @@ list<Instance*>* InstanceResolver::resolve(struct ast_t *ast, ContainerRoot *mod
 					}
 
 			}else {
-				ContainerNode * cn = model->findnodesByID(childName) ;
+				ContainerNode * cn = model->findnodesByID(nodeName) ;
 				if(cn != NULL)
 					{
 				node_list->push_back(cn);
@@ -43,16 +43,21 @@ list<Instance*>* InstanceResolver::resolve(struct ast_t *ast, ContainerRoot *mod
 				for(std::list<ContainerNode*>::iterator it = node_list->begin() ; it != node_list->end() ; ++it){
 					ContainerNode * cn = *it ;
 					std::map<string,ComponentInstance*> CIMap = cn->components ;
+
 					for(std::map<string,ComponentInstance*>::iterator itct = CIMap.begin(); itct != CIMap.end() ; ++itct){
 						ComponentInstance * ct = itct->second ;
 						Instance * is = (Instance *)ct ;
+						if(ct->name.compare(childName)== 0){
 						resolved->push_back(is) ;
+						}
 					}
 					std::map<string,ContainerNode*> CNH = cn->hosts ;
 					for(std::map<string,ContainerNode*>::iterator itht =CNH.begin() ; itht != CNH.end() ; ++itht){
 							ContainerNode * ct = itht->second ;
 							Instance * is = (Instance *)ct ;
+							if(ct->name.compare(childName)== 0){
 							resolved->push_back(is) ;
+							}
 						}
 
 					}
