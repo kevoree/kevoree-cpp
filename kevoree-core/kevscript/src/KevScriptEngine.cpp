@@ -4,7 +4,9 @@
 #include <kevoree-core/kevscript/api/KevScriptEngine.h>
 #include <kevoree-core/model/kevoree/DefaultkevoreeFactory.h>
 #include <kevoree-core/model/kevoree/Instance.h>
+#include <kevoree-core/model/kevoree/Channel.h>
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
+#include <kevoree-core/kevscript/src/utils/InstanceResolver.h>
 #include "utils/MergeResolver.h"
 #include "utils/TypeDefinitionResolver.h"
 
@@ -37,6 +39,8 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 
 	struct ast_tree_t *tree = ast->data.tree;
     struct vector_t *child ;
+    struct vector_t *left_hand_children;
+	struct ast_t *left_hand_Network	 ;
     size_t num_child ;
     size_t i;
     TypeDefinition *td  ;
@@ -44,6 +48,12 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     Repository *rep ;
     string type ;
     string url ;
+    list<Instance*>* leftHands;
+	list<Instance*>* rightHands;
+	list<Instance*>* instances ;
+	list<Instance*>* channel_instances;
+
+
 
     switch (tree->type) {
 
@@ -124,8 +134,8 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	break ;
     case TYPE_MOVE:
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_MOVE");
-    	list<Instance*>* leftHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
-    	list<Instance*>* rightHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
+    	leftHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
+     rightHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
     	for(auto itLeft = leftHands->begin() ; itLeft != leftHands->end() ; ++itLeft){
     		for(auto itRight = rightHands->begin(); itRight != rightHands->end() ; ++ itRight){
     			applyMove(*itLeft,*itRight,model) ;
@@ -134,8 +144,8 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	break ;
     case TYPE_ATTACH:
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_ATTACH");
-    	list<Instance*>* leftHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
-    	list<Instance*>* rightHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
+    	leftHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
+    	rightHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
     	for(auto itLeft = leftHands->begin() ; itLeft != leftHands->end() ; ++itLeft){
     		for(auto itRight = rightHands->begin(); itRight != rightHands->end() ; ++ itRight){
     			applyAttach(*itLeft,*itRight,model,true) ;
@@ -144,8 +154,8 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	break ;
     case TYPE_DETACH:
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_DETACH");
-    	list<Instance*>* leftHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
-    	list<Instance*>* rightHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
+    	leftHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
+    	rightHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
     	for(auto itLeft = leftHands->begin() ; itLeft != leftHands->end() ; ++itLeft){
     		for(auto itRight = rightHands->begin(); itRight != rightHands->end() ; ++ itRight){
     			applyAttach(*itLeft,*itRight,model,true) ;
@@ -154,10 +164,10 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	break ;
     case TYPE_START:
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_START");
-    	list<Instance*>* instances = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
+    	instances = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
     	for(auto it = instances->begin() ; it != instances->end(); ++it)
     	{
-    		Instance * ist = it ;
+    		Instance * ist = *it ;
     		ist->started = true ;
     	}
     	break ;
@@ -167,18 +177,18 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	break ;
     case TYPE_STOP:
        	LOGGER_WRITE(Logger::DEBUG,"TYPE_STOP");
-    	list<Instance*>* instances = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
+    	instances = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
     	for(auto it = instances->begin() ; it != instances->end(); ++it)
     	{
-    		Instance * ist = it ;
+    		Instance * ist =* it ;
     		ist->started = false ;
     	}
     	break ;
     case TYPE_NETWORK:
      	LOGGER_WRITE(Logger::DEBUG,"TYPE_NETWORK");
-    	struct ast_t *left_hand_Network	= (struct ast_t*)  vector_get(child, 0);
-    	struct vector_t *left_hand_children = left_hand_Network->data.tree->children ;
-    	if(left_hand_children-> size() != 3)
+    	left_hand_Network	= (struct ast_t*)  vector_get(child, 0);
+    	left_hand_children = left_hand_Network->data.tree->children ;
+    	/*if(left_hand_children->size() != 3)
     	{
     		throw string("Network must be : network nodeName.propertyType.interfaceName IP") ;
     	}else{
@@ -202,15 +212,21 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     			info->addvalues(netprop) ;
     		}
     		netprop->value =  string(ast_children_as_string((struct ast_t*) vector_get(child, 1)));
-    	}
+    	}*/
 
     	break ;
     case TYPE_ADDBINDING:
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADDBINDING");
+      	channel_instances = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
+      	for(auto it = channel_instances->begin(); it != channel_instances->end(); ++it){
+      	//	Channel * channel = (Channel *)it ;
+      		//list<Port> ports = Port;
+      	}
     	break ;
     case TYPE_DELBINDING:
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_DELBINDING");
     	break ;
+
 
     default:
     	LOGGER_WRITE(Logger::DEBUG,"default");
@@ -374,4 +390,4 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 	}
 	return process != NULL;
 
-}
+};
