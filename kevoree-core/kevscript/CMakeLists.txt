@@ -7,12 +7,13 @@ set(SRC_KEVOREE_CORE  ${KEVOREEROOT}/kevoree-core)
 set(SRC_MICROFRAMEWORK ${SRC_KEVOREE_CORE}/model/)
 
 
-
+include_directories(${KEVOREEROOT}/maven-resolver-cpp/src)
 include_directories(${KEVOREEROOT})
 include_directories(${SRC_MICROFRAMEWORK})
 
 include_directories(.)
 include_directories(src/)
+include_directories(src/api)
 include_directories(waxeye/include)
 
 file(GLOB_RECURSE kevscript_files src/*)
@@ -20,12 +21,16 @@ file(GLOB_RECURSE waxeye_files waxeye/*.c)
 
 
 ADD_LIBRARY(kevscript   STATIC   ${kevscript_files})
+TARGET_LINK_LIBRARIES(kevscript  libboost_thread-mt.a) # FIX ME REMOVE 
+TARGET_LINK_LIBRARIES(kevscript  pthread)
+
+TARGET_LINK_LIBRARIES(kevscript  maven-resolver-cpp )
 
 ADD_LIBRARY(waxeye   STATIC   ${waxeye_files})
 
 
-add_executable(
-        kevscript-parser
-        ${kevscript_files}
-)
-TARGET_LINK_LIBRARIES(kevscript-parser waxeye )
+#add_executable(
+#        kevscript-parser
+#        ${kevscript_files}
+#)
+#TARGET_LINK_LIBRARIES(kevscript-parser waxeye )
