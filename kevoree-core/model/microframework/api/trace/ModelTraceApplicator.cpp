@@ -4,14 +4,17 @@
 #include <string>
 #include <microframework/api/utils/any.h>
 
-ModelTraceApplicator::ModelTraceApplicator(KMFContainer* _targetModel, KMFFactory* _factory){
-	 targetModel = _targetModel ;
-	 factory = _factory ;
-	 pendingObj = NULL;
-	 pendingParent = NULL;
-	 pendingParentRefName ="";
-	 pendingObjPath ="" ;
-	 fireEvents = true ;
+
+ModelTraceApplicator::ModelTraceApplicator(ContainerRoot* _targetModel, KMFFactory* _factory){
+	targetModel = _targetModel ;
+	factory = _factory ;
+	pendingObj = NULL;
+	pendingParent = NULL;
+	pendingParentRefName ="";
+	pendingObjPath ="" ;
+	fireEvents = true ;
+
+
 }
 
 ModelTraceApplicator::~ModelTraceApplicator(){
@@ -21,23 +24,25 @@ ModelTraceApplicator::~ModelTraceApplicator(){
 
 void ModelTraceApplicator::createOrAdd(string previousPath , KMFContainer* target, string refName, string potentialTypeName)
 {
+
 	KMFContainer* targetElm = NULL ;
 	if(!previousPath.empty()){
-		targetElm = target->findByPath(previousPath);
+		targetElm = targetModel->findByPath(previousPath);
 	}
-	if(targetElm != NULL){
-
+	if(targetElm != NULL)
+	{
+		LOGGER_WRITE(Logger::DEBUG,"createOrAdd targetElm found in target model "+previousPath);
 		target->reflexiveMutator(ADD,refName,targetElm, true, fireEvents) ;
-
 	}else{
 		if(!potentialTypeName.empty()){
-			pendingObj = factory->create("org.kevoree." +potentialTypeName);
-			cout << "creation " +potentialTypeName << endl ;
-			if(pendingObj == NULL){
-				cout << "pendingObj null" << endl ;
-			}
-			if(factory == NULL){
-				cout << "factory null" << endl ;
+			LOGGER_WRITE(Logger::DEBUG,string("createOrAdd instance of "+potentialTypeName));
+			if(factory !=NULL){
+				pendingObj = factory->create("org.kevoree." +potentialTypeName);
+				if(pendingObj == NULL){
+					throw string("The factory cannot create an instance of "+potentialTypeName);
+				}
+			}else {
+				throw string("createOrAdd, the factory is null");
 			}
 		}
 		pendingObjPath = previousPath ;
@@ -50,11 +55,14 @@ void ModelTraceApplicator::createOrAdd(string previousPath , KMFContainer* targe
 void ModelTraceApplicator::tryClosePending(string srcPath){
 	if((pendingObj != NULL) && (pendingObjPath.compare(srcPath) !=0)){
 		if(pendingParent != NULL){
-			 pendingParent->reflexiveMutator(ADD, pendingParentRefName, pendingObj, true, fireEvents) ;
-			 pendingObj = NULL;
-			 pendingParent = NULL;
-			 pendingParentRefName = "";
-			 pendingObjPath = "";
+			LOGGER_WRITE(Logger::DEBUG,"tryClosePending in "+pendingParent->metaClassName()+" ParentRefName "+pendingParentRefName+" obj "+pendingObj->internalGetKey());
+			pendingParent->reflexiveMutator(ADD, pendingParentRefName, pendingObj, true, fireEvents) ;
+			pendingObj = NULL;
+			pendingParent = NULL;
+			pendingParentRefName = "";
+			pendingObjPath = "";
+		}else {
+			LOGGER_WRITE(Logger::DEBUG,"tryClosePending not found ");
 		}
 	}
 }
@@ -65,21 +73,21 @@ void ModelTraceApplicator::applyTraceOnModel(TraceSequence *seq){
 	{
 		KMFContainer* target = targetModel ;
 		ModelTrace* mt = *iterator ;
-		cout << mt->toString() << endl ;
+
 		if(dynamic_cast<ModelAddTrace*>(mt) != 0){
+			ModelAddTrace *addtrace = (ModelAddTrace*)mt;
+			//LOGGER_WRITE(Logger::DEBUG,"ModelAddTrace "+addtrace->toString());
 			tryClosePending("");
-            if(!mt->srcPath.empty()){
-            	 if(targetModel->findByPath(mt->srcPath) != NULL)
-            	{
-            		 target = targetModel->findByPath(mt->srcPath)	;
-
-            	}
-            }
-            	 createOrAdd(((ModelAddTrace*)mt)->previousPath, target, mt->refName, ((ModelAddTrace*)mt)->typeName);
-            	 	LOGGER_WRITE(Logger::DEBUG,"Creation" + ((ModelAddTrace*)mt)->previousPath + ";" + mt->refName + "; "+ ((ModelAddTrace*)mt)->typeName);
-		}
-
-		if(dynamic_cast<ModelAddAllTrace*>(mt) != 0){
+			if(!addtrace->srcPath.empty())
+			{
+				KMFContainer *resolvedTarget=targetModel->findByPath(addtrace->srcPath);
+				if(resolvedTarget == NULL)
+				{
+					throw string("Add Trace source not found for path : " + addtrace->srcPath + " pending " + pendingObjPath + "\n" + addtrace->toString());
+				}
+			}
+			createOrAdd(addtrace->previousPath, target, mt->refName, addtrace->typeName);
+		}else if(dynamic_cast<ModelAddAllTrace*>(mt) != 0){
 			tryClosePending("");
 			int i = 0 ;
 			if( !((ModelAddAllTrace*)mt)->previousPath.empty())
@@ -94,12 +102,10 @@ void ModelTraceApplicator::applyTraceOnModel(TraceSequence *seq){
 						string type_name = *it2;
 						createOrAdd(path,target, mt->refName, type_name);
 					}
-					++i ;
+					i++ ;
 				}
 			}
-		}
-
-		if(dynamic_cast<ModelRemoveTrace*>(mt) != 0){
+		}else if(dynamic_cast<ModelRemoveTrace*>(mt) != 0){
 			tryClosePending(mt->srcPath);
 			KMFContainer* tmpTarget = targetModel ;
 
@@ -109,59 +115,55 @@ void ModelTraceApplicator::applyTraceOnModel(TraceSequence *seq){
 			if(tmpTarget != NULL){
 				tmpTarget->reflexiveMutator(REMOVE,mt->refName, targetModel->findByPath(((ModelRemoveTrace*)mt)->objPath), true, fireEvents);
 			}
-		}
-
-		if(dynamic_cast<ModelRemoveAllTrace*>(mt) != 0){
-				tryClosePending(mt->srcPath);
-				KMFContainer* tmpTarget = targetModel ;
-
-				if(mt->srcPath.compare("") != 0){
-					tmpTarget = targetModel->findByPath(mt->srcPath) ;
-				}
-				if(tmpTarget != NULL){
-					tmpTarget->reflexiveMutator(REMOVE_ALL,mt->refName,NULL, true, fireEvents);
-				}
-			}
-
-		if(dynamic_cast<ModelSetTrace*> (mt) != 0){
+		}else if(dynamic_cast<ModelRemoveAllTrace*>(mt) != 0){
 			tryClosePending(mt->srcPath);
-			if(!mt->srcPath.empty() && mt->srcPath.compare(pendingObjPath) != 0){
-				KMFContainer* target = targetModel->findByPath(mt->srcPath) ;
+			KMFContainer* tmpTarget = targetModel ;
+
+			if(mt->srcPath.compare("") != 0){
+				tmpTarget = targetModel->findByPath(mt->srcPath) ;
+			}
+			if(tmpTarget != NULL){
+				tmpTarget->reflexiveMutator(REMOVE_ALL,mt->refName,NULL, true, fireEvents);
+			}
+		}else if(dynamic_cast<ModelSetTrace*> (mt) != 0){
+			ModelSetTrace *settrace = (ModelSetTrace*)mt;
+//			LOGGER_WRITE(Logger::DEBUG,"ModelSetTrace "+settrace->toString());
+
+			tryClosePending(settrace->srcPath);
+			if(!mt->srcPath.empty() && settrace->srcPath.compare(pendingObjPath) != 0){
+				KMFContainer* target = targetModel->findByPath(settrace->srcPath) ;
 				if(target == NULL)
 				{
-					throw string("Set Trace source not found for path : " + mt->srcPath + " pending " + pendingObjPath + "\n" + mt->toString()) ;
+					throw string("Set Trace source not found for path : " + settrace->srcPath + " pending " + pendingObjPath + "\n" + settrace->toString()) ;
 				}
 			}else {
-				if(mt->srcPath.compare(pendingObjPath) == 0 && pendingObj != NULL){
+				if(settrace->srcPath.compare(pendingObjPath) == 0 && pendingObj != NULL){
 					target = pendingObj ;
 				}
 			}
-			if(!((ModelSetTrace*)mt)->content.empty()){
-				target->reflexiveMutator(SET, mt->refName, ((ModelSetTrace*)mt)->content, true, fireEvents) ;
+			if(!settrace->content.empty()){
+				target->reflexiveMutator(SET, settrace->refName, settrace->content, true, fireEvents) ;
 			}else
 			{
 				KMFContainer* targetContentPath ;
-				if(!((ModelSetTrace*)mt)->objPath.empty()){
-					targetContentPath = targetModel->findByPath(((ModelSetTrace*)mt)->objPath) ;
+				if(!settrace->objPath.empty()){
+					targetContentPath = targetModel->findByPath(settrace->objPath) ;
 				}else
 				{
 					targetContentPath = NULL ;
 				}
 				if(targetContentPath != NULL){
-					target->reflexiveMutator(SET, mt->refName, targetContentPath, true , fireEvents );
+					target->reflexiveMutator(SET, settrace->refName, targetContentPath, true , fireEvents );
 				}else {
-					if(!((ModelSetTrace*)mt)->typeName.empty() && !((ModelSetTrace*)mt)->typeName.empty() ){
+					if(!(settrace->typeName.empty()) && !(settrace->typeName.empty()) ){
 
-						createOrAdd(((ModelSetTrace*)mt)->objPath, target, ((ModelSetTrace*)mt)->refName,((ModelSetTrace*)mt)->typeName) ;
+						createOrAdd(settrace->objPath, target, settrace->refName,settrace->typeName) ;
 					}else
 					{
-
-						LOGGER_WRITE(Logger::DEBUG,	((ModelSetTrace*)mt)->refName);
 						any path = string("");
-						target->reflexiveMutator(SET,((ModelSetTrace*)mt)->refName,path, true, fireEvents );
-						LOGGER_WRITE(Logger::DEBUG,"else31"+ mt->toString());
+						target->reflexiveMutator(SET,settrace->refName,path, true, fireEvents );
 					}
- 				}
+				}
 
 			}
 		}
