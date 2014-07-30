@@ -188,7 +188,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
      	LOGGER_WRITE(Logger::DEBUG,"TYPE_NETWORK");
     	left_hand_Network	= (struct ast_t*)  vector_get(child, 0);
     	left_hand_children = left_hand_Network->data.tree->children ;
-    /*	if(left_hand_children->size() != 3)
+    	if(left_hand_children->size != 3)
     	{
     		throw string("Network must be : network nodeName.propertyType.interfaceName IP") ;
     	}else{
@@ -212,7 +212,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     			info->addvalues(netprop) ;
     		}
     		netprop->value =  string(ast_children_as_string((struct ast_t*) vector_get(child, 1)));
-    	}*/
+    	}
 
     	break ;
     case TYPE_ADDBINDING:
@@ -390,4 +390,4 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 	}
 	return process != NULL;
 
-};
+}
