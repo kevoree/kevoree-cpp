@@ -26,23 +26,27 @@ void MergeResolver::merge(ContainerRoot *model, std::string type, std::string ur
 			string url = it->first ;
 			urls.push_back(url) ;
 		}
+		// FIX ME USAGE THE GLOBAL
 		maven::resolver::MavenResolver mvnResol;
-		mvnResol.setBasePath("/tmp");
+		mvnResol.setBasePath("/tmp/kev"); // FIX ME
 		std::vector<string> splitted_chain;
 		Utils::split(splitted_chain , url  ,":") ;
 		JSONModelLoader loader;
 		string file  = mvnResol.resolve(splitted_chain.at(0),splitted_chain.at(1),splitted_chain.at(2),"json",urls) ;
 		ifstream target;
-			target.open (file);
-			if(!target){
-				cout << "no file trace" << endl;
-			}
-
+		target.open (file);
+		if(!target){
+			cout << "no file trace" << endl;
+		}
+		LOGGER_WRITE(Logger::DEBUG,"TypeDefintion found " + file);
 		DefaultkevoreeFactory factory;
 		loader.setFactory(&factory) ;
 		ContainerRoot *remote = (ContainerRoot*) loader.loadModelFromStream(target)->front();
 		ModelCompare *compare= new ModelCompare();
 		TraceSequence* trace = compare->merge(model,remote);
+		//LOGGER_WRITE(Logger::DEBUG,"Merge trace  " + trace->exportToString());
+
+
 		ModelTraceApplicator* MTA = new ModelTraceApplicator(model,&factory) ;
 		MTA->applyTraceOnModel(trace);
 		delete MTA ;
