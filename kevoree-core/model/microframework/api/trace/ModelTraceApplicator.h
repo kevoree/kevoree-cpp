@@ -7,18 +7,19 @@
 #include <microframework/api/trace/TraceSequence.h>
 #include <microframework/api/KMFContainer.h>
 #include <microframework/api/KMFFactory.h>
+#include <kevoree-core/model/kevoree/kevoree.h>
 
 class ModelTraceApplicator
 {
 public:
-	ModelTraceApplicator(KMFContainer* _targetModel, KMFFactory* _factory);
+	ModelTraceApplicator(ContainerRoot* _targetModel, KMFFactory* _factory);
 	~ModelTraceApplicator();
 	void applyTraceOnModel(TraceSequence *seq);
 	void tryClosePending(string srcPath) ;
 	void createOrAdd(string previousPath , KMFContainer* target, string refName, string potentialTypeName);
 
 
-	KMFContainer* targetModel ;
+	ContainerRoot* targetModel ;
 	KMFFactory* factory ;
 
 
