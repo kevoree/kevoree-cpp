@@ -6,7 +6,7 @@
  */
 
 #include "KevScriptTest.h"
-#include "kevScriptEngine/KevScriptEngine.h"
+#include <kevoree-core/kevscript/api/KevScriptEngine.h>
 #include <kevoree-core/model/kevoree/DefaultkevoreeFactory.h>
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
 #include <iostream>
