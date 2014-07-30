@@ -44,16 +44,16 @@ TypeDefinition* TypeDefinitionResolver::resolve(struct ast_t *ast, ContainerRoot
 				cout << "type def : " + t->name << endl ;
 
 				if(!version.empty()){
-					LOGGER_WRITE(Logger::DEBUG,string("version not emepty"));
+
 					if ((it->first.compare(typeDefName)==0) && (version.compare(it->second->version)==0))
 					{
 						return it->second ;
 					}
 				}
 				else {
-					LOGGER_WRITE(Logger::DEBUG,string("else"));
+
 					if((it->first.compare(typeDefName)==0)){
-						LOGGER_WRITE(Logger::DEBUG,string("else"));
+
 						if(best_td == NULL){
 							best_td = it->second ;
 						}else{
