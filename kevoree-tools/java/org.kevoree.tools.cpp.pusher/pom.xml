@@ -11,11 +11,11 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>org.kevoree.tools.cpp.maven.plugin</groupId>
-    <artifactId>kevcpp-maven-plugin</artifactId>
+    <groupId>org.kevoree.tools.cpp</groupId>
+    <artifactId>pusher</artifactId>
     <version>1.0.1-SNAPSHOT</version>
-    <packaging>maven-plugin</packaging>
-    <name>Kevoree CPP :: Tools :: MavenPlugin</name>
+
+    <name>Kevoree CPP :: Tools :: pusher</name>
     <properties>
         <kevoree.model.version>3.5.4</kevoree.model.version>
     </properties>

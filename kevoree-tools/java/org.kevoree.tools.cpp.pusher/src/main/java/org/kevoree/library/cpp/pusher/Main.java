@@ -1,4 +1,4 @@
-package org.kevoree.library.cpp.mavenplugin;
+package org.kevoree.library.cpp.pusher;
 
 
 import org.java_websocket.client.WebSocketClient;
@@ -78,10 +78,11 @@ public class Main {
         Protocol.PushMessage pushMessage = new Protocol.PushMessage(jsonModelSaver.serialize(model));
         Protocol.PushMessage pushMessage2 = new Protocol.PushMessage(jsonModelSaver.serialize(model2));
         Protocol.PushMessage pushMessage3 = new Protocol.PushMessage(jsonModelSaver.serialize(model3));
-        WebSocketClient client =createWSClient("stratus.irisa.fr","9000");
-        client.connectBlocking();
+
 
         while(true){
+            WebSocketClient client =createWSClient("127.0.0.1","9000");
+            client.connectBlocking();
 
             client.send(pushMessage.toRaw());
 
@@ -89,10 +90,10 @@ public class Main {
            // System.out.println("UPDATE");
 
             client.send(pushMessage3.toRaw());
-
+            client.close();
 
         }
-     //   client.close();
+
 
 
     }
