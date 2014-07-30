@@ -3,12 +3,18 @@ project(kevoree-platform)
 
 include_directories(${BOOST_ROOT}/include)
 link_directories(${BOOST_ROOT}/lib)
-message("${BOOST_ROOT}")
-include_directories(.)
-include_directories(../)
-include_directories(../kevoree-core/model/)
-include_directories(../maven-resolver-cpp/src)
+set(KEVOREEROOT ../)
+set(SRC_KEVOREE_CORE  ${KEVOREEROOT}/kevoree-core)
+set(SRC_MICROFRAMEWORK ${SRC_KEVOREE_CORE}/model/)
+set(SRC_KEVSCRIPT ${SRC_KEVOREE_CORE}/kevscript)
+set(SRC_KEVTOOLS ${KEVOREEROOT}/kevoree-tools/)
 
+include_directories(${KEVOREEROOT}/)
+include_directories(${SRC_MICROFRAMEWORK}/)
+include_directories(../maven-resolver-cpp/src)
+include_directories(${SRC_KEVSCRIPT}/src)
+include_directories(${SRC_KEVSCRIPT}/waxeye/include)
+include_directories(${SRC_KEVOREE_CORE}/api/queues/include)
 
 file(GLOB_RECURSE kevoree-platform_files KevoreeBootStrap/*)
 

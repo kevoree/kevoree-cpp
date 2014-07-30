@@ -14,7 +14,7 @@
 #include <microframework/api/compare/ModelCompare.h>
 #include <microframework/api/trace/TraceSequence.h>
 #include <microframework/api/trace/ModelTraceApplicator.h>
-
+#include <boost/filesystem.hpp>
 
 void MergeResolver::merge(ContainerRoot *model, std::string type, std::string url){
 	if(type.compare("mvn") == 0)
@@ -28,7 +28,11 @@ void MergeResolver::merge(ContainerRoot *model, std::string type, std::string ur
 		}
 		// FIX ME USAGE THE GLOBAL
 		maven::resolver::MavenResolver mvnResol;
-		mvnResol.setBasePath("/tmp/kev"); // FIX ME
+
+
+		boost::filesystem::path temp = boost::filesystem::temp_directory_path();
+		const std::string tempstr    = temp.native()+"/.m2";
+		mvnResol.setBasePath(tempstr); // FIX ME
 		std::vector<string> splitted_chain;
 		Utils::split(splitted_chain , url  ,":") ;
 		JSONModelLoader loader;

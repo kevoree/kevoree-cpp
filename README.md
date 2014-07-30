@@ -119,8 +119,6 @@ version 	1.0.0
 ## KevScript 
 ```
 repo "http://maven.reacloud.com/nexus/content/repositories/releases"
-repo "http://maven.reacloud.com/nexus/content/repositories/releases/"
-repo "http://maven.reacloud.com/nexus/content/repositories/snapshots"
 repo "http://maven.reacloud.com/nexus/content/repositories/snapshots/"
 repo "http://repo.maven.apache.org/maven2"
 

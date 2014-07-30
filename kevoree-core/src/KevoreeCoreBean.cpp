@@ -8,7 +8,7 @@ KevoreeCoreBean::KevoreeCoreBean(){
 	currentModel=NULL;
 	nodeInstance=NULL;
 	preCompare=NULL;
-	//kevScriptEngine = new KevScriptEngine();
+	kevScriptEngine = new KevScriptEngine();
 	pthread_mutex_init(&lock_core, 0);	
 }
 KevoreeCoreBean::~KevoreeCoreBean()

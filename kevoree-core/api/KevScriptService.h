@@ -9,8 +9,8 @@
 class KevScriptService {
 
 public:
-	virtual void execute(std::string nodeName,ContainerRoot *model)=0;
-	virtual void executeFromStream(istream	&inputstream,ContainerRoot *model)=0;
+	virtual void execute(std::string script,ContainerRoot *model)=0;
+	virtual void executeFromStream(istream	&script,ContainerRoot *model)=0;
 };
 
 #endif
