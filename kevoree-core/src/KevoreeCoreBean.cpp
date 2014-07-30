@@ -2,11 +2,13 @@
 #include <stdexcept>
 #include <sys/time.h>
 #include <sys/resource.h>
+#include <kevoree-core/kevscript/api/KevScriptEngine.h>
 
 KevoreeCoreBean::KevoreeCoreBean(){
 	currentModel=NULL;
 	nodeInstance=NULL;
 	preCompare=NULL;
+	//kevScriptEngine = new KevScriptEngine();
 	pthread_mutex_init(&lock_core, 0);	
 }
 KevoreeCoreBean::~KevoreeCoreBean()

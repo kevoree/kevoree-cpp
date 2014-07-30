@@ -9,6 +9,7 @@
 #include <kevoree-core/api/PreCompare.h>
 
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
+#include <kevoree-core/api/KevScriptService.h>
 #include <kevoree-core/model/kevoree/DefaultkevoreeFactory.h>
 #include <microframework/api/json/JSONModelLoader.h>
 #include <microframework/api/compare/ModelCompare.h>
@@ -51,6 +52,7 @@ public:
 	JSONModelLoader loader;
 	ModelCompare modelCompare;
 	PreCompare *preCompare; // TODO DE
+	KevScriptService *kevScriptEngine;
 };
 
 

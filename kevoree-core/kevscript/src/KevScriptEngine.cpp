@@ -9,7 +9,7 @@
 #include "utils/TypeDefinitionResolver.h"
 
 extern "C" {
-#include <tests/src/tests/Waxeye.h>
+#include <kevoree-core/kevscript/api/Waxeye.h>
 }
 
 

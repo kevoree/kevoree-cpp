@@ -7,10 +7,8 @@
 #include "TypeDefinitionResolver.h"
 
 extern "C" {
-#include <tests/src/tests/Waxeye.h>
+#include <kevoree-core/kevscript/api/Waxeye.h>
 }
-
-
 
 TypeDefinition* TypeDefinitionResolver::resolve(struct ast_t *ast, ContainerRoot *model)
 {

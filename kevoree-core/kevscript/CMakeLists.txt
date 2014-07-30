@@ -21,9 +21,8 @@ file(GLOB_RECURSE waxeye_files waxeye/*.c)
 
 
 ADD_LIBRARY(kevscript   STATIC   ${kevscript_files})
-TARGET_LINK_LIBRARIES(kevscript  libboost_thread-mt.a) # FIX ME REMOVE 
+TARGET_LINK_LIBRARIES(kevscript  boost_thread-mt) # FIX ME REMOVE 
 TARGET_LINK_LIBRARIES(kevscript  pthread)
-
 TARGET_LINK_LIBRARIES(kevscript  maven-resolver-cpp )
 
 ADD_LIBRARY(waxeye   STATIC   ${waxeye_files})
