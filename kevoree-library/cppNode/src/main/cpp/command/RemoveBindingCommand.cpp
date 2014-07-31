@@ -6,7 +6,6 @@
 
 void RemoveBindingCommand::execute(boost::promise<bool> & result)
 {
-	std::cout << "TODO remove binding" << std::endl;
 	bool r=false;
 	MBinding *binding = (MBinding*)instance;
 
