@@ -81,15 +81,14 @@ void JSONModelLoader::loadObject(Lexer *lexer,string nameInParent,KMFContainer *
 			string name = currentToken.value;
 			if(factory == NULL)
 			{
-				Logger::Write(Logger::ERROR," JSONModelLoader::loadObject the Default Factory is NULL WTF");
-				throw std::string( " JSONModelLoader::loadObject the Default Factory is NULL WTF" );
+				throw KevoreeException(" JSONModelLoader::loadObject the Default Factory is NULL");
 			}
 
 			currentObject = factory->create(name);
 			Logger::Write(Logger::DEBUG_MICROFRAMEWORK, "Create "+name);
 			if(currentObject == NULL)
 			{
-				throw std::string(" JSONModelLoader::loadObject the Default Factory failed to build "+name );
+				throw KevoreeException(" JSONModelLoader::loadObject the Default Factory failed to build "+name);
 			}
 
 			if(parent == NULL){
@@ -164,7 +163,7 @@ void JSONModelLoader::loadObject(Lexer *lexer,string nameInParent,KMFContainer *
 
 		}else
 		{
-			throw std::string("Bad Format / eClass att must be first");
+			throw KevoreeException("JSONModelLoader Bad Format / eClass att must be first");
 			//TODO save temp att
 		}
 
@@ -172,7 +171,7 @@ void JSONModelLoader::loadObject(Lexer *lexer,string nameInParent,KMFContainer *
 
 	}  else
 	{
-		throw std::string("Bad Format");
+		throw KevoreeException("JSONModelLoader Bad Format");
 	}
 
 }

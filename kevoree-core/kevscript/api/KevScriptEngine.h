@@ -1,6 +1,8 @@
 
 #include <kevoree-core/api/KevScriptService.h>
 #include <kevoree-core/model/kevoree/Instance.h>
+#include <microframework/api/utils/KevoreeException.h>
+
 #ifndef __KevScriptEngine_H
 #define __KevScriptEngine_H
 

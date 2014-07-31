@@ -14,7 +14,7 @@
 #include <sstream>
 #include <microframework/api/KMFContainer.h>
 #include <microframework/api/container/KMFContainerImpl.h>
-
+#include <microframework/api/utils/KevoreeException.h>
 
 #include <microframework/api/KMFFactory.h>
 #include <microframework/api/ModelLoader.h>

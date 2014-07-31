@@ -42,7 +42,7 @@ list<Port*>* PortResolver::resolve(struct ast_t *ast, ContainerRoot *model){
 				}
 			}
 		if(node_list->empty()){
-			throw string("No nodes resolved from : " + componentname) ;
+			throw KevoreeException("No nodes resolved from : " + componentname) ;
 		}
 
 		for(std::list<ContainerNode*>::iterator it = node_list->begin() ; it != node_list->end() ; ++it){
@@ -80,9 +80,9 @@ list<Port*>* PortResolver::resolve(struct ast_t *ast, ContainerRoot *model){
 
 
 	}else{
-		throw string("Bad name to resolve ports" );
+		throw KevoreeException("Bad name to resolve ports" );
 	}   if (resolved->empty()) {
-        throw string("no port resolved" );
+        throw KevoreeException("no port resolved" );
     }
 	return resolved ;
 

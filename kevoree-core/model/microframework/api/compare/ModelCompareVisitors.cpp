@@ -74,11 +74,9 @@ void ModelCompareVisitorCreateTraces::visit (KMFContainer * elem, string refName
 	}
 	else
 	{
-		// TODO THROW EXCEPTION
-		LOGGER_WRITE(Logger::ERROR,"ERROR the child path is not defined "+elem->path());
+		throw KevoreeException("ModelCompareVisitorFiller the child path is not defined "+elem->path());
 	}
 	LOGGER_WRITE(Logger::DEBUG_MICROFRAMEWORK,"END -- ModelCompareVisitorCreateTraces "+elem->path());
-
 }
 
 

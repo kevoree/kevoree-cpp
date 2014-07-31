@@ -47,7 +47,7 @@ void KevScriptEngine::executeFromStream(istream	&inputstream,ContainerRoot *mode
 		this->execute(script,model);
 	}else
 	{
-		throw string("KevScriptEngine executeFromStream inputstream is null");
+		throw KevoreeException("KevScriptEngine executeFromStream inputstream is null");
 	}
 }
 
@@ -118,7 +118,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
      	}
     	if(td == NULL)
     	{
-    		throw string("TypeDefinition not found : " + string(ast_children_as_string((struct ast_t*) vector_get(child,1))))	;
+    		throw KevoreeException("TypeDefinition not found : " + string(ast_children_as_string((struct ast_t*) vector_get(child,1))))	;
     	}else
     	{
     		struct ast_t *instance_name =  (struct ast_t*)  vector_get(child, 1) ;
@@ -187,7 +187,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	break ;
     case TYPE_PAUSE:
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_PAUSE");
-      	throw string("Pause statement is not implemented yet.") ;
+      	throw KevoreeException("Pause statement is not implemented yet.") ;
     	break ;
     case TYPE_STOP:
        	LOGGER_WRITE(Logger::DEBUG,"TYPE_STOP");
@@ -204,14 +204,14 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	left_hand_children = left_hand_Network->data.tree->children ;
     	if(left_hand_children->size != 3)
     	{
-    		throw string("Network must be : network nodeName.propertyType.interfaceName IP") ;
+    		throw KevoreeException("Network must be : network nodeName.propertyType.interfaceName IP") ;
     	}else{
     		string nodename = string(ast_children_as_string((struct ast_t*) vector_get(left_hand_children,0)));
     		string proptype = string(ast_children_as_string((struct ast_t*) vector_get(left_hand_children,1)));
     		string interfacename = string(ast_children_as_string((struct ast_t*) vector_get(left_hand_children,2)));
     		ContainerNode* networkTargetNode = model->findnodesByID(nodename);
     		if(networkTargetNode == NULL){
-    	  		throw string("Node not found for name " + nodename) ;
+    	  		throw KevoreeException("Node not found for name " + nodename) ;
     		}
     		NetworkInfo * info = networkTargetNode->findnetworkInformationByID(proptype) ;
     		if(info == NULL){
@@ -284,10 +284,10 @@ void KevScriptEngine::applyAttach(Instance *leftH, Instance *rightH, ContainerRo
 	Group* gR = dynamic_cast<Group*>(rightH);
 	if(cnL == 0)
 	{
-		throw string(leftH->name + " is not a ContainerNode") ;
+		throw KevoreeException(leftH->name + " is not a ContainerNode") ;
 	}if(gR == 0)
 	{
-		throw string(rightH->name + " is not a Group") ;
+		throw KevoreeException(rightH->name + " is not a Group") ;
 	}
 	if(!reverse)
 	{
@@ -304,7 +304,7 @@ void KevScriptEngine::applyMove(Instance *leftH, Instance *rightH, ContainerRoot
 	ContainerNode* cn = dynamic_cast<ContainerNode*>(rightH);
 	if(cn == 0)
 	{
-		throw string(rightH -> name + " is not a ContainerNode") ;
+		throw KevoreeException(rightH -> name + " is not a ContainerNode") ;
 	}else
 	{
 		ComponentInstance* ci = dynamic_cast<ComponentInstance*>(leftH);
@@ -318,7 +318,7 @@ void KevScriptEngine::applyMove(Instance *leftH, Instance *rightH, ContainerRoot
 				cn->addhost(cn2) ;
 			}else
 			{
-				throw string(rightH ->name + " is not a ContainerNode or component") ;
+				throw KevoreeException(rightH ->name + " is not a ContainerNode or component") ;
 			}
 		}
 	}
@@ -341,7 +341,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 			instance->name = newNodeName ;
 			if(model->findnodesByID(newNodeName) != NULL)
 			{
-				throw string("Node already exists with name: " + newNodeName) ;
+				throw KevoreeException("Node already exists with name: " + newNodeName) ;
 			}
 			model->addnodes(instance);
 			process = instance ;
@@ -353,7 +353,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 			instance->name = newNodeName ;
 			ContainerNode *parentNode = model->findnodesByID(parentNodeName) ;
 			if(parentNode == NULL){
-				throw string("Node" +parentNodeName +"doesn't exist");
+				throw KevoreeException("Node" +parentNodeName +"doesn't exist");
 			}
 			model->addnodes(instance);
 			parentNode->addhost(instance);
@@ -390,7 +390,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 			string parentNodeName = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
 			ContainerNode *parentNode = model->findnodesByID(parentNodeName) ;
 			if(parentNode == NULL){
-				throw string("Node" +parentNodeName +"doesn't exist");
+				throw KevoreeException("Node" +parentNodeName +"doesn't exist");
 			}
 			else{
 				parentNode->addcomponents(instance);
@@ -410,7 +410,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 				model->addhubs(instance) ;
 				process = instance ;
 			}else{
-				throw string("wrong channel name : ") ;
+				throw KevoreeException("wrong channel name : ") ;
 			}
 		}
 
@@ -425,7 +425,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 				model->addgroups(instance) ;
 				process = instance ;
 			}else{
-				throw string("wrong channel name : " ) ;
+				throw KevoreeException("wrong channel name : " ) ;
 			}
 		}
 	}

@@ -8,6 +8,7 @@
 #include <microframework/api/KMFContainer.h>
 #include <microframework/api/KMFFactory.h>
 #include <kevoree-core/model/kevoree/kevoree.h>
+#include <microframework/api/utils/KevoreeException.h>
 
 class ModelTraceApplicator
 {

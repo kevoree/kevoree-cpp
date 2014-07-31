@@ -52,8 +52,7 @@ TraceSequence* TraceSequence::populateFromStream(istream &inputStream )
 
 	if(currentToken.tokenType != LEFT_BRACKET)
 	{
-		LOGGER_WRITE(Logger::ERROR,"TraceSequence::populateFromStream Bad Format : expect [");
-		throw ("Bad Format : expect [");
+		throw KevoreeException("TraceSequence::populateFromStream Bad Format : expect [");
 	}
 
 	currentToken = lexer->nextToken();

@@ -8,6 +8,7 @@
  */
 
 #include <microframework/api/KMFContainer.h>
+#include <microframework/api/utils/KevoreeException.h>
 #include <map>
 #include <list>
 #include <string>

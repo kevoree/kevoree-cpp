@@ -5,10 +5,12 @@
  *      Author: Aymeric
  */
 
-#ifndef INSTANCERESOLVER_H_
-#define INSTANCERESOLVER_H_
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
 #include <kevoree-core/model/kevoree/Instance.h>
+#include <microframework/api/utils/KevoreeException.h>
+
+#ifndef INSTANCERESOLVER_H_
+#define INSTANCERESOLVER_H_
 
 class InstanceResolver {
 public:

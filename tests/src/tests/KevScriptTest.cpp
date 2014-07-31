@@ -60,10 +60,12 @@ void KevScriptTest::TestAddRepo() {
 			kse.executeFromStream(f,model);
 		}
 	}
-	catch (string e)
+	catch(std::exception const& e)
 	{
-		LOGGER_WRITE(Logger::ERROR,e);
+		LOGGER_WRITE(Logger::ERROR," "+string(e.what()));
 	}
+
+
 
 	CPPUNIT_ASSERT(model->repositories.size() == 1);
 	delete model;
@@ -85,10 +87,11 @@ void KevScriptTest::TestRemove() {
 			kse.executeFromStream(f,model);
 		}
 	}
-	catch (string e)
+	catch(std::exception const& e)
 	{
-		LOGGER_WRITE(Logger::ERROR,e);
+		LOGGER_WRITE(Logger::ERROR," "+string(e.what()));
 	}
+
 
 	// TODO AYMERIC
 	CPPUNIT_ASSERT(1);

@@ -15,7 +15,7 @@ TypeDefinition* TypeDefinitionResolver::resolve(struct ast_t *ast, ContainerRoot
 	if(ast != NULL){
 		if(ast->data.tree->type != TYPE_TYPEDEF)
 		{
-			throw string(&"Parse error, should be a type definition : "  [ast->type]);
+			throw KevoreeException(string(&"Parse error, should be a type definition : "  [ast->type]));
 		}
 
 		struct vector_t *child = ast->data.tree->children;
@@ -65,7 +65,7 @@ TypeDefinition* TypeDefinitionResolver::resolve(struct ast_t *ast, ContainerRoot
 
 		}
 		if (best_td == NULL) {
-			throw string(" TypeDefinition not found with : " +typeDefName +"\n" );
+			throw KevoreeException(" TypeDefinition not found with : " +typeDefName +"\n" );
 		}
 
 		return best_td;

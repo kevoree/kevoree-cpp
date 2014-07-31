@@ -1,4 +1,5 @@
 #include <microframework/api/json/Lexer.h>
+#include <microframework/api/utils/KevoreeException.h>
 #include <algorithm>
 #include <string> 
 #include <sstream>
@@ -18,8 +19,9 @@ Lexer::Lexer(istream &inputstream)
 		bytes = new char [length]; 
 		//std::cout << "Reading " << length << " characters... "  << endl;
 		inputstream.read (bytes,length);	
+	}else{
+		throw  KevoreeException("Lexer inputstream is null");
 	}
-
 	finish_token = new Token(END_OF_FILE,"");
 	index =0;
 }
@@ -104,7 +106,7 @@ Token Lexer::nextToken() {
 			}
 			jsonValue = currentValue;
 		} else {
-			throw  "Unterminated string";
+			throw  KevoreeException("Lexer Unterminated string nextToken");
 		}
 	}else if ('{' == c) {
 		tokenType = LEFT_BRACE;

@@ -39,10 +39,10 @@ void ModelTraceApplicator::createOrAdd(string previousPath , KMFContainer* targe
 			if(factory !=NULL){
 				pendingObj = factory->create("org.kevoree." +potentialTypeName);
 				if(pendingObj == NULL){
-					throw string("The factory cannot create an instance of "+potentialTypeName);
+					throw KevoreeException("The factory cannot create an instance of "+potentialTypeName);
 				}
 			}else {
-				throw string("createOrAdd, the factory is null");
+				throw KevoreeException("createOrAdd, the factory is null");
 			}
 		}
 		pendingObjPath = previousPath ;
@@ -83,7 +83,7 @@ void ModelTraceApplicator::applyTraceOnModel(TraceSequence *seq){
 				KMFContainer *resolvedTarget=targetModel->findByPath(addtrace->srcPath);
 				if(resolvedTarget == NULL)
 				{
-					throw string("Add Trace source not found for path : " + addtrace->srcPath + " pending " + pendingObjPath + "\n" + addtrace->toString());
+					throw KevoreeException("Add Trace source not found for path : " + addtrace->srcPath + " pending " + pendingObjPath + "\n" + addtrace->toString());
 				}
 			}
 			createOrAdd(addtrace->previousPath, target, mt->refName, addtrace->typeName);
@@ -134,7 +134,7 @@ void ModelTraceApplicator::applyTraceOnModel(TraceSequence *seq){
 				KMFContainer* target = targetModel->findByPath(settrace->srcPath) ;
 				if(target == NULL)
 				{
-					throw string("Set Trace source not found for path : " + settrace->srcPath + " pending " + pendingObjPath + "\n" + settrace->toString()) ;
+					throw KevoreeException("Set Trace source not found for path : " + settrace->srcPath + " pending " + pendingObjPath + "\n" + settrace->toString()) ;
 				}
 			}else {
 				if(settrace->srcPath.compare(pendingObjPath) == 0 && pendingObj != NULL){

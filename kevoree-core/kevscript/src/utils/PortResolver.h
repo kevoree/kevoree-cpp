@@ -5,10 +5,13 @@
  *      Author: Aymeric
  */
 
-#ifndef PORTRESOLVER_H_
-#define PORTRESOLVER_H_
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
 #include <kevoree-core/model/kevoree/Port.h>
+#include <microframework/api/utils/KevoreeException.h>
+
+#ifndef PORTRESOLVER_H_
+#define PORTRESOLVER_H_
+
 class PortResolver {
 public:
 	PortResolver();
