@@ -31,11 +31,9 @@ void ModelTraceApplicator::createOrAdd(string previousPath , KMFContainer* targe
 	}
 	if(targetElm != NULL)
 	{
-		LOGGER_WRITE(Logger::DEBUG,"createOrAdd targetElm found in target model "+previousPath);
 		target->reflexiveMutator(ADD,refName,targetElm, true, fireEvents) ;
 	}else{
 		if(!potentialTypeName.empty()){
-			LOGGER_WRITE(Logger::DEBUG,string("createOrAdd instance of "+potentialTypeName));
 			if(factory !=NULL){
 				pendingObj = factory->create("org.kevoree." +potentialTypeName);
 				if(pendingObj == NULL){
@@ -55,7 +53,6 @@ void ModelTraceApplicator::createOrAdd(string previousPath , KMFContainer* targe
 void ModelTraceApplicator::tryClosePending(string srcPath){
 	if((pendingObj != NULL) && (pendingObjPath.compare(srcPath) !=0)){
 		if(pendingParent != NULL){
-			LOGGER_WRITE(Logger::DEBUG,"tryClosePending in "+pendingParent->metaClassName()+" ParentRefName "+pendingParentRefName+" obj "+pendingObj->internalGetKey());
 			pendingParent->reflexiveMutator(ADD, pendingParentRefName, pendingObj, true, fireEvents) ;
 			pendingObj = NULL;
 			pendingParent = NULL;
@@ -76,7 +73,6 @@ void ModelTraceApplicator::applyTraceOnModel(TraceSequence *seq){
 
 		if(dynamic_cast<ModelAddTrace*>(mt) != 0){
 			ModelAddTrace *addtrace = (ModelAddTrace*)mt;
-			//LOGGER_WRITE(Logger::DEBUG,"ModelAddTrace "+addtrace->toString());
 			tryClosePending("");
 			if(!addtrace->srcPath.empty())
 			{
@@ -127,8 +123,6 @@ void ModelTraceApplicator::applyTraceOnModel(TraceSequence *seq){
 			}
 		}else if(dynamic_cast<ModelSetTrace*> (mt) != 0){
 			ModelSetTrace *settrace = (ModelSetTrace*)mt;
-//			LOGGER_WRITE(Logger::DEBUG,"ModelSetTrace "+settrace->toString());
-
 			tryClosePending(settrace->srcPath);
 			if(!mt->srcPath.empty() && settrace->srcPath.compare(pendingObjPath) != 0){
 				KMFContainer* target = targetModel->findByPath(settrace->srcPath) ;
