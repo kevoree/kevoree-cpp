@@ -248,7 +248,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 					{
 
 						if(elementAlreadyProcessed.find(modelElement->path()+"/StopInstance") == elementAlreadyProcessed.end()){
-							adaptationModel->add(adapt(StartInstance, modelElement));
+							adaptationModel->add(adapt(StopInstance, modelElement));
 							auto tuple = std::make_tuple (modelElement,StopInstance);
 							elementAlreadyProcessed[modelElement->path()+"/StopInstance"] = tuple;
 
