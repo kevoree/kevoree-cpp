@@ -86,7 +86,12 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 
 
 
+	   cout << string(ast_children_as_string(ast)) <<endl;
+
+
     switch (tree->type) {
+
+
 
     case TYPE_KEVSCRIPT:
 
@@ -121,7 +126,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	break ;
 
     case TYPE_ADD:
-     	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADD");
+
       	child = ast->data.tree->children;
      	try
      	{
@@ -141,19 +146,20 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     			struct vector_t *chil_inst =instance_name->data.tree->children;
     			size_t num_inst = chil_inst->size;
 				for (i = 0; i < num_inst; i +=1) {
-					LOGGER_WRITE(Logger::DEBUG,"Todo : ApplyAdd");
+					struct ast_t *name =  (struct ast_t*)  vector_get(chil_inst, i) ;
+					applyAdd(td,name,model);
 				}
     		}
     	}
-
+    	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADD");
     	break ;
     case TYPE_INCLUDE:
-     	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE");
+
     	child = ast->data.tree->children;
     	type = string(ast_children_as_string((struct ast_t*) vector_get(child,0))) ;
     	url = string(ast_children_as_string((struct ast_t*) vector_get(child,1)));
     	MergeResolver::merge(model, type, url) ;
-
+     	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE");
     	break ;
 
     case TYPE_REMOVE:
@@ -161,7 +167,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
        	LOGGER_WRITE(Logger::DEBUG,"TYPE_REMOVE");
     	break ;
     case TYPE_MOVE:
-    	LOGGER_WRITE(Logger::DEBUG,"TYPE_MOVE");
+
     	leftHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
      rightHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
     	for(auto itLeft = leftHands->begin() ; itLeft != leftHands->end() ; ++itLeft){
@@ -169,9 +175,10 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     			applyMove(*itLeft,*itRight,model) ;
     		}
     	}
+    	LOGGER_WRITE(Logger::DEBUG,"TYPE_MOVE");
     	break ;
     case TYPE_ATTACH:
-      	LOGGER_WRITE(Logger::DEBUG,"TYPE_ATTACH");
+
     	leftHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
     	rightHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
     	for(auto itLeft = leftHands->begin() ; itLeft != leftHands->end() ; ++itLeft){
@@ -179,9 +186,10 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     			applyAttach(*itLeft,*itRight,model,true) ;
     		}
     	}
+     	LOGGER_WRITE(Logger::DEBUG,"TYPE_ATTACH");
     	break ;
     case TYPE_DETACH:
-      	LOGGER_WRITE(Logger::DEBUG,"TYPE_DETACH");
+
     	leftHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
     	rightHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
     	for(auto itLeft = leftHands->begin() ; itLeft != leftHands->end() ; ++itLeft){
@@ -189,15 +197,17 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     			applyAttach(*itLeft,*itRight,model,true) ;
     		}
     	}
+      	LOGGER_WRITE(Logger::DEBUG,"TYPE_DETACH");
     	break ;
     case TYPE_START:
-    	LOGGER_WRITE(Logger::DEBUG,"TYPE_START");
+
     	instances = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
     	for(auto it = instances->begin() ; it != instances->end(); ++it)
     	{
     		Instance * ist = *it ;
     		ist->started = true ;
     	}
+    	LOGGER_WRITE(Logger::DEBUG,"TYPE_START");
     	break ;
     case TYPE_PAUSE:
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_PAUSE");
