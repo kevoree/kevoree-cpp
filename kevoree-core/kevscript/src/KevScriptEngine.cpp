@@ -1,20 +1,24 @@
 
+
+#include <kevoree-core/kevscript/api/KevScriptEngine.h>
+#include "utils/MergeResolver.h"
+#include "utils/PortResolver.h"
+#include "utils/TypeDefinitionResolver.h"
 #include <iostream>
 #include <string>
-#include <kevoree-core/kevscript/api/KevScriptEngine.h>
+#include <kevoree-core/api/KevScriptService.h>
+#include <kevoree-core/model/kevoree/Instance.h>
+#include <microframework/api/utils/KevoreeException.h>
 #include <kevoree-core/model/kevoree/DefaultkevoreeFactory.h>
 #include <kevoree-core/model/kevoree/Instance.h>
 #include <kevoree-core/model/kevoree/Channel.h>
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
 #include <kevoree-core/kevscript/src/utils/InstanceResolver.h>
-#include "utils/MergeResolver.h"
-#include "utils/PortResolver.h"
-#include "utils/TypeDefinitionResolver.h"
+
 
 extern "C" {
 #include <kevoree-core/kevscript/api/waxeyeParser.h>
 }
-
 
 KevScriptEngine::KevScriptEngine()
 {
@@ -68,7 +72,17 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 	list<Instance*>* rightHands;
 	list<Instance*>* instances ;
 	list<Instance*>* channel_instances;
+	list<Instance*>* target_node;
 	list<Port*>* ports ;
+
+	list<Instance*> *tochangeDico;
+	string propName;
+	vector_t* children_lst2;
+	int val ;
+	vector_t* children_lst;
+	ast_t* portName;
+	ast_t* leftHnodes ;
+	string propToSet ;
 
 
 
@@ -267,16 +281,124 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
       	}
 
     	break ;
+    case TYPE_SET:
+    	propToSet = "";
+    	if(child->size == 3){
+    		vector_t* children = ((struct ast_t*)vector_get(child, 2))->data.tree->children ;
+    		size_t num_child = children->size ;
+    		for (i = 0 ; i < num_child ; i++){
+    			propToSet.append(ast_children_as_string(((struct ast_t*)vector_get(children,i))));
+    		}
 
+    	}else{
+    		vector_t* children = ((struct ast_t*)vector_get(child, 2))->data.tree->children ;
+    		size_t num_child = children->size ;
+    		for (i = 0 ; i < num_child ; i++){
+    			ast_t* curr_child =	((struct ast_t*)vector_get(children,i));
+    			switch(curr_child->data.tree->type){
+    			case TYPE_SINGLEQUOTELINE:
+    				break ;
+
+    			case TYPE_DOUBLEQUOTELINE:
+    				propToSet.append(ast_children_as_string(curr_child));
+    				break ;
+
+    			case TYPE_NEWLINE:
+    				propToSet.append("\n");
+    				break ;
+
+    			default:
+    				break ;
+    			}
+    		}
+    	}
+
+    	leftHnodes = (struct ast_t*)vector_get(child, 0) ;
+    	if(leftHnodes->data.tree->children->size <2)
+    	{
+    		throw KevoreeException("Bad dictionary value description ") ;
+    	}
+    	portName =(struct ast_t*)vector_get(leftHnodes->data.tree->children, leftHnodes->data.tree->children->size -1)   ;
+    	children_lst = leftHnodes->data.tree->children ;
+    	val =leftHnodes->data.tree->children->size -1 ;
+    	children_lst2 = vector_new(val) ;
+    	propName = ast_children_as_string(portName);
+    	// removing from the ast portname
+    	for(int i = 0 ; i < children_lst->size ; i++)
+    	{
+    		string curr_elm =string(ast_children_as_string(((struct ast_t*)vector_get(children_lst,i)))) ;
+    		if(curr_elm.compare(propName) != 0)
+    		{
+    			vector_push(children_lst2,vector_get(children_lst,i));
+    		}
+    	}
+    	leftHnodes->data.tree->children = children_lst2 ;
+    	tochangeDico = InstanceResolver::resolve(leftHnodes,model);
+    	for(list<Instance*>::iterator it = tochangeDico->begin(); it != tochangeDico->end(); ++i){
+    		Instance* target = *it ;
+    		if(target_node == NULL){
+    			if(target->dictionary == NULL){
+    				target->dictionary = factory.createDictionary();
+    			}
+
+    			DictionaryValue* dicVal = target->dictionary->findvaluesByID(propName);
+    			if(dicVal == NULL){
+    				dicVal = factory.createDictionaryValue();
+    				if(target->typeDefinition->dictionaryType != NULL){
+    					DictionaryAttribute* dicAtt = target->typeDefinition->dictionaryType->findattributesByID(propName);
+    					if(dicAtt == NULL){
+    						throw KevoreeException("Param does not existe in type " + target->name + " -> " + propName) ;
+    					}else{
+    						dicVal->name = dicAtt->name;
+    					}
+    				}
+    				target->dictionary->addvalues(dicVal);
+    			}
+    			target->dictionary->addvalues(dicVal);
+    		}else{
+    			for(list<Instance*>::iterator it = target_node->begin(); it != target_node->end(); ++i){
+    				Instance * tg_n = *it ;
+    				if(target->findfragmentDictionaryByID(tg_n->name) == NULL)
+    				{
+    					FragmentDictionary* newDic = factory.createFragmentDictionary();
+    					newDic->name = tg_n->name ;
+    					target->addfragmentDictionary(newDic);
+    				}
+    				DictionaryValue* dicVal = target->findfragmentDictionaryByID(tg_n->name)->findvaluesByID(propName);
+    				if(dicVal == NULL){
+    					dicVal = factory.createDictionaryValue();
+    					if(target->typeDefinition->dictionaryType != NULL){
+    						DictionaryAttribute* dicAttr = target->typeDefinition->dictionaryType->findattributesByID(propName);
+    						if(dicAttr == NULL){
+    							throw KevoreeException("Param does not existe in type " + target->name + " -> " + propName) ;
+    						}else{
+    							if(!dicAttr->fragmentDependant)
+    							{
+    								throw  KevoreeException("Dictionary Attribute is not fragment dependent " + dicAttr->name);
+    							}
+    							dicVal->name = dicAttr->name ;
+    						}
+
+    					}
+    					target->findfragmentDictionaryByID(tg_n->name)->addvalues(dicVal);
+    				}
+    				dicVal->value = propToSet ;
+    			}
+    		}
+    	}
+
+
+
+    	break ;
 
     default:
     	LOGGER_WRITE(Logger::DEBUG,"default");
     	break ;
-    }
+
 
    delete tree ;
 
-
+    }
 	}
 void KevScriptEngine::applyAttach(Instance *leftH, Instance *rightH, ContainerRoot *model, bool reverse) {
 

@@ -1,7 +1,15 @@
-
+#include <iostream>
+#include <string>
 #include <kevoree-core/api/KevScriptService.h>
 #include <kevoree-core/model/kevoree/Instance.h>
 #include <microframework/api/utils/KevoreeException.h>
+#include <kevoree-core/model/kevoree/DefaultkevoreeFactory.h>
+#include <kevoree-core/model/kevoree/Instance.h>
+#include <kevoree-core/model/kevoree/Channel.h>
+#include <kevoree-core/model/kevoree/ContainerRoot.h>
+#include <kevoree-core/kevscript/src/utils/InstanceResolver.h>
+
+
 
 #ifndef __KevScriptEngine_H
 #define __KevScriptEngine_H
