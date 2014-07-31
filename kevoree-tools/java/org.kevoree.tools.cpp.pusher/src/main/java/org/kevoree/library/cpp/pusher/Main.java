@@ -73,24 +73,29 @@ public class Main {
 
         ContainerRoot model3 = (ContainerRoot)  loader.loadModelFromStream(new FileInputStream("/home/jed/KEVOREE_PROJECT/kevoree-cpp/tests/dataTest/kmf/model_node_empty.json")).get(0);
 
+        ContainerRoot model4 = (ContainerRoot)  loader.loadModelFromStream(new FileInputStream("/home/jed/KEVOREE_PROJECT/kevoree-cpp/tests/dataTest/kmf/onNODE_helloworld_component.json")).get(0);
+
+
+
 //                System.out.println(    compare.diff(model,model2).exportToString());
 
         Protocol.PushMessage pushMessage = new Protocol.PushMessage(jsonModelSaver.serialize(model));
         Protocol.PushMessage pushMessage2 = new Protocol.PushMessage(jsonModelSaver.serialize(model2));
         Protocol.PushMessage pushMessage3 = new Protocol.PushMessage(jsonModelSaver.serialize(model3));
+        Protocol.PushMessage pushMessage4 = new Protocol.PushMessage(jsonModelSaver.serialize(model4));
 
 
         while(true){
-            WebSocketClient client =createWSClient("127.0.0.1","9000");
+            WebSocketClient client =createWSClient("stratus.irisa.fr","9000");
             client.connectBlocking();
 
-            client.send(pushMessage.toRaw());
-            Thread.sleep(200);
+            client.send(pushMessage4.toRaw());
+        //    Thread.sleep(200);
            // client.send(pushMessage2.toRaw());
            // System.out.println("UPDATE");
 
             client.send(pushMessage3.toRaw());
-            Thread.sleep(200);
+          //  Thread.sleep(200);
             client.close();
 
         }
