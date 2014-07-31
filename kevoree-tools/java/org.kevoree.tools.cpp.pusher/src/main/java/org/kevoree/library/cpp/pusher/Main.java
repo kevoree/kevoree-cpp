@@ -85,11 +85,12 @@ public class Main {
             client.connectBlocking();
 
             client.send(pushMessage.toRaw());
-
-            client.send(pushMessage2.toRaw());
+            Thread.sleep(200);
+           // client.send(pushMessage2.toRaw());
            // System.out.println("UPDATE");
 
             client.send(pushMessage3.toRaw());
+            Thread.sleep(200);
             client.close();
 
         }

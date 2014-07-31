@@ -10,7 +10,7 @@ using namespace std ;
 #include <kevoree-core/model/kevoree/ComponentType.h>
 #include <kevoree-core/model/kevoree/ContainerNode.h>
 extern "C" {
-#include <kevoree-core/kevscript/api/Waxeye.h>
+#include <kevoree-core/kevscript/api/waxeyeParser.h>
 }
 
 list<Instance*>* InstanceResolver::resolve(struct ast_t *ast, ContainerRoot *model){

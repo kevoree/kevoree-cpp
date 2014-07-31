@@ -13,7 +13,7 @@
 #include <kevoree-core/model/kevoree/ContainerNode.h>
 #include <kevoree-core/model/kevoree/PortTypeRef.h>
 extern "C" {
-#include <kevoree-core/kevscript/api/Waxeye.h>
+#include <kevoree-core/kevscript/api/waxeyeParser.h>
 }
 
 

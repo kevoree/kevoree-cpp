@@ -12,7 +12,7 @@
 #include <iostream>
 
 extern "C" {
-#include <kevoree-core/kevscript/api/Waxeye.h>
+#include <kevoree-core/kevscript/api/waxeyeParser.h>
 }
 
 
@@ -30,19 +30,35 @@ KevScriptTest::~KevScriptTest() {
 }
 
 void KevScriptTest::testkevAllModel() {
-	CPPUNIT_ASSERT(readAllmodel() == 0);
 
+	int res1 = checkerKevscript("./dataTest/KevScriptTest/bigScript.kevs");
+	int res2 = checkerKevscript("./dataTest/KevScriptTest/empty.kevs");
+	int res3 = checkerKevscript("./dataTest/KevScriptTest/fragDic.kevs");
+	int res4 = checkerKevscript("./dataTest/KevScriptTest/hostedNodes.kevs");
+	int res5 = checkerKevscript("./dataTest/KevScriptTest/lifecycle.kevs");
+	int res6 = checkerKevscript("./dataTest/KevScriptTest/multilineAttr.kevs");
+	int res7 = checkerKevscript("./dataTest/KevScriptTest/removes.kevs");
+	int res8 = checkerKevscript("./dataTest/KevScriptTest/repo.kevs");
+	int res9 = checkerKevscript("./dataTest/KevScriptTest/test-parser.kevs");
+	int res10 = checkerKevscript("./dataTest/KevScriptTest/versions.kevs");
+	int res = res1 + res2 + res3+ res4 + res5 + res6 + res7 + res8 + res9 + res10 ;
+	CPPUNIT_ASSERT(res == 0);
 }
 
 void KevScriptTest::TestAddRepo() {
-
-	struct ast_t *ast =	getAst("./dataTest/KevScriptTest/repo.kevs") ;
 	DefaultkevoreeFactory factory;
-	ContainerRoot   *model = factory.createContainerRoot();
-	KevScriptEngine *kse = new KevScriptEngine() ;
+	ContainerRoot   *model=NULL;
+	ifstream f;
+	f.open ("./dataTest/KevScriptTest/repo.kevs");
+
 	try
 	{
-		kse->interpret(ast,model);
+		model = factory.createContainerRoot();
+		CPPUNIT_ASSERT(model !=NULL);
+		KevScriptEngine kse;
+		if(f){
+			kse.executeFromStream(f,model);
+		}
 	}
 	catch (string e)
 	{
@@ -51,35 +67,30 @@ void KevScriptTest::TestAddRepo() {
 
 	CPPUNIT_ASSERT(model->repositories.size() == 1);
 	delete model;
-	delete kse;
-
 }
 
 void KevScriptTest::TestRemove() {
-
-	struct ast_t *ast =	getAst("./dataTest/KevScriptTest/kevscriptKevCPP.kevs") ;
 	DefaultkevoreeFactory factory;
-	ContainerRoot   *model = factory.createContainerRoot();
-	KevScriptEngine *kse = new KevScriptEngine() ;
+	ContainerRoot   *model=NULL;
+	ifstream f;
+	f.open ("./dataTest/KevScriptTest/kevscriptKevCPP.kevs");
 
 	try
 	{
-		kse->interpret(ast,model);
+		model = factory.createContainerRoot();
+		CPPUNIT_ASSERT(model !=NULL);
+
+		KevScriptEngine kse;
+		if(f){
+			kse.executeFromStream(f,model);
+		}
 	}
 	catch (string e)
 	{
 		LOGGER_WRITE(Logger::ERROR,e);
 	}
 
-
+	// TODO AYMERIC
 	CPPUNIT_ASSERT(1);
 	delete model;
-	delete kse;
-
 }
-
-
-
-
-
-

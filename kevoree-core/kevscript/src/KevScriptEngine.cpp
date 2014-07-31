@@ -12,7 +12,7 @@
 #include "utils/TypeDefinitionResolver.h"
 
 extern "C" {
-#include <kevoree-core/kevscript/api/Waxeye.h>
+#include <kevoree-core/kevscript/api/waxeyeParser.h>
 }
 
 
@@ -27,14 +27,29 @@ KevScriptEngine::~KevScriptEngine()
 }
 
 
-void KevScriptEngine::execute(std::string nodeName,ContainerRoot *model){
-
+void KevScriptEngine::execute(std::string &script,ContainerRoot *model){
+	struct ast_t *ast = parseKevscript(script.c_str());
+	//interpret
+	interpret(ast,model);
+	// destructor
+	freeKevScriptAst(ast);
 }
 void KevScriptEngine::executeFromStream(istream	&inputstream,ContainerRoot *model){
-
-
+	if(inputstream)
+	{
+		// read file
+		std::string script;
+		std::ostringstream os;
+		inputstream >>os.rdbuf();
+		script=os.str();
+		LOGGER_WRITE(Logger::DEBUG,"KevScript "+script);
+		// interpret
+		this->execute(script,model);
+	}else
+	{
+		throw string("KevScriptEngine executeFromStream inputstream is null");
+	}
 }
-
 
 void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 
@@ -303,7 +318,7 @@ void KevScriptEngine::applyMove(Instance *leftH, Instance *rightH, ContainerRoot
 				cn->addhost(cn2) ;
 			}else
 			{
-				throw string(rightH -> name + " is not a ContainerNode or component") ;
+				throw string(rightH ->name + " is not a ContainerNode or component") ;
 			}
 		}
 	}
@@ -351,7 +366,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 		ComponentInstance* instance = factory.createComponentInstance();
 		instance->typeDefinition = td ;
 		if((ast->data.tree->type == TYPE_INSTANCEPATH) && child->size == 2)
-			{
+		{
 			string newNodeName = ast_children_as_string((struct ast_t*) vector_get(child,1)) ;
 			instance->name = newNodeName ;
 			map<string,PortTypeRef*> reqPortMap = ct->required ;
@@ -375,44 +390,44 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 			string parentNodeName = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
 			ContainerNode *parentNode = model->findnodesByID(parentNodeName) ;
 			if(parentNode == NULL){
-						throw string("Node" +parentNodeName +"doesn't exist");
-					}
+				throw string("Node" +parentNodeName +"doesn't exist");
+			}
 			else{
 				parentNode->addcomponents(instance);
 				process = instance ;
 			}
 
-			}
+		}
 
 		if(dynamic_cast<ChannelType*>(td) != 0){
 			ChannelType* cht = dynamic_cast<ChannelType*>(td);
 			Channel *instance = factory.createChannel() ;
 			instance->typeDefinition = td ;
 			if((ast->data.tree->type== TYPE_INSTANCEPATH) && child->size == 1)
-						{
+			{
 				string channelname = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
 				instance->name = channelname ;
 				model->addhubs(instance) ;
 				process = instance ;
-						}else{
-							throw string("wrong channel name : ") ;
-						}
+			}else{
+				throw string("wrong channel name : ") ;
+			}
 		}
 
 		if(dynamic_cast<GroupType*>(td) != 0){
 			GroupType* gt = dynamic_cast<GroupType*>(td);
 			Group *instance = factory.createGroup() ;
-				instance->typeDefinition = td ;
-				if((ast->data.tree->type == TYPE_INSTANCEPATH) && child->size == 1)
-							{
-					string channelname = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
-					instance->name = channelname ;
-					model->addgroups(instance) ;
-					process = instance ;
-							}else{
-								throw string("wrong channel name : " ) ;
-							}
+			instance->typeDefinition = td ;
+			if((ast->data.tree->type == TYPE_INSTANCEPATH) && child->size == 1)
+			{
+				string channelname = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
+				instance->name = channelname ;
+				model->addgroups(instance) ;
+				process = instance ;
+			}else{
+				throw string("wrong channel name : " ) ;
 			}
+		}
 	}
 	return process != NULL;
 
