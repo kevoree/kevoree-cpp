@@ -274,6 +274,7 @@ void KmfCppTest::testKmfCompare2(){
 	delete model_src;
 	delete model_target;
 }
+/* REMOVE ONE BINDING */
 void KmfCppTest::testKmfCompareBinding(){
 	DefaultkevoreeFactory factory;
 		JSONModelLoader loader;
@@ -309,3 +310,40 @@ void KmfCppTest::testKmfCompareBinding(){
 		delete model_target;
 }
 
+void KmfCppTest::testKmfCompare3(){
+	DefaultkevoreeFactory factory;
+		JSONModelLoader loader;
+		ContainerRoot   *model_src;
+		ContainerRoot   *model_target;
+		loader.setFactory(&factory);
+
+		ifstream src;
+		src.open ("dataTest/kmf/bindings.json");
+		if(!src){
+			cout << "no file trace" << endl;
+		}
+
+		ifstream target;
+		target.open ("dataTest/kmf/model_node_empty.json");
+		if(!target){
+			cout << "no file trace" << endl;
+		}
+
+		model_src = (ContainerRoot*)loader.loadModelFromStream(src)->front();
+		model_target = (ContainerRoot*)loader.loadModelFromStream(target)->front();
+		CPPUNIT_ASSERT(model_src  !=NULL);
+		CPPUNIT_ASSERT(model_target != NULL);
+		ModelCompare *compare= new ModelCompare();
+
+		// FIX ME
+		TraceSequence *sequencediff = compare->diff(model_src,model_target);
+	//	std::cout << sequencediff->exportToString() << std::endl;
+		//std::cout <<sequencediff->traces.size() << std::endl;
+
+		CPPUNIT_ASSERT(sequencediff->traces.size()  == 63);
+
+		delete sequencediff;
+		delete model_src;
+		delete model_target;
+
+}

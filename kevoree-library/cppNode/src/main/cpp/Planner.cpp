@@ -96,20 +96,17 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 			if(dynamic_cast<Channel*>(targetNode->findByPath(trace->srcPath)) == 0)
 			{
 
-				//LOGGER_WRITE(Logger::DEBUG,"bindings "+trace->toString());
-				ModelAddTrace *modeladdtrace = (ModelAddTrace*) trace;
-				MBinding *binding=(MBinding*)targetModel->findByPath(modeladdtrace->previousPath);
-				Channel *channel=NULL;
-				if(binding != NULL)
-				{
-					channel = binding->hub;
-				}else
-				{
-					LOGGER_WRITE(Logger::DEBUG,"Adding a binding to a channel not defined");
-				}
+
 
 				if(dynamic_cast<ModelAddTrace*>(trace) != 0)
 				{
+					ModelAddTrace *modeladdtrace = (ModelAddTrace*) trace;
+					MBinding *binding=(MBinding*)targetModel->findByPath(modeladdtrace->previousPath);
+					Channel *channel=NULL;
+					if(binding != NULL)
+					{
+						channel = binding->hub;
+					}
 					if(binding != NULL)
 					{
 
@@ -137,45 +134,69 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 
 				}else if(dynamic_cast<ModelRemoveTrace*>(trace) != 0)
 				{
-					MBinding *previousBinding=(MBinding*)currentModel->findByPath(modeladdtrace->srcPath);
-					Channel *oldChannel=previousBinding->hub;
+					ModelRemoveTrace *removetrace = (ModelRemoveTrace*)trace;
+				//	LOGGER_WRITE(Logger::DEBUG,"ModelRemoveTrace "+removetrace->toString());
+					Channel *channel;
+					Channel *oldChannel;
+					/* the previous binding */
+					MBinding *previousbinding=(MBinding*)currentModel->findByPath(removetrace->objPath);
+
+					if(previousbinding !=NULL)
+					{
+						// the channel exist in the target model ?
+						channel=(Channel*)targetModel->findByPath(previousbinding->hub->path());
+						// old channel
+						oldChannel = previousbinding->hub;
+					}else
+					{
+						LOGGER_WRITE(Logger::ERROR,"Try to remove a binding but didn't find it !!");
+					}
+
+
 					//check if not no current usage of this channel
 					bool stillUsed = (channel != NULL);
+
 					if(channel != NULL)
 					{
+
 						for (std::map<string,MBinding*>::iterator iterator = channel->bindings.begin(), end = channel->bindings.end(); iterator != end; ++iterator)
 						{
 
 							MBinding *loopBinding = iterator->second;
+
 							if(loopBinding->port->eContainer() == targetNode)
 							{
 								stillUsed = true;
+								break;
 							}
+						}
 
-							if(!stillUsed )
-							{
-								if(elementAlreadyProcessed.find(channel->path()+"/RemoveInstance") == elementAlreadyProcessed.end()){
-									adaptationModel->add(adapt(RemoveInstance, channel));
-									auto tuple = std::make_tuple (channel,RemoveInstance);
-									elementAlreadyProcessed[channel->path()+"/RemoveInstance"] = tuple;
 
-								}else {
-									LOGGER_WRITE(Logger::DEBUG,"RemoveInstance channel already stopped");
-								}
-							}
+					}else {
+						LOGGER_WRITE(Logger::DEBUG,"Channel is null");
+					}
+					if(!stillUsed )
+					{
+						if(elementAlreadyProcessed.find(oldChannel->path()+"/RemoveInstance") == elementAlreadyProcessed.end()){
+							adaptationModel->add(adapt(StopInstance, oldChannel));
+							adaptationModel->add(adapt(RemoveInstance, oldChannel));
+							auto tuple = std::make_tuple (oldChannel,RemoveInstance);
+							elementAlreadyProcessed[oldChannel->path()+"/RemoveInstance"] = tuple;
 
+						}else {
+						//	LOGGER_WRITE(Logger::DEBUG,"RemoveInstance channel already stopped "+oldChannel->path()+"/RemoveInstance");
 						}
 					}
-					if(binding != NULL)
+					if(previousbinding != NULL)
 					{
 
-						if(elementAlreadyProcessed.find(binding->path()+"/RemoveBinding") == elementAlreadyProcessed.end()){
-							adaptationModel->add(adapt(RemoveBinding, binding));
-							auto tuple = std::make_tuple (binding,RemoveBinding);
-							elementAlreadyProcessed[binding->path()+"/RemoveBinding"] = tuple;
+						if(elementAlreadyProcessed.find(previousbinding->path()+"/RemoveBinding") == elementAlreadyProcessed.end()){
+							adaptationModel->add(adapt(RemoveBinding, previousbinding));
+							auto tuple = std::make_tuple (previousbinding,RemoveBinding);
+							elementAlreadyProcessed[previousbinding->path()+"/RemoveBinding"] = tuple;
 						}else
 						{
-							LOGGER_WRITE(Logger::WARNING,"RemoveBinding "+binding->path());
+							//LOGGER_WRITE(Logger::WARNING,"RemoveBinding "+previousbinding->path());
 						}
 					}
 

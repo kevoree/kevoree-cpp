@@ -21,17 +21,12 @@ public:
 		this->mservice =mservice;
 	}
 
-	void execute(boost::promise<bool> & result)
-	{
-		std::cout << "TODO remove binding" << std::endl;
-		result.set_value(true);
-	}
+	void execute(boost::promise<bool> & result);
 
 
-	void undo()
-	{
-		// TODO
-	}
+
+	void undo();
+
 
 };
 

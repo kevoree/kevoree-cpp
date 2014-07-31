@@ -9,7 +9,7 @@ void AddBindingCommand::execute(boost::promise<bool> & result)
 {
 	bool r=false;
 
-	// TODO
+
 	MBinding *binding = (MBinding*)instance;
 
 	if(instance != NULL && binding->port != NULL){
