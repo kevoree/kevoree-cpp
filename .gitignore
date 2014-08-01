@@ -35,3 +35,4 @@ cppunit-report.xml
 lib.json
 *.class
 CMakeCache.txt
+*.dylib
