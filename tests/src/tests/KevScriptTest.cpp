@@ -124,9 +124,20 @@ void KevScriptTest::theUltimeTest(){
 			kse.executeFromStream(f,model);
 
 			ModelCompare *compare= new ModelCompare();
+			list<ModelTrace*>* lst2 =model->toTraces(true, true) ;
+			for(list<ModelTrace*>::iterator it = lst2->begin() ; it != lst2->end(); ++it){
+						ModelTrace* mt = *it ;
+						cout << mt->toString()<< endl ;
+					}
 
 				// FIX ME
 				TraceSequence *sequencediff = compare->diff(model,model_to_compare);
+				list<ModelTrace*> lst =	sequencediff->traces;
+				cout <<sequencediff->traces.size() << endl ;
+				for(list<ModelTrace*>::iterator it = lst.begin() ; it != lst.end(); ++it){
+					ModelTrace* mt = *it ;
+					cout << mt->toString()<< endl ;
+				}
 
 				CPPUNIT_ASSERT(sequencediff->traces.size()  == 0);
 				delete compare;
