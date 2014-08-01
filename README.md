@@ -7,6 +7,12 @@ KevC++ is open source project LGPL v3.
 For more information :
 Official website 		: http://www.kevoree.org
 
+###  Roadmap :
+KevC++ 1.0.1 Due by September 12, 2014
+KevC++ 1.0.2 Due by October    2, 2014
+
+More informaitons : https://github.com/kevoree/kevoree-cpp/milestones
+
 
 Continuous integration 	: http://jenkins.reacloud.com and https://drone.io/github.com/kevoree/kevoree-cpp
 Maven repository  		: http://maven.reacloud.com/nexus
