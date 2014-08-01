@@ -289,7 +289,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 
     	break ;
     case TYPE_SET:
-    	/*LOGGER_WRITE(Logger::DEBUG,"TYPE_SET");
+    	LOGGER_WRITE(Logger::DEBUG,"TYPE_SET");
     	propToSet = "";
     	if(child->size == 3){
     		vector_t* children = ((struct ast_t*)vector_get(child, 2))->data.tree->children ;
@@ -394,11 +394,8 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     			}
     		}
     	}
-
-
-
     	break ;
-*/
+
     default:
     	LOGGER_WRITE(Logger::DEBUG,"default");
     	break ;

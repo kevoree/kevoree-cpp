@@ -20,7 +20,6 @@ TypeDefinition* TypeDefinitionResolver::resolve(struct ast_t *ast, ContainerRoot
 
 		struct vector_t *child = ast->data.tree->children;
 		string typeDefName = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
-		LOGGER_WRITE(Logger::DEBUG,string("Type Definition Name :" + typeDefName));
 		string version = "" ;
 		if(child->size > 1){
 			version = ast_children_as_string((struct ast_t*) vector_get(child,1)) ;
