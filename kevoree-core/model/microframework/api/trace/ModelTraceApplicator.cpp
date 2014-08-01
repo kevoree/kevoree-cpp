@@ -77,11 +77,8 @@ void ModelTraceApplicator::applyTraceOnModel(TraceSequence *seq){
 			tryClosePending("");
 			if(!addtrace->srcPath.empty())
 			{
-				KMFContainer *resolvedTarget=targetModel->findByPath(addtrace->srcPath);
-				if(resolvedTarget == NULL)
-				{
-					throw KevoreeException("Add Trace source not found for path : " + addtrace->srcPath + " pending " + pendingObjPath + "\n" + addtrace->toString());
-				}
+				target =targetModel->findByPath(addtrace->srcPath);
+
 			}
 			createOrAdd(addtrace->previousPath, target, mt->refName, addtrace->typeName);
 		}else if(dynamic_cast<ModelAddAllTrace*>(mt) != 0){
