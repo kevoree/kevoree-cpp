@@ -31,26 +31,15 @@ TypeDefinition* TypeDefinitionResolver::resolve(struct ast_t *ast, ContainerRoot
 		std::map<string,TypeDefinition*> type_defs = model->typeDefinitions ;
 		for(std::map<string,TypeDefinition*>::iterator it = type_defs.begin(); it != type_defs.end() ; ++it)
 		{
-			cout << type_defs.size() << endl ;
-			cout << it->first  << endl ;
 			TypeDefinition * t = it->second ;
-			if(t == NULL)
-			{
-				cout <<"null t" << endl ;
-			}
-
-				cout << "type def : " + t->name << endl ;
-
 				if(!version.empty()){
-
-					if ((it->first.compare(typeDefName)==0) && (version.compare(it->second->version)==0))
+					if ((it->second->name.compare(typeDefName)==0) && (version.compare(it->second->version)==0))
 					{
 						return it->second ;
 					}
 				}
 				else {
-
-					if((it->first.compare(typeDefName)==0)){
+					if((it->second->name.compare(typeDefName)==0)){
 
 						if(best_td == NULL){
 							best_td = it->second ;
