@@ -110,10 +110,6 @@ int main (int argc, char *argv[])
 
 		DefaultkevoreeFactory factory;
 
-
-
-
-
 		if(hasEnding(path_bootstrap_model,"json"))
 		{
 			JSONModelLoader loader;
@@ -121,15 +117,12 @@ int main (int argc, char *argv[])
 			model=  (ContainerRoot*)loader.loadModelFromStream(modelfile)->front();
 
 		}else if(hasEnding(path_bootstrap_model,"kevs") ){
-
+			model = factory.createContainerRoot();
 			KevScriptEngine kse;
 			kse.executeFromStream(modelfile,model);
 		}else{
 			throw KevoreeException("Unsupported model format use Json or Kevs") ;
 		}
-
-
-
 
 	}
 
