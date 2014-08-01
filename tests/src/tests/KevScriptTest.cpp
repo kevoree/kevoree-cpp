@@ -97,3 +97,49 @@ void KevScriptTest::TestRemove() {
 	CPPUNIT_ASSERT(1);
 	delete model;
 }
+
+void KevScriptTest::theUltimeTest(){
+	DefaultkevoreeFactory factory;
+	JSONModelLoader loader;
+	KevScriptEngine kse;
+	ContainerRoot   *model=NULL;
+	ifstream f;
+	f.open ("./dataTest/KevScriptTest/kevscriptKevCPP.kevs");
+
+	loader.setFactory(&factory);
+	ifstream json_file;
+	json_file.open ("./dataTest/KevScriptTest/model_to_check.json");
+	if(!json_file){
+		cout << "no json_file trace" << endl;
+	}
+
+	ContainerRoot *model_to_compare = (ContainerRoot*)loader.loadModelFromStream(json_file)->front();
+	CPPUNIT_ASSERT(model_to_compare !=NULL);
+	try
+	{
+		model = factory.createContainerRoot();
+		CPPUNIT_ASSERT(model !=NULL);
+
+		if(f){
+			kse.executeFromStream(f,model);
+
+			ModelCompare *compare= new ModelCompare();
+
+				// FIX ME
+				TraceSequence *sequencediff = compare->diff(model,model_to_compare);
+
+				CPPUNIT_ASSERT(sequencediff->traces.size()  == 0);
+				delete compare;
+				delete sequencediff;
+		}
+	}
+	catch(std::exception const& e)
+	{
+		LOGGER_WRITE(Logger::ERROR," "+string(e.what()));
+	}
+
+
+	// TODO AYMERIC
+	CPPUNIT_ASSERT(1);
+	delete model;
+}

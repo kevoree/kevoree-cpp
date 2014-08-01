@@ -1,0 +1,339 @@
+{
+    "eClass": "org.kevoree.ContainerRoot",
+    "generated_KMF_ID": "12814832561406814102367",
+    "nodes": [
+        {
+            "eClass": "org.kevoree.ContainerNode",
+            "name": "node0",
+            "started": "true",
+            "metaData": "{\"x\":360,\"y\":350}",
+            "typeDefinition": [
+                "typeDefinitions[cppnode/1.0.1-SNAPSHOT]"
+            ],
+            "hosts": [],
+            "host": [],
+            "groups": [
+                "groups[group0]"
+            ],
+            "dictionary": [],
+            "fragmentDictionary": [],
+            "components": [
+                {
+                    "eClass": "org.kevoree.ComponentInstance",
+                    "name": "comp314",
+                    "started": "true",
+                    "metaData": "",
+                    "typeDefinition": [
+                        "typeDefinitions[fakeconsole/1.0.1-SNAPSHOT]"
+                    ],
+                    "namespace": [],
+                    "dictionary": [],
+                    "fragmentDictionary": [],
+                    "provided": [
+                        {
+                            "eClass": "org.kevoree.Port",
+                            "name": "showin",
+                            "bindings": [
+                                "mBindings[0.68464093725197021406885041657]"
+                            ],
+                            "portTypeRef": [
+                                "typeDefinitions[fakeconsole/1.0.1-SNAPSHOT]/provided[showin]"
+                            ]
+                        }
+                    ],
+                    "required": [
+                        {
+                            "eClass": "org.kevoree.Port",
+                            "name": "output",
+                            "bindings": [
+                                "mBindings[0.68903675326146191406885041656]"
+                            ],
+                            "portTypeRef": [
+                                "typeDefinitions[fakeconsole/1.0.1-SNAPSHOT]/required[output]"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "networkInformation": [
+                {
+                    "eClass": "org.kevoree.NetworkInfo",
+                    "name": "ip",
+                    "values": [
+                        {
+                            "eClass": "org.kevoree.NetworkProperty",
+                            "name": "lo",
+                            "value": "127.0.0.1"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "typeDefinitions": [
+        {
+            "eClass": "org.kevoree.NodeType",
+            "abstract": "false",
+            "bean": "",
+            "name": "cppnode",
+            "factoryBean": "",
+            "version": "1.0.1-SNAPSHOT",
+            "deployUnit": [
+                "deployUnits[org.kevoree.library.cpp//cppnode/1.0.1-SNAPSHOT]"
+            ],
+            "superTypes": [],
+            "dictionaryType": [
+                {
+                    "eClass": "org.kevoree.DictionaryType",
+                    "generated_KMF_ID": "1710142341406814081551",
+                    "attributes": []
+                }
+            ]
+        },
+        {
+            "eClass": "org.kevoree.ComponentType",
+            "abstract": "false",
+            "bean": "",
+            "name": "fakeconsole",
+            "factoryBean": "",
+            "version": "1.0.1-SNAPSHOT",
+            "deployUnit": [
+                "deployUnits[org.kevoree.library.cpp//fakeconsole/1.0.1-SNAPSHOT]"
+            ],
+            "superTypes": [],
+            "dictionaryType": [
+                {
+                    "eClass": "org.kevoree.DictionaryType",
+                    "generated_KMF_ID": "2034342031406814097436",
+                    "attributes": []
+                }
+            ],
+            "required": [
+                {
+                    "eClass": "org.kevoree.PortTypeRef",
+                    "noDependency": "false",
+                    "optional": "false",
+                    "name": "output",
+                    "ref": [
+                        ""
+                    ],
+                    "mappings": []
+                }
+            ],
+            "provided": [
+                {
+                    "eClass": "org.kevoree.PortTypeRef",
+                    "noDependency": "false",
+                    "optional": "false",
+                    "name": "showin",
+                    "ref": [
+                        ""
+                    ],
+                    "mappings": []
+                }
+            ]
+        },
+        {
+            "eClass": "org.kevoree.GroupType",
+            "abstract": "false",
+            "bean": "",
+            "name": "kevoree-group-websocket",
+            "factoryBean": "",
+            "version": "1.0.1-SNAPSHOT",
+            "deployUnit": [
+                "deployUnits[org.kevoree.library.cpp//kevoree-group-websocket/1.0.1-SNAPSHOT]"
+            ],
+            "superTypes": [],
+            "dictionaryType": [
+                {
+                    "eClass": "org.kevoree.DictionaryType",
+                    "generated_KMF_ID": "16980872781406814091945",
+                    "attributes": [
+                        {
+                            "eClass": "org.kevoree.DictionaryAttribute",
+                            "fragmentDependant": "true",
+                            "optional": "false",
+                            "name": "port",
+                            "state": "false",
+                            "datatype": "string",
+                            "defaultValue": "9000",
+                            "genericTypes": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "eClass": "org.kevoree.ChannelType",
+            "upperFragments": "0",
+            "abstract": "false",
+            "upperBindings": "0",
+            "lowerBindings": "0",
+            "bean": "",
+            "lowerFragments": "0",
+            "name": "sharedmemorychannel",
+            "factoryBean": "",
+            "version": "1.0.1-SNAPSHOT",
+            "deployUnit": [
+                "deployUnits[org.kevoree.library.cpp//sharedMemoryChannel/1.0.1-SNAPSHOT]"
+            ],
+            "superTypes": [],
+            "dictionaryType": [
+                {
+                    "eClass": "org.kevoree.DictionaryType",
+                    "generated_KMF_ID": "789047131406814102368",
+                    "attributes": []
+                }
+            ]
+        }
+    ],
+    "repositories": [
+        {
+            "eClass": "org.kevoree.Repository",
+            "url": "http://maven.reacloud.com/nexus/content/repositories/releases"
+        },
+        {
+            "eClass": "org.kevoree.Repository",
+            "url": "http://maven.reacloud.com/nexus/content/repositories/snapshots/"
+        },
+        {
+            "eClass": "org.kevoree.Repository",
+            "url": "http://repo.maven.apache.org/maven2"
+        },
+        {
+            "eClass": "org.kevoree.Repository",
+            "url": "http://maven.reacloud.com/nexus/content/repositories/releases/"
+        }
+    ],
+    "dataTypes": [],
+    "libraries": [
+        {
+            "eClass": "org.kevoree.TypeLibrary",
+            "name": "Default",
+            "subTypes": [
+                "typeDefinitions[cppnode/1.0.1-SNAPSHOT]",
+                "typeDefinitions[fakeconsole/1.0.1-SNAPSHOT]",
+                "typeDefinitions[kevoree-group-websocket/1.0.1-SNAPSHOT]",
+                "typeDefinitions[sharedmemorychannel/1.0.1-SNAPSHOT]"
+            ]
+        }
+    ],
+    "hubs": [
+        {
+            "eClass": "org.kevoree.Channel",
+            "name": "chan225",
+            "started": "true",
+            "metaData": "{\"x\":742,\"y\":190}",
+            "typeDefinition": [
+                "typeDefinitions[sharedmemorychannel/1.0.1-SNAPSHOT]"
+            ],
+            "bindings": [
+                "mBindings[0.68903675326146191406885041656]",
+                "mBindings[0.68464093725197021406885041657]"
+            ],
+            "dictionary": [],
+            "fragmentDictionary": [
+                {
+                    "eClass": "org.kevoree.FragmentDictionary",
+                    "name": "node0",
+                    "generated_KMF_ID": "",
+                    "values": []
+                }
+            ]
+        }
+    ],
+    "mBindings": [
+        {
+            "eClass": "org.kevoree.MBinding",
+            "generated_KMF_ID": "0.68903675326146191406885041656",
+            "port": [
+                "nodes[node0]/components[comp314]/required[output]"
+            ],
+            "hub": [
+                "hubs[chan225]"
+            ]
+        },
+        {
+            "eClass": "org.kevoree.MBinding",
+            "generated_KMF_ID": "0.68464093725197021406885041657",
+            "port": [
+                "nodes[node0]/components[comp314]/provided[showin]"
+            ],
+            "hub": [
+                "hubs[chan225]"
+            ]
+        }
+    ],
+    "deployUnits": [
+        {
+            "eClass": "org.kevoree.DeployUnit",
+            "groupName": "org.kevoree.library.cpp",
+            "name": "cppnode",
+            "hashcode": "",
+            "type": "so",
+            "url": "",
+            "version": "1.0.1-SNAPSHOT",
+            "requiredLibs": []
+        },
+        {
+            "eClass": "org.kevoree.DeployUnit",
+            "groupName": "org.kevoree.library.cpp",
+            "name": "fakeconsole",
+            "hashcode": "",
+            "type": "so",
+            "url": "",
+            "version": "1.0.1-SNAPSHOT",
+            "requiredLibs": []
+        },
+        {
+            "eClass": "org.kevoree.DeployUnit",
+            "groupName": "org.kevoree.library.cpp",
+            "name": "kevoree-group-websocket",
+            "hashcode": "",
+            "type": "so",
+            "url": "",
+            "version": "1.0.1-SNAPSHOT",
+            "requiredLibs": []
+        },
+        {
+            "eClass": "org.kevoree.DeployUnit",
+            "groupName": "org.kevoree.library.cpp",
+            "name": "sharedMemoryChannel",
+            "hashcode": "",
+            "type": "so",
+            "url": "",
+            "version": "1.0.1-SNAPSHOT",
+            "requiredLibs": []
+        }
+    ],
+    "nodeNetworks": [],
+    "groups": [
+        {
+            "eClass": "org.kevoree.Group",
+            "name": "group0",
+            "started": "true",
+            "metaData": "{\"x\":428,\"y\":99}",
+            "typeDefinition": [
+                "typeDefinitions[kevoree-group-websocket/1.0.1-SNAPSHOT]"
+            ],
+            "subNodes": [
+                "nodes[node0]"
+            ],
+            "dictionary": [],
+            "fragmentDictionary": [
+                {
+                    "eClass": "org.kevoree.FragmentDictionary",
+                    "name": "node0",
+                    "generated_KMF_ID": "",
+                    "values": [
+                        {
+                            "eClass": "org.kevoree.DictionaryValue",
+                            "name": "port",
+                            "value": "9000"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

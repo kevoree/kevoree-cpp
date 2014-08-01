@@ -1,18 +1,22 @@
 repo "http://maven.reacloud.com/nexus/content/repositories/releases"
-repo "http://maven.reacloud.com/nexus/content/repositories/snapshots"
+repo "http://maven.reacloud.com/nexus/content/repositories/snapshots/"
+
 
 include mvn:org.kevoree.library.cpp:cppnode:1.0.1-SNAPSHOT
 include mvn:org.kevoree.library.cpp:fakeconsole:1.0.1-SNAPSHOT
 include mvn:org.kevoree.library.cpp:kevoree-group-websocket:1.0.1-SNAPSHOT
 include mvn:org.kevoree.library.cpp:sharedMemoryChannel:1.0.1-SNAPSHOT
 
+add node0 : cppnode
+add node0.comp314 : fakeconsole
+add group0 : kevoree-group-websocket
+add chan225 : sharedmemorychannel
 
-add node579 : cppnode
-add node579.comp28 : fakeconsole
-add group575 : kevoree-group-websocket
-add chan863 : sharedmemorychannel
+attach node0 group0
 
-attach node579 group575
+bind node0.comp314.output chan225
+bind node0.comp314.showin chan225
 
-bind node579.comp28.output chan863
-bind node579.comp28.showin chan863
+set group0.port/node0 = '9000'
+
+network node0.ip.lo 127.0.0.1
