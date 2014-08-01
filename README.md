@@ -369,5 +369,21 @@ bin/runtime: /usr/lib/libstdc++.so.6: version `GLIBCXX_3.4.15' not found (requir
 ```
 ##### Fix 
 ```
-upgrade your version ;-) 
+You can compile the runtime by your own or upgrade the version of GLIBC
+```
+
+#### invalid ELF header
+
+```
+INFO: Kevoree Start event : node name = node0
+INFO: Model Checker
+ERROR: dlopen =>/tmp/.m2/org/kevoree/library/cpp/cppnode/1.0.1-SNAPSHOT/cppnode-1.0.1-20140731.142834-50.so: invalid ELF header
+ERROR: failed install_deploy_unit /tmp/.m2/org/kevoree/library/cpp/cppnode/1.0.1-SNAPSHOT/cppnode-1.0.1-20140731.142834-50.so
+ERROR: The DU is no registred
+ERROR: The create instance fail
+ERROR: The installation of the Typedefintion of the NodeType has fail, the runtime cannot start !
+```
+##### Fix 
+```
+mvn clean deploy of your typdefintion.
 ```
