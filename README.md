@@ -1,6 +1,6 @@
 # KevC++
 
-The KevC++ project aims to offers runtime of kevoree for native application and helping you to develop your adaptable software from embedded devices!
+The KevC++ project aims to offers runtime of kevoree for native application and helping you to develop your adaptable software for embedded devices!
 Select the download for your platform below to try it !
 KevC++ is open source project LGPL v3. 
 
@@ -19,44 +19,6 @@ https://github.com/kevoree/kevoree-cpp/milestones
 Continuous integration 	: http://jenkins.reacloud.com and https://drone.io/github.com/kevoree/kevoree-cpp
 Maven repository  		: http://maven.reacloud.com/nexus
 
-### Requirements:
-
-Please make sure your system satisfies one of these requirements:
-Mac - OSX 10.5 and up
-Linux - a fairly recent linux distro with libc >= 2.6
-
-* Git 
-* Java
-* CPP unit
-* gcc 
-* g++
-* Cmake
-
-#### Installing Requirements Linux Ubuntu :
-Linux Debian Procedure should work on Ubuntu and similar distributions: install appropriate packages:
-```sh
-sudo apt-get install cmake make gcc g++ git wget curl libcppunit-doc libcppunit-dev
-```
-
-#### Installing Requirements on Mac OS X 
-
-You will need to have Homebrew installed.
-
-* Xcode
-* Clang llvm
-
-```
-brew install cppunit
-brew install cmake
-```
-
-##### MacPort:
-```sh
-sudo port install cmake_modules
-sudo port install arm-none-eabi-gcc
-sudo port install arm-none-eabi-binutils
-clang-llvm 3.2
-```
 
 ### Getting started platform 
 
@@ -64,7 +26,6 @@ clang-llvm 3.2
 
 
 Linux 64 bit
-[Here]( https://github.com/kevoree/kevoree-cpp/releases/download/Linux64_1.0.1beta/kevCPP_1.0.0-BETA_64.tar.gz)
 
 Linux 32 bit  (no available, soon !)
 
@@ -298,6 +259,46 @@ mvn kevcpp:deploy
 
 
 ## Compile the platform 
+
+
+### Requirements:
+
+Please make sure your system satisfies one of these requirements:
+Mac - OSX 10.5 and up
+Linux - a fairly recent linux distro with libc >= 2.6
+
+* Git 
+* Java
+* CPP unit
+* gcc 
+* g++
+* Cmake
+
+#### Installing Requirements Linux Ubuntu :
+Linux Debian Procedure should work on Ubuntu and similar distributions: install appropriate packages:
+```sh
+sudo apt-get install cmake make gcc g++ git wget curl libcppunit-doc libcppunit-dev
+```
+
+#### Installing Requirements on Mac OS X 
+
+You will need to have Homebrew installed.
+
+* Xcode
+* Clang llvm
+
+```
+brew install cppunit
+brew install cmake
+```
+
+##### MacPort:
+```sh
+sudo port install cmake_modules
+sudo port install arm-none-eabi-gcc
+sudo port install arm-none-eabi-binutils
+clang-llvm 3.2
+```
 
 #### Get the source code:
 ```sh
