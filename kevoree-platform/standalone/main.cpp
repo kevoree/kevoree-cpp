@@ -8,6 +8,8 @@
 #include <kevoree-core/model/kevoree/Instance.h>
 #include <microframework/api/KMFContainer.h>
 #include <microframework/api/utils/Logger.h>
+#include <kevoree-core/kevscript/api/KevScriptEngine.h>
+#include <kevoree-core/model/kevoree/DefaultkevoreeFactory.h>
 
 #include <kevoree-tools/DynamicLoader/DynamicLoader.h>
 
@@ -34,6 +36,15 @@ std::string nodename = "node0";
 void sig_handler(int s);
 
 void defaultbootstrapmodel(std::string nodename);
+
+bool hasEnding (std::string const &fullString, std::string const &ending)
+{
+    if (fullString.length() >= ending.length()) {
+        return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
+    } else {
+        return false;
+    }
+}
 
 
 int main (int argc, char *argv[])
@@ -95,25 +106,29 @@ int main (int argc, char *argv[])
 		Logger::Write(Logger::DEBUG, "Reading model");
 		ifstream modelfile;
 		modelfile.open(path_bootstrap_model);
-		std::string json_model;
-		string buffer;
-		while(!modelfile.eof()) // To get you all the lines.
+
+
+		DefaultkevoreeFactory factory;
+
+
+
+
+
+		if(hasEnding(path_bootstrap_model,"json"))
 		{
-			getline(modelfile,buffer); // Saves the line in STRING.
-			json_model += buffer;
+			JSONModelLoader loader;
+			loader.setFactory(&factory);
+			model=  (ContainerRoot*)loader.loadModelFromStream(modelfile)->front();
+
+		}else if(hasEnding(path_bootstrap_model,"kevs") ){
+
+			KevScriptEngine kse;
+			kse.executeFromStream(modelfile,model);
+		}else{
+			throw KevoreeException("Unsupported model format use Json or Kevs") ;
 		}
-		modelfile.close();
-		vector<KMFContainer*> *models =loader.loadModelFromString(json_model);
-		if(models != NULL && !models->empty())
-		{
 
-			model  =	(ContainerRoot*)models->front();
 
-		}else
-		{
-
-			return 0;
-		}
 
 
 	}
