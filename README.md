@@ -130,7 +130,7 @@ repo "http://maven.reacloud.com/nexus/content/repositories/releases"
 repo "http://maven.reacloud.com/nexus/content/repositories/snapshots/"
 repo "http://repo.maven.apache.org/maven2"
 
-include mvn:org.kevoree.library.cpp:CPPNode:1.0.1-SNAPSHOT
+include mvn:org.kevoree.library.cpp:cppnode:1.0.1-SNAPSHOT
 include mvn:org.kevoree.library.cpp:fakeconsole:1.0.1-SNAPSHOT
 include mvn:org.kevoree.library.cpp:kevoree-group-websocket:1.0.1-SNAPSHOT
 include mvn:org.kevoree.library.cpp:sharedMemoryChannel:1.0.1-SNAPSHOT
