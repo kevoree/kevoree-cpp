@@ -73,6 +73,7 @@ void ModelTraceApplicator::applyTraceOnModel(TraceSequence *seq){
 
 		if(dynamic_cast<ModelAddTrace*>(mt) != 0){
 			ModelAddTrace *addtrace = (ModelAddTrace*)mt;
+			//LOGGER_WRITE(Logger::DEBUG,"ModelAddTrace "+addtrace->toString());
 			tryClosePending("");
 			if(!addtrace->srcPath.empty())
 			{
@@ -123,6 +124,8 @@ void ModelTraceApplicator::applyTraceOnModel(TraceSequence *seq){
 			}
 		}else if(dynamic_cast<ModelSetTrace*> (mt) != 0){
 			ModelSetTrace *settrace = (ModelSetTrace*)mt;
+//			LOGGER_WRITE(Logger::DEBUG,"ModelSetTrace "+settrace->toString());
+
 			tryClosePending(settrace->srcPath);
 			if(!mt->srcPath.empty() && settrace->srcPath.compare(pendingObjPath) != 0){
 				KMFContainer* target = targetModel->findByPath(settrace->srcPath) ;
