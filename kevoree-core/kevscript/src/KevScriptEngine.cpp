@@ -480,7 +480,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 		cout << "NodeType" << endl ;
 		NodeType* nt = dynamic_cast<NodeType*>(td) ;
 		ContainerNode* instance = factory.createContainerNode() ;
-		instance->typeDefinition = td ;
+		instance->typeDefinition = nt ;
 		if((ast->data.tree->type == TYPE_INSTANCEPATH) && child->size == 1)
 		{
 			string newNodeName = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
@@ -511,7 +511,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 		cout << "ComponentType" << endl ;
 		ComponentType* ct = dynamic_cast<ComponentType*>(td);
 		ComponentInstance* instance = factory.createComponentInstance();
-		instance->typeDefinition = td ;
+		instance->typeDefinition = ct ;
 		if((ast->data.tree->type == TYPE_INSTANCEPATH) && child->size == 2)
 		{
 
@@ -552,7 +552,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 			cout << "ChannelType" << endl ;
 			ChannelType* cht = dynamic_cast<ChannelType*>(td);
 			Channel *instance = factory.createChannel() ;
-			instance->typeDefinition = td ;
+			instance->typeDefinition = cht ;
 			if((ast->data.tree->type== TYPE_INSTANCEPATH) && child->size == 1)
 			{
 				string channelname = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
@@ -568,15 +568,15 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 			cout << "GroupType" << endl ;
 			GroupType* gt = dynamic_cast<GroupType*>(td);
 			Group *instance = factory.createGroup() ;
-			instance->typeDefinition = td ;
+			instance->typeDefinition = gt ;
 			if((ast->data.tree->type == TYPE_INSTANCEPATH) && child->size == 1)
 			{
-				string channelname = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
-				instance->name = channelname ;
+				string groupname = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
+				instance->name = groupname ;
 				model->addgroups(instance) ;
 				process = instance ;
 			}else{
-				throw KevoreeException("wrong channel name : " ) ;
+				throw KevoreeException("Bad group name : " ) ;
 			}
 		}
 
