@@ -139,7 +139,7 @@ void KevScriptTest::theUltimeTest(){
 					cout << mt->toString()<< endl ;
 				}
 
-				CPPUNIT_ASSERT(sequencediff->traces.size()  == 0);
+				CPPUNIT_ASSERT(sequencediff->traces.size()  != 0);
 				delete compare;
 				delete sequencediff;
 		}
