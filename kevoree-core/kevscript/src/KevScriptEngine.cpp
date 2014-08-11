@@ -239,9 +239,10 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     		string interfacename = string(ast_children_as_string((struct ast_t*) vector_get(left_hand_children,2)));
     		ContainerNode* networkTargetNode = model->findnodesByID(nodename);
 
-    		cout << nodename << endl ;
-    		cout << proptype << endl ;
-    		cout << interfacename << endl ;
+    		cout <<"nodename " + nodename << endl ;
+    		cout <<"proptype " +proptype << endl ;
+    		cout <<"interfacename " + interfacename << endl ;
+
     		if(networkTargetNode == NULL){
     	  		throw KevoreeException("Node not found for name " + nodename) ;
     		}
@@ -258,6 +259,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     			info->addvalues(netprop) ;
     		}
     		netprop->value =  string(ast_children_as_string((struct ast_t*) vector_get(child, 1)));
+    		cout <<"value " + netprop->value << endl ;
     	}
 
     	break ;
@@ -469,7 +471,7 @@ void KevScriptEngine::applyMove(Instance *leftH, Instance *rightH, ContainerRoot
 }
 
 bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerRoot *model) {
-	Instance* process ;
+	Instance* process = NULL;
 	DefaultkevoreeFactory factory;
 	struct vector_t *child = ast->data.tree->children;
 	string newNodeName = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
@@ -480,6 +482,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 		cout << "NodeType" << endl ;
 		NodeType* nt = dynamic_cast<NodeType*>(td) ;
 		ContainerNode* instance = factory.createContainerNode() ;
+		instance->started = true ;
 		instance->typeDefinition = nt ;
 		if((ast->data.tree->type == TYPE_INSTANCEPATH) && child->size == 1)
 		{
@@ -497,6 +500,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 			string parentNodeName = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
 			string newNodeName = ast_children_as_string((struct ast_t*) vector_get(child,1)) ;
 			instance->name = newNodeName ;
+			instance->started = true ;
 			ContainerNode *parentNode = model->findnodesByID(parentNodeName) ;
 			if(parentNode == NULL){
 				throw KevoreeException("Node" +parentNodeName +"doesn't exist");
@@ -512,15 +516,18 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 		ComponentType* ct = dynamic_cast<ComponentType*>(td);
 		ComponentInstance* instance = factory.createComponentInstance();
 		instance->typeDefinition = ct ;
+		instance->started = true ;
 		if((ast->data.tree->type == TYPE_INSTANCEPATH) && child->size == 2)
 		{
-
+			cout << "Port" << endl ;
+			cout << newNodeName << endl ;
 			string newNodeName = ast_children_as_string((struct ast_t*) vector_get(child,1)) ;
 			instance->name = newNodeName ;
 			map<string,PortTypeRef*> reqPortMap = ct->required ;
-			map<string,PortTypeRef*> provPortMap = ct->required ;
+			map<string,PortTypeRef*> provPortMap = ct->provided ;
 			for(std::map<string,PortTypeRef*>::iterator it = reqPortMap.begin(); it != reqPortMap.end() ; ++it)
 			{
+
 				PortTypeRef *curr = it->second ;
 				Port *newPort = factory.createPort() ;
 				newPort->portTypeRef = curr ;
@@ -552,6 +559,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 			cout << "ChannelType" << endl ;
 			ChannelType* cht = dynamic_cast<ChannelType*>(td);
 			Channel *instance = factory.createChannel() ;
+			instance->started = true ;
 			instance->typeDefinition = cht ;
 			if((ast->data.tree->type== TYPE_INSTANCEPATH) && child->size == 1)
 			{

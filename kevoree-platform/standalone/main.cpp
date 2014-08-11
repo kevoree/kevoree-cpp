@@ -106,8 +106,6 @@ int main (int argc, char *argv[])
 		Logger::Write(Logger::DEBUG, "Reading model");
 		ifstream modelfile;
 		modelfile.open(path_bootstrap_model);
-
-
 		DefaultkevoreeFactory factory;
 
 		if(hasEnding(path_bootstrap_model,"json"))
@@ -116,20 +114,20 @@ int main (int argc, char *argv[])
 			loader.setFactory(&factory);
 			model=  (ContainerRoot*)loader.loadModelFromStream(modelfile)->front();
 
-		}else if(hasEnding(path_bootstrap_model,"kevs") ){
+		}else if(hasEnding(path_bootstrap_model,"kevs") || hasEnding(path_bootstrap_model,"kev")  ){
 			model = factory.createContainerRoot();
 			KevScriptEngine kse;
 			kse.executeFromStream(modelfile,model);
 		}else{
-			throw KevoreeException("Unsupported model format use Json or Kevs") ;
+			throw KevoreeException("Unsupported model format use json, kevs or kev") ;
 		}
 
 	}
 
 
-
 	if(model == NULL)
 	{
+		Logger::Write(Logger::DEBUG, "loading default model");
 		defaultbootstrapmodel(nodename);
 	}
 
