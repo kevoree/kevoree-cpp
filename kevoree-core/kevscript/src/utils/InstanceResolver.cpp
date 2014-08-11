@@ -68,8 +68,9 @@ list<Instance*>* InstanceResolver::resolve(struct ast_t *ast, ContainerRoot *mod
 			list<Instance*>* instanceFound = new list<Instance *>() ;
 			std::map<string,ContainerNode*> nodeMap =	model->nodes ;
 
-			if(instanceName.compare("*"))
+			if(instanceName.compare("*") == 0)
 				{
+
 					for(std::map<string,ContainerNode*>::iterator it = nodeMap.begin(); it != nodeMap.end() ; ++it)
 						{
 						instanceFound->push_back((Instance *)it->second) ;
@@ -85,14 +86,19 @@ list<Instance*>* InstanceResolver::resolve(struct ast_t *ast, ContainerRoot *mod
 					}
 			else {
 				Instance * inst =  (Instance *)model->findnodesByID(instanceName) ;
+
 				if(inst ==NULL){
+
 					inst =(Instance *) model->findgroupsByID(instanceName);
 				}
 				if(inst == NULL){
+
 					inst = (Instance *)model->findhubsByID(instanceName);
 				}
 				if(inst != NULL){
+
 					resolved->push_back(inst);
+					cout << "end" << endl ;
 				}
 				if(inst == NULL){
 					throw KevoreeException("No group / channel found for "+ instanceName) ;
@@ -114,7 +120,8 @@ list<Instance*>* InstanceResolver::resolve(struct ast_t *ast, ContainerRoot *mod
 				}
 			}
 		}
-
+	cout << "size : "  << endl ;
+	cout <<   resolved->size() << endl ;
 	return resolved ;
 }
 

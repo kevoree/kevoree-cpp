@@ -106,6 +106,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 
 
     case TYPE_KEVSCRIPT:
+    	LOGGER_WRITE(Logger::DEBUG,"TYPE_KEVSCRIPT");
     	if(child != NULL)
     	{
     	num_child = child->size;
@@ -113,10 +114,11 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     		interpret((struct ast_t*) vector_get(child, i), model);
     		}
     	}
-    	LOGGER_WRITE(Logger::DEBUG,"TYPE_KEVSCRIPT");
+
 
     	break ;
     case TYPE_STATEMENT:
+       	LOGGER_WRITE(Logger::DEBUG,"TYPE_STATEMENT");
         	if(child != NULL)
         	{
         	num_child = child->size;
@@ -124,16 +126,18 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
         		interpret((struct ast_t*) vector_get(child, i), model);
         		}
         	}
-        	LOGGER_WRITE(Logger::DEBUG,"TYPE_STATEMENT");
+
         	break ;
     case TYPE_ADDREPO:
+    	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADDREPO ");
       	rep = factory.createRepository();
       	rep->url = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
       	model->addrepositories(rep);
-      	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADDREPO " + rep->url);
+
     	break ;
 
     case TYPE_ADD:
+    	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADD");
      	try
      	{
     	    td = TypeDefinitionResolver::resolve((struct ast_t*) vector_get(child,1),model) ;
@@ -157,21 +161,23 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 				}
     		}
     	}
-    	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADD");
+
     	break ;
     case TYPE_INCLUDE:
+    	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE");
     	type = string(ast_children_as_string((struct ast_t*) vector_get(child,0))) ;
     	url = string(ast_children_as_string((struct ast_t*) vector_get(child,1)));
     	MergeResolver::merge(model, type, url) ;
-     	LOGGER_WRITE(Logger::DEBUG,"TYPE_INCLUDE");
+
     	break ;
 
     case TYPE_REMOVE:
+     	LOGGER_WRITE(Logger::DEBUG,"TYPE_REMOVE");
      	display_ast(ast, type_strings);
-       	LOGGER_WRITE(Logger::DEBUG,"TYPE_REMOVE");
+
     	break ;
     case TYPE_MOVE:
-
+    	LOGGER_WRITE(Logger::DEBUG,"TYPE_MOVE");
     	leftHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
      rightHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
     	for(auto itLeft = leftHands->begin() ; itLeft != leftHands->end() ; ++itLeft){
@@ -179,21 +185,25 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     			applyMove(*itLeft,*itRight,model) ;
     		}
     	}
-    	LOGGER_WRITE(Logger::DEBUG,"TYPE_MOVE");
+
     	break ;
     case TYPE_ATTACH:
-
+    	LOGGER_WRITE(Logger::DEBUG,"TYPE_ATTACH");
     	leftHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
     	rightHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
+    	cout <<"s" << endl ;
     	for(auto itLeft = leftHands->begin() ; itLeft != leftHands->end() ; ++itLeft){
+    		Instance * leftinst = *itLeft ;;
     		for(auto itRight = rightHands->begin(); itRight != rightHands->end() ; ++ itRight){
-    			applyAttach(*itLeft,*itRight,model,true) ;
+    	   		Instance * rightinst = *itRight ;
+    			applyAttach(leftinst,rightinst,model,false) ;
+
     		}
     	}
-     	LOGGER_WRITE(Logger::DEBUG,"TYPE_ATTACH");
+
     	break ;
     case TYPE_DETACH:
-
+    	LOGGER_WRITE(Logger::DEBUG,"TYPE_DETACH");
     	leftHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
     	rightHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
     	for(auto itLeft = leftHands->begin() ; itLeft != leftHands->end() ; ++itLeft){
@@ -201,17 +211,17 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     			applyAttach(*itLeft,*itRight,model,true) ;
     		}
     	}
-      	LOGGER_WRITE(Logger::DEBUG,"TYPE_DETACH");
+
     	break ;
     case TYPE_START:
-
+    	LOGGER_WRITE(Logger::DEBUG,"TYPE_START");
     	instances = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
     	for(auto it = instances->begin() ; it != instances->end(); ++it)
     	{
     		Instance * ist = *it ;
     		ist->started = true ;
     	}
-    	LOGGER_WRITE(Logger::DEBUG,"TYPE_START");
+
     	break ;
     case TYPE_PAUSE:
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_PAUSE");
@@ -247,6 +257,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	  		throw KevoreeException("Node not found for name " + nodename) ;
     		}
     		NetworkInfo * info = networkTargetNode->findnetworkInformationByID(proptype) ;
+
     		if(info == NULL){
     			info = factory.createNetworkInfo();
     			info->name = proptype ;
@@ -259,12 +270,13 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     			info->addvalues(netprop) ;
     		}
     		netprop->value =  string(ast_children_as_string((struct ast_t*) vector_get(child, 1)));
-    		cout <<"value " + netprop->value << endl ;
+
     	}
 
     	break ;
     case TYPE_ADDBINDING:
       	LOGGER_WRITE(Logger::DEBUG,"TYPE_ADDBINDING");
+
       	channel_instances = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
       	for(auto it = channel_instances->begin(); it != channel_instances->end(); ++it){
       		Channel* channel = (Channel *)*it ;
@@ -303,18 +315,26 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	break ;
     case TYPE_SET:
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_SET");
-
     	propToSet = "";
         display_ast(ast, type_strings);
+
     	child = ast->data.tree->children;
+    	LOGGER_WRITE(Logger::DEBUG,"valeur");
+
     	if(child->size == 3){
+    		LOGGER_WRITE(Logger::DEBUG,"valeur");
+
     		vector_t* children = ((struct ast_t*)vector_get(child, 2))->data.tree->children ;
     		size_t num_child = children->size ;
     		for (i = 0 ; i < num_child ; i++){
     			propToSet.append(ast_children_as_string(((struct ast_t*)vector_get(children,i))));
     		}
+    		cout << "vv" << endl ;
+    		instances = InstanceResolver::resolve((struct ast_t*) vector_get(child,1) , model) ;
+    		cout << "vv" << endl ;
+    		cout << instances->size() << endl ;
     	}else{
-    		vector_t* children = ((struct ast_t*)vector_get(child, 2))->data.tree->children ;
+    		vector_t* children = ((struct ast_t*) vector_get(child, 2))->data.tree->children ;
     		size_t num_child = children->size ;
 
     		for (i = 0 ; i < num_child ; i++){
@@ -424,9 +444,9 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     }
 	}
 void KevScriptEngine::applyAttach(Instance *leftH, Instance *rightH, ContainerRoot *model, bool reverse) {
-
 	ContainerNode* cnL = dynamic_cast<ContainerNode*>(leftH);
 	Group* gR = dynamic_cast<Group*>(rightH);
+
 	if(cnL == 0)
 	{
 		throw KevoreeException(leftH->name + " is not a ContainerNode") ;
@@ -434,6 +454,7 @@ void KevScriptEngine::applyAttach(Instance *leftH, Instance *rightH, ContainerRo
 	{
 		throw KevoreeException(rightH->name + " is not a Group") ;
 	}
+
 	if(!reverse)
 	{
 		gR->addsubNodes(cnL);
@@ -519,8 +540,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 		instance->started = true ;
 		if((ast->data.tree->type == TYPE_INSTANCEPATH) && child->size == 2)
 		{
-			cout << "Port" << endl ;
-			cout << newNodeName << endl ;
+
 			string newNodeName = ast_children_as_string((struct ast_t*) vector_get(child,1)) ;
 			instance->name = newNodeName ;
 			map<string,PortTypeRef*> reqPortMap = ct->required ;
@@ -543,11 +563,13 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 				instance->addprovided(newPort) ;
 			}
 			string parentNodeName = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
-			ContainerNode *parentNode = model->findnodesByID(parentNodeName) ;
+
+			ContainerNode *parentNode = model->findnodesByID(parentNodeName);
 			if(parentNode == NULL){
 				throw KevoreeException("Node" +parentNodeName +"doesn't exist");
 			}
 			else{
+
 				parentNode->addcomponents(instance);
 				process = instance ;
 			}
