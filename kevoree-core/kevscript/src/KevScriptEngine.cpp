@@ -46,6 +46,24 @@ KevScriptEngine::~KevScriptEngine()
 
  */
 
+void KevScriptEngine:: printCP(ContainerRoot *model){
+	std::map<string, ContainerNode*> m =model->nodes ;
+	LOGGER_WRITE(Logger::DEBUG,"Print CP MAp");
+    		for(auto it = m.begin(); it != m.end(); ++it){
+    			ContainerNode* cn = it->second  ;
+    		 	LOGGER_WRITE(Logger::DEBUG,"Node name " + cn->name);
+    		 	LOGGER_WRITE(Logger::DEBUG,"cp size " );
+    		 	std::map<string, ComponentInstance*> cmap =	cn->components ;
+    		 	for(std::map<string, ComponentInstance*>::iterator it2 = cmap.begin(); it2 != cmap.end(); it2++){
+    		 		ComponentInstance* cio = it2->second ;
+    		 		LOGGER_WRITE(Logger::DEBUG,"ComponentInstance " + cio->name);
+    		 	}
+    		 	}
+
+    		cout << "maps" << endl;
+
+}
+
 void KevScriptEngine::execute(std::string &script,ContainerRoot *model){
 	struct ast_t *ast = parseKevscript(script.c_str());
 	//interpret
@@ -159,6 +177,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 					struct ast_t *name =  (struct ast_t*)  vector_get(chil_inst, i) ;
 					applyAdd(td,name,model);
 				}
+
     		}
     	}
 
@@ -179,7 +198,8 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     case TYPE_MOVE:
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_MOVE");
     	leftHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
-     rightHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
+        rightHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
+
     	for(auto itLeft = leftHands->begin() ; itLeft != leftHands->end() ; ++itLeft){
     		for(auto itRight = rightHands->begin(); itRight != rightHands->end() ; ++ itRight){
     			applyMove(*itLeft,*itRight,model) ;
@@ -191,15 +211,17 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_ATTACH");
     	leftHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
     	rightHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
-    	cout <<"s" << endl ;
     	for(auto itLeft = leftHands->begin() ; itLeft != leftHands->end() ; ++itLeft){
     		Instance * leftinst = *itLeft ;;
     		for(auto itRight = rightHands->begin(); itRight != rightHands->end() ; ++ itRight){
     	   		Instance * rightinst = *itRight ;
-    			applyAttach(leftinst,rightinst,model,false) ;
+    	   		  applyAttach(leftinst,rightinst,model,false) ;
+
 
     		}
     	}
+
+    	LOGGER_WRITE(Logger::DEBUG,"TYPE_ATTACH END");
 
     	break ;
     case TYPE_DETACH:
@@ -248,11 +270,6 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     		string proptype = string(ast_children_as_string((struct ast_t*) vector_get(left_hand_children,1)));
     		string interfacename = string(ast_children_as_string((struct ast_t*) vector_get(left_hand_children,2)));
     		ContainerNode* networkTargetNode = model->findnodesByID(nodename);
-
-    		cout <<"nodename " + nodename << endl ;
-    		cout <<"proptype " +proptype << endl ;
-    		cout <<"interfacename " + interfacename << endl ;
-
     		if(networkTargetNode == NULL){
     	  		throw KevoreeException("Node not found for name " + nodename) ;
     		}
@@ -319,20 +336,19 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
         display_ast(ast, type_strings);
 
     	child = ast->data.tree->children;
-    	LOGGER_WRITE(Logger::DEBUG,"valeur");
+
 
     	if(child->size == 3){
-    		LOGGER_WRITE(Logger::DEBUG,"valeur");
+
 
     		vector_t* children = ((struct ast_t*)vector_get(child, 2))->data.tree->children ;
     		size_t num_child = children->size ;
     		for (i = 0 ; i < num_child ; i++){
     			propToSet.append(ast_children_as_string(((struct ast_t*)vector_get(children,i))));
     		}
-    		cout << "vv" << endl ;
-    		instances = InstanceResolver::resolve((struct ast_t*) vector_get(child,1) , model) ;
-    		cout << "vv" << endl ;
-    		cout << instances->size() << endl ;
+
+    		target_node = InstanceResolver::resolve((struct ast_t*) vector_get(child,1) , model) ;
+
     	}else{
     		vector_t* children = ((struct ast_t*) vector_get(child, 2))->data.tree->children ;
     		size_t num_child = children->size ;
@@ -380,13 +396,12 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 
     	leftHnodes->data.tree->children = children_lst2 ;
     	tochangeDico = InstanceResolver::resolve(leftHnodes,model);
-    	for(list<Instance*>::iterator it = tochangeDico->begin(); it != tochangeDico->end(); ++i){
-    		Instance* target = *it ;
+    	for(auto itDico = tochangeDico->begin() ; itDico != tochangeDico->end() ; ++itDico){
+    		Instance* target = *itDico ;
     		if(target_node == NULL){
     			if(target->dictionary == NULL){
     				target->dictionary = factory.createDictionary();
     			}
-
     			DictionaryValue* dicVal = target->dictionary->findvaluesByID(propName);
     			if(dicVal == NULL){
     				dicVal = factory.createDictionaryValue();
@@ -402,7 +417,9 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     			}
     			target->dictionary->addvalues(dicVal);
     		}else{
-    			for(list<Instance*>::iterator it = target_node->begin(); it != target_node->end(); ++i){
+
+    			for(auto it = target_node->begin(); it != target_node->end(); ++it){
+
     				Instance * tg_n = *it ;
     				if(target->findfragmentDictionaryByID(tg_n->name) == NULL)
     				{
@@ -462,8 +479,7 @@ void KevScriptEngine::applyAttach(Instance *leftH, Instance *rightH, ContainerRo
 	{
 		gR->removesubNodes(cnL);
 	}
-	delete cnL ;
-	delete gR ;
+
 }
 void KevScriptEngine::applyMove(Instance *leftH, Instance *rightH, ContainerRoot *model) {
 
@@ -496,11 +512,9 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 	DefaultkevoreeFactory factory;
 	struct vector_t *child = ast->data.tree->children;
 	string newNodeName = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
-	cout << "Apply ADD" << endl ;
-	cout<< newNodeName << endl ;
 	if(dynamic_cast<NodeType*>(td) != 0)
 	{
-		cout << "NodeType" << endl ;
+
 		NodeType* nt = dynamic_cast<NodeType*>(td) ;
 		ContainerNode* instance = factory.createContainerNode() ;
 		instance->started = true ;
@@ -569,12 +583,15 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 				throw KevoreeException("Node" +parentNodeName +"doesn't exist");
 			}
 			else{
+				cout << "adding cp" << endl;
 
 				parentNode->addcomponents(instance);
 				process = instance ;
 			}
 
+
 		}
+
 	}
 
 		else if(dynamic_cast<ChannelType*>(td) != 0){

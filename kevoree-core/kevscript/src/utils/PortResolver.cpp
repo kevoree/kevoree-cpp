@@ -62,39 +62,30 @@ list<Port*>* PortResolver::resolve(struct ast_t *ast, ContainerRoot *model){
 					}
 				}else
 				{
-					cout <<"add" << endl;
-					cout << cn->components.size() << endl ;
 					ComponentInstance * ct = cn->findcomponentsByID(componentname) ;
 					cil->push_back(	ct);
-					cout <<ct->name << endl;
+
 				}
-				cout << cil->size() << endl ;
 
-				for(std::list<ComponentInstance *>::iterator itci = cil->begin() ; itci != cil->end(); ++cil){
+				for(std::list<ComponentInstance *>::iterator itci = cil->begin() ; itci != cil->end(); ++itci){
 					ComponentInstance* currCi = *itci ;
-					cout << "ee" << endl ;
-					cout << currCi << endl ;
-
 					for(std::map<string,Port*>::iterator itprov = currCi->provided.begin() ;  itprov != currCi->provided.end() ; ++itprov)
 					{
-						cout << "ee3" << endl ;
 						Port* p = itprov->second ;
-						cout << "ee4" << endl ;
 						if(p->portTypeRef->name.compare(portName) == 0){
 							resolved->push_back(p) ;
 						}
 					}
 					for(std::map<string,Port*>::iterator itreq = currCi->required.begin() ;  itreq != currCi->required.end() ; ++itreq)
 					{
-						cout << "ee5" << endl ;
 						Port* p = itreq->second ;
-						cout << "ee6" << endl ;
 						if(p->portTypeRef->name.compare(portName) == 0)
 						{
 							resolved->push_back(p) ;
 						}
 					}
-					}
+
+				}
 		}
 
 

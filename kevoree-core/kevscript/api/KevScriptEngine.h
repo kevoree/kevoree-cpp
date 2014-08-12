@@ -28,6 +28,7 @@ private:
 	bool applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerRoot *model) ;
 	void applyMove(Instance *leftH, Instance *rightH, ContainerRoot *model) ;
 	void applyAttach(Instance *leftH, Instance *rightH, ContainerRoot *model, bool reverse) ;
+	void printCP(ContainerRoot *model) ;
 };
 
 
