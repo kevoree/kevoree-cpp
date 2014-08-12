@@ -120,8 +120,6 @@ list<Instance*>* InstanceResolver::resolve(struct ast_t *ast, ContainerRoot *mod
 				}
 			}
 		}
-	cout << "size : "  << endl ;
-	cout <<   resolved->size() << endl ;
 	return resolved ;
 }
 

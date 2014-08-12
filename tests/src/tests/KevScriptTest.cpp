@@ -10,6 +10,7 @@
 #include <kevoree-core/model/kevoree/DefaultkevoreeFactory.h>
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
 #include <iostream>
+#include <fstream>
 
 extern "C" {
 #include <kevoree-core/kevscript/api/waxeyeParser.h>
@@ -101,6 +102,7 @@ void KevScriptTest::TestRemove() {
 void KevScriptTest::theUltimeTest(){
 	DefaultkevoreeFactory factory;
 	JSONModelLoader loader;
+	JSONModelSerializer jml ;
 	KevScriptEngine kse;
 	ContainerRoot   *model=NULL;
 	ifstream f;
@@ -122,6 +124,16 @@ void KevScriptTest::theUltimeTest(){
 
 		if(f){
 			kse.executeFromStream(f,model);
+			 ofstream myfile;
+			  myfile.open ("/Users/Aymeric/Documents/dev_Kevoree/kevoree-cpp/debug/bin/kev.json");
+			  myfile << jml.serialize(model);
+			  myfile.close();
+
+
+
+
+
+
 
 			ModelCompare *compare= new ModelCompare();
 			list<ModelTrace*>* lst2 =model->toTraces(true, true) ;
@@ -129,7 +141,14 @@ void KevScriptTest::theUltimeTest(){
 						ModelTrace* mt = *it ;
 						cout << mt->toString()<< endl ;
 					}
+			cout <<"-----------"<< endl ;
 
+			lst2 =model_to_compare->toTraces(true, true) ;
+					for(list<ModelTrace*>::iterator it = lst2->begin() ; it != lst2->end(); ++it){
+								ModelTrace* mt = *it ;
+								cout << mt->toString()<< endl ;
+							}
+					cout <<"-----------"<< endl ;
 				// FIX ME
 				TraceSequence *sequencediff = compare->diff(model,model_to_compare);
 				list<ModelTrace*> lst =	sequencediff->traces;

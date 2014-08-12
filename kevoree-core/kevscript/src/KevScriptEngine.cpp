@@ -212,7 +212,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	leftHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
     	rightHands = InstanceResolver::resolve( (struct ast_t*)  vector_get(child, 1) , model) ;
     	for(auto itLeft = leftHands->begin() ; itLeft != leftHands->end() ; ++itLeft){
-    		Instance * leftinst = *itLeft ;;
+    		Instance * leftinst = *itLeft ;
     		for(auto itRight = rightHands->begin(); itRight != rightHands->end() ; ++ itRight){
     	   		Instance * rightinst = *itRight ;
     	   		  applyAttach(leftinst,rightinst,model,false) ;
@@ -302,6 +302,8 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
       			MBinding* mb = factory.createMBinding();
       			mb->port = *itp ;
       			mb->hub= channel;
+      			cout <<"id  " +mb->generated_KMF_ID <<  endl ;
+      			cout <<"hub" +mb->hub->name <<  endl ;
       			model->addmBindings(mb);
       		}
       	}
@@ -396,12 +398,17 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 
     	leftHnodes->data.tree->children = children_lst2 ;
     	tochangeDico = InstanceResolver::resolve(leftHnodes,model);
+
     	for(auto itDico = tochangeDico->begin() ; itDico != tochangeDico->end() ; ++itDico){
+
     		Instance* target = *itDico ;
+
     		if(target_node == NULL){
+    			LOGGER_WRITE(Logger::DEBUG,"IF");
     			if(target->dictionary == NULL){
     				target->dictionary = factory.createDictionary();
     			}
+
     			DictionaryValue* dicVal = target->dictionary->findvaluesByID(propName);
     			if(dicVal == NULL){
     				dicVal = factory.createDictionaryValue();
@@ -413,24 +420,30 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     						dicVal->name = dicAtt->name;
     					}
     				}
+
     				target->dictionary->addvalues(dicVal);
     			}
+
     			target->dictionary->addvalues(dicVal);
     		}else{
+    			for(auto it2 = target_node->begin(); it2 != target_node->end(); ++it2){
 
-    			for(auto it = target_node->begin(); it != target_node->end(); ++it){
-
-    				Instance * tg_n = *it ;
+    				Instance * tg_n = *it2 ;
+    				cout << tg_n->name << endl ;
     				if(target->findfragmentDictionaryByID(tg_n->name) == NULL)
     				{
     					FragmentDictionary* newDic = factory.createFragmentDictionary();
     					newDic->name = tg_n->name ;
     					target->addfragmentDictionary(newDic);
+
     				}
+
     				DictionaryValue* dicVal = target->findfragmentDictionaryByID(tg_n->name)->findvaluesByID(propName);
     				if(dicVal == NULL){
     					dicVal = factory.createDictionaryValue();
+    					cout << "nul" << endl ;
     					if(target->typeDefinition->dictionaryType != NULL){
+
     						DictionaryAttribute* dicAttr = target->typeDefinition->dictionaryType->findattributesByID(propName);
     						if(dicAttr == NULL){
     							throw KevoreeException("Param does not existe in type " + target->name + " -> " + propName) ;
@@ -440,11 +453,13 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     								throw  KevoreeException("Dictionary Attribute is not fragment dependent " + dicAttr->name);
     							}
     							dicVal->name = dicAttr->name ;
+
     						}
 
     					}
     					target->findfragmentDictionaryByID(tg_n->name)->addvalues(dicVal);
     				}
+
     				dicVal->value = propToSet ;
     			}
     		}
@@ -456,14 +471,15 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	break ;
 
 
-   delete tree ;
+
 
     }
 	}
 void KevScriptEngine::applyAttach(Instance *leftH, Instance *rightH, ContainerRoot *model, bool reverse) {
 	ContainerNode* cnL = dynamic_cast<ContainerNode*>(leftH);
 	Group* gR = dynamic_cast<Group*>(rightH);
-
+cout << "container" + cnL->name << endl ;
+cout << "gR" + gR->name << endl ;
 	if(cnL == 0)
 	{
 		throw KevoreeException(leftH->name + " is not a ContainerNode") ;
@@ -475,6 +491,7 @@ void KevScriptEngine::applyAttach(Instance *leftH, Instance *rightH, ContainerRo
 	if(!reverse)
 	{
 		gR->addsubNodes(cnL);
+
 	}else
 	{
 		gR->removesubNodes(cnL);
@@ -504,7 +521,7 @@ void KevScriptEngine::applyMove(Instance *leftH, Instance *rightH, ContainerRoot
 			}
 		}
 	}
-	delete cn ;
+
 }
 
 bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerRoot *model) {
@@ -516,6 +533,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 	{
 
 		NodeType* nt = dynamic_cast<NodeType*>(td) ;
+
 		ContainerNode* instance = factory.createContainerNode() ;
 		instance->started = true ;
 		instance->typeDefinition = nt ;
@@ -583,8 +601,6 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 				throw KevoreeException("Node" +parentNodeName +"doesn't exist");
 			}
 			else{
-				cout << "adding cp" << endl;
-
 				parentNode->addcomponents(instance);
 				process = instance ;
 			}
@@ -616,6 +632,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 			GroupType* gt = dynamic_cast<GroupType*>(td);
 			Group *instance = factory.createGroup() ;
 			instance->typeDefinition = gt ;
+			instance->started = true ;
 			if((ast->data.tree->type == TYPE_INSTANCEPATH) && child->size == 1)
 			{
 				string groupname = ast_children_as_string((struct ast_t*) vector_get(child,0)) ;
