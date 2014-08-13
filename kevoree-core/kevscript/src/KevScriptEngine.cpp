@@ -300,8 +300,13 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
       		ports = PortResolver::resolve( (struct ast_t*)  vector_get(child, 0) , model) ;
       		for(auto itp = ports->begin(); itp != ports->end(); ++itp){
       			MBinding* mb = factory.createMBinding();
+      			Port* p = (Port*)*itp ;
+      			cout << p->name << endl ;
+      			p->addbindings(mb);
       			mb->port = *itp ;
       			mb->hub= channel;
+      			channel->addbindings(mb);
+      			mb->addport(p);
       			cout <<"id  " +mb->generated_KMF_ID <<  endl ;
       			cout <<"hub" +mb->hub->name <<  endl ;
       			model->addmBindings(mb);
@@ -319,6 +324,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
       			for(auto itp = ports->begin(); itp != ports->end() ; ++ itp){
       				MBinding* mb = 	itb ->second;
       				Port* p = *itp ;
+      				p->removebindings(mb);
       				if(mb->port->internalGetKey().compare(p->internalGetKey())){
       					toDrop = mb ;
       				}
