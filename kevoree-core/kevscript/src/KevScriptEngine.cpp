@@ -187,8 +187,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	type = string(ast_children_as_string((struct ast_t*) vector_get(child,0))) ;
     	url = string(ast_children_as_string((struct ast_t*) vector_get(child,1)));
     	MergeResolver::merge(model, type, url) ;
-
-    	break ;
+     	break ;
 
     case TYPE_REMOVE:
      	LOGGER_WRITE(Logger::DEBUG,"TYPE_REMOVE");
@@ -301,14 +300,11 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
       		for(auto itp = ports->begin(); itp != ports->end(); ++itp){
       			MBinding* mb = factory.createMBinding();
       			Port* p = (Port*)*itp ;
-      			cout << p->name << endl ;
       			p->addbindings(mb);
       			mb->port = *itp ;
       			mb->hub= channel;
       			channel->addbindings(mb);
       			mb->addport(p);
-      			cout <<"id  " +mb->generated_KMF_ID <<  endl ;
-      			cout <<"hub" +mb->hub->name <<  endl ;
       			model->addmBindings(mb);
       		}
       	}
@@ -428,6 +424,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     				}
 
     				target->dictionary->addvalues(dicVal);
+
     			}
 
     			target->dictionary->addvalues(dicVal);
@@ -598,6 +595,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 			{
 				PortTypeRef *curr = it->second ;
 				Port *newPort = factory.createPort() ;
+
 				newPort->portTypeRef = curr ;
 				newPort->name = curr->name ;
 				instance->addprovided(newPort) ;
