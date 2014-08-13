@@ -491,10 +491,12 @@ cout << "gR" + gR->name << endl ;
 	if(!reverse)
 	{
 		gR->addsubNodes(cnL);
+		cnL->addgroups(gR);
 
 	}else
 	{
 		gR->removesubNodes(cnL);
+		cnL->removegroups(gR);
 	}
 
 }
