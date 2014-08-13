@@ -28,8 +28,6 @@ void MergeResolver::merge(ContainerRoot *model, std::string type, std::string ur
 		}
 		// FIX ME USAGE THE GLOBAL
 		maven::resolver::MavenResolver mvnResol;
-
-
 		boost::filesystem::path temp = boost::filesystem::temp_directory_path();
 		const std::string tempstr    = temp.native()+"/.m2";
 		mvnResol.setBasePath(tempstr); // FIX ME
