@@ -20,9 +20,7 @@ extern "C" {
 
 list<Port*>* PortResolver::resolve(struct ast_t *ast, ContainerRoot *model){
 	list<Port*>* resolved = new list<Port*>() ;
-	  display_ast(ast, type_strings);
-
-    struct vector_t *child = ast->data.tree->children;
+	     struct vector_t *child = ast->data.tree->children;
 	if((ast->data.tree->type == TYPE_INSTANCEPATH) && child->size == 3){
 
 		string nodeName = string(ast_children_as_string((struct ast_t*) vector_get(child,0)));
