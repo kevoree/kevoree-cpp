@@ -30,6 +30,12 @@
                 <version>1.0.1-SNAPSHOT</version>
                 <executions>
                     <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>build-cmake</goal>
+                        </goals>
+                    </execution>
+                    <execution>
                         <id>gen</id>
                         <phase>install</phase>
                         <goals>
