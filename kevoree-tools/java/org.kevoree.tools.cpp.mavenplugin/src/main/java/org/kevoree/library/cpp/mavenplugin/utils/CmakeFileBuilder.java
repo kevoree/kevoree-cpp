@@ -6,7 +6,7 @@ import java.util.LinkedList;
 /**
  * Created by Aymeric on 18/08/2014.
  */
-public class CmakeFileBuilder {
+public class CMakeFileBuilder {
 
     private LinkedList<String> link_directories_list ;
 
@@ -24,7 +24,11 @@ public class CmakeFileBuilder {
 
     private String internalprojectName ;
 
-    public CmakeFileBuilder(String ProjecName) {
+    private String path ;
+
+    private File cmakeFile ;
+
+    public CMakeFileBuilder(String ProjecName, String basePath) {
         link_directories_list = new LinkedList<String>() ;
         include_directories_list = new LinkedList<String>() ;
         set_var_list = new LinkedList<String>() ;
@@ -32,6 +36,7 @@ public class CmakeFileBuilder {
         library_Lst = new LinkedList<String>();
         this.projectName = ProjecName ;
         internalprojectName = this.projectName +"_intern";
+        path = basePath ;
     }
 
 
@@ -44,7 +49,7 @@ public class CmakeFileBuilder {
     }
 
     public void add_link_Directories(String file){
-        link_directories_list.add("LINK_directories("+file+")\n") ;
+        link_directories_list.add("link_directories("+file+")\n") ;
     }
 
     public void add_set(String varName,String varVal){
@@ -52,47 +57,56 @@ public class CmakeFileBuilder {
     }
 
     public void add_target_link_lib( String varVal){
-        target_link_lib.add("TARGET_LINK_LIBRARIES("+internalprojectName+" "+varVal+")\n") ;
+        target_link_lib.add("TARGET_LINK_LIBRARIES("+projectName+" "+varVal+")\n") ;
     }
 
 
+    public File getCmakeFile() {
+        return cmakeFile;
+    }
 
     public void buildCmake() throws IOException {
-        File file = new File("./CMakeLists.txt") ;
 
-        if (!file.exists()) {
-            file.createNewFile();
+         cmakeFile = new File(path +File.separator +"CMakeLists.txt") ;
+
+        if (!cmakeFile.exists()) {
+            cmakeFile.createNewFile();
         }else
         {
-            file.delete();
-            file.createNewFile();
+            cmakeFile.delete();
+            cmakeFile.createNewFile();
         }
 
-        FileWriter fw = new FileWriter(file);
-        fw.write("cmake_minimum_required(VERSION" + version+")\n" );
+        FileWriter fw = new FileWriter(cmakeFile);
+        fw.write("cmake_minimum_required(VERSION " + version+")\n" );
         fw.write("project("+projectName +")\n" );
-        for (String s : include_directories_list) {
-            fw.write(s);
-        }
-
-        for (String s : link_directories_list) {
-            fw.write(s);
-        }
 
         for (String s : set_var_list) {
             fw.write(s);
         }
+        fw.write("\n" );
 
+
+        for (String s : include_directories_list) {
+            fw.write(s);
+        }
+        fw.write("\n" );
+        for (String s : link_directories_list) {
+            fw.write(s);
+        }
+
+        fw.write("\n" );
         fw.write("file(GLOB_RECURSE "+internalprojectName+"_files src/*.cpp)\n") ;
-        fw.write("ADD_LIBRARY("+projectName+" SHARED    ${"+internalprojectName+"_files} )\n") ;
-
+        fw.write("ADD_LIBRARY("+projectName+" SHARED ${"+internalprojectName+"_files} )\n") ;
+        fw.write("\n" );
         for (String s : target_link_lib) {
             fw.write(s);
         }
-
+        fw.write("\n" );
         for (String s : library_Lst) {
             fw.write(s);
         }
+        fw.close();
     }
 
 }
