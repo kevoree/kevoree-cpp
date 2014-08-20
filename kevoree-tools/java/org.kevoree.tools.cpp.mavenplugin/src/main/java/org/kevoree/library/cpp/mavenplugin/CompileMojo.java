@@ -3,6 +3,7 @@ package org.kevoree.library.cpp.mavenplugin;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.kevoree.library.cpp.mavenplugin.utils.CMakeFileBuilder;
 import org.kevoree.library.cpp.mavenplugin.utils.Mojos;
@@ -10,6 +11,7 @@ import org.kevoree.library.cpp.mavenplugin.utils.Mojos;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 
@@ -18,6 +20,16 @@ import java.util.Map;
  * @goal build-cmake
  */
 public class CompileMojo extends AbstractMojo {
+    /**
+     * @parameter
+     */
+    private List<String> includeDir;
+
+
+    /**
+     * @parameter
+     */
+    private List<String> libs;
 
     /**
      * POM
@@ -36,17 +48,27 @@ public class CompileMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
+        String kevpath = System.getenv("KEVOREE_PATH");
+        System.out.println(libs.size());
 
+          Map<String, String> variables = System.getenv();
         String[] projectNameTab = project.getName().split("::") ;
         CMakeFileBuilder cmfb = new CMakeFileBuilder(projectNameTab[projectNameTab.length-1].trim(), inputCFile.getPath()) ;
-        cmfb.add_set("KEVOREEROOT", "/Users/Aymeric/Documents/dev_Kevoree/Kevoree_Component_Dev_Env/Release");
+        cmfb.add_set("KEVOREEROOT", kevpath);
         cmfb.add_Include_Directories("${KEVOREEROOT}/include/kevoree-core/");
         cmfb.add_Include_Directories("${KEVOREEROOT}/include/kevoree-core/model/");
         cmfb.add_Include_Directories("${KEVOREEROOT}/include/");
+        for (String s : includeDir) {
+            cmfb.add_Include_Directories(s);
+        }
         cmfb.add_link_Directories("${KEVOREEROOT}/lib/");
-        cmfb.add_target_link_lib("kevoree-model-dynamic");
-        cmfb.add_target_link_lib("boost_system-mt");
-        cmfb.add_target_link_lib("boost_thread-mt");
+
+
+        for (String lib : libs) {
+            cmfb.add_target_link_lib(lib);
+        }
+
+
         try {
             cmfb.buildCmake();
         } catch (IOException e) {
