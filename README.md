@@ -396,3 +396,81 @@ ERROR: The installation of the Typedefintion of the NodeType has fail, the runti
 ```
 mvn clean deploy of your typdefintion.
 ```
+
+#Creating your first component
+## requirement
+* maven
+* cmake
+* c++ compiler
+##Setting up the environment
+* download a Kevoree Release
+* Unzip it
+* Set up an environment variable : KEVOREE_PATH where is located Kevoree release
+
+#Start your project
+* use your favorite IDE and create an empty C++ project
+* create a folder src
+* create a pom.xml file containing the following lines :
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.kevoree.library.cpp</groupId>
+      <artifactId>org.kevoree.library.cpp.root</artifactId>
+      <version>1.0.1-SNAPSHOT</version>
+   </parent>
+   <groupId>org.kevoree.library.cpp</groupId>
+   <artifactId>HelloWorldComponent</artifactId>
+   <version>1.0.1-SNAPSHOT</version>
+   <name>Kevoree CPP :: Library :: HelloWorldComponent</name>
+   <build>
+      <plugins>
+         <plugin>
+            <groupId>org.kevoree.tools.cpp.maven.plugin</groupId>
+            <artifactId>kevcpp-maven-plugin</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+            <configuration>
+               <libs>
+                  <lib>kevoree-model-dynamic</lib>
+                  <lib>boost_system-mt</lib>
+                  <lib>boost_thread-mt</lib>
+               </libs>
+            </configuration>
+            <executions>
+               <execution>
+                  <phase>compile</phase>
+                  <goals>
+                     <goal>build-cmake</goal>
+                  </goals>
+               </execution>
+               <execution>
+                  <id>gen</id>
+                  <phase>install</phase>
+                  <goals>
+                     <goal>generate</goal>
+                  </goals>
+               </execution>
+               <execution>
+                  <id>de</id>
+                  <phase>deploy</phase>
+                  <goals>
+                     <goal>deploy</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+      </plugins>
+   </build>
+</project>
+``
+ 
+* copy the following two files in the src directory :
+*https://github.com/kevoree/kevoree-cpp/tree/master/kevoree-library/ *helloworldcomponet/src/main/cpp
+
+####Compilation and deployment
+To build the component enter in your shell :
+ ```
+mvn compile
+ ```
