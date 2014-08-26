@@ -471,6 +471,35 @@ mvn clean deploy of your typdefintion.
 
 ####Compilation and deployment
 To build the component enter in your shell :
+
  ```
 mvn compile
+ ```
+
+
+####Maven Plugin
+
+To integrate the c++ compilation in the build process add the following lines: 
+ ```
+            <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>build-cmake</goal>
+                        </goals>
+                    </execution>
+ ```
+ 
+To include your libs and headers you can use the following lines :
+
+ ```
+                     <configuration>
+                    <libs>
+                        <lib>kevoree-model-dynamic</lib>
+                        <lib>boost_system-mt</lib>
+                        <lib>boost_thread-mt</lib>
+                    </libs>
+                    <headers>
+                    <header> header directory 1</header>
+                    </headers>
+                </configuration>
  ```
