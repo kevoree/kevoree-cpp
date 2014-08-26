@@ -467,7 +467,7 @@ mvn clean deploy of your typdefintion.
  ```
  
 * copy the following two files in the src directory :
-*https://github.com/kevoree/kevoree-cpp/tree/master/kevoree-library/ *helloworldcomponet/src/main/cpp
+*https://github.com/kevoree/kevoree-cpp/tree/master/kevoree-library/helloworldcomponet/src/main/cpp
 
 ####Compilation and deployment
 To build the component enter in your shell :
