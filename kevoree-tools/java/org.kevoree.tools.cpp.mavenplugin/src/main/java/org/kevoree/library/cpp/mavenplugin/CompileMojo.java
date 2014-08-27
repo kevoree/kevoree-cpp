@@ -78,7 +78,7 @@ public class CompileMojo extends AbstractMojo {
         }
         getLog().info("building make file");
         String path = System.getenv("PATH");
-        ProcessBuilder pb = new ProcessBuilder("cmake",".");
+        ProcessBuilder pb = new ProcessBuilder("cmake",project.getBasedir().toString());
         Map<String, String> env = pb.environment();
         env.put("PATH",path);
         try {
@@ -91,7 +91,7 @@ public class CompileMojo extends AbstractMojo {
 
          }
         getLog().info("Compiling");
-        ProcessBuilder pb2 = new ProcessBuilder("make");
+        ProcessBuilder pb2 = new ProcessBuilder("make","-C", project.getBasedir().toString());
         try {
 
             Mojos.waitFor(pb2,this);
