@@ -29,6 +29,11 @@
                         <lib>boost_thread-mt</lib>
                         <lib>boost_random-mt</lib>
                     </libs>
+
+
+                                    <headers>
+                                        <header>$project.build.sourceDirectory}</header>
+                                    </headers>
                 </configuration>
                 <executions>
                     <execution>

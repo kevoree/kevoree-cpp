@@ -39,7 +39,7 @@
                         <phase>install</phase>
                         <goals>
                             <goal>generate</goal>
-                           
+
                         </goals>
                     </execution>
                     <execution>
