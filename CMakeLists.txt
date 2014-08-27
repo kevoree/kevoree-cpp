@@ -84,7 +84,7 @@ ENDIF()
 
 add_subdirectory (${SRC_MAVEN_RESOLVER}/)
 add_subdirectory (${SRC_KEVOREE_CORE}/)
-add_subdirectory (${SRC_KEVOREE_LIBRARY}/)
+#add_subdirectory (${SRC_KEVOREE_LIBRARY}/)
 add_subdirectory (${SRC_KEVOREE_TOOLS}/)
 add_subdirectory (${SRC_KEVOREE_PLATFORM}/)
 
