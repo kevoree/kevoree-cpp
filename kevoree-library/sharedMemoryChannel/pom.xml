@@ -17,5 +17,46 @@
     <name>Kevoree CPP :: Library :: sharedMemoryChannel</name>
 
 
+ <build>
+        <plugins>
+            <plugin>
+                <groupId>org.kevoree.tools.cpp.maven.plugin</groupId>
+                <artifactId>kevcpp-maven-plugin</artifactId>
+                <version>1.0.1-SNAPSHOT</version>
+                                <configuration>
+                    <libs>
+                        <lib>kevoree-model-dynamic</lib>
+                        <lib>boost_system-mt</lib>
+                        <lib>boost_thread-mt</lib>
+                    </libs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>build-cmake</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>gen</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>de</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+
 </project>
 

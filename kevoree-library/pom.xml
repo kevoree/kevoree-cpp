@@ -20,6 +20,7 @@
         <module>websocketgroup</module>
         <module>fakeconsole</module>
         <module>sharedMemoryChannel</module>
+         <module>facialrecognation</module>
     </modules>
 
   <build>
