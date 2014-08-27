@@ -7,9 +7,9 @@
 #include <microframework/api/utils/Uuid.h>
 class PortTypeMapping : public KMFContainerImpl{ 
 public:
-std::string beanMethodName;
-std::string serviceMethodName;
-std::string paramTypes;
+string beanMethodName;
+string serviceMethodName;
+string paramTypes;
 std::string generated_KMF_ID;
 std::string internalGetKey();
 string metaClassName();

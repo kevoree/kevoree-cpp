@@ -51,8 +51,10 @@ std::string NodeTypeBootstrapHelper::resolveDeployUnit(DeployUnit *deployunit)
 		}
 	}
 
-	return resolver.resolve(deployunit->groupName,deployunit->name,deployunit->version,deployunit->type,urls);
-
+	LOGGER_WRITE(Logger::ERROR,"FIX ME DU !! V5 groupName == package");
+	//V5 groupName == package
+	//return resolver.resolve(deployunit->groupName,deployunit->name,deployunit->version,deployunit->type,urls);
+return "";
 }
 
 

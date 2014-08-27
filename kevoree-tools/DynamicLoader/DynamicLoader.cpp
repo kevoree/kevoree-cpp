@@ -12,13 +12,15 @@ void DynamicLoader::setModelService(KevoreeModelHandlerService *mservice){
 
 
 DeployUnit * DynamicLoader::select_du_architecture(TypeDefinition *type) {
-	DeployUnit *du=NULL;
 
-	// TODO need to add in the metamodel
-	for ( std::map<string,DeployUnit*>::const_iterator it = (type->deployUnit).begin();  it != (type->deployUnit).end(); ++it) {
+
+
+	for ( std::map<string,DeployUnit*>::const_iterator it = (type->deployUnits).begin();  it != (type->deployUnits).end(); ++it) {
+		// FIX ME SELECT DU
+		LOGGER_WRITE(Logger::ERROR,"TODO SELECT DU !!!");
 		return it->second;
 	}
-	return du;
+	return NULL;
 }
 
 
@@ -36,7 +38,7 @@ bool DynamicLoader::register_instance(Instance *i)
 			return false;
 		}
 
-		if(type->deployUnit.size() == 0)
+		if(type->deployUnits.size() == 0)
 		{
 			LOGGER_WRITE(Logger::ERROR,"There is no DeployUnit defined");
 			return false;

@@ -184,22 +184,22 @@ void defaultbootstrapmodel(std::string nodename){
 
 	DeployUnit *d =factory.createDeployUnit();
 	d->name = "cppnode";
-	d->groupName = "org.kevoree.library.cpp";
+	//d->groupName = "org.kevoree.library.cpp";
 	d->version = version;
-	d->type ="so";
+//	d->type ="so";
 
 
 	TypeDefinition *nodetype = factory.createNodeType();
 	nodetype->name = "cppnode";
 	nodetype->abstract= false;
-	nodetype->adddeployUnit(d);
+	nodetype->adddeployUnits(d);
 
 
 	DeployUnit *dg =factory.createDeployUnit();
 	dg->name = "kevoree-group-websocket";
-	dg->groupName = "org.kevoree.library.cpp";
+	//dg->groupName = "org.kevoree.library.cpp";
 	dg->version = version;
-	dg->type ="so";
+	//dg->type ="so";
 
 	TypeDefinition *grouptype = factory.createGroupType();
 	grouptype->abstract= false;
@@ -217,7 +217,7 @@ void defaultbootstrapmodel(std::string nodename){
 
 	grouptype->adddictionaryType(typegroup);
 
-	grouptype->adddeployUnit(dg);
+	grouptype->adddeployUnits(dg);
 
 
 
@@ -234,6 +234,7 @@ void defaultbootstrapmodel(std::string nodename){
 	FragmentDictionary *dico =factory.createFragmentDictionary();
 
 	dico->name ="node0";
+	/*FIX ME V5
 	DictionaryValue *valport = factory.createDictionaryValue();
 	valport->name ="port";
 	valport->value ="9000";
@@ -241,27 +242,28 @@ void defaultbootstrapmodel(std::string nodename){
 	dico->addvalues(valport);
 
 
-	group->addfragmentDictionary(dico);
+	group->addfragmentDictionary(dico);*/
 
 
 
 
 	DeployUnit *dc =factory.createDeployUnit();
 	dc->name = "HelloWorldComponent";
-	dc->groupName = "org.kevoree.library.cpp";
+	//dc->groupName = "org.kevoree.library.cpp";
 	dc->version = version;
-	dc->type ="so";
+//	dc->type ="so";
 
-
+/*
 	node0->addtypeDefinition(nodetype);
 	model->addtypeDefinitions(grouptype);
 	model->addtypeDefinitions(nodetype);
+	*/
 
-
+/*
 	model->adddeployUnits(d);
 	model->adddeployUnits(dg);
 	model->adddeployUnits(dc);
-
+*/
 
 	model->addnodes(node0);
 

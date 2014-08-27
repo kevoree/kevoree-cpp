@@ -10,7 +10,7 @@
 
 #include <kevoree-core/model/kevoree/TypeDefinition.h>
 #include <kevoree-core/model/kevoree/Dictionary.h>
-#include <kevoree-core/model/kevoree/DictionaryValue.h>
+
 #include <kevoree-core/model/kevoree/DeployUnit.h>
 #include <kevoree-core/model/kevoree/FragmentDictionary.h>
 #include <kevoree-core/model/kevoree/DictionaryType.h>

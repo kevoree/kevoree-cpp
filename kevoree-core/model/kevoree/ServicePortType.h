@@ -8,7 +8,7 @@ class Operation;
 
 class ServicePortType : public PortType{ 
 public:
-std::string interface;
+string interface;
 std::map<string,Operation*> operations; 
 std::string internalGetKey();
 Operation *findoperationsByID(std::string id);

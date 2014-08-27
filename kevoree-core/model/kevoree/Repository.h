@@ -6,7 +6,7 @@
 #include <microframework/api/container/KMFContainerImpl.h>
 class Repository : public KMFContainerImpl{ 
 public:
-std::string url;
+string url;
 std::string internalGetKey();
 string metaClassName();
 void reflexiveMutator(int ___mutatorType,string ___refName, any ___value, bool ___setOpposite,bool ___fireEvent );

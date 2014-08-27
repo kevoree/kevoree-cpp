@@ -15,6 +15,8 @@
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
 #include <kevoree-core/kevscript/src/utils/InstanceResolver.h>
 
+#include <kevoree-core/model/kevoree/NetworkInfo.h>
+
 
 extern "C" {
 #include <kevoree-core/kevscript/api/waxeyeParser.h>
@@ -259,6 +261,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     	break ;
     case TYPE_NETWORK:
      	LOGGER_WRITE(Logger::DEBUG,"TYPE_NETWORK");
+
     	left_hand_Network	= (struct ast_t*)  vector_get(child, 0);
     	left_hand_children = left_hand_Network->data.tree->children ;
     	if(left_hand_children->size != 3)
@@ -271,7 +274,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     		ContainerNode* networkTargetNode = model->findnodesByID(nodename);
     		if(networkTargetNode == NULL){
     	  		throw KevoreeException("Node not found for name " + nodename) ;
-    		}
+    		}/* FIX V5
     		NetworkInfo * info = networkTargetNode->findnetworkInformationByID(proptype) ;
 
     		if(info == NULL){
@@ -286,7 +289,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     			info->addvalues(netprop) ;
     		}
     		netprop->value =  string(ast_children_as_string((struct ast_t*) vector_get(child, 1)));
-
+*/
     	}
 
     	break ;
@@ -410,7 +413,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     			if(target->dictionary == NULL){
     				target->dictionary = factory.createDictionary();
     			}
-
+/* FIX ME V5
     			DictionaryValue* dicVal = target->dictionary->findvaluesByID(propName);
     			if(dicVal == NULL){
     				dicVal = factory.createDictionaryValue();
@@ -427,7 +430,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 
     			}
 
-    			target->dictionary->addvalues(dicVal);
+    			target->dictionary->addvalues(dicVal);*/
     		}else{
     			for(auto it2 = target_node->begin(); it2 != target_node->end(); ++it2){
 
@@ -440,7 +443,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     					target->addfragmentDictionary(newDic);
 
     				}
-
+/*
     				DictionaryValue* dicVal = target->findfragmentDictionaryByID(tg_n->name)->findvaluesByID(propName);
     				if(dicVal == NULL){
     					dicVal = factory.createDictionaryValue();
@@ -463,7 +466,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     					target->findfragmentDictionaryByID(tg_n->name)->addvalues(dicVal);
     				}
 
-    				dicVal->value = propToSet ;
+    				dicVal->value = propToSet ;*/
     			}
     		}
     	}

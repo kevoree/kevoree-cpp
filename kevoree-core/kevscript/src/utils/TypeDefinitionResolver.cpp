@@ -26,7 +26,8 @@ TypeDefinition* TypeDefinitionResolver::resolve(struct ast_t *ast, ContainerRoot
 
 		}
 		TypeDefinition *best_td = NULL ;
-
+///packages[org]/packages[kevoree]/packages[library]/packages[cloud]/packages[lightlxc]/typeDefinitions[name=LightLXCNode,version=5.0.1-SNAPSHOT]
+		/* FIX ME V5 USE PACKAGE
 		std::map<string,TypeDefinition*> type_defs = model->typeDefinitions ;
 		for(std::map<string,TypeDefinition*>::iterator it = type_defs.begin(); it != type_defs.end() ; ++it)
 		{
@@ -51,7 +52,7 @@ TypeDefinition* TypeDefinitionResolver::resolve(struct ast_t *ast, ContainerRoot
 					}
 				}
 
-		}
+		}*/
 		if (best_td == NULL) {
 			throw KevoreeException(" TypeDefinition not found with : " +typeDefName +"\n" );
 		}

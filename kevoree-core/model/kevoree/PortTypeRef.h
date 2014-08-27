@@ -10,8 +10,8 @@ class PortTypeMapping;
 
 class PortTypeRef : public NamedElement{ 
 public:
-short optional;
-short noDependency;
+bool optional;
+bool noDependency;
 PortType *ref; 
 std::map<string,PortTypeMapping*> mappings; 
 std::string internalGetKey();

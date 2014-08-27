@@ -4,9 +4,9 @@
 #include <string>
 #include <map>
 #include <microframework/api/container/KMFContainerImpl.h>
-class NamedElement : public KMFContainerImpl{ 
+class NamedElement : public KMFContainerImpl{
 public:
-std::string name;
+string name;
 std::string internalGetKey();
 string metaClassName();
 void reflexiveMutator(int ___mutatorType,string ___refName, any ___value, bool ___setOpposite,bool ___fireEvent );

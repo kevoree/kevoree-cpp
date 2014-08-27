@@ -265,7 +265,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 			}
 		}else if(trace->refName.compare("value") ==0){
 
-
+			/* FIX ME V5
 			if(dynamic_cast<DictionaryValue*>(modelElement) != 0)
 			{
 
@@ -281,7 +281,7 @@ AdaptationModel *Planner::compareModels(ContainerRoot *currentModel,ContainerRoo
 			}else {
 				// TODO CHECK cout << modelElement->path() << endl;
 
-			}
+			}*/
 
 		}
 
