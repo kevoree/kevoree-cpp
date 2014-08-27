@@ -14,13 +14,13 @@
     <version>1.0.1-SNAPSHOT</version>
     <name>Kevoree CPP :: Library :: HelloWorldComponent</name>
 
- <build>
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.kevoree.tools.cpp.maven.plugin</groupId>
                 <artifactId>kevcpp-maven-plugin</artifactId>
                 <version>1.0.1-SNAPSHOT</version>
-                                <configuration>
+                <configuration>
                     <libs>
                         <lib>kevoree-model-dynamic</lib>
                         <lib>boost_system-mt</lib>
@@ -39,6 +39,7 @@
                         <phase>install</phase>
                         <goals>
                             <goal>generate</goal>
+                           
                         </goals>
                     </execution>
                     <execution>

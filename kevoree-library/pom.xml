@@ -18,37 +18,11 @@
         <module>cppNode</module>
         <module>helloWorldComponent</module>
         <module>websocketgroup</module>
-        <module>fakeconsole</module>
+        <module>fakeConsole</module>
         <module>sharedMemoryChannel</module>
-         <module>facialrecognation</module>
+         <module>facialRecognation</module>
     </modules>
 
-  <build>
-        <plugins>
-            <plugin>
-                <groupId>org.kevoree.tools.cpp.maven.plugin</groupId>
-                <artifactId>kevcpp-maven-plugin</artifactId>
-                <version>1.0.1-SNAPSHOT</version>
-                <executions>
-                    
-                    <execution>
-                        <id>gen</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>de</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>
 
