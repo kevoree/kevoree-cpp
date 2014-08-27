@@ -21,62 +21,37 @@ void destroy_object(FacialRecognation  * object )
 
 using namespace std;
 
-void ThreadFunction(FacialRecognation *ptr)
+void ThreadFunction(FacialRecognation *ptr,VideoCapture *capture, Mat *frame)
 {
 
-	LOGGER_WRITE(Logger::DEBUG, "Starting  FacialRecognation Component's thread" );
-	RNG rng(12345);
-	string face_cascade_name = "/Users/Aymeric/Documents/dev_Kevoree/kevoree-cpp/kevoree-library/FacialRecognation/ressources/lbpcascade_frontalface.xml" ;
-	if( !ptr->face_cascade.load( face_cascade_name ) ){
-		LOGGER_WRITE(Logger::DEBUG, "Error loading face_cascade_name file" );
-	}else{
-		LOGGER_WRITE(Logger::DEBUG, "face_cascade_name file loaded" );
-	}
-	LOGGER_WRITE(Logger::DEBUG, "11" );
 
 
-
-	VideoCapture capture;
-	LOGGER_WRITE(Logger::DEBUG, "11" );
-	capture.open("/Users/Aymeric/Downloads/video1.avi");
-	LOGGER_WRITE(Logger::DEBUG, "11" );
-
-	/*for (int i = 1; i < 1500; i++) {
-		cout << i  << "\n" ;
-	    if (capture.open(i))
-	    {
-
-	        cout << "Found camera %d\n" << i;
-	        break;
-	    }else{
-	    cout << "No camera \n" ;
-	    }
-	}*/
-
-	if(!capture.isOpened()){
+	if(!capture->isOpened()){
 		LOGGER_WRITE(Logger::DEBUG, "Unable to open Video Stream" );
+	}else{
+		LOGGER_WRITE(Logger::DEBUG, " Video Stream  Open"   );
 	}
-    Mat frame;
 
-	LOGGER_WRITE(Logger::DEBUG, "Opening Video Stream" );
 
-	LOGGER_WRITE(Logger::DEBUG, "1" );
+
+
 	long curr = 0 ;
 	long potentialVal = 0;
 
 
-	LOGGER_WRITE(Logger::DEBUG, "1" );
+	LOGGER_WRITE(Logger::DEBUG, " Video Stream  Open"   );
 	milliseconds timestamp = duration_cast< milliseconds >(high_resolution_clock::now().time_since_epoch());
-	LOGGER_WRITE(Logger::DEBUG, "1" );
+	LOGGER_WRITE(Logger::DEBUG, " Video Stream  Open"   );
 	duration<double> threshold = duration<double>(0.3);
-	LOGGER_WRITE(Logger::DEBUG, "1" );
+	LOGGER_WRITE(Logger::DEBUG, " Video Stream  Open"   );
 	for(;;)
 	{
-		capture >> frame;
-
+		LOGGER_WRITE(Logger::DEBUG, " Video Stream  Open"   );
+		(*capture) >> (*frame);
+		LOGGER_WRITE(Logger::DEBUG, " Video Stream  Open"   );
 		//-- 3. Apply the classifier to the frame
-		if( !frame.empty() )
-		{ long curr2 = ptr->detectAndDisplay( frame );
+		if( !frame->empty() )
+		{ long curr2 = ptr->detectAndDisplay(*frame );
 		milliseconds timestamp1 = duration_cast< milliseconds >(high_resolution_clock::now().time_since_epoch());
 		duration<double> time_span = duration_cast<duration<double> > (timestamp1 - timestamp) ;
 
@@ -85,7 +60,7 @@ void ThreadFunction(FacialRecognation *ptr)
 			curr = potentialVal ;
 			std::ostringstream ss;
 			ss << curr;
-			ptr->send("Output",ss.str());
+			ptr->send("output",ss.str());
 			timestamp = timestamp1 ;
 		}else if(curr2 == curr){
 			timestamp = timestamp1 ;
@@ -97,11 +72,15 @@ void ThreadFunction(FacialRecognation *ptr)
 		}
 		}
 		else
-		{ printf(" --(!) No captured frame -- Break!"); break; }
+		{
+			LOGGER_WRITE(Logger::INFO," --(!) No captured frame -- Break!" );
+
+		break;
+		}
+
 		int c = waitKey(10);
 		if( (char)c == 'c' ) { break; }
 	}
-
 
 
 }
@@ -124,10 +103,19 @@ FacialRecognation::~FacialRecognation()
 void FacialRecognation::start()
 {
 
-
-	this->started = 1;
-	t= new boost::thread(&ThreadFunction,this);
-
+		this->started = 1 ;
+		cout << "Start"<< endl ;
+		face_cascade.load("/Users/Aymeric/Documents/dev_Kevoree/kevoree-cpp/kevoree-library/FacialRecognation/ressources/lbpcascade_frontalface.xml" );
+		cout << "Start"<< endl ;
+		VideoCapture* capture = new VideoCapture() ;
+		cout << "Start"<< endl ;
+	    Mat  *frame = new Mat();
+		cout << "Start"<< endl ;
+		capture->open(-1);
+		cout << "Start"<< endl ;
+		(*capture) >> (*frame);
+		cout << "Start"<< endl ;
+		t= new boost::thread (&ThreadFunction,this,capture,frame );
 
 }
 
@@ -175,7 +163,7 @@ long FacialRecognation::detectAndDisplay( Mat frame )
 
 	}
 	//-- Show what you got
-	imshow( "Capture - Face detection", frame );
+//	imshow( "Capture - Face detection", frame );
 	return res ;
 
 }
