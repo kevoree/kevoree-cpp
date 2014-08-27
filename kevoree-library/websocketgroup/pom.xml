@@ -29,11 +29,9 @@
                         <lib>boost_thread-mt</lib>
                         <lib>boost_random-mt</lib>
                     </libs>
-
-
-                                    <headers>
-                                        <header>$project.build.sourceDirectory}</header>
-                                    </headers>
+                    <includes>
+                        <include>${project.basedir}</include>
+                    </includes>
                 </configuration>
                 <executions>
                     <execution>
