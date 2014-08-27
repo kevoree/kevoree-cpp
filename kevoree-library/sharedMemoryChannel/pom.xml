@@ -31,7 +31,15 @@
                     </libs>
                 </configuration>
                 <executions>
+                  <execution>
+                  <id>cl</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean-cmake</goal>
+                        </goals>
+                    </execution>
                     <execution>
+                    <id>bd</id>
                         <phase>compile</phase>
                         <goals>
                             <goal>build-cmake</goal>
