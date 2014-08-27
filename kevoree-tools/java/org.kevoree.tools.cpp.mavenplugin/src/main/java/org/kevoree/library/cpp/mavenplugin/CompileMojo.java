@@ -87,6 +87,7 @@ public class CompileMojo extends AbstractMojo {
         env.put("PATH",path);
         try {
             Mojos.waitFor(pb,this);
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -96,6 +97,7 @@ public class CompileMojo extends AbstractMojo {
         getLog().info("Compiling");
         ProcessBuilder pb2 = new ProcessBuilder("make");
         try {
+
             Mojos.waitFor(pb2,this);
         } catch (IOException e) {
             e.printStackTrace();
@@ -103,7 +105,7 @@ public class CompileMojo extends AbstractMojo {
             e.printStackTrace();
         }
 
-        cmfb.getCmakeFile().delete();
+      //  cmfb.getCmakeFile().delete();
 
     }
 
