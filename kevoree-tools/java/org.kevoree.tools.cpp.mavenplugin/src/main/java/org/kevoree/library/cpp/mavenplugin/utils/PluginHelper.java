@@ -44,9 +44,7 @@ public static  void run(String... command){
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader br = new BufferedReader(isr);
         String line;
-        while ((line = br.readLine()) != null) {
-            System.out.println(line);
-        }
+
         System.out.println("Program terminated!");
     } catch (IOException e) {
         e.printStackTrace();
