@@ -16,11 +16,11 @@
 
     <modules>
         <module>cppNode</module>
-        <module>helloworldcomponent</module>
+        <module>helloWorldComponent</module>
         <module>websocketgroup</module>
-        <module>fakeconsole</module>
+        <module>fakeConsole</module>
         <module>sharedMemoryChannel</module>
-         <module>facialrecognation</module>
+         <module>facialRecognation</module>
     </modules>
 
   <build>
