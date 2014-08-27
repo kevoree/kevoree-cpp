@@ -31,6 +31,7 @@ public class CompileMojo extends AbstractMojo {
      */
     private List<String> libs;
 
+
     /**
      * POM
      *
@@ -49,25 +50,30 @@ public class CompileMojo extends AbstractMojo {
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         String kevpath = System.getenv("KEVOREE_PATH");
-        System.out.println(libs.size());
-
-          Map<String, String> variables = System.getenv();
+        Map<String, String> variables = System.getenv();
         String[] projectNameTab = project.getName().split("::") ;
         CMakeFileBuilder cmfb = new CMakeFileBuilder(projectNameTab[projectNameTab.length-1].trim(), inputCFile.getPath()) ;
         cmfb.add_set("KEVOREEROOT", kevpath);
+        cmfb.add_set("CMAKE_CXX_FLAGS", "\"${CMAKE_CXX_FLAGS}   -std=c++11 -pedantic\"") ;
         cmfb.add_Include_Directories("${KEVOREEROOT}/include/kevoree-core/");
         cmfb.add_Include_Directories("${KEVOREEROOT}/include/kevoree-core/model/");
         cmfb.add_Include_Directories("${KEVOREEROOT}/include/");
-        for (String s : includeDir) {
-            cmfb.add_Include_Directories(s);
+
+
+
+
+        if(includeDir != null) {
+            for (String s : includeDir) {
+                cmfb.add_Include_Directories(s);
+            }
         }
         cmfb.add_link_Directories("${KEVOREEROOT}/lib/");
 
-
-        for (String lib : libs) {
-            cmfb.add_target_link_lib(lib);
+        if(libs != null) {
+            for (String lib : libs) {
+                cmfb.add_target_link_lib(lib);
+            }
         }
-
 
         try {
             cmfb.buildCmake();
