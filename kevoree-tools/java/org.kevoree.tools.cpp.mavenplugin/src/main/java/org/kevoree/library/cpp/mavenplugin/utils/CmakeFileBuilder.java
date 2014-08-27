@@ -28,6 +28,17 @@ public class CMakeFileBuilder {
 
     private File cmakeFile ;
 
+
+    public static String compilationCmd = "IF(${CMAKE_SYSTEM_NAME} MATCHES \"Linux\")\n" +
+            "\n" +
+            "   SET(ENABLE_CXX11 \"-std=c++11\")\n" +
+            "   EXECUTE_PROCESS(COMMAND \"${CMAKE_CXX_COMPILER} -dumpversion\" OUTPUT_VARIABLE GCC_VERSION)\n" +
+            "   if (GCC_VERSION VERSION_LESS 4.7)\n" +
+            "      SET(ENABLE_CXX11 \"-std=c++0x\")\n" +
+            "   endif()\n" +
+            "   SET(CMAKE_CXX_FLAGS \"${CMAKE_CXX_FLAGS} ${ENABLE_CXX11}\")\n" +
+            "endif()\n" ;
+
     public CMakeFileBuilder(String ProjecName, String basePath) {
         link_directories_list = new LinkedList<String>() ;
         include_directories_list = new LinkedList<String>() ;
@@ -85,8 +96,8 @@ public class CMakeFileBuilder {
             fw.write(s);
         }
         fw.write("\n" );
-
-
+       fw.write(compilationCmd);
+        fw.write("\n" );
         for (String s : include_directories_list) {
             fw.write(s);
         }
