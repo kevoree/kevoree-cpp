@@ -70,17 +70,15 @@ public class DeployMojo extends AbstractMojo {
                 deployer = new MavenDeployer(repo.getId(),repo.getUrl());
 
                 try {
-                    getLog().info("Deploy Typedefintion  "+repo.getUrl());
+                    getLog().info("Deploying Typedefinition : "+repo.getUrl());
                     String path =inputCFile.getPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"KEV-INF"+File.separator;
                     File json = new File (path+"lib.json");
                     if(json.exists())
                     {
                         deployer.deploy(project.getGroupId(),project.getArtifactId(),project.getVersion(),json.getAbsolutePath(),"json");
-
                     }else
                     {
                         getLog().error("lib.json not found");
-
                     }
 
                     getLog().info("Deploy dynamic library "+types_lib.get(0).getName()+" "+repo.getUrl());
@@ -92,7 +90,7 @@ public class DeployMojo extends AbstractMojo {
                 }
                 //      deployer.deploy(project.getGroupId(),project.getArtifactId(),project.getVersion(),path+"lib.json","json");
             }else{
-                getLog().error("There is not distributionManagement specify for deploy artifact");
+                getLog().error("No distributionManagement specified to deploy the artifact");
             }
 
 
