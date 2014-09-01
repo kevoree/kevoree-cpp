@@ -82,6 +82,7 @@ public class DeployMojo extends AbstractMojo {
                     }
 
                     getLog().info("Deploy dynamic library "+types_lib.get(0).getName()+" "+repo.getUrl());
+
                     deployer.deploy(project.getGroupId(),project.getArtifactId(),project.getVersion(),types_lib.get(0).getAbsolutePath(),"so");
 
 
