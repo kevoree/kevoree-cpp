@@ -258,6 +258,12 @@ mvn kevcpp:generate
 mvn kevcpp:deploy
 
 
+###  The Kevoree- Maven archetype:generate 
+ ```
+mvn archetype:generate -DarchetypeGroupId=org.kevoree.library.cpp -DarchetypeArtifactId=Kevoree-Cpp-Component-archetype -DarchetypeVersion=1.0.1-SNAPSHOT -DarchetypeCatalog=http://maven.reacloud.com/nexus/content/repositories/snapshots/
+ ```
+
+
 ## Compile the platform 
 
 
