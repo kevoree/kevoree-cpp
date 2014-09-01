@@ -68,6 +68,18 @@
         </repository>
     </repositories>
 
+    <distributionManagement>
+        <repository>
+            <id>reacloud</id>
+            <url>http://maven.reacloud.com/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>reacloud</id>
+            <url>http://maven.reacloud.com/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+
 
     
     

@@ -6,7 +6,7 @@
     <groupId>${groupId}</groupId>
     <artifactId>${artifactId}</artifactId>
     <version>${version}</version>
-    <name>Kevoree CPP :: Library :: ${componentName}</name>
+    <name>Kevoree CPP :: Library :: ${typeDefName}</name>
 
     <build>
         <plugins>

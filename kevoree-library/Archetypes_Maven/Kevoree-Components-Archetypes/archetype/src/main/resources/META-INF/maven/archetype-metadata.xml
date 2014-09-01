@@ -12,12 +12,13 @@
     </fileSet>
   </fileSets>
   <requiredProperties>
-	<requiredProperty key="componentName">
-	<defaultValue>MyFirstKevoreeComponent</defaultValue>
+	<requiredProperty key="typeDefName">
 	</requiredProperty>
- <requiredProperty key="hashSymbol">
+		 <requiredProperty key="hashSymbol">
             <defaultValue>#</defaultValue>
         </requiredProperty>	
+        		 <requiredProperty key="typeDef">
+                  </requiredProperty>	
          <requiredProperty key="lt">
             <defaultValue>&lt;</defaultValue>
         </requiredProperty>	
