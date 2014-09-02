@@ -22,15 +22,15 @@ import java.io.IOException;
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
 
-
+        String missing_element  ="" ;
         if(!verifyKevoreePath()){
 
             getLog().error("Please set up your KEVOREE_PATH environment variable (export KEVOREE_PATH=/Kev/Path)..");
         }
-        if(!verifiyGit())
+     /*   if(!verifiyGit())
         {
             getLog().error("git is missing, please install it or update your path ");
-        }
+        }*/
         if(!verifiyGcc())
         {
             getLog().error("gcc is missing, please install it or update your path ");
