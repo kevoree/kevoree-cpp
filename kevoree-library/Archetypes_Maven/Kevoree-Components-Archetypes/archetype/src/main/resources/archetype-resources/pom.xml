@@ -29,6 +29,15 @@
                             <goal>clean-cmake</goal>
                         </goals>
                     </execution>
+                      
+                 <execution>
+                     <id>val</id>
+                     <phase>validate</phase>
+                     <goals>
+                         <goal>environment-checker</goal>
+                     </goals>
+                 </execution>
+                    
                     <execution>
                         <phase>compile</phase>
                         <goals>
@@ -55,16 +64,16 @@
         </plugins>
     </build>
 
-    <repositories>
-        <repository>
+    <pluginRepositories>
+        <pluginRepository>
             <id>reacloud-snapshot</id>
             <url>http://maven.reacloud.com/nexus/content/repositories/snapshots/</url>
-        </repository>
-        <repository>
+        </pluginRepository>
+        <pluginRepository>
             <id>reacloud-release</id>
             <url>http://maven.reacloud.com/nexus/content/repositories/releases/</url>
-        </repository>
-    </repositories>
+        </pluginRepository>
+    </pluginRepositories>
 
 
     
