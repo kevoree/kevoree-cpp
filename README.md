@@ -415,8 +415,10 @@ mvn clean deploy of your typdefintion.
 
 #Start your project with maven archetypes
 * open a terminal and enter the following command :
+* 
  ```
- mvn archetype:generate -DarchetypeGroupId=org.kevoree.library.cpp -DarchetypeArtifactId=Kevoree-Cpp-Component-archetype -DarchetypeVersion=1.0.1-SNAPSHOT -DarchetypeCatalog=http://maven.reacloud.com/nexus/content/repositories/snapshots/  ```
+ mvn archetype:generate -DarchetypeGroupId=org.kevoree.library.cpp -DarchetypeArtifactId=Kevoree-Cpp-Component-archetype -DarchetypeVersion=1.0.1-SNAPSHOT -DarchetypeCatalog=http://maven.reacloud.com/nexus/content/repositories/snapshots/  
+ ```
  * Enter asked values
  * When maven asks to select the typedef you can choose either the following values :
 	 * channel
