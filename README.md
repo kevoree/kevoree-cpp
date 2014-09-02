@@ -419,7 +419,6 @@ mvn clean deploy of your typdefintion.
 
  ```
  mvn archetype:generate -DarchetypeGroupId=org.kevoree.library.cpp -DarchetypeArtifactId=Kevoree-Cpp-Component-archetype -DarchetypeVersion=1.0.1-SNAPSHOT -DarchetypeCatalog=http://maven.reacloud.com/nexus/content/repositories/snapshots/  
-
  ```
 
 
