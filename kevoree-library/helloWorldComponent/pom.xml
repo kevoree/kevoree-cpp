@@ -32,13 +32,7 @@
                         </goals>
                     </execution>
                  
-                 <execution>
-                     <id>val</id>
-                     <phase>validate</phase>
-                     <goals>
-                         <goal>environment-checker</goal>
-                     </goals>
-                 </execution>
+               
                     <execution>
                         <phase>compile</phase>
                         <goals>
