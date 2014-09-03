@@ -17,12 +17,9 @@
     <modules>
         <module>cppNode</module>
         <module>helloWorldComponent</module>
-        <module>websocketgroup</module>
-        <module>fakeConsole</module>
-        <module>sharedMemoryChannel</module>
+       <module>sharedMemoryChannel</module>
          <module>facialRecognation</module>
     </modules>
-
 
 </project>
 
