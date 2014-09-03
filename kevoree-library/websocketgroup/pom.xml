@@ -34,6 +34,13 @@
                     </includes>
                 </configuration>
                 <executions>
+                     <execution>
+                  <id>cl</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean-cmake</goal>
+                        </goals>
+                    </execution>
                     <execution>
                         <phase>compile</phase>
                         <goals>
