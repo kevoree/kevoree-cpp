@@ -14,7 +14,7 @@
 #include <microframework/api/json/JSONModelLoader.h>
 #include <microframework/api/compare/ModelCompare.h>
 #include <microframework/api/trace/TraceSequence.h>
-#include <microframework/api/utils/Logger.h>
+#include <kevoree-logger/api/Logger.h>
 #include <pthread.h>
 #include <list>
 #include <string>

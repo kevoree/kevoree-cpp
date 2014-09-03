@@ -6,7 +6,7 @@
 #include <microframework/api/utils/any.h>
 #include <microframework/api/utils/ModelVisitor.h>
 #include <microframework/api/utils/ModelAttributeVisitor.h>
-#include <microframework/api/utils/Logger.h>
+#include <kevoree-logger/api/Logger.h>
 #include <ctime>
 #include <list>
 #include <string>

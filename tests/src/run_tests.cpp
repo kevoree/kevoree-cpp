@@ -9,7 +9,7 @@
 #include <cppunit/BriefTestProgressListener.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/XmlOutputter.h>
-#include <microframework/api/utils/Logger.h>
+#include <kevoree-logger/api/Logger.h>
 int main(int argc, char* argv[])
 {
 	const string log_file ="kevoree.log";

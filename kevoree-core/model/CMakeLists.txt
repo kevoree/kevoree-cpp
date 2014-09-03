@@ -10,6 +10,8 @@ include_directories(${CMAKE_SOURCE_DIR})
 include_directories(.)
 include_directories(${SRC_MICROFRAMEWORK}/)
 include_directories(${SRC_KEVOREE_MODEL}/)
+
+include_directories(${SRC_KEVOREE_LOGGER}/api)
 include_directories(${SRC_KEVOREE_ADAPTATION_MODEL_KEVOREE}/)
 
 file(GLOB_RECURSE microframework_files ${SRC_MICROFRAMEWORK}/*)
@@ -23,7 +25,7 @@ ADD_LIBRARY(kevoree-model-dynamic   SHARED   ${microframework_files} ${model_fil
 if(LINUX)
 	TARGET_LINK_LIBRARIES(kevoree-model-dynamic rt)
 ENDIF()
-
+TARGET_LINK_LIBRARIES(kevoree-model-dynamic  kevoree-logger)
 
 #************************************** INSTALL ****************************************************
 

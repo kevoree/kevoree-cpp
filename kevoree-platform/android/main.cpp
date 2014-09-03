@@ -7,7 +7,7 @@
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
 #include <kevoree-core/model/kevoree/Instance.h>
 #include <microframework/api/KMFContainer.h>
-#include <microframework/api/utils/Logger.h>
+#include <kevoree-logger/api/Logger.h>
 
 #include <kevoree-tools/DynamicLoader/DynamicLoader.h>
 
