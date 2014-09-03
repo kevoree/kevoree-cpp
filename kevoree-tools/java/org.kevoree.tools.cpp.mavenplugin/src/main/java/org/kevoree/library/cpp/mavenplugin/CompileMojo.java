@@ -5,6 +5,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.kevoree.library.cpp.mavenplugin.utils.CMakeFileBuilder;
+import org.kevoree.library.cpp.mavenplugin.utils.Deleters;
 import org.kevoree.library.cpp.mavenplugin.utils.Mojos;
 
 
@@ -50,22 +51,22 @@ public class CompileMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         String kevpath = System.getenv("KEVOREE_PATH");
         Map<String, String> variables = System.getenv();
-        String[] projectNameTab = project.getName().split("::") ;
-        CMakeFileBuilder cmfb = new CMakeFileBuilder(projectNameTab[projectNameTab.length-1].trim(), inputCFile.getPath()) ;
+        String[] projectNameTab = project.getName().split("::");
+        CMakeFileBuilder cmfb = new CMakeFileBuilder(projectNameTab[projectNameTab.length - 1].trim(), inputCFile.getPath());
         cmfb.add_set("KEVOREEROOT", kevpath);
-        cmfb.add_set("CMAKE_CXX_FLAGS", "\"${CMAKE_CXX_FLAGS}   -std=c++11 -pedantic\"") ;
+        cmfb.add_set("CMAKE_CXX_FLAGS", "\"${CMAKE_CXX_FLAGS}   -std=c++11 -pedantic\"");
         cmfb.add_Include_Directories("${KEVOREEROOT}/include/kevoree-core/");
         cmfb.add_Include_Directories("${KEVOREEROOT}/include/kevoree-core/model/");
         cmfb.add_Include_Directories("${KEVOREEROOT}/include/");
 
-        if(includes != null) {
+        if (includes != null) {
             for (String s : includes) {
                 cmfb.add_Include_Directories(s);
             }
         }
         cmfb.add_link_Directories("${KEVOREEROOT}/lib/");
 
-        if(libs != null) {
+        if (libs != null) {
             for (String lib : libs) {
                 cmfb.add_target_link_lib(lib);
             }
@@ -78,30 +79,37 @@ public class CompileMojo extends AbstractMojo {
         }
         getLog().info("building make file");
         String path = System.getenv("PATH");
-        ProcessBuilder pb = new ProcessBuilder("cmake",project.getBasedir().toString());
+        System.out.println("COMPILATION BASEDIR : " + project.getBasedir().toString());
+        // Cleaning step
+
+
+        ProcessBuilder pb = new ProcessBuilder("cmake",".");
+        pb.directory(project.getBasedir());
         Map<String, String> env = pb.environment();
-        env.put("PATH",path);
+        env.put("PATH", path);
         try {
-            Mojos.waitFor(pb,this);
+            Mojos.waitFor(pb, this);
 
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
 
-         }
+        }
         getLog().info("Compiling");
-        ProcessBuilder pb2 = new ProcessBuilder("make","-C", project.getBasedir().toString());
+        ProcessBuilder pb2 = new ProcessBuilder("make");
+        pb2.directory(project.getBasedir());
         try {
 
-            Mojos.waitFor(pb2,this);
+            Mojos.waitFor(pb2, this);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-      //  cmfb.getCmakeFile().delete();
+        //    cmfb.getCmakeFile().delete();
+
 
     }
 

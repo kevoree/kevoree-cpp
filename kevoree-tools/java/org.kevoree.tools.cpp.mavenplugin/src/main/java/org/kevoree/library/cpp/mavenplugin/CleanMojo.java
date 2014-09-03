@@ -4,6 +4,7 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
+import org.kevoree.library.cpp.mavenplugin.utils.Deleters;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -39,7 +40,7 @@ public class CleanMojo extends AbstractMojo {
         }
         File f2 = new File(working_dir.toString() + "/CMakeFiles");
         if (f2.exists()) {
-            removeDirectory(f2);
+            Deleters.removeDirectory(f2);
         }
         File f3 = new File(working_dir.toString() + "/cmake_install.cmake");
         if (f3.exists()) {
@@ -47,7 +48,7 @@ public class CleanMojo extends AbstractMojo {
         }
         File f4 = new File(working_dir.toString() + "/target");
         if (f4.exists()) {
-            removeDirectory(f4);
+            Deleters.removeDirectory(f4);
         }
         File f5 = new File(working_dir.toString() + "/Makefile");
         if (f5.exists()) {
@@ -73,44 +74,6 @@ public class CleanMojo extends AbstractMojo {
     }
 
 
-
-
-    private static boolean removeDirectory(File directory) {
-
-        // System.out.println("removeDirectory " + directory);
-
-        if (directory == null)
-            return false;
-        if (!directory.exists())
-            return true;
-        if (!directory.isDirectory())
-            return false;
-
-        String[] list = directory.list();
-
-        // Some JVMs return null for File.list() when the
-        // directory is empty.
-        if (list != null) {
-            for (int i = 0; i < list.length; i++) {
-                File entry = new File(directory, list[i]);
-
-                //        System.out.println("\tremoving entry " + entry);
-
-                if (entry.isDirectory())
-                {
-                    if (!removeDirectory(entry))
-                        return false;
-                }
-                else
-                {
-                    if (!entry.delete())
-                        return false;
-                }
-            }
-        }
-
-        return directory.delete();
-    }
 
 
 
