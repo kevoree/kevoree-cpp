@@ -15,7 +15,7 @@ include_directories(../maven-resolver-cpp/src)
 include_directories(${SRC_KEVSCRIPT}/src)
 include_directories(${SRC_KEVSCRIPT}/waxeye/include)
 include_directories(${SRC_KEVOREE_CORE}/api/queues/include)
-
+include_directories(${SRC_KEVOREE_LOGGER}/)
 file(GLOB_RECURSE kevoree-platform_files KevoreeBootStrap/*)
 
 
@@ -28,6 +28,7 @@ add_executable(
         ${kevoree-platform_files}
 )
 TARGET_LINK_LIBRARIES(runtime  kevoree-tools)
+TARGET_LINK_LIBRARIES(runtime  kevoree-logger)
 TARGET_LINK_LIBRARIES(runtime  kevoree-core-impl)
 TARGET_LINK_LIBRARIES(runtime  kevoree-model-dynamic)
 TARGET_LINK_LIBRARIES(runtime  maven-resolver-cpp )

@@ -33,39 +33,48 @@ public class CleanMojo extends AbstractMojo {
 
         File working_dir = project.getBasedir();
         File f = new File(working_dir.toString() + "/CMakeCache.txt");
-        System.out.print(f.toString());
+       // System.out.print(f.toString());
         if (f.exists()) {
-            System.out.print("exe");
+            //System.out.println("Deleting : " + f.getName());
             f.delete();
         }
         File f2 = new File(working_dir.toString() + "/CMakeFiles");
         if (f2.exists()) {
+            //System.out.println("Deleting : " + f2.getName());
             Deleters.removeDirectory(f2);
         }
         File f3 = new File(working_dir.toString() + "/cmake_install.cmake");
         if (f3.exists()) {
+            //System.out.println("Deleting : " + f3.getName());
             f3.delete();
         }
         File f4 = new File(working_dir.toString() + "/target");
         if (f4.exists()) {
+          //  System.out.println("Deleting : " + f4.getName());
             Deleters.removeDirectory(f4);
         }
         File f5 = new File(working_dir.toString() + "/Makefile");
         if (f5.exists()) {
+        //    System.out.println("Deleting : " + f5.getName());
            f5.delete();
         }
         File f6 = new File(working_dir.toString() + "/CMakeLists.txt");
         if (f6.exists()) {
+          //  System.out.println("Deleting : " + f6.getName());
             f6.delete();
         }
         File[] res =  working_dir.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
 
-                System.out.print(pathname.getName());
-                return pathname.toString().trim().contains("dylib") || pathname.toString().trim().contains("so") ;
+
+                return pathname.getName().toString().trim().contains(".dylib") || pathname.getName().toString().trim().contains(".so") ;
             }
         });
+
+        for (File re : res) {
+
+        }
         if(res.length > 0)
         {
             res[0].delete();

@@ -25,7 +25,7 @@ public class Deleters {
             for (int i = 0; i < list.length; i++) {
                 File entry = new File(directory, list[i]);
 
-                //        System.out.println("\tremoving entry " + entry);
+                  //     System.out.println("\tremoving entry " + entry);
 
                 if (entry.isDirectory())
                 {

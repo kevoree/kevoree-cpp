@@ -3,7 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+    <parent>
+        <groupId>org.kevoree.library.cpp</groupId>
+        <artifactId>org.kevoree.library.cpp.root</artifactId>
+        <version>1.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
     <groupId>org.kevoree.library.cpp</groupId>
     <artifactId>HelloWorldComponent</artifactId>
@@ -24,7 +29,7 @@
                           <lib>kevoree-logger</lib>
                     </libs>
                 </configuration>
-                <executions>
+                 <executions>
                  <execution>
                   <id>cl</id>
                         <phase>clean</phase>
@@ -32,8 +37,6 @@
                             <goal>clean-cmake</goal>
                         </goals>
                     </execution>
-                 
-               
                     <execution>
                         <phase>compile</phase>
                         <goals>
@@ -45,7 +48,6 @@
                         <phase>install</phase>
                         <goals>
                             <goal>generate</goal>
-
                         </goals>
                     </execution>
                     <execution>
@@ -60,7 +62,7 @@
         </plugins>
     </build>
 
-
+    
 
     
     

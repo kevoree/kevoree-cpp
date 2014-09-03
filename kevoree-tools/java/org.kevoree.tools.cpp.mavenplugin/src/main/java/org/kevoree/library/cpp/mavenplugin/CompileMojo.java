@@ -108,7 +108,7 @@ public class CompileMojo extends AbstractMojo {
             e.printStackTrace();
         }
 
-        //    cmfb.getCmakeFile().delete();
+           cmfb.getCmakeFile().delete();
 
 
     }
