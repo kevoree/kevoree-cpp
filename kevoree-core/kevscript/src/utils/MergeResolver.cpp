@@ -21,7 +21,7 @@ void MergeResolver::merge(ContainerRoot *model, std::string type, std::string ur
 	{
 		std::list<std::string> urls;
 		std::map<std::string, Repository*> map =  model->repositories ;
-		cout << map.size() << endl ;
+
 		for(std::map<std::string, Repository*>::iterator it = model->repositories.begin(); it != model->repositories.end(); ++it) {
 			string url = it->first ;
 			urls.push_back(url) ;
@@ -38,7 +38,7 @@ void MergeResolver::merge(ContainerRoot *model, std::string type, std::string ur
 		ifstream target;
 		target.open (file);
 		if(!target){
-			cout << "no file trace" << endl;
+			LOGGER_WRITE(Logger::DEBUG,"No file trace during Merge resolution ");
 		}
 		LOGGER_WRITE(Logger::DEBUG,"TypeDefintion found " + file);
 		DefaultkevoreeFactory factory;

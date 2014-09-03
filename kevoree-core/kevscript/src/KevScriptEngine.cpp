@@ -31,20 +31,6 @@ KevScriptEngine::~KevScriptEngine()
 }
 
 
-/*
- *
- *
- *
- *
-
-    		std::map<string, ContainerNode*> m =model->nodes ;
-    		cout << "maps" << endl;
-    		for(auto it = m.begin(); it != m.end(); ++it){
-    			cout << it->first <<endl ;
-    		}
-    		cout << "maps" << endl;
-
- */
 
 void KevScriptEngine:: printCP(ContainerRoot *model){
 	std::map<string, ContainerNode*> m =model->nodes ;
@@ -60,7 +46,7 @@ void KevScriptEngine:: printCP(ContainerRoot *model){
     		 	}
     		 	}
 
-    		cout << "maps" << endl;
+
 
 }
 
@@ -190,8 +176,8 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
      	break ;
 
     case TYPE_REMOVE:
-     	LOGGER_WRITE(Logger::DEBUG,"TYPE_REMOVE");
-     	display_ast(ast, type_strings);
+     	LOGGER_WRITE(Logger::DEBUG,"TYPE_REMOVE : TODO IMPLEMENT");
+
 
     	break ;
     case TYPE_MOVE:
@@ -337,7 +323,6 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     case TYPE_SET:
     	LOGGER_WRITE(Logger::DEBUG,"TYPE_SET");
     	propToSet = "";
-        display_ast(ast, type_strings);
 
     	child = ast->data.tree->children;
 
@@ -432,7 +417,6 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     			for(auto it2 = target_node->begin(); it2 != target_node->end(); ++it2){
 
     				Instance * tg_n = *it2 ;
-    				cout << tg_n->name << endl ;
     				if(target->findfragmentDictionaryByID(tg_n->name) == NULL)
     				{
     					FragmentDictionary* newDic = factory.createFragmentDictionary();
@@ -444,7 +428,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
     				DictionaryValue* dicVal = target->findfragmentDictionaryByID(tg_n->name)->findvaluesByID(propName);
     				if(dicVal == NULL){
     					dicVal = factory.createDictionaryValue();
-    					cout << "nul" << endl ;
+
     					if(target->typeDefinition->dictionaryType != NULL){
 
     						DictionaryAttribute* dicAttr = target->typeDefinition->dictionaryType->findattributesByID(propName);
@@ -481,8 +465,7 @@ void KevScriptEngine::interpret(struct ast_t *ast, ContainerRoot *model){
 void KevScriptEngine::applyAttach(Instance *leftH, Instance *rightH, ContainerRoot *model, bool reverse) {
 	ContainerNode* cnL = dynamic_cast<ContainerNode*>(leftH);
 	Group* gR = dynamic_cast<Group*>(rightH);
-cout << "container" + cnL->name << endl ;
-cout << "gR" + gR->name << endl ;
+
 	if(cnL == 0)
 	{
 		throw KevoreeException(leftH->name + " is not a ContainerNode") ;
@@ -570,7 +553,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 	}
 
 	else if(dynamic_cast<ComponentType*>(td) != 0){
-		cout << "ComponentType" << endl ;
+
 		ComponentType* ct = dynamic_cast<ComponentType*>(td);
 		ComponentInstance* instance = factory.createComponentInstance();
 		instance->typeDefinition = ct ;
@@ -617,7 +600,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 	}
 
 		else if(dynamic_cast<ChannelType*>(td) != 0){
-			cout << "ChannelType" << endl ;
+
 			ChannelType* cht = dynamic_cast<ChannelType*>(td);
 			Channel *instance = factory.createChannel() ;
 			instance->started = true ;
@@ -634,7 +617,7 @@ bool KevScriptEngine::applyAdd(TypeDefinition *td, struct ast_t *ast, ContainerR
 		}
 
 		else if(dynamic_cast<GroupType*>(td) != 0){
-			cout << "GroupType" << endl ;
+
 			GroupType* gt = dynamic_cast<GroupType*>(td);
 			Group *instance = factory.createGroup() ;
 			instance->typeDefinition = gt ;
