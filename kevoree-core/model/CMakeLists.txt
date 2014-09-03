@@ -29,4 +29,4 @@ TARGET_LINK_LIBRARIES(kevoree-model-dynamic  kevoree-logger)
 
 #************************************** INSTALL ****************************************************
 
-install(TARGETS kevoree-model-dynamic  DESTINATION  ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
+#install(TARGETS kevoree-model-dynamic  DESTINATION  ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
