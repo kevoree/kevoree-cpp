@@ -98,7 +98,7 @@ list<Instance*>* InstanceResolver::resolve(struct ast_t *ast, ContainerRoot *mod
 				if(inst != NULL){
 
 					resolved->push_back(inst);
-					cout << "end" << endl ;
+
 				}
 				if(inst == NULL){
 					throw KevoreeException("No group / channel found for "+ instanceName) ;
