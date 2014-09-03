@@ -4,32 +4,25 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.kevoree.library.cpp</groupId>
-        <artifactId>org.kevoree.library.cpp.root</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
 
     <groupId>org.kevoree.library.cpp</groupId>
-    <artifactId>fakeConsole</artifactId>
+    <artifactId>FakeConsoleComponent</artifactId>
     <version>1.0.1-SNAPSHOT</version>
-    <name>Kevoree CPP :: Library :: fakeConsole</name>
- <build>
+    <name>Kevoree CPP :: Library :: FakeConsoleComponent</name>
+
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.kevoree.tools.cpp.maven.plugin</groupId>
                 <artifactId>kevcpp-maven-plugin</artifactId>
                 <version>1.0.1-SNAPSHOT</version>
-                                <configuration>
+                <configuration>
                     <libs>
                         <lib>kevoree-model-dynamic</lib>
                         <lib>boost_system-mt</lib>
                         <lib>boost_thread-mt</lib>
+                          <lib>kevoree-logger</lib>
                     </libs>
-                    <headers>
-                    <header>${KEVOREEROOT}/include/maven-resolver/src/</header>
-                    </headers>
                 </configuration>
                 <executions>
                  <execution>
@@ -39,6 +32,8 @@
                             <goal>clean-cmake</goal>
                         </goals>
                     </execution>
+                 
+               
                     <execution>
                         <phase>compile</phase>
                         <goals>
@@ -50,6 +45,7 @@
                         <phase>install</phase>
                         <goals>
                             <goal>generate</goal>
+
                         </goals>
                     </execution>
                     <execution>
@@ -65,5 +61,8 @@
     </build>
 
 
+
+    
+    
 </project>
 
