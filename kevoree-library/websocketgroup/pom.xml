@@ -13,7 +13,7 @@
     <groupId>org.kevoree.library.cpp</groupId>
     <artifactId>webSocketGroup</artifactId>
     <version>1.0.1-SNAPSHOT</version>
-    <name>Kevoree CPP :: Tools :: WebSocketGroup</name>
+    <name>Kevoree CPP :: Tools :: webSocketGroup</name>
 
 
  <build>
