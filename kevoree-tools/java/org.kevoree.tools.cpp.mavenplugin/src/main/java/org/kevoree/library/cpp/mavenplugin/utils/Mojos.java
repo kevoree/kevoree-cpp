@@ -34,8 +34,12 @@ public class Mojos
 				String line = in.readLine();
 				if (line == null)
 					break;
-                am.getLog().info(line);
-			}
+                if(line.contains("error")){
+                    am.getLog().error(line);
+                }else {
+                    am.getLog().info(line);
+                }
+            }
 		}
 		finally
 		{
