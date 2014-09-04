@@ -15,7 +15,7 @@ include_directories(.)
 include_directories(src/)
 include_directories(src/api)
 include_directories(waxeye/include)
-include_directories(waxeye/include/waxeye)
+
 include_directories(${BOOST_ROOT}/include)
 link_directories(${BOOST_ROOT}/lib)
 
@@ -25,7 +25,6 @@ file(GLOB_RECURSE waxeye_files waxeye/*.c)
 
 
 ADD_LIBRARY(waxeye   STATIC   ${waxeye_files})
-
 
 ADD_LIBRARY(kevscript   STATIC   ${kevscript_files})
 TARGET_LINK_LIBRARIES(kevscript  boost_thread-mt) # FIX ME REMOVE 
