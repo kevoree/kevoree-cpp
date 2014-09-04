@@ -116,7 +116,8 @@ For more information => https://github.com/kevoree/kevoree-web-editor
 
 
 ### Mac notes
-
+Environement variables :
+set your DYLIB_PATH to the Release/bin directory of kevoree 
 
 ### Linux notes
 
