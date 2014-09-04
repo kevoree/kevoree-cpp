@@ -412,7 +412,17 @@ mvn clean deploy of your typdefintion.
 ##Setting up the environment
 * download a Kevoree Release
 * Unzip it
-* Set up an environment variable : KEVOREE_PATH where is located Kevoree release
+* Set up a variable kevoreePath in your setting.xml in .m2 folder where is located Kevoree release as shown bellow
+
+ ```
+  
+        <profile>
+            <id>default-profile</id>
+            <properties>
+            <kevoreePath>/Users/Aymeric/Documents/dev_Kevoree/kevoree-cpp/Release</kevoreePath>
+            	</properties>
+        </profile>
+ ```
 
 #Start your project with maven archetypes
 * open a terminal and enter the following command :
