@@ -34,8 +34,8 @@ TARGET_LINK_LIBRARIES(kevscript  maven-resolver-cpp )
 TARGET_LINK_LIBRARIES(kevscript  waxeye )
 
 
-install(TARGETS kevscript   DESTINATION  ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
-install(TARGETS waxeye   DESTINATION  ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
+##install(TARGETS kevscript   DESTINATION  ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
+#install(TARGETS waxeye   DESTINATION  ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
 
 #add_executable(
 #        kevscript-parser
