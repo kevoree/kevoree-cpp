@@ -24,7 +24,7 @@ using websocketpp::lib::bind;
 typedef server::message_ptr message_ptr;
 
 
-#pragma GroupType "webSocketGroup"
+#pragma GroupType "websocketgroup"
 #pragma Param "port" defaultValue="9000" fragdep
 
 class WebSocketGroup :public AbstractGroup
