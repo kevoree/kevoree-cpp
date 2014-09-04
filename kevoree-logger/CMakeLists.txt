@@ -3,8 +3,8 @@ project(kevoree-logger)
 
 
 
-
-file(GLOB_RECURSE files api/*.cpp)
+include_directories(api/)
+file(GLOB_RECURSE files src/*.cpp)
 
 
 ADD_LIBRARY(kevoree-logger SHARED    ${files}  ) #${HEADERS_MOC}
