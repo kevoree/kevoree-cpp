@@ -53,3 +53,13 @@ void KevoreeBootStrap::start()
     coreBean->start();
    	coreBean->updateModel(bootstrapModel);	
 }
+
+void KevoreeBootStrap::stop()
+{
+	if(started == true)
+	{
+		return;
+	}
+    coreBean->stop();
+
+}

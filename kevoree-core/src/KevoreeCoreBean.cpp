@@ -170,6 +170,41 @@ void KevoreeCoreBean::stop()
 	LOGGER_WRITE(Logger::INFO,"Kevoree Core will be stopped ! "+getNodeName());
 	modelListeners.stop();
 
+	ContainerRoot *currentmodel = getLastModel();
+
+	ContainerRoot *stopModel; // TODO CLONE MODEL
+
+/*FIX MEE
+	// stop hosts
+	for ( std::map<string,ContainerNode*>::iterator it = currentNode->hosts.begin();  it !=  currentNode->hosts.end(); ++it)
+	{
+		ContainerNode *n = it->second;
+		n->started = false;
+
+	}
+	for ( std::map<string,Group*>::iterator it = stopModel->groups.begin();  it !=  stopModel->groups.end(); ++it)
+	{
+		Group *g = it->second;
+		g->started = false;
+
+	}
+
+	for ( std::map<string,Channel*>::iterator it = stopModel->hubs.begin();  it !=  stopModel->hubs.end(); ++it)
+	{
+		Channel *c = it->second;
+		c->started = false;
+
+	}
+
+	for ( std::map<string,ComponentInstance*>::iterator it = currentNode->components.begin();  it !=  currentNode->components.end(); ++it)
+	{
+		ComponentInstance *co = it->second;
+		co->started = false;
+
+	}
+	LOGGER_WRITE(Logger::INFO,"Update to StopModel");
+	updateModel(stopModel);*/
+
 }
 
 bool KevoreeCoreBean::checkModel(ContainerRoot *targetModel){

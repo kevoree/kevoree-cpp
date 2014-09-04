@@ -14,6 +14,7 @@ public:
     void setBootstrapModel(ContainerRoot *bmodel);
 	void setBasePath(std::string path);
 	void start();
+	void stop();
 	
 private:
   std::string nodeName;
