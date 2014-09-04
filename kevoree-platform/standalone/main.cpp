@@ -212,14 +212,14 @@ void defaultbootstrapmodel(std::string nodename){
 
 
 	DeployUnit *dg =factory.createDeployUnit();
-	dg->name = "kevoree-group-websocket";
+	dg->name = "webSocketGroup";
 	dg->groupName = "org.kevoree.library.cpp";
 	dg->version = version;
 	dg->type ="so";
 
 	TypeDefinition *grouptype = factory.createGroupType();
 	grouptype->abstract= false;
-	grouptype->name ="kevoree-group-websocket";
+	grouptype->name ="webSocketGroupt";
 	grouptype->version = version;
 
 	DictionaryType *typegroup= factory.createDictionaryType();
