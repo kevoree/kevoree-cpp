@@ -40,7 +40,7 @@ void KevScriptTest::testkevAllModel() {
 	int res6 = checkerKevscript("./dataTest/KevScriptTest/multilineAttr.kevs");
 	int res7 = checkerKevscript("./dataTest/KevScriptTest/removes.kevs");
 	int res8 = checkerKevscript("./dataTest/KevScriptTest/repo.kevs");
-	int res9 = checkerKevscript("./dataTest/KevScriptTest/test-parser.kevs");
+	int res9 = checkerKevscript("./dataTest/KevScriptTest/test-parserKev-CPP.kevs");
 	int res10 = checkerKevscript("./dataTest/KevScriptTest/versions.kevs");
 	int res = res1 + res2 + res3+ res4 + res5 + res6 + res7 + res8 + res9 + res10 ;
 	CPPUNIT_ASSERT(1);
@@ -139,23 +139,23 @@ void KevScriptTest::theUltimeTest(){
 			list<ModelTrace*>* lst2 =model->toTraces(true, true) ;
 			for(list<ModelTrace*>::iterator it = lst2->begin() ; it != lst2->end(); ++it){
 						ModelTrace* mt = *it ;
-						cout << mt->toString()<< endl ;
+						//cout << mt->toString()<< endl ;
 					}
-			cout <<"-----------"<< endl ;
+		//	cout <<"-----------"<< endl ;
 
 			lst2 =model_to_compare->toTraces(true, true) ;
 					for(list<ModelTrace*>::iterator it = lst2->begin() ; it != lst2->end(); ++it){
 								ModelTrace* mt = *it ;
-								cout << mt->toString()<< endl ;
+								//cout << mt->toString()<< endl ;
 							}
-					cout <<"-----------"<< endl ;
+				//	cout <<"-----------"<< endl ;
 				// FIX ME
 				TraceSequence *sequencediff = compare->diff(model,model_to_compare);
 				list<ModelTrace*> lst =	sequencediff->traces;
-				cout <<sequencediff->traces.size() << endl ;
+				//cout <<sequencediff->traces.size() << endl ;
 				for(list<ModelTrace*>::iterator it = lst.begin() ; it != lst.end(); ++it){
 					ModelTrace* mt = *it ;
-					cout << mt->toString()<< endl ;
+					//cout << mt->toString()<< endl ;
 				}
 
 				CPPUNIT_ASSERT(sequencediff->traces.size()  != 0);
