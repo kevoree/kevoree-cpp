@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>org.kevoree.library.cpp</groupId>
-    <artifactId>kevoree-group-websocket</artifactId>
+    <artifactId>webSocketGroup</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <name>Kevoree CPP :: Tools :: WebSocketGroup</name>
 

@@ -219,7 +219,7 @@ void defaultbootstrapmodel(std::string nodename){
 
 	TypeDefinition *grouptype = factory.createGroupType();
 	grouptype->abstract= false;
-	grouptype->name ="webSocketGroupt";
+	grouptype->name ="webSocketGroup";
 	grouptype->version = version;
 
 	DictionaryType *typegroup= factory.createDictionaryType();
