@@ -1,0 +1,17 @@
+repo "http://maven.reacloud.com/nexus/content/repositories/releases"
+repo "http://maven.reacloud.com/nexus/content/repositories/snapshots"
+
+repo "http://repo.maven.apache.org/maven2"
+
+include mvn:org.kevoree.library.cpp:cppnode:1.0.1-SNAPSHOT
+include mvn:org.kevoree.library.cpp:webSocketGroup:1.0.1-SNAPSHOT
+include mvn:org.kevoree.library.cpp:fakeconsole:1.0.1-SNAPSHOT
+include mvn:org.kevoree.library.cpp:sharedMemoryChannel:1.0.1-SNAPSHOT
+include mvn:org.kevoree.library.cpp:HelloWorldComponent:1.0.1-SNAPSHOT
+
+add node0 : cppnode
+add group0 : websocketgroup
+
+attach node0 group0
+
+set group0.port/node0 = '9000'
