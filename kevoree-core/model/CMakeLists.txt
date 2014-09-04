@@ -19,7 +19,7 @@ file(GLOB_RECURSE model_files ${SRC_KEVOREE_MODEL}/*)
 file(GLOB_RECURSE adaptation_model_files ${SRC_KEVOREE_ADAPTATION_MODEL_KEVOREE}/*)
 
 
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
+#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
 
 ADD_LIBRARY(kevoree-model-dynamic   SHARED   ${microframework_files} ${model_files} ${adaptation_model_files})
 if(LINUX)
