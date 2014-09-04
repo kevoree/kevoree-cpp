@@ -38,11 +38,12 @@ void MergeResolver::merge(ContainerRoot *model, std::string type, std::string ur
 		ifstream target;
 		target.open (file);
 		if(!target){
-			LOGGER_WRITE(Logger::DEBUG,"No file trace during Merge resolution ");
+			throw KevoreeException("No file trace during Merge resolution Typedefinition <"+type+"> repos => "+url);
 		}
 		LOGGER_WRITE(Logger::DEBUG,"TypeDefintion found " + file);
 		DefaultkevoreeFactory factory;
 		loader.setFactory(&factory) ;
+
 		ContainerRoot *remote = (ContainerRoot*) loader.loadModelFromStream(target)->front();
 		ModelCompare *compare= new ModelCompare();
 		TraceSequence* trace = compare->merge(model,remote);
@@ -54,6 +55,8 @@ void MergeResolver::merge(ContainerRoot *model, std::string type, std::string ur
 		delete MTA ;
 		delete remote ;
 		delete compare ;
+
+
 	}else
 	{
 		LOGGER_WRITE(Logger::WARNING,"Not resolved typeDef" + url);
