@@ -63,6 +63,12 @@ public class CleanMojo extends AbstractMojo {
           //  System.out.println("Deleting : " + f6.getName());
             f6.delete();
         }
+
+        File f7 = new File(working_dir.toString() + "/src/main/ressources");
+        if (f7.exists()) {
+            //System.out.println("Deleting : " + f2.getName());
+            Deleters.removeDirectory(f7);
+        }
         File[] res =  working_dir.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
