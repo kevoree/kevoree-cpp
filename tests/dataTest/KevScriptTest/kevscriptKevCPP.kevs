@@ -4,12 +4,12 @@ repo "http://maven.reacloud.com/nexus/content/repositories/snapshots/"
 
 include mvn:org.kevoree.library.cpp:cppnode:1.0.1-SNAPSHOT
 include mvn:org.kevoree.library.cpp:fakeconsole:1.0.1-SNAPSHOT
-include mvn:org.kevoree.library.cpp:kevoree-group-websocket:1.0.1-SNAPSHOT
+include mvn:org.kevoree.library.cpp:webSocketGroup:1.0.1-SNAPSHOT
 include mvn:org.kevoree.library.cpp:sharedMemoryChannel:1.0.1-SNAPSHOT
 
 add node0 : cppnode
 add node0.comp314 : fakeconsole
-add group0 : kevoree-group-websocket
+add group0 : websocketgroup
 add chan225 : sharedmemorychannel
 
 attach node0 group0

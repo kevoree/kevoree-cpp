@@ -38,9 +38,9 @@ void MergeResolver::merge(ContainerRoot *model, std::string type, std::string ur
 		ifstream target;
 		target.open (file);
 		if(!target){
-			throw KevoreeException("No file trace during Merge resolution Typedefinition <"+type+"> repos => "+url);
+			throw KevoreeException("\nTypedefinition <"+splitted_chain.at(1)+"> not found in repositories");
 		}
-		LOGGER_WRITE(Logger::DEBUG,"TypeDefintion found " + file);
+		LOGGER_WRITE(Logger::DEBUG,"TypeDefintion found " + splitted_chain.at(1));
 		DefaultkevoreeFactory factory;
 		loader.setFactory(&factory) ;
 
