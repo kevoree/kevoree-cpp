@@ -58,7 +58,8 @@ public class CompileMojo extends AbstractMojo {
         cmfb.add_Include_Directories("${KEVOREEROOT}/include/kevoree-core/");
         cmfb.add_Include_Directories("${KEVOREEROOT}/include/kevoree-core/model/");
         cmfb.add_Include_Directories("${KEVOREEROOT}/include/");
-
+        cmfb.add_Include_Directories("${KEVOREEROOT}/include/maven-resolver/src/");
+        cmfb.add_target_link_lib("maven-resolver-cpp");
         if (includes != null) {
             for (String s : includes) {
                 cmfb.add_Include_Directories(s);
