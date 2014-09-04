@@ -49,7 +49,9 @@ public class CompileMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        String kevpath = System.getenv("KEVOREE_PATH");
+
+
+        String kevpath = project.getProperties().getProperty("kevoreePath");
         Map<String, String> variables = System.getenv();
         String[] projectNameTab = project.getName().split("::");
         CMakeFileBuilder cmfb = new CMakeFileBuilder(projectNameTab[projectNameTab.length - 1].trim(), inputCFile.getPath());
