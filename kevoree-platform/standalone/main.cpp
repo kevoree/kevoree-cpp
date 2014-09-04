@@ -18,13 +18,13 @@
 #include <boost/program_options/options_description.hpp>
 #include <boost/program_options/parsers.hpp>
 #include <boost/program_options/variables_map.hpp>
-
+/*
 #include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
 
-
+*/
 namespace po = boost::program_options;
 
 DefaultkevoreeFactory factory;
@@ -57,13 +57,13 @@ int main (int argc, char *argv[])
 {
 
 
-	 struct sigaction sigIntHandler;
+	 /*struct sigaction sigIntHandler;
 
 	   sigIntHandler.sa_handler = sig_handler;
 	   sigemptyset(&sigIntHandler.sa_mask);
 	   sigIntHandler.sa_flags = 0;
 
-	   sigaction(SIGINT, &sigIntHandler, NULL);
+	   sigaction(SIGINT, &sigIntHandler, NULL);*/
 
 	Logger::Start(Logger::INFO, log_file);
 
@@ -135,7 +135,7 @@ int main (int argc, char *argv[])
 			kse.executeFromStream(modelfile,model);
 		}else{
 			Logger::Write(Logger::INFO, "Unsupported model format use json, kevs or kev, loading default model") ;
-			model = NULL ;
+		//	model = NULL ;
 		}
 
 	}
