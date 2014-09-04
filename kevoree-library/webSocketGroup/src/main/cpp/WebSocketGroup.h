@@ -24,7 +24,7 @@ using websocketpp::lib::bind;
 typedef server::message_ptr message_ptr;
 
 
-#pragma GroupType "kevoree-group-websocket"
+#pragma GroupType "webSocketGroup"
 #pragma Param "port" defaultValue="9000" fragdep
 
 class WebSocketGroup :public AbstractGroup
