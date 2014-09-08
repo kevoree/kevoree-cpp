@@ -26,7 +26,22 @@ public:
 	virtual ~ModelCloner();
 	std::map<KMFContainer*, KMFContainer*>*  createContext() ;
 
-	template<class A> A*  clone(A* o, bool readOnly, bool mutableOnly);
+
+	template<class A>
+	A* clone(A* o, bool readOnly, bool mutableOnly){
+		std::map<KMFContainer*, KMFContainer*>*  context = createContext();
+		KMFContainer* clonedObject = cloneModelElm(o);
+		context->insert(std::make_pair(o,clonedObject)) ;
+		CloneGraphVisitor* cgv =  new CloneGraphVisitor(context,mutableOnly,this);
+		((KMFContainer*)o)->visit(cgv,true,true,false);
+		ResolveGraphVisitor *rgv = new ResolveGraphVisitor(context,mutableOnly,readOnly,this);
+		resolveModelElem(o, clonedObject, context, mutableOnly);
+		((KMFContainer*)o)->visit(rgv,true,true,false);
+		if(readOnly){
+			clonedObject->setInternalReadOnly();
+		}
+		return (A*)clonedObject ;
+	}
 
 private:
 
