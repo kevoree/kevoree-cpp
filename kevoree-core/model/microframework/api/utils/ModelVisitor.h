@@ -3,7 +3,7 @@
 
 #include <microframework/api/utils/any.h>
 #include <string>
-#include <unordered_map>
+#include <map>
 
 using std::string;
 class KMFContainer;
@@ -29,7 +29,7 @@ public:
 	bool visitStopped; // false
 	bool visitChildren; // true
 	bool visitReferences; // true;
-	std::unordered_map<string,KMFContainer*> alreadyVisited;
+	std::map<string,KMFContainer*> alreadyVisited;
 };
 
 
