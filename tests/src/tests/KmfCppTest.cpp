@@ -350,8 +350,10 @@ void KmfCppTest::testKmfCompare3(){
 }
 
 void KmfCppTest::testKmfCloner(){
+//	Logger::Start(Logger::DEBUG_MICROFRAMEWORK, "log");
 	DefaultkevoreeFactory factory;
 		JSONModelLoader loader;
+		JSONModelSerializer serial ;
 		ContainerRoot   *model_src;
 		ContainerRoot   *model_target;
 		loader.setFactory(&factory);
@@ -368,16 +370,33 @@ void KmfCppTest::testKmfCloner(){
 			cout << "no file trace" << endl;
 		}
 
+
 		model_src = (ContainerRoot*)loader.loadModelFromStream(src)->front();
 	//	model_target = (ContainerRoot*)loader.loadModelFromStream(target)->front();
 		CPPUNIT_ASSERT(model_src  !=NULL);
 		CPPUNIT_ASSERT(model_target != NULL);
-		ModelCloner *cloner= new ModelCloner(&factory);
-		model_target = cloner->clone(model_src,true,true) ;
+/*
 		ModelCompare *compare= new ModelCompare();
 		TraceSequence *sequencediff = compare->diff(model_src,model_target);
+		std::cout << sequencediff->exportToString() << std::endl;
+		cout << "-----------------" << endl ;
+*/
+		ModelCloner *cloner= new ModelCloner(&factory);
+		model_target = cloner->clone(model_src,true,true) ;
+		//model_src->toTraces(true, true) ;
+		ModelCompare *compare= new ModelCompare();
+		TraceSequence *sequencediff = compare->diff(model_src,model_target);
+		std::cout << sequencediff->exportToString() << std::endl;
+	//	cout <<serial.serialize(model_src) <<endl;
+		cout <<"------------------------------" <<endl;
+		cout <<serial.serialize(model_target) <<endl;
+
+
 
 		CPPUNIT_ASSERT(sequencediff->traces.size()  == 0);
+
+
+
 
 		delete sequencediff;
 		delete model_src;
