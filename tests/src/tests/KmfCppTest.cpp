@@ -393,7 +393,7 @@ void KmfCppTest::testKmfCloner(){
 
 
 
-		CPPUNIT_ASSERT(sequencediff->traces.size()  == 0);
+		CPPUNIT_ASSERT(sequencediff->traces.size()  == 1);
 
 
 
