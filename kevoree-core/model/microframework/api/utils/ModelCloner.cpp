@@ -74,31 +74,43 @@ ModelCloner::AttributeCloner::AttributeCloner(KMFContainer* clonedSrcIn){
 }
 
 void ModelCloner::AttributeCloner::visit(any val,string name,KMFContainer *parent){
-
 	if(!val.empty ())
 	{
 		string data="";
-
 		if (!val.empty () && val.type () == typeid (string) )
 		{
 			data =AnyCast < string>(val);
-
-			clonedSrc->reflexiveMutator(SET,name, data, false, false);
-			cout << "visiting " << name << data << endl ;
-		} else  if(!val.empty () && val.type () == typeid (bool)){
+		}else  if(!val.empty () && val.type () == typeid (int))
+		{
+			data =AnyCast < int>(val);
+		}else  if(!val.empty () && val.type () == typeid (short))
+		{
+			data =AnyCast <short>(val);
+		} else  if(!val.empty () && val.type () == typeid (bool))
+		{
 			if(AnyCast<bool>(val) == true)
-						{
-							data ="true";
-						} else
-						{
-							data  ="false";
-						}
-			clonedSrc->reflexiveMutator(SET,name, data, false, false);
-
+			{
+				data ="true";
+			} else
+			{
+				data  ="false";
+			}
 		}
-
+		else{
+			LOGGER_WRITE(Logger::ERROR,"The SerializerAttributeVisitor::visit the type is not supported of "+name+" his parent his "+parent->path());
+		}
+		clonedSrc->reflexiveMutator(SET,name, data, false, false);
 	}
 }
+/*
+ *
+ *
+ *
+ *
+
+ 		cout << "visiting " << name  <<" : "<< data << endl ;
+
+ */
 
 /* ------------ Internal Class ReferenceResolver ------------ */
 
@@ -144,7 +156,6 @@ void ModelCloner::CloneGraphVisitor::visit(KMFContainer* elem,string name, KMFCo
 		if(mutableOnly && elem->isRecursiveReadOnly() ){
 			noChildrenVisit();
 		}else{
-
 			KMFContainer* clonedObject = modelclone->cloneModelElm(elem);
 			(*context)[elem->path()] =clonedObject ;
 

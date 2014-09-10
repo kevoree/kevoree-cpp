@@ -33,7 +33,6 @@ public:
 
 	template<class A>
 	A* clone(A* o, bool readOnly, bool mutableOnly){
-		cout << "Start " << endl;
 		std::map<string, KMFContainer*>*  context = createContext();
 		KMFContainer* clonedObject = cloneModelElm(o);
 		if(clonedObject != NULL)
