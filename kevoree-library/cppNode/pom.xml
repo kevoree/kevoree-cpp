@@ -27,7 +27,7 @@
                         <lib>kevoree-model-dynamic</lib>
                         <lib>boost_system-mt</lib>
                         <lib>boost_thread-mt</lib>
-                           <lib>kevoree-logger</lib>
+                         <lib>kevoree-logger</lib>
                     </libs>
                     <headers>
                     <header>${KEVOREEROOT}/include/maven-resolver/src/</header>

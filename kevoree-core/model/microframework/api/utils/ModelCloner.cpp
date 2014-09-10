@@ -12,7 +12,6 @@
 
 
 #include <microframework/api/utils/ModelCloner.h>
-#include <microframework/api/utils/ModelAttributeVisitor.h>
 #include <microframework/api/utils/KevoreeException.h>
 
 
@@ -25,23 +24,30 @@ ModelCloner::~ModelCloner() {
 	// TODO Auto-generated destructor stub
 }
 
-std::map<KMFContainer*, KMFContainer*>* ModelCloner::createContext()
+std::map<string, KMFContainer*>* ModelCloner::createContext()
 {
-	std::map<KMFContainer*, KMFContainer*>* map = new std::map<KMFContainer*, KMFContainer*>();
+	std::map<string, KMFContainer*>* map = new std::map<string, KMFContainer*>();
 	return map ;
 }
 
 
 
 KMFContainer* ModelCloner::cloneModelElm(KMFContainer* src) {
+
+
+
 	if(src != NULL)
 	{
 		string metaClassname = src->metaClassName() ;
 		if(!metaClassname.empty()){
-			KMFContainer* clonedSrc = mainFactory->create(src->metaClassName()) ;
-			ModelAttributeVisitor* mav = new AttributeCloner(clonedSrc) ;
-			src->visitAttributes(mav);
-			return clonedSrc ;
+			KMFContainer* clonedSrc = mainFactory->create("org.kevoree." + src->metaClassName()) ;
+			if(clonedSrc != NULL)
+			{
+				ModelAttributeVisitor* mav = new AttributeCloner(clonedSrc) ;
+				src->visitAttributes(mav);
+
+				return clonedSrc ;
+			}else throw  KevoreeException("Unable to clone element" + src->metaClassName());
 		}
 		else throw  KevoreeException("KMF Container metaClass Name is empty in cloneModelElm");
 
@@ -51,7 +57,7 @@ KMFContainer* ModelCloner::cloneModelElm(KMFContainer* src) {
 }
 
 
-void ModelCloner::resolveModelElem(KMFContainer* src, KMFContainer* target,std::map<KMFContainer*, KMFContainer*>* context,bool mutableOnlyIn){
+void ModelCloner::resolveModelElem(KMFContainer* src, KMFContainer* target,std::map<string, KMFContainer*>* context,bool mutableOnlyIn){
 	ReferenceResolver* rf = new ReferenceResolver(target,mutableOnlyIn,context);
 	src->visit(rf,false,true,true);
 }
@@ -63,79 +69,120 @@ void ModelCloner::resolveModelElem(KMFContainer* src, KMFContainer* target,std::
 /* ------------ Internal Class Attribute Cloner ------------ */
 
 ModelCloner::AttributeCloner::AttributeCloner(KMFContainer* clonedSrcIn){
+
 	clonedSrc = clonedSrcIn;
 }
 
-void ModelCloner::AttributeCloner::visit(KMFContainer *elem,string name,KMFContainer *parent){
+void ModelCloner::AttributeCloner::visit(any val,string name,KMFContainer *parent){
 
+	if(!val.empty ())
+	{
+		string data="";
+
+		if (!val.empty () && val.type () == typeid (string) )
+		{
+			data =AnyCast < string>(val);
+
+			clonedSrc->reflexiveMutator(SET,name, data, false, false);
+			cout << "visiting " << name << data << endl ;
+		} else  if(!val.empty () && val.type () == typeid (bool)){
+			if(AnyCast<bool>(val) == true)
+						{
+							data ="true";
+						} else
+						{
+							data  ="false";
+						}
+			clonedSrc->reflexiveMutator(SET,name, data, false, false);
+
+		}
+
+	}
 }
 
 /* ------------ Internal Class ReferenceResolver ------------ */
 
- ModelCloner::ReferenceResolver::ReferenceResolver(KMFContainer* targetIn, bool mutableOnlyIn,std::map<KMFContainer*, KMFContainer*>* contextIn)
- {
-	 target = targetIn ;
-	 mutableOnly = mutableOnlyIn;
-	 context = contextIn ;
+ModelCloner::ReferenceResolver::ReferenceResolver(KMFContainer* targetIn, bool mutableOnlyIn,std::map<string, KMFContainer*>* contextIn)
+{
+	target = targetIn ;
+	mutableOnly = mutableOnlyIn;
+	context = contextIn ;
 }
 
- void ModelCloner::ReferenceResolver::visit(KMFContainer *elem,string refNameInParent,KMFContainer *parent){
-
- 	if(elem != NULL){
- 	if(mutableOnly && elem->isRecursiveReadOnly() ){
- 		target->reflexiveMutator(ADD,refNameInParent,elem,false,false);
- 	}else{
- 		KMFContainer * elemResolved =  context->find(elem)->second ;
- 		if(elemResolved == NULL){
- 			throw KevoreeException("Cloner error, not self-contain model, the element " + elem->path() + " is contained in the root element") ;
- 		}
- 		target->reflexiveMutator(ADD,refNameInParent,elemResolved,false,false);
- 	}
- 	}else throw  KevoreeException("KMFContainer is Null");
-}
-
- /* ------------ Internal Class CloneGraphVisitor ------------ */
-
- ModelCloner::CloneGraphVisitor::CloneGraphVisitor(std::map<KMFContainer*, KMFContainer*>* contextIn, bool mutableOnlyIn, ModelCloner* obj){
-	 context = contextIn;
-	 mutableOnly = mutableOnlyIn ;
-	 modelclone = obj ;
- }
-
-void ModelCloner::CloneGraphVisitor::visit(KMFContainer *elem,string name, KMFContainer *parent){
+void ModelCloner::ReferenceResolver::visit(KMFContainer *elem,string refNameInParent,KMFContainer *parent){
 
 	if(elem != NULL){
-	if(mutableOnly && elem->isRecursiveReadOnly() ){
-		noChildrenVisit();
-	}else{
+		if(mutableOnly && elem->isRecursiveReadOnly() ){
+			target->reflexiveMutator(ADD,refNameInParent,elem,false,false);
 
-		context->insert(std::make_pair(elem,modelclone->cloneModelElm(elem))) ;
-	}
- 	}else throw  KevoreeException("KMFContainer is Null");
+		}else{
+			KMFContainer *  elemResolved = NULL ;
+			if(context->find(elem->path()) != context->end()){
+				elemResolved = (*context)[elem->path()];
+			}
+			if(elemResolved == NULL){
+				cout << elem->metaClassName() << endl ;
+				throw KevoreeException("Cloner error, not self-contain model, the element " + elem->path() + " is contained in the root element") ;
+			}
+
+			target->reflexiveMutator(ADD,refNameInParent,elemResolved,false,false);
+
+		}
+	}else throw  KevoreeException("KMFContainer is Null");
+}
+
+/* ------------ Internal Class CloneGraphVisitor ------------ */
+
+ModelCloner::CloneGraphVisitor::CloneGraphVisitor(std::map<string, KMFContainer*>* contextIn, bool mutableOnlyIn, ModelCloner* obj){
+	context = contextIn;
+	mutableOnly = mutableOnlyIn ;
+	modelclone = obj ;
+}
+
+void ModelCloner::CloneGraphVisitor::visit(KMFContainer* elem,string name, KMFContainer *parent){
+	if(elem != NULL){
+		if(mutableOnly && elem->isRecursiveReadOnly() ){
+			noChildrenVisit();
+		}else{
+
+			KMFContainer* clonedObject = modelclone->cloneModelElm(elem);
+			(*context)[elem->path()] =clonedObject ;
+
+		}
+	}else throw  KevoreeException("KMFContainer is Null");
 
 }
 
 /* ------------ Internal Class ResolveGraphVisitor ------------ */
 
-ModelCloner::ResolveGraphVisitor::ResolveGraphVisitor(std::map<KMFContainer*, KMFContainer*>* contextIn, bool mutableOnlyIn, bool readOnlyIn,ModelCloner* obj){
-	 context = contextIn;
-	 mutableOnly = mutableOnlyIn ;
-	 readOnly = readOnlyIn ;
-	 modelclone = obj ;
-		}
+ModelCloner::ResolveGraphVisitor::ResolveGraphVisitor(std::map<string, KMFContainer*>* contextIn, bool mutableOnlyIn, bool readOnlyIn,ModelCloner* obj){
+	context = contextIn;
+	mutableOnly = mutableOnlyIn ;
+	readOnly = readOnlyIn ;
+	modelclone = obj ;
+}
 
 void ModelCloner::ResolveGraphVisitor::visit(KMFContainer *elem,string name,KMFContainer *parent){
 
-		if(elem != NULL){
+	if(elem != NULL){
 		if(mutableOnly && elem->isRecursiveReadOnly() ){
 
 		}else{
-			KMFContainer * clonedObj =  context->find(elem)->second ;
-		if(clonedObj != 0){
-			modelclone->resolveModelElem(elem,clonedObj, context,mutableOnly);
+			KMFContainer * clonedObj =  NULL ;
+			if(context->find(elem->path()) != context->end()){
+				clonedObj = (*context)[elem->path()];
+				modelclone->resolveModelElem(elem,clonedObj, context,mutableOnly);
+
+					}else throw  KevoreeException("Unable to resolve Model Element " + elem->metaClassName());
+
+				if(readOnly){
+					clonedObj->setInternalReadOnly();
+						}
+
+
+
 		}
-		}
-	 	}else throw  KevoreeException("KMFContainer is Null");
+	}else throw  KevoreeException("KMFContainer is Null");
 
 
 }

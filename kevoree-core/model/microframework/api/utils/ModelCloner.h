@@ -4,11 +4,15 @@
 #include <microframework/api/KMFContainer.h>
 #include <microframework/api/KMFFactory.h>
 #include <kevoree-core/model/kevoree/ContainerRoot.h>
+#include <microframework/api/utils/KevoreeException.h>
+#include <microframework/api/utils/ModelAttributeVisitor.h>
+
 #include <map>
 #include <iostream>
 #include <list>
 #include <string>
 #include <sstream>
+
 
 
 /**
@@ -24,67 +28,73 @@ public:
 
 	ModelCloner(KMFFactory* factory) ;
 	virtual ~ModelCloner();
-	std::map<KMFContainer*, KMFContainer*>*  createContext() ;
+	std::map<string, KMFContainer*> * createContext() ;
 
 
 	template<class A>
 	A* clone(A* o, bool readOnly, bool mutableOnly){
-		std::map<KMFContainer*, KMFContainer*>*  context = createContext();
+		cout << "Start " << endl;
+		std::map<string, KMFContainer*>*  context = createContext();
 		KMFContainer* clonedObject = cloneModelElm(o);
-		context->insert(std::make_pair(o,clonedObject)) ;
-		CloneGraphVisitor* cgv =  new CloneGraphVisitor(context,mutableOnly,this);
-		((KMFContainer*)o)->visit(cgv,true,true,false);
-		ResolveGraphVisitor *rgv = new ResolveGraphVisitor(context,mutableOnly,readOnly,this);
-		resolveModelElem(o, clonedObject, context, mutableOnly);
-		((KMFContainer*)o)->visit(rgv,true,true,false);
-		if(readOnly){
-			clonedObject->setInternalReadOnly();
-		}
-		return (A*)clonedObject ;
+		if(clonedObject != NULL)
+		{
+			(*context)[o->path()] = clonedObject ;
+			CloneGraphVisitor* cgv =  new CloneGraphVisitor(context,mutableOnly,this);
+			((KMFContainer*)o)->visit(cgv,true,true,false);
+			ResolveGraphVisitor *rgv = new ResolveGraphVisitor(context,mutableOnly,readOnly,this);
+			resolveModelElem(o, clonedObject, context, mutableOnly);
+			((KMFContainer*)o)->visit(rgv,true,true,false);
+			if(readOnly){
+				clonedObject->setInternalReadOnly();
+			}
+			return (A*)clonedObject ;
+
+
+		}else  throw  KevoreeException("clonedObject NULL");
 	}
 
 private:
 
 	 KMFContainer* cloneModelElm(KMFContainer* src) ;
-	 void resolveModelElem(KMFContainer* src, KMFContainer* target,std::map<KMFContainer*, KMFContainer*>* context, bool mutableOnly ) ;
+	 void resolveModelElem(KMFContainer* src, KMFContainer* target,std::map<string, KMFContainer*>* context, bool mutableOnly ) ;
 
 
 	class AttributeCloner : public ModelAttributeVisitor{
 	public:
 		KMFContainer* clonedSrc ;
 		AttributeCloner(KMFContainer* _clonedSrc);
-		void visit(KMFContainer *elem,string name,KMFContainer *parent);
+		void  visit(any val,string name,KMFContainer *parent);
 	};
 
 	class ReferenceResolver : public ModelVisitor{
 	public:
 		KMFContainer* target ;
 		bool mutableOnly ;
-		std::map<KMFContainer*, KMFContainer*>* context ;
+		std::map<string, KMFContainer*>* context ;
 
-		ReferenceResolver(KMFContainer* targetIn, bool mutableOnlyIn,std::map<KMFContainer*, KMFContainer*>* contextIn) ;
+		ReferenceResolver(KMFContainer* targetIn, bool mutableOnlyIn,std::map<string, KMFContainer*>* contextIn) ;
 		void visit(KMFContainer *elem,string name,KMFContainer *parent);
 
 		};
 
 	class CloneGraphVisitor : public ModelVisitor{
 	public:
-		std::map<KMFContainer*, KMFContainer*>* context ;
+		std::map<string, KMFContainer*>* context ;
 		bool mutableOnly ;
 		ModelCloner* modelclone ;
 
-		CloneGraphVisitor(std::map<KMFContainer*, KMFContainer*>* contextIn, bool mutableOnlyIn, ModelCloner* obj);
+		CloneGraphVisitor(std::map<string, KMFContainer*>*contextIn, bool mutableOnlyIn, ModelCloner* obj);
 		void visit(KMFContainer *elem,string name,KMFContainer *parent);
 		};
 
 	class ResolveGraphVisitor : public ModelVisitor{
 		public:
-			std::map<KMFContainer*, KMFContainer*>* context ;
+			std::map<string, KMFContainer*>* context ;
 			bool mutableOnly ;
 			bool readOnly ;
 			ModelCloner* modelclone ;
 
-			ResolveGraphVisitor(std::map<KMFContainer*, KMFContainer*>* contextIn, bool mutableOnlyIn, bool readOnlyIn, ModelCloner* obj);
+			ResolveGraphVisitor(std::map<string, KMFContainer*> *contextIn, bool mutableOnlyIn, bool readOnlyIn, ModelCloner* obj);
 			void visit(KMFContainer *elem,string name,KMFContainer *parent);
 			};
 };
