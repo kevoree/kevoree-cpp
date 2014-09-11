@@ -5227,7 +5227,7 @@ void NetworkProperty::visit(ModelVisitor *visitor,bool recursive,bool containedR
 
 void NetworkProperty::visitAttributes(ModelAttributeVisitor *visitor){
 visitor->visit(any(name),"name",this);
-visitor->visit(any(name),"name",this);
+//visitor->visit(any(name),"name",this);
 visitor->visit(any(value),"value",this);
 }
 NetworkProperty::NetworkProperty(){
