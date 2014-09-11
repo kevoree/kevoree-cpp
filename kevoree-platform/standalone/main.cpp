@@ -195,9 +195,6 @@ void sig_handler(int s)
 		kb->stop();
 		delete kb;
 	}
-	if(model != NULL)
-		delete model;
-
 	exit(1);
 }
 

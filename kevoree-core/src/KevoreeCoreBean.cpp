@@ -3,6 +3,8 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <kevoree-core/kevscript/api/KevScriptEngine.h>
+#include <microframework/api/utils/ModelCloner.h>
+
 
 KevoreeCoreBean::KevoreeCoreBean(){
 	currentModel=NULL;
@@ -171,10 +173,16 @@ void KevoreeCoreBean::stop()
 	modelListeners.stop();
 
 	ContainerRoot *currentmodel = getLastModel();
+	ModelCloner *cloner= new ModelCloner(&factory);
+	ContainerRoot *stopModel = cloner->clone(currentmodel,true,true) ;
 
-	ContainerRoot *stopModel; // TODO CLONE MODEL
+	ContainerNode *currentNode = stopModel->findnodesByID(getNodeName());
+	if(currentNode == NULL){
 
-/*FIX MEE
+//todo throw exception
+	}
+	currentNode->started = false;
+
 	// stop hosts
 	for ( std::map<string,ContainerNode*>::iterator it = currentNode->hosts.begin();  it !=  currentNode->hosts.end(); ++it)
 	{
@@ -203,7 +211,7 @@ void KevoreeCoreBean::stop()
 
 	}
 	LOGGER_WRITE(Logger::INFO,"Update to StopModel");
-	updateModel(stopModel);*/
+	updateModel(stopModel);
 
 }
 
