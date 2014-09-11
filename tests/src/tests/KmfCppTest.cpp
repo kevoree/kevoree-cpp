@@ -350,7 +350,7 @@ void KmfCppTest::testKmfCompare3(){
 }
 
 void KmfCppTest::testKmfCloner(){
-//	Logger::Start(Logger::DEBUG_MICROFRAMEWORK, "log");
+	//Logger::Start(Logger::DEBUG_MICROFRAMEWORK, "log");
 	DefaultkevoreeFactory factory;
 		JSONModelLoader loader;
 		JSONModelSerializer serial ;
@@ -393,7 +393,7 @@ void KmfCppTest::testKmfCloner(){
 
 
 
-		CPPUNIT_ASSERT(sequencediff->traces.size()  == 1);
+		CPPUNIT_ASSERT(sequencediff->traces.size()  == 0);
 
 
 
